@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Lokale Claude-indstillinger (personlige)
+.claude/settings.local.json
