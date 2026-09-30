@@ -31,23 +31,24 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | Fil | Indhold |
 | --- | --- |
 | `app.html` | Hele appen (HTML, CSS og JavaScript). Kilden, der redigeres. |
-| `build.py` | Laver `pwa/index.html` og `pwa/sw.js` ud fra `app.html`. |
-| `pwa/` | Den færdige webapp, klar til at lægge på en webserver. |
-| `tools/make_icons.py` | Tegner app-ikonerne i `pwa/icons/`. |
+| `build.py` | Laver `docs/index.html` og `docs/sw.js` ud fra `app.html`. |
+| `docs/` | Den færdige webapp. GitHub Pages udgiver denne mappe. |
+| `tools/make_icons.py` | Tegner app-ikonerne i `docs/icons/`. |
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
 
 ## Kør den lokalt
 
 ```bash
 python3 build.py
-python3 -m http.server 8765 --directory pwa
+python3 -m http.server 8765 --directory docs
 ```
 
 Åbn derefter http://localhost:8765 i browseren.
 
 ## Læg den på telefon og tablet
 
-For at installere appen skal `pwa/`-mappen ligge på en HTTPS-adresse. Brug fx GitHub Pages, Netlify eller Cloudflare Pages, som alle er gratis til den slags.
+Appen ligger på **https://gammowich.github.io/taktiktavle/** (GitHub Pages udgiver `docs/` fra `main`).
+Efter en ændring: ret `app.html`, kør `python3 build.py`, commit og push – så er den nye version ude efter et minut eller to.
 
 - **iPhone/iPad (Safari):** åbn adressen → Del → *Føj til hjemmeskærm*.
 - **Android (Chrome):** åbn adressen → menu → *Installer app*.

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Tegner appens ikoner (PNG) til pwa/icons/. Kør: python3 tools/make_icons.py"""
+"""Tegner appens ikoner (PNG) til docs/icons/. Kør: python3 tools/make_icons.py"""
 import math
 import pathlib
 from PIL import Image, ImageDraw
 
-OUT = pathlib.Path(__file__).resolve().parent.parent / "pwa" / "icons"
+OUT = pathlib.Path(__file__).resolve().parent.parent / "docs" / "icons"
 SS = 4  # supersampling for bløde kanter
 
 STRIPE_A = (47, 122, 61)

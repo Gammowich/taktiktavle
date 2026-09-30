@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Bygger den installerbare webapp i pwa/ ud fra app.html.
+"""Bygger den installerbare webapp i docs/ ud fra app.html (GitHub Pages udgiver docs/).
 
 app.html er kilden. Den er skrevet uden <html>/<head>/<body>, så den også kan
 publiceres direkte som claude.ai-artifact. Dette script pakker den ind i et
@@ -12,7 +12,7 @@ import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent
-PWA = ROOT / "pwa"
+PWA = ROOT / "docs"
 
 src = (ROOT / "app.html").read_text(encoding="utf-8")
 
@@ -49,5 +49,5 @@ page = f"""<!doctype html>
 sw = (ROOT / "tools" / "sw.template.js").read_text(encoding="utf-8").replace("__VERSION__", version)
 (PWA / "sw.js").write_text(sw, encoding="utf-8")
 
-print(f"pwa/index.html  {len(page):>7} tegn")
-print(f"pwa/sw.js       version {version}")
+print(f"docs/index.html {len(page):>7} tegn")
+print(f"docs/sw.js      version {version}")
