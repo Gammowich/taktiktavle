@@ -2936,13 +2936,41 @@ function simAddEvent(ev, label, quiet) {
     sim.hold = 1.6 / Math.sqrt(sim.speed);
   }
 }
+// Afspark: begge hold i grundformationen på egen banehalvdel, bolden på midten.
+// Holdet med afsparket står ved bolden; modstanderne står uden for midtercirklen.
+function simKickoff(kicker) {
+  const f = FORMATS[board.format], cx = f.W / 2, cy = f.L / 2;
+  for (const team of ['home', 'away']) {
+    const lay = layoutFor(board.format, board[team + 'Formation'], 'normal');
+    board[team].forEach((p, k) => {
+      const q = lay[k] || lay[0], y = Math.max(q.y, cy + 1.2);
+      sim.target[p.id] = team === 'home' ? { x: q.x, y } : { x: f.W - q.x, y: f.L - y };
+    });
+  }
+  const kTeam = kicker === 0 ? 'home' : 'away', oTeam = kicker === 0 ? 'away' : 'home', dir = kicker === 0 ? 1 : -1;
+  const pl = board[kTeam];
+  const taker = pl.find(p => p.role === 'CF') || pl.find(p => p.role === 'SS') || pl.find(p => p.role === 'CAM') || pl[pl.length - 1];
+  const mate = pl.find(p => p !== taker && ['SS', 'CF', 'CAM', 'CM', 'LW', 'RW'].includes(p.role));
+  if (taker) sim.target[taker.id] = { x: cx, y: cy + .9 * dir };
+  if (mate) sim.target[mate.id] = { x: cx - 2.5 * dir, y: cy + 1.8 * dir };
+  const r = f.mk.circle + .8;
+  board[oTeam].forEach(p => {
+    const t = sim.target[p.id], dx = t.x - cx, dy = t.y - cy, d = Math.hypot(dx, dy);
+    if (d < r) sim.target[p.id] = d > .01 ? { x: cx + dx / d * r, y: cy + dy / d * r } : { x: cx, y: cy - r * dir };
+  });
+  sim.ballT = { x: cx, y: cy };
+}
 function simStep(quiet) {
   const tl = sim.res.timeline;
+  if (sim.kickoff != null) { simKickoff(sim.kickoff); sim.kickoff = null; return; }
   if (sim.i >= tl.length) return;
+  if (tl[sim.i].m === 46 && !sim.secondHalf) { sim.secondHalf = true; simKickoff(1); return; }
   const e = tl[sim.i++];
   sim.ballT = zoneToBall(e.poss, e.zone);
   simTargets(e.poss, sim.ballT);
   e.events.forEach(ev => simAddEvent(ev, e.label, quiet));
+  const goal = e.events.find(ev => ev.type === 'goal');
+  if (goal) sim.kickoff = 1 - goal.team;
   $('#sbScore').textContent = `${e.stats[0].goals}–${e.stats[1].goals}`;
   $('#sbClock').textContent = e.label;
   simRenderStats(e.stats);
@@ -2976,15 +3004,14 @@ function simControls() {
 function simNewMatch() {
   sim.A = teamProfile(board, 'home'); sim.B = teamProfile(board, 'away');
   sim.res = simulateMatch(sim.A, sim.B, (Math.random() * 4294967296) >>> 0);
-  sim.i = 0; sim.playing = false; sim.acc = 0; sim.hold = 0; sim.pos = {}; sim.target = {};
+  sim.i = 0; sim.playing = false; sim.acc = 0; sim.hold = 0; sim.pos = {}; sim.target = {}; sim.kickoff = null; sim.secondHalf = false;
   $('#simFeed').innerHTML = ''; $('#simFlash').hidden = true;
   $('#sbHome').textContent = sim.A.name; $('#sbAway').textContent = sim.B.name;
   $('#sbHomeDot').style.setProperty('--c', sim.A.kit); $('#sbAwayDot').style.setProperty('--c', sim.B.kit);
-  const first = sim.res.timeline[0];
-  sim.ball = zoneToBall(0, first.zone); sim.ballT = { ...sim.ball };
-  simTargets(0, sim.ball);
+  simStep(true);            // minut 0: "Kampen er i gang"
+  simKickoff(0);            // holdene står over for hinanden inden start
   for (const id in sim.target) sim.pos[id] = { ...sim.target[id] };
-  simStep(true);
+  sim.ball = { ...sim.ballT };
   simRenderAnalysis();
   simControls();
 }
