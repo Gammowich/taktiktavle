@@ -451,6 +451,12 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .stats th:last-child, .stats td:last-child { text-align: right; }
 .stats td { padding: 8px 4px; border-bottom: 1px solid var(--line); font-weight: 700; }
 .stats td:nth-child(2) { text-align: center; font-weight: 500; color: var(--muted); font-size: 12.5px; }
+.sim-charts { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.sim-charts h3 { margin: 6px 0 0; font-size: 12px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.sim-charts p { margin: 0; }
+.xg-chart { width: 100%; height: 140px; display: block; }
+.mini-pitch { width: 100%; aspect-ratio: 117 / 80; display: block; border-radius: 10px; }
+.feed .replay-btn { margin-top: 4px; height: 26px; padding: 0 10px; font-size: 12px; }
 .analysis { display: flex; flex-direction: column; gap: 12px; font-size: 14px; }
 .analysis ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
 .analysis h3 { margin: 0; }
@@ -459,6 +465,7 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .wdl-legend { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .sim-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .sim-controls .segmented { grid-auto-columns: 44px; }
+.sim-controls .btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 @media (max-width: 760px) {
   .sim-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(200px, 44%) minmax(0, 1fr); }
   .sb-score { font-size: 30px; }
@@ -737,7 +744,18 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
           <button type="button" role="tab" data-tab="analysis" aria-selected="false" aria-checked="false">Analyse</button>
         </div>
         <div class="sim-panel" id="simPanelFeed"><ol class="feed" id="simFeed"></ol></div>
-        <div class="sim-panel" id="simPanelStats" hidden><table class="stats" id="simStats"></table></div>
+        <div class="sim-panel" id="simPanelStats" hidden>
+          <table class="stats" id="simStats"></table>
+          <div class="sim-charts">
+            <h3>xG gennem kampen</h3>
+            <canvas class="xg-chart" id="simXg" role="img" aria-label="Forventede mål (xG) minut for minut for begge hold"></canvas>
+            <h3>Skudkort</h3>
+            <canvas class="mini-pitch" id="simShots" role="img" aria-label="Kampens skud. Jo større cirkel, jo større chance. Udfyldt cirkel er mål."></canvas>
+            <p class="muted small" id="simShotsNote"></p>
+            <h3>Gennemsnitlige positioner</h3>
+            <canvas class="mini-pitch" id="simAvg" role="img" aria-label="Spillernes gennemsnitlige positioner i kampen"></canvas>
+          </div>
+        </div>
         <div class="sim-panel players" id="simPanelPlayers" hidden><div id="simPlayers"></div></div>
         <div class="sim-panel tactic" id="simPanelTactic" hidden></div>
         <div class="sim-panel analysis" id="simPanelAnalysis" hidden></div>
@@ -755,6 +773,7 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
         <button type="button" role="radio" data-mode="highlights" aria-checked="true">Højdepunkter</button>
         <button type="button" role="radio" data-mode="full" aria-checked="false">Hele kampen</button>
       </div>
+      <button type="button" class="btn" id="simLabels" aria-pressed="false" title="Vis navne (eller position) under spillerne">Navne</button>
       <button type="button" class="btn" id="simSkip">Spring til slut</button>
       <button type="button" class="btn" id="simNew">Ny kamp</button>
       <button type="button" class="btn" id="simMany">Simulér 500 kampe</button>
@@ -3223,11 +3242,11 @@ function keyFactors(A, B) {
    følger den kalibrerede model. */
 const sim = {
   mt: null, A: null, B: null, rec: null, queue: [], act: null, qLen: 0, qDone: 0,
-  playing: false, speed: 1, mode: 'highlights', quiet: false, ended: false, hold: 0, raf: 0, last: 0,
+  playing: false, speed: 1, mode: 'highlights', quiet: false, labels: 'none', ended: false, hold: 0, raf: 0, last: 0,
   view: null, pos: {}, target: {}, ball: { x: 0, y: 0 }, ballH: 0, owner: 0, carrier: null,
   lastPass: [null, null], pendingKickoff: null, goalsShown: [0, 0], statsShown: null,
   lineup: { home: [], away: [] }, bench: [], subs: [0, 0], formation: {}, tac: {}, crng: Math.random,
-  ps: {}, ts: [{}, {}], mom: [], many: null, flashTimer: 0, leaving: {}, mirrors: [], men0: [10, 10],
+  ps: {}, ts: [{}, {}], mom: [], many: null, flashTimer: 0, leaving: {}, mirrors: [], men0: [10, 10], vel: {},
 };
 const tk = i => i === 0 ? 'home' : 'away';
 const simF = () => FORMATS[board.format];
@@ -3265,6 +3284,41 @@ function shapeTargets(poss, ball) {
         : { u: clamp(W / 2 + (q.u - W / 2) * spread + lat, 1.5, W - 1.5), v: clamp(q.v + shift, 1.5, L - 2) };
       sim.target[p.id] = relToPitch(i, r.u, r.v);
     });
+  }
+  // Holdet med bolden i sidste tredjedel: angriberne søger ind i feltet, kanten i den fjerne side går mod
+  // bageste stolpe, og backen i boldsiden overlapper. Ingen står offside: de holder sig på linje med
+  // modstanderens bageste markspiller (dybe bolde og stikninger sendes forbi linjen af selve handlingen).
+  const ak = tk(poss), dk0 = tk(1 - poss), bA = pitchToRel(poss, ball), sx = W / 68, sy = L / 105, tacA = sim.tac[ak];
+  const defV = sim.lineup[dk0].filter(p => p.role !== 'GK').map(p => pitchToRel(poss, sim.target[p.id]).v);
+  const offLine = Math.max(defV.length ? Math.max(...defV) : L, bA.v) - .6;
+  const deep = clamp((bA.v - L * .58) / (L * .25), 0, 1), side = bA.u < W / 2 ? -1 : 1;
+  for (const p of sim.lineup[ak]) {
+    if (p.role === 'GK') continue;
+    let { u, v } = pitchToRel(poss, sim.target[p.id]);
+    if (deep > 0) {
+      const pSide = /^L/.test(p.role) ? -1 : /^R/.test(p.role) ? 1 : 0;
+      if (p.role === 'CF') { v = lerp(v, L - 10 * sy, deep); u = lerp(u, W / 2 + side * 2 * sx, deep * .6); }
+      else if (p.role === 'SS') { v = lerp(v, L - 14 * sy, deep); u = lerp(u, W / 2 - side * 4 * sx, deep * .6); }
+      else if (p.role === 'CAM') v = lerp(v, L - 21 * sy, deep);
+      else if (['LW', 'RW', 'LM', 'RM'].includes(p.role)) {
+        if (pSide === side) v = lerp(v, L - 18 * sy, deep);
+        else { v = lerp(v, L - 9 * sy, deep); u = lerp(u, W / 2 - side * 7 * sx, deep); }
+      } else if (pSide === side && ['LB', 'RB', 'LWB', 'RWB'].includes(p.role) && (tacA.width >= 3 || tacA.style === 'off')) {
+        v = lerp(v, Math.min(bA.v + 3 * sy, L - 12 * sy), deep * .8); u = lerp(u, side < 0 ? 3 * sx : W - 3 * sx, deep * .8);
+      }
+    }
+    sim.target[p.id] = relToPitch(poss, clamp(u, 1.5, W - 1.5), clamp(Math.min(v, offLine), 1.5, L - 2));
+  }
+  // Holdet uden bold: hver markspiller tager den nærmeste modstander i sit område og står på målsiden af ham.
+  // Bagkæden flytter sig kun sideværts, så linjen holdes.
+  const opp = sim.lineup[ak].filter(p => p.role !== 'GK').map(p => sim.target[p.id]), own = relToPitch(1 - poss, W / 2, 0);
+  for (const p of sim.lineup[dk0]) {
+    if (p.role === 'GK') continue;
+    const t = sim.target[p.id]; let best = null, bd = 11 * sx;
+    for (const o of opp) { const d = Math.hypot(o.x - t.x, o.y - t.y); if (d < bd) { bd = d; best = o; } }
+    if (!best) continue;
+    const gx = own.x - best.x, gy = own.y - best.y, gd = Math.hypot(gx, gy) || 1, m = { x: best.x + gx / gd * 2.2, y: best.y + gy / gd * 2.2 };
+    sim.target[p.id] = DEF_ROLES.includes(p.role) ? { x: lerp(t.x, m.x, .5), y: t.y } : { x: lerp(t.x, m.x, .4), y: lerp(t.y, m.y, .4) };
   }
   // Pres: den nærmeste (to ved højt pres) fra holdet uden bold går mod bolden.
   const dk = tk(1 - poss), n = sim.tac[dk].press >= 4 ? 2 : 1;
@@ -3305,6 +3359,7 @@ function pickMate(i, fromId, want, o = {}) {
 /* ---- Handlinger. Hver handling beregnes først, når den begynder (prep), så den bygger videre
    på, hvor bolden og spillerne faktisk er. ---- */
 const A = prep => ({ prep });
+const vary = (arr, k) => arr[Math.abs(k) % arr.length];
 function carryInfo(i, want, text) {
   const id = sim.carrier; if (!id) return null;
   const f = simF(), from = { ...sim.ball };
@@ -3312,7 +3367,8 @@ function carryInfo(i, want, text) {
   const maxD = 22 * f.L / 105;   // en enkelt dribling er højst ca. 22 m
   if (d > maxD) { to = { x: from.x + (to.x - from.x) * maxD / d, y: from.y + (to.y - from.y) * maxD / d }; d = maxD; }
   return { dur: .15 + d / 6.2, from, to, owner: i, carrierAfter: id, dribbler: id, move: { [id]: to }, shapeBall: to, team: i,
-    text: text || (sim.crng() < .3 * (1 + .15 * (attrOf(simPlayer(id), 'tech') - 5)) ? `${cap(simName(id))} går forbi sin mand` : `${cap(simName(id))} fører bolden frem`) };
+    text: text || (sim.crng() < .3 * (1 + .15 * (attrOf(simPlayer(id), 'tech') - 5)) ? `${cap(simName(id))} ${vary(['går forbi sin mand', 'dribler sig fri', 'snyder sin modstander'], sim.qDone)}`
+      : `${cap(simName(id))} ${vary(['fører bolden frem', 'trækker op ad banen', 'driver bolden fremad'], sim.qDone)}`) };
 }
 function passInfo(i, want, kind = 'short', o = {}) {
   const f = simF(), passer = sim.carrier;
@@ -3328,7 +3384,8 @@ function passInfo(i, want, kind = 'short', o = {}) {
   const lofted = kind === 'long' || kind === 'cross' || (kind !== 'through' && d > 30);
   const speed = kind === 'through' ? 16 : lofted ? 18 : 13.5;
   const text = o.text || (kind === 'cross' ? `Indlæg fra ${simName(passer)}` : kind === 'through' ? `Stikning til ${simName(r.id)}`
-    : lofted ? `Lang bold fra ${simName(passer)} mod ${simName(r.id)}` : `${cap(simName(passer))} til ${simName(r.id)}`);
+    : lofted ? `Lang bold fra ${simName(passer)} mod ${simName(r.id)}`
+    : vary([`${cap(simName(passer))} til ${simName(r.id)}`, `${cap(simName(passer))} til ${simName(r.id)}`, `${cap(simName(passer))} finder ${simName(r.id)}`, `${cap(simName(passer))} lægger den til ${simName(r.id)}`], sim.qDone + (sim.rec ? sim.rec.m : 0)));
   const ballT = .2 + d / speed;
   return { dur: Math.min(Math.max(ballT, runD / 7.5), ballT + 1.2), from, to: at, h: lofted ? Math.min(kind === 'cross' ? 6 : 9, d * .14) : 0,
     owner: i, carrierAfter: r.id, move: { [r.id]: at }, shapeBall: at, text, team: i,
@@ -3430,6 +3487,7 @@ function shotAct(sh, header = false, pen = false) {
       const bl = nearestOf(1 - i, to); if (bl) move[bl.id] = to;
     }
     const d = Math.hypot(to.x - from.x, to.y - from.y);
+    (sim.shots || (sim.shots = [])).push({ team: i, x: from.x, y: from.y, xg: sh.xg || .05, outcome: sh.outcome, m: sim.rec ? sim.rec.m : 0, pen, header });
     return { dur: .15 + d / 26, from, to, h, owner: i, ownerAfter: sh.outcome === 'goal' ? i : 1 - i, carrierAfter: null, move, shapeBall: from, team: i, keep: pen,
       text: pen ? `${cap(simName(shooter))} sparker!` : header ? `Hovedstød fra ${simName(shooter)}!` : `${cap(simName(shooter))} skyder!`,
       end() {
@@ -3438,6 +3496,7 @@ function shotAct(sh, header = false, pen = false) {
         const lp = sim.lastPass[i], assist = lp && lp.to === shooter && lp.from !== shooter ? lp.from : null;
         if (assist) pstat(assist, 'key');
         const ev = sim.rec.events.find(e => (e.type === 'goal' || e.type === 'shot') && e.team === i && !e.shown);
+        if (ev && sh.outcome === 'goal') ev.replay = simReplayCapture(i, shooter);
         if (ev) { ev.shown = true; simUI.event(ev, sim.rec.label); }
         if (sh.outcome === 'goal') {
           pstat(shooter, 'goals'); if (assist) pstat(assist, 'assists');
@@ -3456,14 +3515,11 @@ function afterShot(sh) {
     return { dur: 3, from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: null, move, shapeBall: { x: f.W / 2, y: f.L / 2 }, team: i, text: `MÅL! ${cap(simName(sc))} jubler med holdkammeraterne` };
   })];
   if (sh.outcome === 'save') return [
-    A(() => { const k = keeperOf(d); return { dur: .9, from: { ...sim.ball }, to: { ...sim.pos[k.id] }, owner: d, carrierAfter: k.id, shapeBall: sim.ball, team: d, text: 'Målmanden griber bolden' }; }),
+    A(() => { const k = keeperOf(d), at = { ...sim.pos[k.id] }; return { dur: .9, from: { ...sim.ball }, to: at, owner: d, carrierAfter: k.id, move: { [k.id]: at }, shapeBall: sim.ball, team: d, text: 'Målmanden griber bolden' }; }),
     A(() => passInfo(d, { u: simF().W * (sim.crng() < .5 ? .2 : .8), v: simF().L * .22 }, 'short', { text: 'Målmanden sætter spillet i gang' })),
   ];
-  if (sh.outcome === 'block') return [A(() => {
-    const clr = nearestOf(d, sim.ball); if (!clr) return null;
-    sim.carrier = clr.id; sim.pos[clr.id] = { ...sim.ball };
-    return passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .55 }, 'long', { text: `${cap(simName(clr.id))} rydder` });
-  })];
+  if (sh.outcome === 'block') return [reachAct(d), A(() => sim.carrier && simTeamOf(sim.carrier) === d
+    ? passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .55 }, 'long', { text: `${cap(simName(sim.carrier))} rydder` }) : null)];
   return [
     A(() => {
       const f = simF(), k = keeperOf(d), spot = relToPitch(d, f.W / 2 + (sim.crng() < .5 ? -1 : 1) * 8 * f.W / 68, 5.5 * f.L / 105);
@@ -3535,13 +3591,18 @@ function spDelivery(i, target) {
 function spShortFirst(i) {
   return A(() => (sim.sp && sim.sp.shortId && sim.sp.routine === 'short') ? passInfo(i, null, 'short', { to: sim.sp.shortId, at: sim.pos[sim.sp.shortId] }) : null);
 }
-function headedClear(i) {
+// Den nærmeste spiller fra hold d løber hen til bolden og får den.
+function reachAct(d) {
   return A(() => {
-    const d = 1 - i, clr = nearestOf(d, sim.ball); if (!clr) return null;
-    sim.carrier = clr.id; sim.pos[clr.id] = { ...sim.ball };
-    const info = passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .5 }, 'long', { text: `${cap(simName(clr.id))} header bolden væk` });
-    return info;
+    const clr = nearestOf(d, sim.ball); if (!clr) return null;
+    const q = sim.pos[clr.id] || sim.ball, dist = Math.hypot(q.x - sim.ball.x, q.y - sim.ball.y);
+    return { dur: clamp(dist / 7.5, .2, 1.4), from: { ...sim.ball }, to: { ...sim.ball }, owner: d, carrierAfter: clr.id, move: { [clr.id]: { ...sim.ball } }, shapeBall: sim.ball, team: d };
   });
+}
+function headedClear(i) {
+  const d = 1 - i;
+  return [reachAct(d), A(() => sim.carrier && simTeamOf(sim.carrier) === d
+    ? passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .5 }, 'long', { text: `${cap(simName(sim.carrier))} header bolden væk` }) : null)];
 }
 // Viser næste endnu ikke viste hændelse fra motoren, der passer (kort, straffespark, skade …).
 function showEv(pred) {
@@ -3563,7 +3624,7 @@ function foulAct(i, f, o = {}) {
     const fid = f && sim.pos[f.fouler.id] ? f.fouler.id : (nearestOf(1 - i, sim.ball) || {}).id; if (!fid) return null;
     const q = sim.pos[fid], d = Math.hypot(q.x - sim.ball.x, q.y - sim.ball.y), card = f && f.card;
     const cardTxt = card === 'yellow' ? ' Gult kort!' : card === 'second' ? ' Andet gule kort – rødt!' : card === 'red' ? ' Rødt kort!' : '';
-    return { dur: clamp(d / 7.5, 1.1, 2.4), from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: victim, move: { [fid]: { ...sim.ball } }, shapeBall: sim.ball, team: 1 - i,
+    return { dur: clamp(d / 7.5, 1.1, 2.4), from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: victim, move: { [fid]: { ...sim.ball }, [victim]: { ...sim.pos[victim] || sim.ball } }, shapeBall: sim.ball, team: 1 - i,
       text: (o.text || `Frispark – ${simName(fid)} lægger ${simName(victim)} ned.`) + cardTxt,
       end() {
         if (f) recordFoul(f); else pstat(fid, 'fouls');
@@ -3738,7 +3799,7 @@ function attackFails(i, type) {
     return [
       A(() => carryInfo(i, { u: side < 0 ? 4 * f.W / 68 : f.W - 4 * f.W / 68, v: f.L - 9 * f.L / 105 })),
       A(() => { const tgt = pickMate(i, sim.carrier, { u: f.W / 2, v: f.L - 7 }, { roles: ['CF', 'SS', 'CAM', 'LW', 'RW', 'CM'] }); return tgt ? passInfo(i, null, 'cross', { to: tgt.id, at: relToPitch(i, f.W / 2 + (sim.crng() - .5) * 8, f.L - 7 * f.L / 105), text: `Indlæg fra ${simName(sim.carrier)}` }) : null; }),
-      headedClear(i),
+      ...headedClear(i),
     ];
   }
   return [A(() => winInfo(1 - i, 'intercept'))];
@@ -3784,10 +3845,10 @@ function buildScript(rec) {
     S.push(...buildUp(offs.team, Math.max(1, passesFor(offs.team) - 1), .5), offsideAct(offs));
   } else if (fiz) {
     S.push(...buildUp(fiz.team, passesFor(fiz.team), approachV(fiz.type)));
-    if (fiz.toCorner) S.push(blockedToCorner(fiz.team), setPieceSetup(fiz.team, 'corner'), spShortFirst(fiz.team), spDelivery(fiz.team, null), headedClear(fiz.team));
+    if (fiz.toCorner) S.push(blockedToCorner(fiz.team), setPieceSetup(fiz.team, 'corner'), spShortFirst(fiz.team), spDelivery(fiz.team, null), ...headedClear(fiz.team));
     else S.push(...attackFails(fiz.team, fiz.type));
   } else if (setp) {
-    S.push(...buildUp(setp.team, 2, .55), ...fkLead(setp.team), setPieceSetup(setp.team, 'fk'), spDelivery(setp.team, null), headedClear(setp.team));
+    S.push(...buildUp(setp.team, 2, .55), ...fkLead(setp.team), setPieceSetup(setp.team, 'fk'), spDelivery(setp.team, null), ...headedClear(setp.team));
   } else {
     S.push(...buildUp(X, 2 + Math.floor(sim.crng() * 3), .3 + sim.crng() * .3));
     if (!fouls.length && sim.crng() < .12) S.push(...throwInAct(1 - X));
@@ -3814,6 +3875,13 @@ function simBegin(act) {
   return info;
 }
 function simEnd(info) {
+  if (!info.fast && !info.keep && !info.place && info.dur > 0) {
+    const avg = sim.avg || (sim.avg = {});
+    for (const i of [0, 1]) for (const p of sim.lineup[tk(i)]) {
+      const q = sim.pos[p.id]; if (!q) continue;
+      const a = avg[p.id] || (avg[p.id] = { x: 0, y: 0, w: 0 }); a.x += q.x * info.dur; a.y += q.y * info.dur; a.w += info.dur;
+    }
+  }
   sim.ball = { ...info.to }; sim.ballH = 0;
   sim.owner = info.ownerAfter ?? info.owner ?? sim.owner;
   sim.carrier = info.carrierAfter ?? null;
@@ -3825,6 +3893,7 @@ function simEnd(info) {
 function simInstant(act) {
   const info = simBegin(act); if (!info) return;
   for (const id in sim.target) sim.pos[id] = { ...sim.target[id] };
+  sim.vel = {};
   simEnd(info);
 }
 function simAdvance(info, dtg) {
@@ -3832,13 +3901,27 @@ function simAdvance(info, dtg) {
   const k = info.dur > 0 ? info.t / info.dur : 1;
   sim.ball = { x: lerp(info.from.x, info.to.x, k), y: lerp(info.from.y, info.to.y, k) };
   sim.ballH = info.h ? 4 * info.h * k * (1 - k) : 0;
+  const mv = info.move || {}, left = Math.max(1e-3, info.dur - info.t + dtg);
   for (const id in sim.target) {
     const q = sim.pos[id] || (sim.pos[id] = { ...sim.target[id] }), t = sim.target[id];
-    if (id === info.dribbler) { q.x = sim.ball.x; q.y = sim.ball.y + (simTeamOf(id) === 0 ? .8 : -.8); continue; }
+    if (id === info.dribbler) { q.x = sim.ball.x; q.y = sim.ball.y + (simTeamOf(id) === 0 ? .8 : -.8); sim.vel[id] = null; continue; }
     // Topfart efter egenskaben Fart og konditionen (trætte spillere løber langsommere).
-    const pl = simPlayer(id), vmax = (info.fast ? 20 : 7.2 * (1 + .06 * (attrOf(pl, 'pace') - 5)) * (.85 + .15 * condOf(id) / 100)) * dtg;
+    const pl = simPlayer(id), top = info.fast ? 20 : 7.2 * (1 + .06 * (attrOf(pl, 'pace') - 5)) * (.85 + .15 * condOf(id) / 100);
     const dx = t.x - q.x, dy = t.y - q.y, d = Math.hypot(dx, dy);
-    if (d <= vmax) { q.x = t.x; q.y = t.y; } else { q.x += dx / d * vmax; q.y += dy / d * vmax; }
+    if (info.fast || mv[id]) {
+      // Spillere med en opgave i handlingen (modtager, synder, skytte …) når altid frem til tiden.
+      const step = Math.max(top * dtg, d * dtg / left);
+      if (d <= step) { q.x = t.x; q.y = t.y; } else { q.x += dx / d * step; q.y += dy / d * step; }
+      sim.vel[id] = null;
+      continue;
+    }
+    // Resten accelererer og bremser blødt i stedet for at starte og stoppe brat.
+    const v = sim.vel[id] || (sim.vel[id] = { x: 0, y: 0 }), want = Math.min(top, d * 3);
+    const wx = d > 1e-6 ? dx / d * want : 0, wy = d > 1e-6 ? dy / d * want : 0, acc = 9 * dtg;
+    let ax = wx - v.x, ay = wy - v.y; const an = Math.hypot(ax, ay);
+    if (an > acc) { ax *= acc / an; ay *= acc / an; }
+    v.x += ax; v.y += ay;
+    q.x += v.x * dtg; q.y += v.y * dtg;
   }
 }
 function simIsKey(rec) {
@@ -3873,7 +3956,7 @@ function simLoadMinute() {
 }
 function simAfterMinute() {
   const rec = sim.rec; if (!rec || !sim.minuteOpen) return;
-  sim.minuteOpen = false;
+  sim.minuteOpen = false; sim.doneMin = rec.m;
   rec.acts.forEach(a => { if (a.kind === 'foul' || a.kind === 'pen') recordFoul(a); });
   simFlushMirrors();
   rec.events.filter(e => !e.shown && e.type !== 'end').forEach(e => { e.shown = true; simUI.event(e, rec.label); });
@@ -3887,6 +3970,20 @@ function simFlushMirrors(keepLeaving) {
   (sim.mirrors || []).forEach(a => a.mirror());
   if (!keepLeaving) for (const id in sim.leaving) { delete sim.leaving[id]; delete sim.target[id]; delete sim.pos[id]; }
 }
+function simTapeFrame() {
+  const pos = {}; for (const id in sim.pos) pos[id] = [sim.pos[id].x, sim.pos[id].y];
+  const tape = sim.tape || (sim.tape = []);
+  tape.push({ pos, b: [sim.ball.x, sim.ball.y, sim.ballH] });
+  if (tape.length > 330) tape.shift();
+}
+// Gemmer de sidste ca. 9 sekunder før målet. Returnerer et id til "Se igen" (eller null uden optagelse).
+function simReplayCapture(i, shooter) {
+  if (sim.quiet || !sim.tape || sim.tape.length < 20) return null;
+  const vis = [...sim.lineup.away.map(p => ({ p: { ...p }, team: 'away' })), ...sim.lineup.home.map(p => ({ p: { ...p }, team: 'home' }))];
+  const id = 'r' + (sim.replayN = (sim.replayN || 0) + 1);
+  (sim.replays || (sim.replays = {}))[id] = { frames: sim.tape.slice(-270), vis, team: i, shooter, label: sim.rec ? sim.rec.label : '' };
+  return id;
+}
 function simFinish() {
   sim.playing = false; sim.ended = true; sim.act = null; sim.queue = [];
   simUI.finished();
@@ -3898,7 +3995,7 @@ function simPump(dtg) {
       if (!sim.queue.length) {
         if (!simLoadMinute()) { simFinish(); return; }
         if (sim.mode === 'highlights' && !simIsKey(sim.rec)) {
-          sim.quiet = true; while (sim.queue.length) simInstant(sim.queue.shift()); sim.quiet = false;
+          sim.quiet = true; sim.tape = []; while (sim.queue.length) simInstant(sim.queue.shift()); sim.quiet = false;
           simAfterMinute(); continue;
         }
       }
@@ -3907,11 +4004,13 @@ function simPump(dtg) {
     }
     const a = sim.act, step = Math.min(dtg, a.dur - a.t);
     simAdvance(a, step); dtg -= step;
+    sim.tapeT = (sim.tapeT || 0) + step;
+    if (sim.tapeT >= 1 / 30) { sim.tapeT %= 1 / 30; simTapeFrame(); }
     if (a.t >= a.dur - 1e-9) { sim.act = null; simEnd(a); sim.qDone++; if (!sim.queue.length) simAfterMinute(); }
   }
 }
 function simSkipToEnd() {
-  sim.quiet = true;
+  sim.quiet = true; sim.tape = [];
   if (sim.act) { const a = sim.act; sim.act = null; for (const id in sim.target) sim.pos[id] = { ...sim.target[id] }; simEnd(a); }
   while (sim.queue.length) simInstant(sim.queue.shift());
   if (sim.minuteOpen) simAfterMinute();
@@ -3962,7 +4061,7 @@ const simUI = {
   event(ev, label) {
     const li = document.createElement('li');
     li.className = ev.type;
-    li.innerHTML = `<span class="min">${esc(label)}</span><span>${esc(ev.text)}</span>`;
+    li.innerHTML = `<span class="min">${esc(label)}</span><span>${esc(ev.text)}${ev.replay ? `<br><button type="button" class="btn btn-sm replay-btn" data-replay="${ev.replay}">${ic('play')}Se målet igen</button>` : ''}</span>`;
     $('#simFeed').prepend(li);
   },
   score() { $('#sbScore').textContent = `${sim.goalsShown[0]}–${sim.goalsShown[1]}`; },
@@ -3982,6 +4081,7 @@ const simUI = {
     simSetTab('stats'); simControls();
   },
   finished() {
+    const tk0 = $('#simTicker'); tk0.textContent = `Slutfløjt: ${sim.A.name} ${sim.goalsShown[0]}–${sim.goalsShown[1]} ${sim.B.name}`; tk0.hidden = false;
     const rs = simRatings().sort((a, b) => b.r - a.r || b.s.goals - a.s.goals);
     if (rs[0]) simUI.event({ type: 'meta', text: `Kampens spiller: ${cap(simName(rs[0].p.id))} (${(rs[0].team === 0 ? sim.A : sim.B).name}) med karakteren ${fmtRating(rs[0].r)}.` }, 'Slut');
     if (!sim.quiet) {
@@ -3991,7 +4091,7 @@ const simUI = {
     }
     simUI.minute(); simRenderAnalysis(); simControls();
   },
-  minute() { simRenderStats(); simRenderPlayers(); simDrawMomentum(); simClock(); },
+  minute() { simRenderStats(); simRenderPlayers(); simDrawMomentum(); simClock(); simRenderCharts(); },
 };
 function simClock() {
   const rec = sim.rec;
@@ -4008,7 +4108,7 @@ function simResize() {
   sim.view.dpr = dpr; sim.view.labelMax = 12;
   const m = momCv.getBoundingClientRect();
   momCv.width = Math.max(1, Math.round(m.width * dpr)); momCv.height = Math.max(1, Math.round(m.height * dpr));
-  simDraw(); simDrawMomentum();
+  simDraw(); simDrawMomentum(); simRenderCharts();
 }
 new ResizeObserver(() => simResize()).observe(simBox);
 function simDraw() {
@@ -4019,7 +4119,25 @@ function simDraw() {
   const vis = [...sim.lineup.away.map(p => ({ p, team: 'away' })), ...sim.lineup.home.map(p => ({ p, team: 'home' })),
     ...Object.values(sim.leaving).map(o => ({ p: o.p, team: tk(o.team) }))];
   drawScene(simCtx, v, v.dpr, { pos: sim.pos, ball: sim.ball, ballH: sim.ballH, drawings: [], drawAlpha: 1, ghost: null },
-    { colors, labels: 'none', selected: null, highlight: sim.carrier, fillBg: true, vis });
+    { colors, labels: sim.labels, selected: null, highlight: sim.carrier, fillBg: true, vis });
+}
+function simStartReplay(id) {
+  const R = sim.replays && sim.replays[id]; if (!R) return;
+  sim.playing = false; sim.hold = 0; $('#simFlash').hidden = true; simControls();
+  sim.replay = { ...R, k: 0 };
+  simUI.ticker(`Genafspilning: ${cap(simName(R.shooter))} scorer (${R.label})`, R.team);
+}
+function simDrawReplay(R, fr) {
+  const v = sim.view; if (!v) return;
+  simCtx.setTransform(1, 0, 0, 1, 0, 0);
+  simCtx.clearRect(0, 0, simCv.width, simCv.height);
+  const pos = {}; for (const id in fr.pos) pos[id] = { x: fr.pos[id][0], y: fr.pos[id][1] };
+  drawScene(simCtx, v, v.dpr, { pos, ball: { x: fr.b[0], y: fr.b[1] }, ballH: fr.b[2], drawings: [], drawAlpha: 1, ghost: null },
+    { colors, labels: 'none', selected: null, highlight: R.shooter, fillBg: true, vis: R.vis.filter(o => pos[o.p.id]) });
+  simCtx.setTransform(v.dpr, 0, 0, v.dpr, 0, 0);
+  simCtx.font = '800 13px system-ui, sans-serif'; simCtx.textAlign = 'left';
+  simCtx.fillStyle = 'rgba(0,0,0,.55)'; simCtx.fillRect(10, 10, 132, 24);
+  simCtx.fillStyle = '#ffffff'; simCtx.fillText('▶ GENAFSPILNING', 18, 27);
 }
 function simDrawMomentum() {
   const w = momCv.width, h = momCv.height, dpr = window.devicePixelRatio || 1;
@@ -4041,6 +4159,14 @@ function simLoop(now) {
   if (!simDlg.open) { sim.raf = 0; return; }
   const dt = Math.min(.1, sim.last ? (now - sim.last) / 1000 : 0);
   sim.last = now;
+  if (sim.replay) {
+    const R = sim.replay; R.k += dt * 30 * .6;   // lidt langsommere end normalt
+    const fr = R.frames[Math.floor(R.k)];
+    if (fr) simDrawReplay(R, fr);
+    else { sim.replay = null; simUI.ticker('Genafspilning slut. Tryk Fortsæt for at spille videre.', null); simDraw(); }
+    sim.raf = requestAnimationFrame(simLoop);
+    return;
+  }
   if (sim.playing) {
     if (sim.hold > 0) { sim.hold -= dt; if (sim.hold <= 0) $('#simFlash').hidden = true; }
     else simPump(dt * sim.speed);
@@ -4048,6 +4174,71 @@ function simLoop(now) {
   }
   simDraw();
   sim.raf = requestAnimationFrame(simLoop);
+}
+// ---- Kampanalyse: xG gennem kampen, skudkort og gennemsnitlige positioner ----
+function fitCanvas(cv) {
+  const r = cv.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  if (r.width < 10 || r.height < 10) return null;
+  cv.width = Math.round(r.width * dpr); cv.height = Math.round(r.height * dpr);
+  const c = cv.getContext('2d'); c.setTransform(1, 0, 0, 1, 0, 0); c.clearRect(0, 0, cv.width, cv.height);
+  return { c, w: r.width, h: r.height, dpr };
+}
+function simRenderCharts() {
+  if ($('#simPanelStats').hidden || !sim.mt || !sim.A) return;
+  simDrawXg(); simDrawShots(); simDrawAvg();
+}
+function simDrawXg() {
+  const k = fitCanvas($('#simXg')); if (!k) return;
+  const { c, w, h, dpr } = k; c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const cs = getComputedStyle(document.documentElement), line = cs.getPropertyValue('--line').trim() || '#999', muted = cs.getPropertyValue('--muted').trim() || '#888', text = cs.getPropertyValue('--fg').trim() || '#222';
+  const tl = sim.mt.timeline.filter(e => e.m >= 1 && e.m <= (sim.doneMin || 0)), total = sim.mt.total;
+  const pts = [0, 1].map(i => tl.map(e => ({ m: e.m, v: e.stats[i].xg })));
+  const maxV = Math.max(1, ...pts.flat().map(p => p.v)) * 1.15;
+  const pad = { l: 28, r: 40, t: 8, b: 18 }, X = m => pad.l + (w - pad.l - pad.r) * m / total, Y = v => h - pad.b - (h - pad.t - pad.b) * v / maxV;
+  c.lineWidth = 1; c.strokeStyle = line; c.fillStyle = muted; c.font = '11px system-ui, sans-serif';
+  c.textAlign = 'center';
+  for (const m of [0, 45, 90]) { c.beginPath(); c.moveTo(X(m), pad.t); c.lineTo(X(m), h - pad.b); c.stroke(); c.fillText(m + "'", X(m), h - 4); }
+  c.textAlign = 'right';
+  const stepV = maxV > 3.2 ? 1 : .5;
+  for (let v = 0; v < maxV; v += stepV) { c.beginPath(); c.moveTo(pad.l, Y(v)); c.lineTo(w - pad.r, Y(v)); c.globalAlpha = .5; c.stroke(); c.globalAlpha = 1; c.fillText(v.toFixed(1).replace('.', ','), pad.l - 4, Y(v) + 4); }
+  const ends = [];
+  [0, 1].forEach(i => {
+    const kit = i === 0 ? sim.A.kit : sim.B.kit;
+    const path = () => { c.beginPath(); let prev = 0; c.moveTo(X(0), Y(0)); for (const p of pts[i]) { c.lineTo(X(p.m), Y(prev)); c.lineTo(X(p.m), Y(p.v)); prev = p.v; } return prev; };
+    c.lineJoin = 'round';
+    c.strokeStyle = text; c.globalAlpha = .25; c.lineWidth = 4.5; path(); c.stroke(); c.globalAlpha = 1;   // kant, så hvide trøjer kan ses
+    c.strokeStyle = kit; c.lineWidth = 2.5; const last = path(); c.stroke();
+    for (const e of tl) if (e.events.some(ev => ev.type === 'goal' && ev.team === i)) {
+      c.beginPath(); c.arc(X(e.m), Y(e.stats[i].xg), 5, 0, Math.PI * 2); c.fillStyle = kit; c.fill(); c.strokeStyle = text; c.lineWidth = 1.5; c.stroke();
+    }
+    ends.push({ y: Y(last), v: last, kit });
+  });
+  if (Math.abs(ends[0].y - ends[1].y) < 13) { const up = ends[0].y <= ends[1].y ? 0 : 1; ends[up].y -= 7; ends[1 - up].y += 7; }
+  c.textAlign = 'left'; c.font = '700 12px system-ui, sans-serif'; c.fillStyle = text;
+  ends.forEach((o, i) => c.fillText(o.v.toFixed(2).replace('.', ','), w - pad.r + 5, o.y + 4));
+}
+function simDrawShots() {
+  const k = fitCanvas($('#simShots')); if (!k) return;
+  const { c, w, h, dpr } = k, f = simF(), v = computeView(w, h, f, 2);
+  drawPitch(c, v, dpr, colors, f, true);
+  c.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const shots = sim.shots || [];
+  for (const sh of shots.filter(x => x.outcome !== 'goal').concat(shots.filter(x => x.outcome === 'goal'))) {
+    const [x, y] = toScreen(v, sh.x, sh.y), r = 2.5 + 11 * Math.sqrt(sh.xg), kit = sh.team === 0 ? sim.A.kit : sim.B.kit;
+    c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2);
+    if (sh.outcome === 'goal') { c.fillStyle = kit; c.fill(); c.strokeStyle = '#ffffff'; c.lineWidth = 1.8; c.stroke(); }
+    else { c.fillStyle = 'rgba(255,255,255,.16)'; c.fill(); c.strokeStyle = kit; c.lineWidth = 2; c.stroke(); }
+  }
+  const txt = i => { const s2 = shots.filter(x => x.team === i); return `${(i === 0 ? sim.A : sim.B).name}: ${s2.length} skud, ${s2.filter(x => x.outcome === 'goal').length} mål`; };
+  $('#simShotsNote').textContent = shots.length ? `${txt(0)} · ${txt(1)}. Jo større cirkel, jo større chance (xG). Udfyldt cirkel = mål.` : 'Ingen skud endnu.';
+}
+function simDrawAvg() {
+  const k = fitCanvas($('#simAvg')); if (!k) return;
+  const { c, w, h, dpr } = k, f = simF(), v = computeView(w, h, f, 2);
+  v.R = clamp(f.W * v.s * .026, 7, 11); v.labelMax = 9; v.strokeMax = 2.5;
+  const pos = {}, vis = [], avg = sim.avg || {};
+  for (const i of [0, 1]) for (const p of sim.lineup[tk(i)]) { const a = avg[p.id]; if (a && a.w > 0) { pos[p.id] = { x: a.x / a.w, y: a.y / a.w }; vis.push({ p, team: tk(i) }); } }
+  drawScene(c, v, dpr, { pos, ball: null, drawings: [], drawAlpha: 1, ghost: null }, { colors, labels: 'none', selected: null, fillBg: true, vis });
 }
 function simRenderStats() {
   const s = sim.statsShown || sim.mt.stats(), [a, b] = s, [ta, tb] = sim.ts;
@@ -4159,7 +4350,7 @@ function simNewMatch() {
   sim.bench = board.bench.map(p => ({ p: { ...p, role: 'CM' }, used: false, team: 0 }));
   sim.formation = { home: board.homeFormation, away: board.awayFormation };
   sim.tac = { home: { ...board.tactics.home, style: board.homeStyle || 'normal' }, away: { ...board.tactics.away, style: board.awayStyle || 'normal' } };
-  sim.subs = [0, 0]; sim.ps = {}; sim.ts = [{}, {}]; sim.mom = []; sim.leaving = {}; sim.mirrors = []; sim.goalsShown = [0, 0]; sim.lastPass = [null, null];
+  sim.subs = [0, 0]; sim.ps = {}; sim.ts = [{}, {}]; sim.mom = []; sim.leaving = {}; sim.mirrors = []; sim.vel = {}; sim.shots = []; sim.avg = {}; sim.tape = []; sim.replays = {}; sim.replay = null; sim.doneMin = 0; sim.goalsShown = [0, 0]; sim.lastPass = [null, null];
   sim.A = simProfile(0); sim.B = simProfile(1);
   const seed = (Math.random() * 4294967296) >>> 0;
   sim.mt = createMatch(sim.A, sim.B, seed);
@@ -4173,6 +4364,8 @@ function simNewMatch() {
   $('#simFeed').innerHTML = ''; $('#simFlash').hidden = true; $('#simTicker').hidden = true;
   $('#sbHome').textContent = sim.A.name; $('#sbAway').textContent = sim.B.name;
   $('#sbHomeDot').style.setProperty('--c', sim.A.kit); $('#sbAwayDot').style.setProperty('--c', sim.B.kit);
+  const pre = simulateMany(sim.A, sim.B, 300), pc = v => Math.round(v / pre.n * 100), kf = keyFactors(sim.A, sim.B)[0];
+  simUI.event({ type: 'meta', text: `Før kampen (300 simulerede kampe): ${sim.A.name} vinder ${pc(pre.w)} %, uafgjort ${pc(pre.d)} %, ${sim.B.name} vinder ${pc(pre.l)} %.${kf ? ' ' + kf : ''}` }, 'Før');
   sim.mt.timeline[0].events.forEach(e => simUI.event(e, "0'"));
   simUI.score(); simUI.minute(); simRenderAnalysis(); simRenderTactic(); simControls();
   simUI.ticker(`${sim.A.name} mod ${sim.B.name} – klar til afspark`, null);
@@ -4191,10 +4384,13 @@ function openSim() {
 function simSetTab(tab) {
   $('#simTabs').querySelectorAll('[data-tab]').forEach(b => { const on = b.dataset.tab === tab; b.setAttribute('aria-selected', String(on)); b.setAttribute('aria-checked', String(on)); });
   for (const [k, id] of [['feed', '#simPanelFeed'], ['stats', '#simPanelStats'], ['players', '#simPanelPlayers'], ['tactic', '#simPanelTactic'], ['analysis', '#simPanelAnalysis']]) $(id).hidden = tab !== k;
+  if (tab === 'stats') simRenderCharts();
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-sim]')) openSim(); });
 $('#simTabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) simSetTab(b.dataset.tab); });
+$('#simFeed').addEventListener('click', e => { const b = e.target.closest('[data-replay]'); if (b) simStartReplay(b.dataset.replay); });
 $('#simPlay').addEventListener('click', () => {
+  if (sim.replay) { sim.replay = null; simDraw(); }
   if (sim.ended) return;
   sim.playing = !sim.playing;
   if (sim.playing) { $('#simFlash').hidden = true; sim.hold = 0; sim.last = 0; if (!$('#simPanelStats').hidden && sim.rec && sim.rec.halfTime) simSetTab('feed'); }
@@ -4209,6 +4405,11 @@ $('#simMode').addEventListener('click', e => {
   const b = e.target.closest('[data-mode]'); if (!b) return;
   sim.mode = b.dataset.mode;
   $('#simMode').querySelectorAll('[data-mode]').forEach(x => x.setAttribute('aria-checked', String(x === b)));
+});
+$('#simLabels').addEventListener('click', e => {
+  sim.labels = sim.labels === 'name' ? 'none' : 'name';
+  e.currentTarget.setAttribute('aria-pressed', String(sim.labels === 'name'));
+  simDraw();
 });
 $('#simSkip').addEventListener('click', () => { sim.playing = false; sim.hold = 0; $('#simFlash').hidden = true; simSkipToEnd(); simDraw(); });
 $('#simNew').addEventListener('click', () => { simNewMatch(); simSetTab('feed'); simDraw(); });
