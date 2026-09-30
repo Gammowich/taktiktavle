@@ -230,7 +230,14 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .swatch[aria-pressed="true"] { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--fg); }
 .roster { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
 .row { display: grid; grid-template-columns: 42px 44px minmax(0, 1fr); gap: 6px; align-items: center; }
-.row.bench { grid-template-columns: 44px minmax(0, 1fr) minmax(0, 104px) 34px; }
+.row.bench { grid-template-columns: 44px minmax(0, 1fr) minmax(0, 92px) 34px 34px; gap: 4px; }
+button.role { border: 0; cursor: pointer; font: inherit; font-size: 11px; font-weight: 700; }
+button.role:hover { background: var(--accent-soft); color: var(--fg); }
+.level { display: grid; grid-template-columns: minmax(0, 1fr) 24px auto; align-items: center; gap: 8px; }
+.level input { width: 100%; min-width: 0; margin: 0; accent-color: var(--accent); }
+.level .sl-val { font: 700 16px/1 var(--font-display); text-align: center; }
+.attrs .slider { grid-template-columns: 86px minmax(0, 1fr) 28px; }
+.attrs .sl-val { font: 700 16px/1 var(--font-display); text-align: center; }
 .role {
   font-size: 11px; font-weight: 700; letter-spacing: .03em; color: var(--muted); text-align: center;
   background: var(--surface-2); border-radius: 6px; padding: 6px 0;
@@ -570,6 +577,8 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       <section class="group">
         <h2 class="group-title">Taktik</h2>
         <label class="field-inline">Holdnavn <input type="text" id="homeTeamName" data-team-name="home" maxlength="40" autocomplete="off"></label>
+        <div class="sub-label" id="homeLevelLabel">Niveau for hele holdet</div>
+        <div class="level"><input type="range" min="1" max="10" step="1" id="homeLevel" aria-labelledby="homeLevelLabel"><span class="sl-val" id="homeLevelVal">5</span><button type="button" class="btn btn-sm" data-level-apply="home">Sæt alle</button></div>
         <div class="tactics" id="homeTactics"></div>
         <div class="btn-row">
           <button type="button" class="btn btn-accent" data-sim><span data-icon="play"></span>Simulér kamp</button>
@@ -608,6 +617,8 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
           <label class="field-inline">Formation <select id="awayFormation"></select></label>
           <label class="field-inline">Udgangspunkt <select id="awayStyle"></select></label>
           <div class="swatch-row"><span>Farve</span><div class="swatches" id="kitAway"></div></div>
+          <div class="sub-label" id="awayLevelLabel">Niveau for hele holdet</div>
+          <div class="level"><input type="range" min="1" max="10" step="1" id="awayLevel" aria-labelledby="awayLevelLabel"><span class="sl-val" id="awayLevelVal">5</span><button type="button" class="btn btn-sm" data-level-apply="away">Sæt alle</button></div>
           <div class="tactics" id="awayTactics"></div>
         </div>
       </section>
@@ -645,6 +656,10 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       <label class="field">Nummer<input id="pdNum" class="num" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off"></label>
       <label class="field">Navn<input id="pdName" maxlength="30" autocomplete="off" placeholder="Skriv navn"></label>
       <label class="field">Rolle<input id="pdRole" maxlength="4" autocomplete="off"></label>
+    </div>
+    <div id="pdAttrsWrap">
+      <h3>Egenskaber (1–10)</h3>
+      <div class="sliders attrs" id="pdAttrs"></div>
     </div>
     <div id="pdSwapWrap">
       <h3>Skift med udskifter</h3>
@@ -837,6 +852,7 @@ const ICONS = {
   check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
   alert: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/>',
   up: '<path d="M12 19V5M6 11l6-6 6 6"/>',
+  sliders: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
 };
 const ic = name => `<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
@@ -919,6 +935,13 @@ const TACTIC_KEYS = [
   { key: 'width', label: 'Bredde', vals: ['Meget smal', 'Smal', 'Middel', 'Bred', 'Meget bred'] },
   { key: 'passing', label: 'Afleveringer', vals: ['Meget korte', 'Korte', 'Blandede', 'Direkte', 'Meget direkte'] },
 ];
+// Spilleregenskaber 1–10. 5 er gennemsnit og svarer til den kalibrerede motor.
+const ATTRS = [
+  { k: 'pace', l: 'Fart' }, { k: 'tech', l: 'Teknik' }, { k: 'shoot', l: 'Afslutning' },
+  { k: 'def', l: 'Forsvar' }, { k: 'phys', l: 'Fysik' }, { k: 'gk', l: 'Målmand' },
+];
+const defaultAttrs = () => ({ pace: 5, tech: 5, shoot: 5, def: 5, phys: 5, gk: 5 });
+const attrOf = (p, k) => (p && p.attrs && Number.isFinite(p.attrs[k])) ? p.attrs[k] : 5;
 const SET_ATT = { mix: 'Blandet', near: 'Nærmeste stolpe', far: 'Bageste stolpe', short: 'Kort variant' };
 const SET_DEF = { zone: 'Zoneopdækning', man: 'Mandsopdækning', mixed: 'Blandet opdækning' };
 const DEFAULT_NAMES = { home: 'Mit hold', away: 'Modstander' };
@@ -1056,8 +1079,8 @@ function newBoard({ format = '11', formation, name = 'Ny tavle', homeStyle = 'no
   const hl = layoutFor(format, hf, homeStyle), al = layoutFor(format, af, awayStyle);
   const hn = classicNumbers(format, hf), an = classicNumbers(format, af);
   const pos = {};
-  const home = hl.map((s, i) => { const id = 'h' + (i + 1); pos[id] = { x: round2(s.x), y: round2(s.y) }; return { id, num: hn[i], name: '', role: s.role, autoNum: true }; });
-  const away = al.map((s, i) => { const id = 'a' + (i + 1); pos[id] = { x: round2(f.W - s.x), y: round2(f.L - s.y) }; return { id, num: an[i], name: '', role: s.role, autoNum: true }; });
+  const home = hl.map((s, i) => { const id = 'h' + (i + 1); pos[id] = { x: round2(s.x), y: round2(s.y) }; return { id, num: hn[i], name: '', role: s.role, autoNum: true, attrs: defaultAttrs() }; });
+  const away = al.map((s, i) => { const id = 'a' + (i + 1); pos[id] = { x: round2(f.W - s.x), y: round2(f.L - s.y) }; return { id, num: an[i], name: '', role: s.role, autoNum: true, attrs: defaultAttrs() }; });
   return {
     v: 2, id: uid(), name, updated: Date.now(), format,
     homeFormation: hf, awayFormation: af, homeStyle, awayStyle, showAway: false,
@@ -1098,6 +1121,7 @@ function exampleBoard() {
 const cleanText = (v, max) => String(v ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').slice(0, max);
 const cleanNum = v => String(v ?? '').replace(/\D/g, '').slice(0, 2);
 const cleanRole = v => String(v ?? '').toUpperCase().replace(/[^A-ZÆØÅ]/g, '').slice(0, 4);
+const cleanAttrs = a => { const out = defaultAttrs(); if (a && typeof a === 'object') for (const { k } of ATTRS) if (typeof a[k] === 'number' && Number.isFinite(a[k])) out[k] = clamp(Math.round(a[k]), 1, 10); return out; };
 const validId = v => typeof v === 'string' && /^[\w-]{1,40}$/.test(v);
 const cleanLogo = v => typeof v === 'string' && v.length < 700000 && /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(v) ? v : '';
 const finite = n => typeof n === 'number' && Number.isFinite(n);
@@ -1141,7 +1165,7 @@ function normalizeBoard(o) {
     const list = src.map((p, i) => ({
       id: p && validId(p.id) ? p.id : base[team][i].id,
       num: cleanNum(p && p.num), name: cleanText(p && p.name, 30), role: cleanRole(p && p.role) || base[team][i].role,
-      autoNum: !!(p && autoOf(p)),
+      autoNum: !!(p && autoOf(p)), attrs: cleanAttrs(p && p.attrs),
     }));
     if (legacy) {
       const lay = layoutFor(format, b[team + 'Formation']);
@@ -1154,7 +1178,7 @@ function normalizeBoard(o) {
   const allIds = [...b.home, ...b.away].map(p => p.id);
   const fallback = [...base.home, ...base.away].map(p => base.frames[0].pos[p.id]);
   b.bench = (Array.isArray(o.bench) ? o.bench : []).slice(0, 30).filter(p => p && typeof p === 'object')
-    .map(p => ({ id: validId(p.id) && !allIds.includes(p.id) ? p.id : uid(), num: cleanNum(p.num), name: cleanText(p.name, 30) }));
+    .map(p => ({ id: validId(p.id) && !allIds.includes(p.id) ? p.id : uid(), num: cleanNum(p.num), name: cleanText(p.name, 30), attrs: cleanAttrs(p.attrs) }));
   const cleanPt = (p, fb) => (p && finite(p.x) && finite(p.y))
     ? { x: round2(clamp(p.x, -m, f.W + m)), y: round2(clamp(p.y, -m, f.L + m)) }
     : (fb ? { x: fb.x, y: fb.y } : null);
@@ -1933,9 +1957,9 @@ function changeFormat(format) {
   fromOld[0] = 0;
   for (let r = 0; r < rows; r++) {
     if (match[r] < cols) fromOld[match[r] + 1] = r + 1;
-    else if (old.home[r + 1].name.trim()) nb.bench.push({ id: uid(), num: old.home[r + 1].num, name: old.home[r + 1].name });
+    else if (old.home[r + 1].name.trim()) nb.bench.push({ id: uid(), num: old.home[r + 1].num, name: old.home[r + 1].name, attrs: cleanAttrs(old.home[r + 1].attrs) });
   }
-  nb.home.forEach((p, i) => { const o = old.home[fromOld[i]]; if (o) { p.num = o.num; p.name = o.name; p.autoNum = !!o.autoNum; } });
+  nb.home.forEach((p, i) => { const o = old.home[fromOld[i]]; if (o) { p.num = o.num; p.name = o.name; p.autoNum = !!o.autoNum; p.attrs = cleanAttrs(o.attrs); } });
   renumber(nb, 'home');
   board = nb; ui.frame = 0; ui.selected = null; ui.anim = null;
   commit(); refreshAll();
@@ -2155,7 +2179,7 @@ function renderPanel() {
   $('#kitKeeper').innerHTML = swatchesHTML('keeper', board.kit.keeper);
   $('#kitAway').innerHTML = swatchesHTML('away', board.kit.away);
   $('#homeList').innerHTML = board.home.map(p => `<li class="row" data-id="${esc(p.id)}">
-    <span class="role" title="${esc(roleName(p.role))}">${esc(p.role)}</span>
+    <button type="button" class="role" data-edit="home" title="${esc(roleName(p.role))} – egenskaber" aria-label="Egenskaber for ${esc(p.name.trim() || roleName(p.role))}">${esc(p.role)}</button>
     <input class="num" id="num-${esc(p.id)}" inputmode="numeric" pattern="[0-9]*" maxlength="2" value="${esc(p.num)}" autocomplete="off" aria-label="Nummer, ${esc(roleName(p.role))}">
     <input class="name" id="name-${esc(p.id)}" maxlength="30" value="${esc(p.name)}" placeholder="Navn" autocomplete="off" aria-label="Navn, ${esc(roleName(p.role))}">
   </li>`).join('');
@@ -2164,6 +2188,7 @@ function renderPanel() {
     <input class="num" id="bnum-${esc(b.id)}" inputmode="numeric" pattern="[0-9]*" maxlength="2" value="${esc(b.num)}" autocomplete="off" aria-label="Nummer, udskifter">
     <input class="name" id="bname-${esc(b.id)}" maxlength="30" value="${esc(b.name)}" placeholder="Navn" autocomplete="off" aria-label="Navn, udskifter">
     <select class="swap" id="bswap-${esc(b.id)}" aria-label="Skift ${esc(b.name || 'udskifteren')} ind for"><option value="">Skift ind…</option>${starters}</select>
+    <button type="button" class="icon-btn sm" data-edit="bench" aria-label="Egenskaber for ${esc(b.name || 'udskifter')}" title="Egenskaber">${ic('sliders')}</button>
     <button type="button" class="icon-btn sm" data-remove aria-label="Fjern ${esc(b.name || 'udskifter')}">${ic('close')}</button>
   </li>`).join('') : '<li class="empty">Ingen udskiftere endnu.</li>';
   $('#homeStyleSeg').innerHTML = Object.entries(STYLES).map(([k, l]) =>
@@ -2181,6 +2206,13 @@ function renderPanel() {
   $('#logoOpacityRow').hidden = !board.logos.home && !board.logos.away;
   $('#homeTeamName').value = board.teamNames.home;
   $('#awayTeamName').value = board.teamNames.away;
+  for (const team of ['home', 'away']) {
+    const ps = team === 'home' ? [...board.home, ...board.bench] : board.away;
+    const avg = ps.reduce((s2, p) => s2 + ATTRS.reduce((a2, a) => a2 + attrOf(p, a.k), 0) / ATTRS.length, 0) / Math.max(1, ps.length);
+    const el = $(team === 'home' ? '#homeLevel' : '#awayLevel');
+    el.value = String(Math.round(avg)); $(team === 'home' ? '#homeLevelVal' : '#awayLevelVal').textContent = String(Math.round(avg));
+    $(team === 'home' ? '#homeLevelLabel' : '#awayLevelLabel').textContent = `Niveau for hele holdet (nu Ø ${avg.toFixed(1).replace('.', ',')})`;
+  }
   $('#homeTactics').innerHTML = tacticsHTML('home');
   $('#awayTactics').innerHTML = tacticsHTML('away');
   $('#showAway').checked = board.showAway;
@@ -2216,6 +2248,10 @@ function rosterInput(list, e) {
 const homeList = $('#homeList'), benchList = $('#benchList');
 homeList.addEventListener('input', e => rosterInput(board.home, e));
 homeList.addEventListener('change', () => commit());
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-edit]'); if (!b) return;
+  const row = b.closest('[data-id]'); if (row) openPlayerEditor(b.dataset.edit, row.dataset.id);
+});
 homeList.addEventListener('focusin', e => { const row = e.target.closest('[data-id]'); if (row) { ui.highlight = row.dataset.id; render(); } });
 homeList.addEventListener('focusout', () => { ui.highlight = null; render(); });
 homeList.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) e.target.blur(); });
@@ -2244,6 +2280,7 @@ benchList.addEventListener('click', e => {
 function swapPlayers(bench, starter) {
   [bench.num, starter.num] = [starter.num, bench.num];
   [bench.name, starter.name] = [starter.name, bench.name];
+  [bench.attrs, starter.attrs] = [cleanAttrs(starter.attrs), cleanAttrs(bench.attrs)];
   starter.autoNum = false;
 }
 function nextFreeNum() {
@@ -2252,7 +2289,7 @@ function nextFreeNum() {
   return String(n);
 }
 $('#addBench').addEventListener('click', () => {
-  const b = { id: uid(), num: nextFreeNum(), name: '' };
+  const b = { id: uid(), num: nextFreeNum(), name: '', attrs: defaultAttrs() };
   board.bench.push(b);
   commit(); renderPanel();
   const el = document.getElementById('bname-' + b.id); if (el) el.focus();
@@ -2335,12 +2372,24 @@ function openPlayerEditor(team, id) {
   const p = board[team].find(x => x.id === id); if (!p) return;
   editing = { team, id };
   ui.highlight = id; render();
-  $('#pdTitle').textContent = team === 'home' ? roleName(p.role) : `Modstander · ${roleName(p.role)}`;
-  pdNum.value = p.num; pdName.value = p.name; pdRole.value = p.role;
+  $('#pdTitle').textContent = team === 'home' ? roleName(p.role) : team === 'bench' ? 'Udskifter' : `Modstander · ${roleName(p.role)}`;
+  pdNum.value = p.num; pdName.value = p.name; pdRole.value = p.role || '';
+  pdRole.closest('label').hidden = team === 'bench';
   renderSwapList();
+  renderAttrEditor(p);
   playerDlg.showModal();
   markHintSeen();
 }
+function renderAttrEditor(p) {
+  $('#pdAttrs').innerHTML = ATTRS.map(a => { const v = attrOf(p, a.k); return `<label class="slider"><span class="sl-name">${a.l}</span><input type="range" min="1" max="10" step="1" data-attr="${a.k}" value="${v}" aria-valuetext="${v}"><span class="sl-val">${v}</span></label>`; }).join('')
+    + `<p class="group-note">${p.role === 'GK' ? 'Målmand er den vigtigste egenskab for en målmand.' : 'Målmand tæller kun for spilleren i mål. 5 er gennemsnit.'}</p>`;
+}
+$('#pdAttrs').addEventListener('input', e => {
+  const el = e.target.closest('[data-attr]'), p = editingPlayer(); if (!el || !p) return;
+  const v = clamp(Number(el.value), 1, 10);
+  p.attrs = { ...cleanAttrs(p.attrs), [el.dataset.attr]: v };
+  el.nextElementSibling.textContent = v; el.setAttribute('aria-valuetext', String(v));
+});
 function renderSwapList() {
   const show = editing && editing.team === 'home' && board.bench.length > 0;
   $('#pdSwapWrap').hidden = !show;
@@ -2356,6 +2405,7 @@ $('#pdSwap').addEventListener('click', e => {
   const bp = board.bench.find(x => x.id === b.dataset.swap), p = editingPlayer();
   if (!bp || !p) return;
   swapPlayers(bp, p);
+  renderAttrEditor(p);
   pdNum.value = p.num; pdName.value = p.name;
   renderSwapList(); render();
 });
@@ -2616,6 +2666,18 @@ panel.addEventListener('change', e => {
 panel.addEventListener('toggle', e => { const d = e.target; if (d.classList && d.classList.contains('tactic-details')) ui.tacticOpen[d.dataset.tteam] = d.open; }, true);
 panel.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset && e.target.dataset.teamName) e.target.blur(); });
 
+for (const team of ['home', 'away']) {
+  $(team === 'home' ? '#homeLevel' : '#awayLevel').addEventListener('input', e => { $(team === 'home' ? '#homeLevelVal' : '#awayLevelVal').textContent = e.target.value; });
+}
+panel.addEventListener('click', e => {
+  const b = e.target.closest('[data-level-apply]'); if (!b) return;
+  const team = b.dataset.levelApply, v = clamp(Number($(team === 'home' ? '#homeLevel' : '#awayLevel').value), 1, 10);
+  const ps = team === 'home' ? [...board.home, ...board.bench] : board.away;
+  ps.forEach(p => { p.attrs = { pace: v, tech: v, shoot: v, def: v, phys: v, gk: v }; });
+  commit(); renderPanel();
+  toast(`Alle egenskaber for ${board.teamNames[team]} er sat til ${v}.`, { label: 'Fortryd', fn: undo });
+});
+
 /* ---- Dødbolde: stil begge hold op i et nyt trin ---- */
 // Placerer begge hold til en dødbold. Bruges både af tavlen (nyt trin) og af kampsimuleringen.
 // kind: 'corner' | 'fk', attTeam: 'home' | 'away', side: 'right' | 'left' set fra det angribende hold.
@@ -2752,9 +2814,29 @@ const DESC = {
 };
 const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
 
+// Holdets egenskaber som afvigelse fra gennemsnittet: 0 = alle på 5, +1 = alle på 10, −0,8 = alle på 1.
+function attrProfile(players) {
+  const dv = v => (v - 5) / 5;
+  const av = (roles, k) => { const ps = players.filter(p => roles.includes(p.role)); return ps.length ? ps.reduce((s2, p) => s2 + attrOf(p, k), 0) / ps.length : 5; };
+  const avMix = (roles, ks) => { const ps = players.filter(p => roles.includes(p.role)); return ps.length ? ps.reduce((s2, p) => s2 + ks.reduce((a2, k) => a2 + attrOf(p, k), 0) / ks.length, 0) / ps.length : 5; };
+  const ATT = ['CF', 'SS', 'LW', 'RW', 'CAM', 'LM', 'RM'], DEF = ['CB', 'LB', 'RB', 'LWB', 'RWB'], OUT = ['LB', 'CB', 'RB', 'LWB', 'RWB', 'DM', 'CM', 'CAM', 'LM', 'RM', 'LW', 'RW', 'SS', 'CF'];
+  const side = (att, def) => ({ att: avMix(att, ['pace', 'tech']), def: avMix(def, ['def', 'pace']) });
+  // Hver flanke: den mest offensive spiller i siden mod den bageste forsvarer i samme side.
+  const first = (prefs, fallback) => [prefs.find(r => players.some(p => p.role === r)) || fallback];
+  const L = side(first(['LW', 'LM', 'LWB'], 'LB'), first(['LB', 'LWB'], 'CB'));
+  const R = side(first(['RW', 'RM', 'RWB'], 'RB'), first(['RB', 'RWB'], 'CB'));
+  const gkP = players.find(p => p.role === 'GK');
+  return {
+    attPace: dv(av(ATT, 'pace')), attTech: dv(av(ATT, 'tech')), attPhys: dv(av(['CF', 'SS'], 'phys')),
+    midTech: dv(av(['DM', 'CM', 'CAM'], 'tech')), defDef: dv(av(DEF, 'def')), defPace: dv(av(DEF, 'pace')), cbPhys: dv(av(['CB'], 'phys')),
+    press: dv(avMix(OUT, ['pace', 'phys'])), fit: dv(av(OUT, 'phys')), gk: dv(gkP ? attrOf(gkP, 'gk') : 5), aerial: dv(av(['CB', 'CF', 'SS'], 'phys')),
+    sideAtt: { L: dv(L.att), R: dv(R.att) }, sideDef: { L: dv(L.def), R: dv(R.def) },
+  };
+}
 function teamProfile(b, team) {
   const roles = b[team].map(p => p.role), n = list => roles.filter(r => list.includes(r)).length, t = b.tactics[team];
   return {
+    a: attrProfile(b[team]),
     key: team, name: b.teamNames[team] || DEFAULT_NAMES[team], formation: formationText(b, team),
     kit: team === 'home' ? b.kit.home : b.kit.away, players: b[team],
     def: n(['LB', 'RB', 'CB']) + .5 * n(['LWB', 'RWB']), mid: n(['DM', 'CM', 'CAM']),
@@ -2776,24 +2858,32 @@ function createMatch(A, B, seed) {
   const choose = arr => arr[Math.floor(rnd() * arr.length)];
   const who = (X, type) => {
     const w = WHO[type] || {}, cands = X.players.filter(p => p.role !== 'GK');
-    const ws = cands.map(p => w[p.role] ?? .3), tot = ws.reduce((a, b) => a + b, 0);
+    const k = type === 'setpiece' ? 'phys' : 'shoot';
+    const ws = cands.map(p => (w[p.role] ?? .3) * (1 + .6 * (attrOf(p, k) - 5) / 5)), tot = ws.reduce((a, b) => a + b, 0);
     let r = rnd() * tot;
     for (let i = 0; i < cands.length; i++) { r -= ws[i]; if (r <= 0) return cands[i]; }
     return cands[0];
   };
   const label = p => p ? (p.name.trim() || `nr. ${p.num}`) : 'en spiller';
   const score = () => `${st[0].goals}–${st[1].goals}`;
-  const ctrl = (X, Y) => Math.max(.25, 1 + .1 * (X.mid - Y.mid) - .12 * c(X.passing) + .05 * c(X.press) + .06 * X.style + .03 * c(X.line));
-  const attackRate = (X, Y) => Math.max(.4, 1 + .1 * X.style + .04 * c(X.tempo) - .05 * (Y.def - 4) + .05 * Y.style);
+  const ctrl = (X, Y) => Math.max(.25, 1 + .1 * (X.mid - Y.mid) - .12 * c(X.passing) + .05 * c(X.press) + .06 * X.style + .03 * c(X.line) + .22 * X.a.midTech);
+  const attackRate = (X, Y) => Math.max(.4, (1 + .1 * X.style + .04 * c(X.tempo) - .05 * (Y.def - 4) + .05 * Y.style) * (1 + .1 * ((X.a.attPace + X.a.attTech) / 2 - Y.a.defDef)));
+  // Dueller: kanterne (kantspiller mod back på begge sider) og angriberes fart mod forsvarernes fart.
+  const wingDuel = (X, Y) => ((X.a.sideAtt.L - Y.a.sideDef.R) + (X.a.sideAtt.R - Y.a.sideDef.L)) / 2;
+  const paceDuel = (X, Y) => X.a.attPace - Y.a.defPace;
   // Pres: kun et højt pres giver mange erobringer; korte afleveringer er mest udsatte, når modstanderen presser højt.
-  const pressPower = Y => Math.max(.15, 1 + .55 * c(Y.press));
-  const pressVuln = (X, Y) => 1 + .1 * (3 - X.passing) * Math.max(0, c(Y.press)) / 2;
+  const pressPower = Y => Math.max(.15, 1 + .55 * c(Y.press)) * (1 + .2 * Y.a.press);
+  const pressVuln = (X, Y) => (1 + .1 * (3 - X.passing) * Math.max(0, c(Y.press)) / 2) * Math.max(.5, 1 - .2 * X.a.midTech);
 
   function shot(xi, type, xg, sub) {
     const X = T[xi], s = st[xi];
     xg = clamp(xg, .02, .78);
     s.shots++; s.xg += xg; if (xg >= BIG) s.big++;
-    const p = who(X, type), goal = rnd() < xg, onT = goal || rnd() < .24 + .55 * xg;
+    // Afslutning og målmand afgør, hvor mange af chancerne (xG) der bliver til mål.
+    const p = who(X, type), head = type === 'wing' || type === 'setpiece';
+    const fin = head ? (attrOf(p, 'shoot') + attrOf(p, 'phys')) / 2 : attrOf(p, 'shoot');
+    const conv = clamp(xg * (1 + .35 * (fin - 5) / 5) * (1 - .3 * T[1 - xi].a.gk), .005, .95);
+    const goal = rnd() < conv, onT = goal || rnd() < .24 + .55 * xg;
     if (onT) s.onTarget++;
     if (goal) s.goals++;
     cur.poss = xi; cur.zone = { x: .5 + (rnd() - .5) * .16, p: goal ? 1.03 : .95 };
@@ -2814,7 +2904,7 @@ function createMatch(A, B, seed) {
     if (kind === 'corner') st[xi].corners++;
     cur.poss = xi; cur.zone = { x: kind === 'corner' ? (rnd() < .5 ? .02 : .98) : .25 + rnd() * .5, p: kind === 'corner' ? .99 : .76 };
     if (rnd() > .33) { cur.acts.push({ kind, team: xi }); return; }
-    const mult = SP_MATCH[X.setAtt][Y.setDef] * (1 + .08 * (X.cb - 2) - .06 * (Y.cb - 2));
+    const mult = SP_MATCH[X.setAtt][Y.setDef] * (1 + .08 * (X.cb - 2) - .06 * (Y.cb - 2)) * (1 + .15 * (X.a.aerial - Y.a.aerial));
     shot(xi, 'setpiece', .075 * mult * (.45 + 1.1 * rnd()), kind === 'corner' ? 'setpiece' : 'freekick');
   }
   function chance(xi, type) {
@@ -2827,7 +2917,8 @@ function createMatch(A, B, seed) {
       cur.acts.push({ kind: 'offside', team: xi, player: runner });
       return;
     }
-    const pShot = { central: .36 * (1 + .08 * Y.style), wing: .33, behind: .4 * (1 + .1 * c(Y.line)), longshot: .85, counter: .6, press: .64 }[type];
+    const pShot = { central: .36 * (1 + .08 * Y.style) * (1 + .12 * (X.a.attTech - Y.a.defDef) + .08 * X.a.midTech), wing: .33 * (1 + .15 * wingDuel(X, Y)),
+      behind: .4 * (1 + .1 * c(Y.line)) * (1 + .15 * paceDuel(X, Y)), longshot: .85, counter: .6 * (1 + .1 * X.a.attPace), press: .64 }[type];
     if (rnd() > pShot) {
       cur.poss = xi; cur.zone = { x: type === 'wing' ? (rnd() < .5 ? .08 : .92) : .3 + rnd() * .4, p: .78 + rnd() * .14 };
       const corner = (type === 'wing' || type === 'central') && rnd() < .3;
@@ -2837,8 +2928,8 @@ function createMatch(A, B, seed) {
     }
     const xgBase = {
       central: .1 * (1 + .08 * (X.mid - Y.mid) + .04 * (3 - X.passing) + .07 * Y.style),
-      wing: .075 * (1 + .12 * (X.fwd - 1) - .06 * (Y.cb - 2) + .05 * c(X.width)),
-      behind: .16 * (1 + .12 * c(Y.line)),
+      wing: .075 * (1 + .12 * (X.fwd - 1) - .06 * (Y.cb - 2) + .05 * c(X.width)) * (1 + .12 * (X.a.attPhys - Y.a.cbPhys)),
+      behind: .16 * (1 + .12 * c(Y.line)) * (1 + .1 * paceDuel(X, Y)),
       longshot: .035, counter: .17 * (1 + .08 * c(Y.line) + .1 * Y.style), press: .2,
     }[type];
     shot(xi, type, xgBase * (.45 + 1.1 * rnd()));
@@ -2875,20 +2966,20 @@ function createMatch(A, B, seed) {
     cur.poss = ai; cur.zone = { x: .2 + rnd() * .6, p: .2 + rnd() * .4 };
     const urgency = mm > 65 ? (st[ai].goals < st[1 - ai].goals ? 1.2 : st[ai].goals > st[1 - ai].goals ? .88 : 1) : 1;
     // Træthed efter 60 min. for hold med højt pres; udskiftninger (fatigueMul < 1) dæmper den.
-    const fatigue = Z => mm > 60 && Z.press >= 4 ? Math.max(.4, 1 - .012 * (mm - 60) * (Z.press - 3) * (Z.fatigueMul ?? 1)) : 1;
+    const fatigue = Z => mm > 60 && Z.press >= 4 ? Math.max(.4, 1 - .012 * (mm - 60) * (Z.press - 3) * (Z.fatigueMul ?? 1) * (1 - .3 * Z.a.fit)) : 1;
     const pPress = .022 * pressPower(Y) * pressVuln(X, Y) * fatigue(Y);
     if (rnd() < .05 * pressPower(Y) * fatigue(Y)) { st[1 - ai].pressWins++; cur.acts.push({ kind: 'regain', team: 1 - ai }); }
     // Kontra: dybe hold med højt tempo rammer hold med mange fremme; eget genpres (X.press) dæmper.
-    const pCounter = .026 * Math.max(.2, 1 + .3 * c(Y.tempo) - .25 * Y.style + .25 * X.style + .12 * c(X.line)) * (1 - .08 * c(X.press));
+    const pCounter = .026 * Math.max(.2, 1 + .3 * c(Y.tempo) - .25 * Y.style + .25 * X.style + .12 * c(X.line)) * (1 - .08 * c(X.press)) * (1 + .2 * Y.a.attPace) * (1 - .15 * X.a.defPace);
     const r0 = rnd();
     if (r0 < pPress) chance(1 - ai, 'press');
     else if (r0 < pPress + pCounter) chance(1 - ai, 'counter');
     else if (rnd() < .012) setPiece(ai, 'freekick');
     else if (rnd() < .5 * urgency * attackRate(X, Y)) {
       chance(ai, pick({
-        central: Math.max(.1, 1 + .2 * (X.mid - Y.mid) - .15 * c(X.passing)),
-        wing: Math.max(.1, .8 + .25 * (X.wide - Y.wide) + .25 * c(X.width)),
-        behind: Math.max(.1, .5 + .25 * c(X.passing) + .2 * c(Y.line) + .15 * c(X.tempo)),
+        central: Math.max(.1, 1 + .2 * (X.mid - Y.mid) - .15 * c(X.passing) + .25 * X.a.midTech),
+        wing: Math.max(.1, .8 + .25 * (X.wide - Y.wide) + .25 * c(X.width) + .3 * wingDuel(X, Y)),
+        behind: Math.max(.1, .5 + .25 * c(X.passing) + .2 * c(Y.line) + .15 * c(X.tempo) + .25 * paceDuel(X, Y)),
         longshot: .35 + (Y.style < 0 ? .15 : 0),
       }));
     }
@@ -3034,7 +3125,7 @@ function carryInfo(i, want, text) {
   const maxD = 22 * f.L / 105;   // en enkelt dribling er højst ca. 22 m
   if (d > maxD) { to = { x: from.x + (to.x - from.x) * maxD / d, y: from.y + (to.y - from.y) * maxD / d }; d = maxD; }
   return { dur: .15 + d / 6.2, from, to, owner: i, carrierAfter: id, dribbler: id, move: { [id]: to }, shapeBall: to, team: i,
-    text: text || (sim.crng() < .3 ? `${cap(simName(id))} går forbi sin mand` : `${cap(simName(id))} fører bolden frem`) };
+    text: text || (sim.crng() < .3 * (1 + .15 * (attrOf(simPlayer(id), 'tech') - 5)) ? `${cap(simName(id))} går forbi sin mand` : `${cap(simName(id))} fører bolden frem`) };
 }
 function passInfo(i, want, kind = 'short', o = {}) {
   const f = simF(), passer = sim.carrier;
@@ -3129,7 +3220,7 @@ function buildUp(i, n, vFrac) {
     const u = f.W * (.12 + .76 * sim.crng());
     if (sim.crng() < .16 + .05 * (tac.tempo - 3)) return carryInfo(i, { u: clamp(cur.u + (sim.crng() - .5) * 10, 3, f.W - 3), v: cur.v + 6 + sim.crng() * 8 });
     // En fejlaflevering: modstanderen opsnapper, og holdet vinder bolden tilbage med det samme.
-    if (sim.crng() < .06 + .03 * (tac.passing - 3) + .02 * (sim.tac[tk(1 - i)].press - 3)) return misplacedInfo(i);
+    if (sim.crng() < (.06 + .03 * (tac.passing - 3) + .02 * (sim.tac[tk(1 - i)].press - 3)) * (1 - .08 * (attrOf(simPlayer(sim.carrier), 'tech') - 5))) return misplacedInfo(i);
     return passInfo(i, { u, v }, tac.passing >= 4 && sim.crng() < .45 ? 'long' : 'short');
   }));
   return out;
@@ -3397,10 +3488,11 @@ function simAdvance(info, dtg) {
   const k = info.dur > 0 ? info.t / info.dur : 1;
   sim.ball = { x: lerp(info.from.x, info.to.x, k), y: lerp(info.from.y, info.to.y, k) };
   sim.ballH = info.h ? 4 * info.h * k * (1 - k) : 0;
-  const vmax = (info.fast ? 20 : 7.2) * dtg;
   for (const id in sim.target) {
     const q = sim.pos[id] || (sim.pos[id] = { ...sim.target[id] }), t = sim.target[id];
     if (id === info.dribbler) { q.x = sim.ball.x; q.y = sim.ball.y + (simTeamOf(id) === 0 ? .8 : -.8); continue; }
+    // Topfart efter egenskaben Fart og konditionen (trætte spillere løber langsommere).
+    const pl = simPlayer(id), vmax = (info.fast ? 20 : 7.2 * (1 + .06 * (attrOf(pl, 'pace') - 5)) * (.85 + .15 * (sim.cond[id] ?? 100) / 100)) * dtg;
     const dx = t.x - q.x, dy = t.y - q.y, d = Math.hypot(dx, dy);
     if (d <= vmax) { q.x = t.x; q.y = t.y; } else { q.x += dx / d * vmax; q.y += dy / d * vmax; }
   }
@@ -3812,8 +3904,8 @@ function feedbackFindings() {
   if (t.setDef === 'man' && A.cb >= 3) add(S, 'Dødbolde', 'Mandsopdækning med tre midterforsvarere giver styrke i luftduellerne.', 1);
   if (t.setDef === 'man' && A.cb <= 1) add(K, 'Dødbolde', 'Mandsopdækning med få midterforsvarere kan give mismatch i luften.', 1);
   // Mod modstanderen
-  if (A.mid - B.mid >= 1) add(S, vs, `Overtal på den centrale midtbane (${A.mid} mod ${B.mid}): I kan styre boldbesiddelsen.`, 2 + A.mid - B.mid);
-  if (B.mid - A.mid >= 1) add(K, vs, `Undertal på den centrale midtbane (${A.mid} mod ${B.mid}): ${B.name} kan tage over på midten.`, 2 + B.mid - A.mid);
+  if (A.mid - B.mid >= 1) add(S, vs, `Formationen giver overtal på den centrale midtbane (${A.mid} mod ${B.mid} på papiret): I kan styre boldbesiddelsen.`, 2 + A.mid - B.mid);
+  if (B.mid - A.mid >= 1) add(K, vs, `Formationen giver undertal på den centrale midtbane (${A.mid} mod ${B.mid} på papiret): ${B.name} kan tage over på midten.`, 2 + B.mid - A.mid);
   if (A.press >= 4 && B.passing <= 3) add(S, vs, `Jeres høje pres rammer ${gen(B.name)} opbygning og kan give boldtab tæt på deres mål.`, 1 + A.press - B.passing);
   if (B.press >= 4 && A.passing <= 3) add(K, vs, `${gen(B.name)} høje pres kan skabe boldtab i jeres opbygning.`, 1 + B.press - A.passing);
   if (A.line >= 4 && (B.passing >= 4 || B.tempo >= 4)) add(K, vs, `Jeres høje forsvarslinje er sårbar over for ${gen(B.name)} ${B.passing >= 4 ? 'direkte bolde i dybden' : 'høje tempo'}.`, A.line + Math.max(B.passing, B.tempo) - 5);
@@ -3824,6 +3916,27 @@ function feedbackFindings() {
   if (A.style > 0 && B.style < 0 && B.tempo >= 4) add(K, vs, `${B.name} ligger dybt og er hurtige i omstillingerne. Pas på kontraangreb.`, 2);
   if (SP_MATCH[A.setAtt][B.setDef] >= 1.25) add(S, vs, `Jeres dødboldsvariant (${SET_ATT[A.setAtt].toLowerCase()}) passer godt mod ${gen(B.name)} ${SET_DEF[B.setDef].toLowerCase()}.`, 1.2);
   if (SP_MATCH[B.setAtt][A.setDef] >= 1.25) add(K, vs, `${gen(B.name)} dødboldsvariant (${SET_ATT[B.setAtt].toLowerCase()}) er farlig mod jeres ${SET_DEF[A.setDef].toLowerCase()}.`, 1.2);
+  // Spillernes egenskaber (1–10, 5 = gennemsnit)
+  const val = d => (5 + 5 * d).toFixed(1).replace('.', ','), aA = A.a, aB = B.a;
+  if (aA.defPace <= -.3 && t.line >= 4) add(K, 'Spillere', `Langsomme forsvarere (fart Ø ${val(aA.defPace)}) og høj forsvarslinje: bolde i dybden bliver farlige. Overvej en lavere linje.`, 2.5);
+  if (aA.attPace - aB.defPace >= .4 && B.line >= 4) add(S, vs, `Jeres hurtige angribere (fart Ø ${val(aA.attPace)}) kan løbe fra ${gen(B.name)} forsvar (fart Ø ${val(aB.defPace)}) bag den høje linje.`, 2.5);
+  if (aB.attPace - aA.defPace >= .4 && t.line >= 3) add(K, vs, `${gen(B.name)} angribere er hurtigere (fart Ø ${val(aB.attPace)}) end jeres forsvarere (Ø ${val(aA.defPace)}).`, 2);
+  const sides = [['venstre', 'L', 'R', 'højre'], ['højre', 'R', 'L', 'venstre']];
+  for (const [nm, s1, s2, onm] of sides) {
+    const ours = aA.sideAtt[s1] - aB.sideDef[s2], theirs = aB.sideAtt[s1] - aA.sideDef[s2];
+    if (ours >= .4) add(S, vs, `Jeres ${nm} kant (Ø ${val(aA.sideAtt[s1])}) er stærkere end ${gen(B.name)} ${onm} back (Ø ${val(aB.sideDef[s2])}). Spil på den side.`, 1.5 + ours);
+    if (theirs >= .4) add(K, vs, `${gen(B.name)} ${nm} kant (Ø ${val(aB.sideAtt[s1])}) er stærkere end jeres ${onm} back (Ø ${val(aA.sideDef[s2])}).`, 1.5 + theirs);
+  }
+  if (aA.midTech - aB.midTech >= .4) add(S, vs, `Mere teknisk midtbane (teknik Ø ${val(aA.midTech)} mod ${val(aB.midTech)}) giver jer mere af bolden.`, 1.5);
+  if (aB.midTech - aA.midTech >= .4) add(K, vs, `${gen(B.name)} midtbane er mere teknisk (Ø ${val(aB.midTech)} mod ${val(aA.midTech)}). Et højt pres kan forstyrre den.`, 1.5);
+  if (aA.gk >= .4) add(S, 'Spillere', `Stærk målmand (${val(aA.gk)}) redder flere af modstanderens chancer.`, 1.2);
+  if (aA.gk <= -.4) add(K, 'Spillere', `Svag målmand (${val(aA.gk)}): modstanderen scorer lettere.`, 1.5);
+  if (aA.aerial - aB.aerial >= .4) add(S, 'Dødbolde', `Fysisk stærkere i luften (Ø ${val(aA.aerial)} mod ${val(aB.aerial)}): gode chancer på hjørnespark og indlæg.`, 1.2);
+  if (aB.aerial - aA.aerial >= .4) add(K, 'Dødbolde', `${B.name} er stærkere i luften (Ø ${val(aB.aerial)} mod ${val(aA.aerial)}). Pas på dødboldene.`, 1.2);
+  const shooters = board.home.filter(p => ['CF', 'SS', 'LW', 'RW', 'CAM'].includes(p.role));
+  const sh = shooters.length ? shooters.reduce((s2, p) => s2 + attrOf(p, 'shoot'), 0) / shooters.length : 5;
+  if (sh >= 7) add(S, 'Spillere', `Gode afsluttere (afslutning Ø ${sh.toFixed(1).replace('.', ',')}) scorer mere, end chancerne tilsiger.`, 1.2);
+  if (sh <= 3.5) add(K, 'Spillere', `Svage afsluttere (afslutning Ø ${sh.toFixed(1).replace('.', ',')}): I skal skabe mange chancer for at score.`, 1.2);
   // Opstillingen på banen i det aktuelle trin
   const out = board.home.filter(p => p.role !== 'GK').map(p => ({ p, q: fr.pos[p.id] })).filter(o => o.q);
   if (out.length >= 3) {
@@ -3854,9 +3967,9 @@ function feedbackFindings() {
   const zones = zoneAnalysis(fr.pos);
   // Kun tydelige forskelle: mindst to i overtal/undertal, eller én med mindst to spillere i zonen.
   const best = zones.filter(z => z.row <= 1 && (z.diff >= 2 || (z.diff >= 1 && z.home >= 2))).sort((a, b) => b.diff - a.diff)[0];
-  if (best) add(S, 'Opstilling', `Overtal ${zoneName(best)} (${best.home} mod ${best.away}).`, 1 + best.diff * .5);
+  if (best) add(S, 'Opstilling', `Placeringerne i trin ${ui.frame + 1} giver overtal ${zoneName(best)} (${best.home} mod ${best.away}).`, 1 + best.diff * .5);
   zones.filter(z => z.row >= 1 && (z.diff <= -2 || (z.diff <= -1 && z.away >= 2))).sort((a, b) => a.diff - b.diff).slice(0, 2)
-    .forEach(z => add(K, 'Opstilling', `Undertal ${zoneName(z)} (${z.home} mod ${z.away}).`, 1 + Math.abs(z.diff) * .6));
+    .forEach(z => add(K, 'Opstilling', `Placeringerne i trin ${ui.frame + 1} giver undertal ${zoneName(z)} (${z.home} mod ${z.away}).`, 1 + Math.abs(z.diff) * .6));
   // Trup
   const nums = board.home.map(p => p.num).filter(Boolean), dup = nums.find((n, i) => nums.indexOf(n) !== i);
   if (dup) add(K, 'Trup', `To spillere har nummer ${dup}.`, 1);
@@ -3884,7 +3997,7 @@ function variantProfile(v) {
   const b = { ...board, tactics: { ...board.tactics, home: { ...board.tactics.home } } };
   if (v.kind === 'tactic') b.tactics.home[v.key] = v.value;
   if (v.kind === 'style') b.homeStyle = v.value;
-  if (v.kind === 'formation') { b.homeFormation = v.value; b.home = layoutFor(board.format, v.value).map((q, i) => ({ id: 'v' + i, role: q.role, num: '', name: '' })); }
+  if (v.kind === 'formation') { b.homeFormation = v.value; b.home = layoutFor(board.format, v.value).map((q, i) => ({ id: 'v' + i, role: q.role, num: '', name: '', attrs: board.home[i] ? board.home[i].attrs : undefined })); }
   return teamProfile(b, 'home');
 }
 const TIP_WHY = {
