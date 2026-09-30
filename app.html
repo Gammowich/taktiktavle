@@ -405,6 +405,9 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .tactic { display: flex; flex-direction: column; gap: 10px; }
 .subs-row { display: flex; flex-direction: column; gap: 6px; }
 .feed li.card { color: var(--danger); font-weight: 600; }
+.feed li.red { color: var(--danger); font-weight: 700; background: color-mix(in srgb, var(--danger) 10%, transparent); }
+.feed li.pen { font-weight: 700; }
+.feed li.injury, .feed li.sub, .feed li.tactic { color: var(--muted); }
 .scoreboard { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; padding: 10px 16px; border-radius: 12px; background: var(--fg); color: var(--bg); }
 .sb-team { display: flex; align-items: center; gap: 10px; min-width: 0; font-weight: 700; font-size: 15px; }
 .sb-team .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -2833,14 +2836,19 @@ function attrProfile(players) {
     sideAtt: { L: dv(L.att), R: dv(R.att) }, sideDef: { L: dv(L.def), R: dv(R.def) },
   };
 }
+// Antal spillere pr. linje. men = markspillere på banen (færre efter et rødt kort).
+function roleCounts(players) {
+  const roles = players.map(p => p.role), n = list => roles.filter(r => list.includes(r)).length;
+  return { def: n(['LB', 'RB', 'CB']) + .5 * n(['LWB', 'RWB']), mid: n(['DM', 'CM', 'CAM']),
+    wide: n(['LM', 'RM', 'LW', 'RW']) + .5 * n(['LWB', 'RWB']), fwd: n(['CF', 'SS']), cb: n(['CB']), men: players.length - n(['GK']) };
+}
 function teamProfile(b, team) {
-  const roles = b[team].map(p => p.role), n = list => roles.filter(r => list.includes(r)).length, t = b.tactics[team];
+  const t = b.tactics[team], counts = roleCounts(b[team]);
   return {
     a: attrProfile(b[team]),
     key: team, name: b.teamNames[team] || DEFAULT_NAMES[team], formation: formationText(b, team),
     kit: team === 'home' ? b.kit.home : b.kit.away, players: b[team],
-    def: n(['LB', 'RB', 'CB']) + .5 * n(['LWB', 'RWB']), mid: n(['DM', 'CM', 'CAM']),
-    wide: n(['LM', 'RM', 'LW', 'RW']) + .5 * n(['LWB', 'RWB']), fwd: n(['CF', 'SS']), cb: n(['CB']),
+    ...counts, men0: counts.men, subsUsed: 0,
     style: { def: -1, normal: 0, off: 1 }[b[team + 'Style'] || 'normal'],
     press: t.press, line: t.line, tempo: t.tempo, width: t.width, passing: t.passing, setAtt: t.setAtt, setDef: t.setDef,
   };
@@ -2848,9 +2856,24 @@ function teamProfile(b, team) {
 
 // Kampmotoren kører minut for minut, så taktikken kan ændres undervejs (setProfile).
 // simulateMatch kører hele kampen på én gang og giver præcis samme resultat som før opdelingen.
-function createMatch(A, B, seed) {
+// Roller fra mest defensiv til mest offensiv: et hold med en mand mindre ofrer den mest offensive plads.
+const ROLE_PRIO = ['GK', 'CB', 'LB', 'RB', 'LWB', 'RWB', 'DM', 'CM', 'LM', 'RM', 'CAM', 'LW', 'RW', 'SS', 'CF'];
+const FOUL_W = { DM: 2.5, CM: 1.8, CB: 1.8, LB: 1.4, RB: 1.4, LWB: 1.4, RWB: 1.4, LM: 1.2, RM: 1.2, CF: 1.2, CAM: 1, LW: 1, RW: 1, SS: 1, GK: .05 };
+const BOX_FOUL_W = { CB: 3, LB: 2, RB: 2, LWB: 2, RWB: 2, DM: 1.5, CM: .8, GK: .6 };
+const PEN_P = { central: .0065, behind: .01, counter: .009, press: .0065, wing: .0026 };
+const roleLoad = r => r === 'GK' ? .2 : ['LB', 'RB', 'LWB', 'RWB', 'LW', 'RW', 'LM', 'RM'].includes(r) ? 1.15 : ['CM', 'DM', 'CAM'].includes(r) ? 1.08 : .88;
+const MAX_SUBS = 5;
+
+// opts.events = false slår frispark, kort, straffespark og skader fra, og opts.ai = [false, false] slår
+// managerne fra. Så trækker motoren præcis de samme tilfældige tal som den oprindeligt kalibrerede.
+function createMatch(A, B, seed, opts = {}) {
   const rnd = mulberry32(seed >>> 0), c = v => v - 3, T = [A, B], BIG = .25;
-  const st = [0, 1].map(() => ({ goals: 0, shots: 0, onTarget: 0, xg: 0, big: 0, corners: 0, offsides: 0, pressWins: 0, possMin: 0 }));
+  const EV = opts.events !== false, AIS = opts.ai || [false, true];
+  const st = [0, 1].map(() => ({ goals: 0, shots: 0, onTarget: 0, xg: 0, big: 0, corners: 0, offsides: 0, pressWins: 0, possMin: 0,
+    fouls: 0, yellow: 0, red: 0, pens: 0, penGoals: 0, injuries: 0, subs: 0 }));
+  const cards = {}, cond = {}, nums = [0, 1].map(i => new Set(T[i].players.map(p => String(p.num))));
+  // Modstanderens manager: udskiftninger omkring 60., 70. og 80. minut og taktikskift sent i kampen.
+  const mgr = [0, 1].map(i => AIS[i] ? { subsAt: [57 + Math.floor(rnd() * 7), 67 + Math.floor(rnd() * 7), 77 + Math.floor(rnd() * 6)], mood: 0 } : null);
   const snap = () => st.map(x => ({ ...x }));
   const timeline = [];
   let cur = null;
@@ -2866,14 +2889,138 @@ function createMatch(A, B, seed) {
   };
   const label = p => p ? (p.name.trim() || `nr. ${p.num}`) : 'en spiller';
   const score = () => `${st[0].goals}–${st[1].goals}`;
-  const ctrl = (X, Y) => Math.max(.25, 1 + .1 * (X.mid - Y.mid) - .12 * c(X.passing) + .05 * c(X.press) + .06 * X.style + .03 * c(X.line) + .22 * X.a.midTech);
-  const attackRate = (X, Y) => Math.max(.4, (1 + .1 * X.style + .04 * c(X.tempo) - .05 * (Y.def - 4) + .05 * Y.style) * (1 + .1 * ((X.a.attPace + X.a.attTech) / 2 - Y.a.defDef)));
+  // Færre mand på banen (rødt kort, skade uden flere udskiftninger) giver mindre af bolden og færre angreb.
+  const short = X => X.men0 == null || X.men == null ? 0 : Math.max(0, X.men0 - X.men);
+  const ctrl = (X, Y) => Math.max(.25, 1 + .1 * (X.mid - Y.mid) - .12 * c(X.passing) + .05 * c(X.press) + .06 * X.style + .03 * c(X.line) + .22 * X.a.midTech) * (1 - .3 * short(X));
+  const attackRate = (X, Y) => Math.max(.4, (1 + .1 * X.style + .04 * c(X.tempo) - .05 * (Y.def - 4) + .05 * Y.style) * (1 + .1 * ((X.a.attPace + X.a.attTech) / 2 - Y.a.defDef))) * (1 - .3 * short(X)) * (1 + .3 * short(Y));
   // Dueller: kanterne (kantspiller mod back på begge sider) og angriberes fart mod forsvarernes fart.
   const wingDuel = (X, Y) => ((X.a.sideAtt.L - Y.a.sideDef.R) + (X.a.sideAtt.R - Y.a.sideDef.L)) / 2;
   const paceDuel = (X, Y) => X.a.attPace - Y.a.defPace;
   // Pres: kun et højt pres giver mange erobringer; korte afleveringer er mest udsatte, når modstanderen presser højt.
   const pressPower = Y => Math.max(.15, 1 + .55 * c(Y.press)) * (1 + .2 * Y.a.press);
   const pressVuln = (X, Y) => (1 + .1 * (3 - X.passing) * Math.max(0, c(Y.press)) / 2) * Math.max(.5, 1 - .2 * X.a.midTech);
+
+  const dv = v => (v - 5) / 5, rank = p => ROLE_PRIO.indexOf(p.role);
+  const outfieldOf = list => list.filter(p => p.role !== 'GK');
+  const mostAttacking = list => outfieldOf(list).reduce((b, p) => !b || rank(p) > rank(b) ? p : b, null);
+  const pickIdx = ws => { const tot = ws.reduce((a, b) => a + b, 0); let r = rnd() * tot; for (let k = 0; k < ws.length; k++) { r -= ws[k]; if (r <= 0) return k; } return 0; };
+  function reprofile(i, players, extra = {}) { T[i] = { ...T[i], ...extra, players, ...roleCounts(players), a: attrProfile(players) }; }
+  // Udskifter: først fra holdets bænk, ellers en reserve med gennemsnitlige egenskaber.
+  function reserve(i, role) {
+    const X = T[i];
+    if (X.bench && X.bench.length) { const b = X.bench[0]; T[i] = { ...X, bench: X.bench.slice(1) }; nums[i].add(String(b.num)); return { ...b, role }; }
+    let n = 12; while (nums[i].has(String(n))) n++;
+    nums[i].add(String(n));
+    return { id: `${X.key || 'hold' + i}-res${n}`, role, num: String(n), name: '', reserve: true };
+  }
+  function substitute(i, outP, inP) {
+    const subsUsed = (T[i].subsUsed || 0) + 1;
+    reprofile(i, T[i].players.map(p => p.id === outP.id ? inP : p), { subsUsed, fatigueMul: Math.max(.4, 1 - .15 * subsUsed) });
+    cond[inP.id] = 100; st[i].subs++;
+  }
+  // En spiller forlader banen uden afløser. Den mest offensive spiller overtager pladsen, hvis den er vigtigere.
+  function sendOff(i, p) {
+    let players = T[i].players.filter(q => q.id !== p.id), moved = null, gkIn = null, gkOut = null, extra = {};
+    if (p.role === 'GK') {
+      const att = mostAttacking(players);
+      if ((T[i].subsUsed || 0) < MAX_SUBS && att) {
+        gkIn = reserve(i, 'GK'); gkOut = att; cond[gkIn.id] = 100; st[i].subs++;
+        players = [gkIn, ...players.filter(q => q !== att)];
+        const subsUsed = (T[i].subsUsed || 0) + 1; extra = { subsUsed, fatigueMul: Math.max(.4, 1 - .15 * subsUsed) };
+      } else if (att) { moved = att; players = players.map(q => q === att ? { ...q, role: 'GK' } : q); }
+    } else {
+      const att = mostAttacking(players);
+      if (att && rank(att) > rank(p)) { moved = att; players = players.map(q => q === att ? { ...q, role: p.role } : q); }
+    }
+    reprofile(i, players, extra);
+    return { moved: moved ? moved.id : null, role: moved ? (p.role === 'GK' ? 'GK' : p.role) : null, gkIn, gkOut: gkOut ? gkOut.id : null };
+  }
+  function book(i, p, kind) {
+    const X = T[i];
+    if (kind === 'yellow') {
+      cards[p.id] = (cards[p.id] || 0) + 1; st[i].yellow++;
+      if (cards[p.id] < 2) { cur.events.push({ type: 'card', team: i, text: `Gult kort til ${label(p)} (${X.name}).` }); return { card: 'yellow' }; }
+      kind = 'second';
+    }
+    st[i].red++;
+    const off = sendOff(i, p), left = T[i].men + 1;
+    cur.events.push({ type: 'red', team: i, text: kind === 'second'
+      ? `Andet gule kort til ${label(p)} (${X.name}) – rødt kort! ${X.name} spiller videre med ${left} mand.`
+      : `Rødt kort til ${label(p)} (${X.name})! ${X.name} spiller videre med ${left} mand.` });
+    return { card: kind, off };
+  }
+  function rollCard(i, p, yP, rP) {
+    const r = rnd();
+    if (r < rP) return book(i, p, 'red');
+    if (r < rP + yP * (cards[p.id] ? .6 : 1)) return book(i, p, 'yellow');
+    return { card: null };
+  }
+  function pickFouler(i, inBox) {
+    const w = inBox ? BOX_FOUL_W : FOUL_W, ps = T[i].players;
+    return ps[pickIdx(ps.map(p => (w[p.role] ?? .3) * (1 - .3 * dv(attrOf(p, 'def'))) * (cards[p.id] ? .4 : 1)))];
+  }
+  function foul(i) {
+    const p = pickFouler(i, false); st[i].fouls++;
+    cur.acts.push({ kind: 'foul', team: i, fouler: p, ...rollCard(i, p, .155, .0035) });
+  }
+  function penalty(xi, type) {
+    const X = T[xi], s = st[xi];
+    const victim = who(X, type === 'wing' ? 'central' : type), fouler = pickFouler(1 - xi, true);
+    st[1 - xi].fouls++; s.pens++;
+    cur.poss = xi; cur.zone = { x: .5 + (rnd() - .5) * .1, p: .95 };
+    cur.events.push({ type: 'pen', team: xi, text: `Straffespark til ${X.name}! ${cap(label(fouler))} lægger ${label(victim)} ned i feltet.` });
+    const r = rnd(), card = r < .08 ? book(1 - xi, fouler, 'red') : r < .5 ? book(1 - xi, fouler, 'yellow') : { card: null };
+    // Straffesparket tages af holdets bedste afslutter.
+    const taker = outfieldOf(T[xi].players).reduce((b, p) => !b || attrOf(p, 'shoot') > attrOf(b, 'shoot') || (attrOf(p, 'shoot') === attrOf(b, 'shoot') && rank(p) > rank(b)) ? p : b, null);
+    const xg = .76, conv = clamp(xg * (1 + .12 * dv(attrOf(taker, 'shoot'))) * (1 - .15 * T[1 - xi].a.gk), .5, .92);
+    s.shots++; s.xg += xg; s.big++;
+    const goal = rnd() < conv, saved = !goal && rnd() < .72;
+    if (goal || saved) s.onTarget++;
+    if (goal) { s.goals++; s.penGoals++; }
+    cur.events.push({ type: goal ? 'goal' : 'shot', team: xi, xg, text: goal ? `MÅL! ${cap(label(taker))} scorer sikkert på straffesparket for ${X.name}. ${score()}.`
+      : saved ? `Målmanden redder straffesparket fra ${label(taker)} (${X.name})!` : `${cap(label(taker))} (${X.name}) skyder straffesparket forbi!` });
+    cur.acts.push({ kind: 'pen', team: xi, fouler, victim, taker, outcome: goal ? 'goal' : saved ? 'save' : 'wide', xg, ...card });
+  }
+  function injury(i) {
+    const X = T[i], ps = X.players;
+    const p = ps[pickIdx(ps.map(q => (q.role === 'GK' ? .3 : 1) * (1 - .3 * dv(attrOf(q, 'phys'))) * (1 + (100 - (cond[q.id] ?? 100)) / 100)))];
+    st[i].injuries++;
+    if ((X.subsUsed || 0) < MAX_SUBS) {
+      const inP = reserve(i, p.role); substitute(i, p, inP);
+      cur.events.push({ type: 'injury', team: i, text: `${cap(label(p))} (${X.name}) er skadet og må udskiftes. ${cap(label(inP))} kommer ind.` });
+      cur.acts.push({ kind: 'injury', team: i, player: p, sub: inP });
+    } else {
+      const off = sendOff(i, p);
+      cur.events.push({ type: 'injury', team: i, text: `${cap(label(p))} (${X.name}) er skadet, og der er ikke flere udskiftninger. ${X.name} spiller videre med ${T[i].men + 1} mand.` });
+      cur.acts.push({ kind: 'injury', team: i, player: p, sub: null, off });
+    }
+  }
+  // Kondition: falder hvert minut efter pres, tempo, position og fysik.
+  function tire() {
+    for (const i of [0, 1]) {
+      const X = T[i], load = .33 * (1 + .12 * (X.press - 3) + .06 * (X.tempo - 3));
+      for (const p of X.players) cond[p.id] = clamp((cond[p.id] ?? 100) - load * roleLoad(p.role) * (1 - .25 * dv(attrOf(p, 'phys'))), 25, 100);
+    }
+  }
+  function manage(i, mn) {
+    const P = mgr[i]; if (!P) return;
+    const X = T[i], diff = st[i].goals - st[1 - i].goals;
+    if (P.subsAt.includes(mn) && (X.subsUsed || 0) < MAX_SUBS) {
+      const tired = outfieldOf(X.players).sort((a, b) => (cond[a.id] ?? 100) - (cond[b.id] ?? 100))[0];
+      if (tired && (cond[tired.id] ?? 100) < 88) {
+        const inP = reserve(i, tired.role); substitute(i, tired, inP);
+        cur.events.push({ type: 'sub', team: i, text: `Udskiftning hos ${X.name}: ${cap(label(inP))} ind for ${label(tired)}.` });
+        cur.acts.push({ kind: 'sub', team: i, player: tired, sub: inP });
+      }
+    }
+    const set = (ch, text, mood) => { T[i] = { ...T[i], ...ch }; P.mood = mood; cur.events.push({ type: 'tactic', team: i, text }); cur.acts.push({ kind: 'tactic', team: i, change: ch }); };
+    const Z = T[i];
+    if (diff < 0 && mn >= 65 && P.mood !== 1) set({ style: Math.min(1, Z.style + 1), tempo: Math.min(5, Z.tempo + 1), press: Math.min(5, Z.press + 1), line: Math.min(5, Z.line + 1) },
+      `${Z.name} ${diff === -1 ? 'går efter udligningen' : 'forsøger at komme tilbage i kampen'}: mere offensivt, højere tempo og højere pres.`, 1);
+    else if (diff > 0 && mn >= 75 && P.mood !== -1) set({ style: Math.max(-1, Z.style - 1), line: Math.max(1, Z.line - 1), tempo: Math.max(1, Z.tempo - 1) },
+      `${Z.name} trækker sig tilbage for at holde føringen.`, -1);
+    else if (P.mood === 0 && short(Z) > 0 && diff >= 0) set({ style: Math.max(-1, Z.style - 1), line: Math.max(1, Z.line - 1) }, `${Z.name} lukker ned med en mand mindre.`, -1);
+  }
 
   function shot(xi, type, xg, sub) {
     const X = T[xi], s = st[xi];
@@ -2902,6 +3049,7 @@ function createMatch(A, B, seed) {
   function setPiece(xi, kind) {
     const X = T[xi], Y = T[1 - xi];
     if (kind === 'corner') st[xi].corners++;
+    if (EV && kind === 'freekick') { const p = pickFouler(1 - xi, false); st[1 - xi].fouls++; cur.acts.push({ kind: 'foul', team: 1 - xi, fouler: p, fk: true, ...rollCard(1 - xi, p, .2, .004) }); }
     cur.poss = xi; cur.zone = { x: kind === 'corner' ? (rnd() < .5 ? .02 : .98) : .25 + rnd() * .5, p: kind === 'corner' ? .99 : .76 };
     if (rnd() > .33) { cur.acts.push({ kind, team: xi }); return; }
     const mult = SP_MATCH[X.setAtt][Y.setDef] * (1 + .08 * (X.cb - 2) - .06 * (Y.cb - 2)) * (1 + .15 * (X.a.aerial - Y.a.aerial));
@@ -2917,6 +3065,7 @@ function createMatch(A, B, seed) {
       cur.acts.push({ kind: 'offside', team: xi, player: runner });
       return;
     }
+    if (EV && PEN_P[type] && rnd() < PEN_P[type] * Math.max(.3, 1 + .2 * X.a.attTech + .15 * X.a.attPace - .2 * Y.a.defDef)) { penalty(xi, type); return; }
     const pShot = { central: .36 * (1 + .08 * Y.style) * (1 + .12 * (X.a.attTech - Y.a.defDef) + .08 * X.a.midTech), wing: .33 * (1 + .15 * wingDuel(X, Y)),
       behind: .4 * (1 + .1 * c(Y.line)) * (1 + .15 * paceDuel(X, Y)), longshot: .85, counter: .6 * (1 + .1 * X.a.attPace), press: .64 }[type];
     if (rnd() > pShot) {
@@ -2984,6 +3133,14 @@ function createMatch(A, B, seed) {
       }));
     }
     if ([14, 31, 59, 76].includes(mn) && !cur.events.length) cur.events.push({ type: 'meta', text: flavor(win) });
+    if (EV) {
+      // Frispark: oftest begået af holdet uden bold, men også af holdet med bolden (efter et boldtab).
+      if (rnd() < .135 * (1 + .12 * c(Y.press)) * Math.max(.3, 1 + .12 * X.a.attTech - .1 * Y.a.defDef)) foul(1 - ai);
+      if (rnd() < .065 * (1 + .1 * c(X.press))) foul(ai);
+      for (const i of [0, 1]) if (rnd() < .0019 * (mm > 60 ? 1.3 : 1)) injury(i);
+    }
+    tire();
+    for (const i of [0, 1]) manage(i, mn);
     if (half === 1 && mn === 45 + ex1) { cur.events.push({ type: 'meta', text: `Pause: ${T[0].name} ${score()} ${T[1].name}.` }); cur.halfTime = true; }
     if (half === 2 && mn === 90 + ex2) { cur.events.push({ type: 'end', text: `Slutfløjt: ${T[0].name} ${score()} ${T[1].name}.` }); cur.fullTime = true; }
     cur.stats = snap();
@@ -2998,10 +3155,12 @@ function createMatch(A, B, seed) {
     profile(i) { return T[i]; },
     stats: snap,
     score: () => [st[0].goals, st[1].goals],
+    cond: id => cond[id] ?? 100,
+    cards: id => cards[id] || 0,
   };
 }
-function simulateMatch(A, B, seed) {
-  const mt = createMatch(A, B, seed);
+function simulateMatch(A, B, seed, opts) {
+  const mt = createMatch(A, B, seed, opts);
   while (!mt.done) mt.next();
   return { timeline: mt.timeline, stats: mt.stats(), score: mt.score(), seed };
 }
@@ -3027,6 +3186,16 @@ function keyFactors(A, B) {
     if (X.style < 0 && Y.style > 0) out.push({ w: 2.5 + (X.tempo - 3), t: `${X.name} ligger dybt og kan ramme ${Y.name} i omstillingerne, når de har mange spillere fremme.` });
     if (SP_MATCH[X.setAtt][Y.setDef] >= 1.25) out.push({ w: 1.5, t: `${gen(X.name)} dødboldsvariant (${SET_ATT[X.setAtt].toLowerCase()}) passer godt mod ${gen(Y.name)} ${SET_DEF[Y.setDef].toLowerCase()}.` });
     if (X.press === 5) out.push({ w: 1, t: `${gen(X.name)} intense pres koster kræfter i den sidste halve time.` });
+    // Spillernes egenskaber (afvigelse fra 5; 0,4 svarer til 2 point på skalaen)
+    const val = d => (5 + 5 * d).toFixed(1).replace('.', ','), a = X.a, b = Y.a;
+    if (a && b) {
+      if (a.attPace - b.defPace >= .4) out.push({ w: 1.5 + 2 * (a.attPace - b.defPace) + (Y.line >= 4 ? 1 : 0), t: `${gen(X.name)} angribere er hurtigere end ${gen(Y.name)} forsvarere (fart ${val(a.attPace)} mod ${val(b.defPace)})${Y.line >= 4 ? ' – farligt bag den høje linje' : ''}.` });
+      const wd = ((a.sideAtt.L - b.sideDef.R) + (a.sideAtt.R - b.sideDef.L)) / 2;
+      if (wd >= .4) out.push({ w: 1.2 + 2 * wd, t: `${X.name} vinder duellerne på kanterne (kant mod back).` });
+      if (a.midTech - b.midTech >= .4) out.push({ w: 1.2 + 2 * (a.midTech - b.midTech), t: `${gen(X.name)} midtbane er mere teknisk (${val(a.midTech)} mod ${val(b.midTech)}) og holder bedre på bolden.` });
+      if (a.gk - b.gk >= .4) out.push({ w: 1 + 2 * (a.gk - b.gk), t: `${X.name} har den bedste målmand (${val(a.gk)} mod ${val(b.gk)}).` });
+      if (a.aerial - b.aerial >= .4) out.push({ w: 1 + 1.5 * (a.aerial - b.aerial), t: `${X.name} er stærkest i luften og farligst på dødbolde.` });
+    }
   }
   return out.sort((a, b) => b.w - a.w).slice(0, 4).map(o => o.t);
 }
@@ -3042,19 +3211,21 @@ const sim = {
   view: null, pos: {}, target: {}, ball: { x: 0, y: 0 }, ballH: 0, owner: 0, carrier: null,
   lastPass: [null, null], pendingKickoff: null, goalsShown: [0, 0], statsShown: null,
   lineup: { home: [], away: [] }, bench: [], subs: [0, 0], formation: {}, tac: {}, crng: Math.random,
-  ps: {}, ts: [{}, {}], mom: [], many: null, flashTimer: 0,
+  ps: {}, ts: [{}, {}], mom: [], many: null, flashTimer: 0, leaving: {}, mirrors: [], men0: [10, 10],
 };
 const tk = i => i === 0 ? 'home' : 'away';
 const simF = () => FORMATS[board.format];
 function relToPitch(i, u, v) { const f = simF(); return i === 0 ? { x: u, y: f.L - v } : { x: f.W - u, y: v }; }
 function pitchToRel(i, q) { const f = simF(); return i === 0 ? { u: q.x, v: f.L - q.y } : { u: f.W - q.x, v: q.y }; }
-const simPlayer = id => sim.lineup.home.find(p => p.id === id) || sim.lineup.away.find(p => p.id === id) || null;
-const simTeamOf = id => sim.lineup.home.some(p => p.id === id) ? 0 : 1;
+const simPlayer = id => sim.lineup.home.find(p => p.id === id) || sim.lineup.away.find(p => p.id === id)
+  || (sim.leaving[id] && sim.leaving[id].p) || (sim.bench.find(b => b.p.id === id) || {}).p || null;
+const simTeamOf = id => sim.lineup.home.some(p => p.id === id) ? 0 : sim.lineup.away.some(p => p.id === id) ? 1 : sim.leaving[id] ? sim.leaving[id].team : 1;
+const condOf = id => sim.mt ? sim.mt.cond(id) : 100;
 const simName = id => { const p = simPlayer(id); return p ? (p.name.trim() || `nr. ${p.num || '?'}`) : 'en spiller'; };
-const keeperOf = i => sim.lineup[tk(i)][0];
+const keeperOf = i => sim.lineup[tk(i)].find(p => p.role === 'GK') || sim.lineup[tk(i)][0];
 function pstat(id, k, n = 1) {
   if (!id) return;
-  const s = sim.ps[id] || (sim.ps[id] = { passes: 0, passOk: 0, key: 0, assists: 0, goals: 0, shots: 0, onT: 0, tackles: 0, inter: 0, fouls: 0, yellow: 0, saves: 0, conceded: 0, mins: 0 });
+  const s = sim.ps[id] || (sim.ps[id] = { passes: 0, passOk: 0, key: 0, assists: 0, goals: 0, shots: 0, onT: 0, tackles: 0, inter: 0, fouls: 0, yellow: 0, red: 0, saves: 0, conceded: 0, mins: 0 });
   s[k] += n;
 }
 const tstat = (i, k, n = 1) => { sim.ts[i][k] = (sim.ts[i][k] || 0) + n; };
@@ -3072,8 +3243,8 @@ function shapeTargets(poss, ball) {
     const shift = clamp(defV + (b.v - midV) * (has ? .55 : .5), 5 * L / 105, Math.max(5 * L / 105, cap)) - defV;
     const spread = has ? 1.06 + .07 * (tac.width - 3) : .78, lat = (b.u - W / 2) * (has ? .18 : .36);
     sim.lineup[key].forEach((p, k) => {
-      const q = pts[k] || pts[0];
-      const r = k === 0
+      const q = pts[p.slot ?? k] || pts[0];
+      const r = p.role === 'GK'
         ? { u: clamp(W / 2 + (b.u - W / 2) * .12, W / 2 - 4, W / 2 + 4), v: has ? clamp(b.v * .2, 3, L * .18) : clamp(b.v * .05, 1.2, 5) }
         : { u: clamp(W / 2 + (q.u - W / 2) * spread + lat, 1.5, W - 1.5), v: clamp(q.v + shift, 1.5, L - 2) };
       sim.target[p.id] = relToPitch(i, r.u, r.v);
@@ -3187,7 +3358,7 @@ function kickoffPlaces(kicker) {
   const f = simF(), cx = f.W / 2, cy = f.L / 2, place = {};
   for (const i of [0, 1]) {
     const lay = layoutFor(board.format, sim.formation[tk(i)], 'normal');
-    sim.lineup[tk(i)].forEach((p, k) => { const q = lay[k] || lay[0], y = Math.max(q.y, cy + 1.2); place[p.id] = i === 0 ? { x: q.x, y } : { x: f.W - q.x, y: f.L - y }; });
+    sim.lineup[tk(i)].forEach((p, k) => { const q = lay[p.slot ?? k] || lay[0], y = Math.max(q.y, cy + 1.2); place[p.id] = i === 0 ? { x: q.x, y } : { x: f.W - q.x, y: f.L - y }; });
   }
   const pl = sim.lineup[tk(kicker)], dir = kicker === 0 ? 1 : -1;
   const taker = pl.find(p => p.role === 'CF') || pl.find(p => p.role === 'SS') || pl.find(p => p.role === 'CAM') || pl[pl.length - 1];
@@ -3228,7 +3399,7 @@ function buildUp(i, n, vFrac) {
 const approachV = type => ({ central: .62, wing: .6, behind: .45, longshot: .6, counter: .3, press: .3 }[type] || .55);
 const passesFor = i => { const t = sim.tac[tk(i)]; return clamp(Math.round(3.4 - (t.passing - 3) * 1.1 + sim.crng() * 1.6), 1, 6); };
 
-function shotAct(sh, header = false) {
+function shotAct(sh, header = false, pen = false) {
   return A(() => {
     const i = sh.team, f = simF(), W = f.W, L = f.L, gw = f.mk.goal, shooter = sh.shooter.id;
     if (sim.carrier !== shooter) { sim.pos[shooter] = { x: sim.ball.x, y: sim.ball.y + (i === 0 ? .8 : -.8) }; sim.carrier = shooter; }
@@ -3243,8 +3414,8 @@ function shotAct(sh, header = false) {
       const bl = nearestOf(1 - i, to); if (bl) move[bl.id] = to;
     }
     const d = Math.hypot(to.x - from.x, to.y - from.y);
-    return { dur: .15 + d / 26, from, to, h, owner: i, ownerAfter: sh.outcome === 'goal' ? i : 1 - i, carrierAfter: null, move, shapeBall: from, team: i,
-      text: header ? `Hovedstød fra ${simName(shooter)}!` : `${cap(simName(shooter))} skyder!`,
+    return { dur: .15 + d / 26, from, to, h, owner: i, ownerAfter: sh.outcome === 'goal' ? i : 1 - i, carrierAfter: null, move, shapeBall: from, team: i, keep: pen,
+      text: pen ? `${cap(simName(shooter))} sparker!` : header ? `Hovedstød fra ${simName(shooter)}!` : `${cap(simName(shooter))} skyder!`,
       end() {
         pstat(shooter, 'shots');
         if (sh.outcome === 'goal' || sh.outcome === 'save') pstat(shooter, 'onT');
@@ -3356,18 +3527,155 @@ function headedClear(i) {
     return info;
   });
 }
-function foulAct(i, yellowP = .18) {
+// Viser næste endnu ikke viste hændelse fra motoren, der passer (kort, straffespark, skade …).
+function showEv(pred) {
+  const ev = sim.rec && sim.rec.events.find(e => !e.shown && pred(e));
+  if (ev) { ev.shown = true; simUI.event(ev, sim.rec.label); }
+  return ev;
+}
+// Motorens frispark og kort tælles på synderen (én gang), uanset om handlingen blev vist.
+function recordFoul(f) {
+  if (f.recorded) return; f.recorded = true;
+  const id = f.fouler.id; pstat(id, 'fouls');
+  if (f.card) { pstat(id, f.card === 'yellow' ? 'yellow' : 'red'); if (f.card === 'second') pstat(id, 'yellow'); }
+  if (f.card && f.card !== 'yellow') { const pl = simPlayer(id); if (pl) pl.sentOff = true; }
+}
+// Frispark fra motoren (f): synderen, kortet og en eventuel udvisning. i = holdet, der bliver lagt ned.
+function foulAct(i, f, o = {}) {
   return A(() => {
     const victim = sim.carrier; if (!victim || simTeamOf(victim) !== i) return null;
-    const fouler = nearestOf(1 - i, sim.ball); if (!fouler) return null;
-    const yellow = sim.crng() < yellowP;
-    return { dur: 1.1, from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: victim, move: { [fouler.id]: { ...sim.ball } }, shapeBall: sim.ball, team: 1 - i,
-      text: `Frispark – ${simName(fouler.id)} lægger ${simName(victim)} ned`,
+    const fid = f && sim.pos[f.fouler.id] ? f.fouler.id : (nearestOf(1 - i, sim.ball) || {}).id; if (!fid) return null;
+    const q = sim.pos[fid], d = Math.hypot(q.x - sim.ball.x, q.y - sim.ball.y), card = f && f.card;
+    const cardTxt = card === 'yellow' ? ' Gult kort!' : card === 'second' ? ' Andet gule kort – rødt!' : card === 'red' ? ' Rødt kort!' : '';
+    return { dur: clamp(d / 7.5, 1.1, 2.4), from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: victim, move: { [fid]: { ...sim.ball } }, shapeBall: sim.ball, team: 1 - i,
+      text: (o.text || `Frispark – ${simName(fid)} lægger ${simName(victim)} ned.`) + cardTxt,
       end() {
-        pstat(fouler.id, 'fouls'); tstat(1 - i, 'fouls');
-        if (yellow) { pstat(fouler.id, 'yellow'); tstat(1 - i, 'yellow'); simUI.event({ type: 'card', text: `Gult kort til ${simName(fouler.id)} (${(i === 0 ? sim.B : sim.A).name}).` }, sim.rec.label); }
+        if (f) recordFoul(f); else pstat(fid, 'fouls');
+        if (o.pen) showEv(e => e.type === 'pen' && e.team === i);
+        if (card) {
+          showEv(e => (e.type === 'card' || e.type === 'red') && e.team === 1 - i);
+          if (card !== 'yellow') simUI.flash('RØDT KORT', `${cap(simName(fid))} · ${(i === 0 ? sim.B : sim.A).name}`, 1.8);
+        }
+        if (o.pen) simUI.flash('STRAFFESPARK', (i === 0 ? sim.A : sim.B).name, 1.5);
+        if (f && f.mirror) f.mirror();
       } };
   });
+}
+// En udvist (eller skadet) spiller går ud over sidelinjen. Spillet står stille imens.
+function walkOffAct(a, text, team = a.team) {
+  return A(() => {
+    if (a.mirror) a.mirror();
+    const ids = Object.keys(sim.leaving); if (!ids.length) return null;
+    const f = simF(), move = {}; let far = 0;
+    ids.forEach(id => {
+      const q = sim.pos[id] || { x: 0, y: f.L / 2 }, t = { x: q.x < f.W / 2 ? -2.5 : f.W + 2.5, y: clamp(q.y, 2, f.L - 2) };
+      move[id] = t; far = Math.max(far, Math.hypot(t.x - q.x, t.y - q.y));
+    });
+    return { dur: clamp(far / 7, 1.4, 4.5), keep: true, from: { ...sim.ball }, to: { ...sim.ball }, owner: sim.owner, carrierAfter: sim.carrier, move, shapeBall: sim.ball, team,
+      text: text || `${cap(simName(ids[0]))} må forlade banen`,
+      end() { ids.forEach(id => { delete sim.leaving[id]; delete sim.target[id]; delete sim.pos[id]; }); } };
+  });
+}
+// Straffespark: angreb ind i feltet, frisparket, opstilling uden for feltet og selve sparket.
+function penaltySeq(pa) {
+  const i = pa.team, f = simF(), W = f.W, L = f.L, sx = W / 68, sy = L / 105, vic = pa.victim.id, side = sim.crng() < .5 ? -1 : 1;
+  const into = { u: W / 2 + side * (4 + 6 * sim.crng()) * sx, v: L - 11 * sy };
+  const S = [...buildUp(i, 2, .6)];
+  S.push(A(() => passInfo(i, null, 'through', { to: vic, at: relToPitch(i, W / 2 + side * 10 * sx, L - 21 * sy), text: `Stikning til ${simName(vic)}` })));
+  S.push(withRun(A(() => carryInfo(i, into, `${cap(simName(vic))} trænger ind i feltet`)), pa.fouler.id, () => relToPitch(i, into.u - side * 1.2 * sx, into.v + 1.2 * sy)));
+  S.push(foulAct(i, pa, { text: `Straffespark! ${cap(simName(pa.fouler.id))} lægger ${simName(vic)} ned.`, pen: true }));
+  if (pa.off) S.push(walkOffAct(pa, null, 1 - i));
+  S.push(penSetupAct(pa));
+  S.push(A(() => ({ dur: 1.3, keep: true, from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: pa.taker.id, shapeBall: sim.ball, team: i, text: `${cap(simName(pa.taker.id))} tager tilløb …` })));
+  const sh = { team: i, shooter: pa.taker, outcome: pa.outcome, xg: pa.xg, type: 'pen' };
+  S.push(shotAct(sh, false, true), ...afterShot(sh));
+  return S;
+}
+function penSetupAct(pa) {
+  return A(() => {
+    const i = pa.team, d = 1 - i, f = simF(), W = f.W, L = f.L, sx = W / 68, sy = L / 105;
+    // 5 mod 5 har hverken straffesparksplet eller bue tegnet: pletten sættes 6 m ude.
+    const spotD = f.mk.spot || 6, boxD = f.mk.box ? f.mk.box[1] : 6, clearD = Math.max(boxD, spotD + (f.mk.arc || 4));
+    const spot = relToPitch(i, W / 2, L - spotD), taker = pa.taker.id, place = {};
+    const gk = keeperOf(d), ownGk = keeperOf(i);
+    place[gk.id] = relToPitch(i, W / 2, L - .4);
+    if (ownGk) place[ownGk.id] = relToPitch(i, W / 2, 10 * sy);
+    // Kanten af feltet uden for buen: skiftevis angriber og forsvarer. Et par spillere bliver tilbage.
+    const edge = [], back = [];
+    const att = sim.lineup[tk(i)].filter(p => p.role !== 'GK' && p.id !== taker), def = sim.lineup[tk(d)].filter(p => p.role !== 'GK');
+    const stayA = att.filter(p => ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.role)).slice(0, 2), stayD = def.filter(p => ['CF', 'SS'].includes(p.role)).slice(0, 1);
+    const inA = att.filter(p => !stayA.includes(p)), inD = def.filter(p => !stayD.includes(p));
+    for (let k = 0; k < Math.max(inA.length, inD.length); k++) { if (inD[k]) edge.push(inD[k]); if (inA[k]) edge.push(inA[k]); }
+    const perRow = 10;
+    edge.forEach((p, k) => {
+      const row = Math.floor(k / perRow), col = k % perRow, n = Math.min(perRow, edge.length - row * perRow);
+      const u = W / 2 + (col - (n - 1) / 2) * 3.4 * sx, du = Math.abs(u - W / 2);
+      const v = (du < 9.5 * sx ? L - clearD - 1.2 : L - boxD - 1.2) - row * 5 * sy;
+      place[p.id] = relToPitch(i, u, v);
+    });
+    [...stayA, ...stayD].forEach((p, k) => { place[p.id] = relToPitch(i, W / 2 + (k - 1) * 12 * sx, L * .55); });
+    return { dur: 2.8, fast: true, keep: true, from: { ...sim.ball }, to: spot, owner: i, carrierAfter: taker, place, move: { [taker]: relToPitch(i, W / 2, L - spotD - 1.2) }, shapeBall: spot, team: i,
+      text: `Straffespark – ${simName(taker)} lægger bolden klar` };
+  });
+}
+// Skade: spillet stopper, spilleren behandles og bliver udskiftet (eller holdet må spille med en mand mindre).
+function injuryActs(a) {
+  return [A(() => ({ dur: 2.2, keep: true, from: { ...sim.ball }, to: { ...sim.ball }, owner: sim.owner, carrierAfter: sim.carrier, shapeBall: sim.ball, team: a.team,
+    text: `${cap(simName(a.player.id))} ligger skadet – spillet er stoppet`, end() { showEv(e => e.type === 'injury' && e.team === a.team); } })), subAct(a)];
+}
+// Udskiftning fra motoren (skade eller modstanderens manager): den nye kommer ind fra sidelinjen.
+function subAct(a) {
+  return A(() => {
+    a.mirror();
+    const f = simF(), ids = Object.keys(sim.leaving), move = {};
+    ids.forEach(id => { const q = sim.pos[id] || { x: 0, y: f.L / 2 }; move[id] = { x: -2.5, y: clamp(q.y, 2, f.L - 2) }; });
+    const name = (a.team === 0 ? sim.A : sim.B).name;
+    const text = a.sub ? `Udskiftning hos ${name}: ${simName(a.sub.id)} ind for ${simName(a.player.id)}` : `${cap(simName(a.player.id))} må udgå – ${name} spiller videre med ${sim.lineup[tk(a.team)].length} mand`;
+    return { dur: 2.6, from: { ...sim.ball }, to: { ...sim.ball }, owner: sim.owner, carrierAfter: sim.carrier, move, shapeBall: sim.ball, team: a.team, text,
+      end() { if (a.kind === 'sub') showEv(e => e.type === 'sub' && e.team === a.team); ids.forEach(id => { delete sim.leaving[id]; delete sim.target[id]; delete sim.pos[id]; }); } };
+  });
+}
+function tacticAct(a) {
+  return A(() => {
+    a.mirror();
+    const ev = showEv(e => e.type === 'tactic' && e.team === a.team);
+    return { dur: .9, keep: true, from: { ...sim.ball }, to: { ...sim.ball }, owner: sim.owner, carrierAfter: sim.carrier, shapeBall: sim.ball, team: a.team,
+      text: ev ? ev.text : `Taktisk ændring hos ${(a.team === 0 ? sim.A : sim.B).name}` };
+  });
+}
+// Motorens ændringer af holdene spejles i kampvisningen: røde kort, skader, udskiftninger og taktik.
+function simMirror(a) {
+  const i = a.kind === 'pen' ? 1 - a.team : a.team, key = tk(i), line = sim.lineup[key], f = simF();
+  const entry = () => ({ x: -1.5, y: f.L / 2 + (i === 0 ? 4 : -4) });
+  const useBench = id => { const b = sim.bench.find(x => x.p.id === id && !x.used); if (b) { b.used = true; b.team = i; } };
+  const leave = (p, flag) => { sim.leaving[p.id] = { p, team: i }; p[flag] = true; sim.bench.push({ p, used: true, team: i, off: true }); if (sim.carrier === p.id) sim.carrier = null; };
+  if (a.kind === 'tactic') {
+    const t = sim.tac[key], ch = a.change;
+    if ('style' in ch) t.style = ['def', 'normal', 'off'][ch.style + 1];
+    for (const k of ['press', 'line', 'tempo']) if (k in ch) t[k] = ch[k];
+    return;
+  }
+  const outId = a.kind === 'foul' || a.kind === 'pen' ? a.fouler.id : a.player.id;
+  const k = line.findIndex(p => p.id === outId); if (k < 0) return;
+  const outP = line[k];
+  if (a.sub) {
+    const inP = { ...a.sub, role: outP.role, slot: outP.slot, autoNum: false };
+    line[k] = inP; useBench(inP.id); sim.subs[i]++;
+    leave(outP, a.kind === 'injury' ? 'injured' : 'subbedOff');
+    sim.pos[inP.id] = entry();
+    return;
+  }
+  // Uden afløser: spilleren forlader banen, og den mest offensive overtager pladsen (motoren afgør hvem).
+  line.splice(k, 1);
+  leave(outP, a.kind === 'injury' ? 'injured' : 'sentOff');
+  const off = a.off || {};
+  if (off.moved) { const m = line.find(p => p.id === off.moved); if (m) { m.role = off.role; m.slot = outP.slot; } }
+  if (off.gkIn) {
+    const j = line.findIndex(p => p.id === off.gkOut);
+    if (j >= 0) { const o2 = line[j]; line.splice(j, 1); leave(o2, 'subbedOff'); }
+    const gk = { ...off.gkIn, role: 'GK', slot: outP.slot, autoNum: false };
+    line.unshift(gk); useBench(gk.id); sim.subs[i]++; sim.pos[gk.id] = entry();
+  }
 }
 function blockedToCorner(i) {
   return A(() => {
@@ -3424,16 +3732,34 @@ function attackFails(i, type) {
 function buildScript(rec) {
   const S = [], X = rec.poss, acts = rec.acts;
   if (sim.pendingKickoff != null) { S.push(kickoffAct(sim.pendingKickoff)); sim.pendingKickoff = null; }
-  S.push(A(() => ensureOwnerInfo(X)));
-  const shot = acts.find(a => a.kind === 'shot'), offs = acts.find(a => a.kind === 'offside');
+  const shot = acts.find(a => a.kind === 'shot'), offs = acts.find(a => a.kind === 'offside'), pen = acts.find(a => a.kind === 'pen');
+  // Ved pres og kontra har modstanderen bolden først (motorens rec.poss er holdet, der afslutter).
+  const turnover = shot && (shot.type === 'press' || shot.type === 'counter'), starter = turnover ? 1 - shot.team : X;
+  S.push(A(() => ensureOwnerInfo(starter)));
   const fiz = acts.find(a => a.kind === 'fizzle'), setp = acts.find(a => a.kind === 'corner' || a.kind === 'freekick');
   const regain = acts.find(a => a.kind === 'regain');
-  if (shot && (shot.type === 'press' || shot.type === 'counter')) {
-    S.push(...buildUp(X, 1 + (sim.crng() < .5 ? 1 : 0), shot.type === 'press' ? .22 : .55));
+  const fkFoul = acts.find(a => a.kind === 'foul' && a.fk) || null, fouls = acts.filter(a => a.kind === 'foul' && !a.fk);
+  const stops = acts.filter(a => a.kind === 'injury' || a.kind === 'sub' || a.kind === 'tactic');
+  // Almindelige frispark: holdet, der bliver lagt ned, har bolden i området, hvor synderen er.
+  const foulSeq = f => {
+    const v = 1 - f.team, out = [A(() => ensureOwnerInfo(v)),
+      A(() => { const q = sim.pos[f.fouler.id]; return q ? passInfo(v, pitchToRel(v, q), 'short') : null; }), foulAct(v, f)];
+    if (f.off) out.push(walkOffAct(f));
+    out.push(A(() => passInfo(v, { ...pitchToRel(v, sim.ball), v: pitchToRel(v, sim.ball).v + 8 }, 'short', { text: 'Frisparket tages hurtigt' })));
+    return out;
+  };
+  const fkLead = team => [foulAct(team, fkFoul), ...(fkFoul && fkFoul.off ? [walkOffAct(fkFoul)] : [])];
+  // I et minut med mål kommer frisparkene før målet (efter målet er der afspark).
+  const goalMinute = acts.some(a => (a.kind === 'shot' || a.kind === 'pen') && a.outcome === 'goal');
+  if (goalMinute && fouls.length) { fouls.forEach(f => S.push(...foulSeq(f))); S.push(A(() => ensureOwnerInfo(starter))); }
+  if (pen) {
+    S.push(...penaltySeq(pen));
+  } else if (shot && (shot.type === 'press' || shot.type === 'counter')) {
+    S.push(...buildUp(starter, 1 + (sim.crng() < .5 ? 1 : 0), shot.type === 'press' ? .22 : .55));
     S.push(A(() => winInfo(shot.team, shot.type === 'press' ? 'tackle' : 'intercept')));
     S.push(...finishing(shot));
   } else if (shot && shot.sub === 'freekick') {
-    S.push(...buildUp(shot.team, 2, .6), foulAct(shot.team), setPieceSetup(shot.team, 'fk'), spDelivery(shot.team, shot.shooter.id), shotAct(shot, true), ...afterShot(shot));
+    S.push(...buildUp(shot.team, 2, .6), ...fkLead(shot.team), setPieceSetup(shot.team, 'fk'), spDelivery(shot.team, shot.shooter.id), shotAct(shot, true), ...afterShot(shot));
   } else if (shot && shot.type === 'setpiece') {
     S.push(...buildUp(shot.team, 2, .66), blockedToCorner(shot.team), setPieceSetup(shot.team, 'corner'), spShortFirst(shot.team), spDelivery(shot.team, shot.shooter.id), shotAct(shot, true), ...afterShot(shot));
   } else if (shot) {
@@ -3445,13 +3771,15 @@ function buildScript(rec) {
     if (fiz.toCorner) S.push(blockedToCorner(fiz.team), setPieceSetup(fiz.team, 'corner'), spShortFirst(fiz.team), spDelivery(fiz.team, null), headedClear(fiz.team));
     else S.push(...attackFails(fiz.team, fiz.type));
   } else if (setp) {
-    S.push(...buildUp(setp.team, 2, .55), foulAct(setp.team), setPieceSetup(setp.team, 'fk'), spDelivery(setp.team, null), headedClear(setp.team));
+    S.push(...buildUp(setp.team, 2, .55), ...fkLead(setp.team), setPieceSetup(setp.team, 'fk'), spDelivery(setp.team, null), headedClear(setp.team));
   } else {
     S.push(...buildUp(X, 2 + Math.floor(sim.crng() * 3), .3 + sim.crng() * .3));
-    if (sim.crng() < .4) S.push(foulAct(X, .13), A(() => passInfo(X, { ...pitchToRel(X, sim.ball), v: pitchToRel(X, sim.ball).v + 8 }, 'short', { text: 'Frisparket tages hurtigt' })));
-    else if (sim.crng() < .12) S.push(...throwInAct(1 - X));
+    if (!fouls.length && sim.crng() < .12) S.push(...throwInAct(1 - X));
   }
-  if (regain && !shot && !offs) S.push(A(() => winInfo(regain.team, 'tackle')), ...buildUp(regain.team, 1, .4));
+  if (!goalMinute) fouls.forEach(f => S.push(...foulSeq(f)));
+  if (regain && !shot && !offs && !pen) S.push(A(() => winInfo(regain.team, 'tackle')), ...buildUp(regain.team, 1, .4));
+  // Udskiftninger, skader og taktikskift sker i en pause i spillet.
+  stops.forEach(a => S.push(...(a.kind === 'injury' ? injuryActs(a) : a.kind === 'sub' ? [subAct(a)] : [tacticAct(a)])));
   if (rec.halfTime) S.push(whistleAct('Pause'));
   if (rec.fullTime) S.push(whistleAct('Slutfløjt'));
   return S;
@@ -3462,7 +3790,7 @@ function simBegin(act) {
   const info = act.prep();
   if (!info) return null;
   info.t = 0; info.from = info.from || { ...sim.ball }; info.to = info.to || { ...info.from };
-  shapeTargets(info.owner ?? sim.owner, info.shapeBall || info.to);
+  if (!info.keep) shapeTargets(info.owner ?? sim.owner, info.shapeBall || info.to);
   if (info.place) Object.assign(sim.target, info.place);
   if (info.move) Object.assign(sim.target, info.move);
   sim.carrier = info.dribbler || null;
@@ -3492,29 +3820,26 @@ function simAdvance(info, dtg) {
     const q = sim.pos[id] || (sim.pos[id] = { ...sim.target[id] }), t = sim.target[id];
     if (id === info.dribbler) { q.x = sim.ball.x; q.y = sim.ball.y + (simTeamOf(id) === 0 ? .8 : -.8); continue; }
     // Topfart efter egenskaben Fart og konditionen (trætte spillere løber langsommere).
-    const pl = simPlayer(id), vmax = (info.fast ? 20 : 7.2 * (1 + .06 * (attrOf(pl, 'pace') - 5)) * (.85 + .15 * (sim.cond[id] ?? 100) / 100)) * dtg;
+    const pl = simPlayer(id), vmax = (info.fast ? 20 : 7.2 * (1 + .06 * (attrOf(pl, 'pace') - 5)) * (.85 + .15 * condOf(id) / 100)) * dtg;
     const dx = t.x - q.x, dy = t.y - q.y, d = Math.hypot(dx, dy);
     if (d <= vmax) { q.x = t.x; q.y = t.y; } else { q.x += dx / d * vmax; q.y += dy / d * vmax; }
   }
 }
 function simIsKey(rec) {
-  return rec.halfTime || rec.fullTime || rec.acts.some(a => a.kind === 'shot') || rec.events.some(e => e.type === 'goal');
+  return rec.halfTime || rec.fullTime || rec.acts.some(a => a.kind === 'shot' || a.kind === 'pen' || (a.card && a.card !== 'yellow')) || rec.events.some(e => e.type === 'goal');
 }
+// Spilletid (konditionen regnes i motoren).
 function simTickCondition() {
-  for (const i of [0, 1]) {
-    const t = sim.tac[tk(i)], load = .33 * (1 + .12 * (t.press - 3) + .06 * (t.tempo - 3));
-    sim.lineup[tk(i)].forEach(p => {
-      const f = p.role === 'GK' ? .2 : ['LB', 'RB', 'LWB', 'RWB', 'LW', 'RW', 'LM', 'RM'].includes(p.role) ? 1.15 : ['CM', 'DM', 'CAM'].includes(p.role) ? 1.08 : .88;
-      sim.cond[p.id] = clamp((sim.cond[p.id] ?? 100) - load * f, 25, 100);
-      pstat(p.id, 'mins');
-    });
-  }
+  for (const i of [0, 1]) sim.lineup[tk(i)].forEach(p => pstat(p.id, 'mins'));
 }
 function simMomentum(rec) {
   let v = rec.poss === 0 ? .25 : -.25;
   for (const a of rec.acts) {
     const s = a.team === 0 ? 1 : -1;
-    v += s * (a.kind === 'shot' ? 1 + 4 * a.xg + (a.outcome === 'goal' ? 2 : 0) : a.kind === 'fizzle' ? .5 : a.kind === 'regain' ? .2 : .3);
+    if (a.kind === 'shot' || a.kind === 'pen') v += s * (1 + 4 * a.xg + (a.outcome === 'goal' ? 2 : 0));
+    else if (a.kind === 'fizzle') v += s * .5;
+    else if (a.kind === 'regain') v += s * .2;
+    else if (a.kind === 'corner' || a.kind === 'freekick' || a.kind === 'offside') v += s * .3;
   }
   return v;
 }
@@ -3522,6 +3847,8 @@ function simMomentum(rec) {
 function simLoadMinute() {
   if (sim.mt.done) return false;
   const rec = sim.mt.next();
+  sim.mirrors = rec.acts.filter(a => a.kind === 'sub' || a.kind === 'tactic' || a.kind === 'injury' || ((a.kind === 'foul' || a.kind === 'pen') && a.off));
+  sim.mirrors.forEach(a => { let done = false; a.mirror = () => { if (!done) { done = true; simMirror(a); } }; });
   sim.rec = rec; sim.queue = buildScript(rec); sim.qLen = sim.queue.length; sim.qDone = 0; sim.minuteOpen = true;
   simTickCondition();
   sim.mom[rec.m] = simMomentum(rec);
@@ -3531,11 +3858,18 @@ function simLoadMinute() {
 function simAfterMinute() {
   const rec = sim.rec; if (!rec || !sim.minuteOpen) return;
   sim.minuteOpen = false;
+  rec.acts.forEach(a => { if (a.kind === 'foul' || a.kind === 'pen') recordFoul(a); });
+  simFlushMirrors();
   rec.events.filter(e => !e.shown && e.type !== 'end').forEach(e => { e.shown = true; simUI.event(e, rec.label); });
   sim.statsShown = rec.stats;
   simUI.minute();
   if (rec.halfTime) { sim.pendingKickoff = 1; if (!sim.quiet) simUI.halfTime(); }
   if (rec.fullTime) { const e = rec.events.find(x => x.type === 'end'); if (e && !e.shown) { e.shown = true; simUI.event(e, rec.label); } simFinish(); }
+}
+// Alle holdændringer i minuttet udføres (fx før en taktikændring midt i et minut), og spillere på vej ud fjernes.
+function simFlushMirrors(keepLeaving) {
+  (sim.mirrors || []).forEach(a => a.mirror());
+  if (!keepLeaving) for (const id in sim.leaving) { delete sim.leaving[id]; delete sim.target[id]; delete sim.pos[id]; }
 }
 function simFinish() {
   sim.playing = false; sim.ended = true; sim.act = null; sim.queue = [];
@@ -3572,10 +3906,12 @@ function simSkipToEnd() {
 // Taktikprofil for motoren ud fra kampens aktuelle hold og instruktioner (til ændringer undervejs).
 function simProfile(i) {
   const key = tk(i);
-  const b = { [key]: sim.lineup[key], [key + 'Formation']: sim.formation[key], [key + 'Style']: sim.tac[key].style,
-    tactics: { [key]: sim.tac[key] }, teamNames: board.teamNames, kit: board.kit };
+  const b = { [key]: sim.lineup[key].map(p => ({ ...p })), [key + 'Formation']: sim.formation[key], [key + 'Style']: sim.tac[key].style,
+    tactics: { [key]: { ...sim.tac[key] } }, teamNames: board.teamNames, kit: board.kit };
   const p = teamProfile(b, key);
+  p.men0 = sim.men0[i]; p.subsUsed = sim.subs[i];
   p.fatigueMul = Math.max(.4, 1 - .15 * sim.subs[i]);
+  if (i === 0) p.bench = sim.bench.filter(x => !x.used).map(x => ({ ...x.p }));
   return p;
 }
 function simRatings() {
@@ -3586,11 +3922,11 @@ function simRatings() {
     for (const p of [...sim.lineup[tk(i)], ...sim.bench.filter(b => b.team === i && b.off).map(b => b.p)]) {
       const s = sim.ps[p.id]; if (!s || !s.mins) continue;
       let r = 6.3 + Math.min(.45, s.passOk * .02) - (s.passes - s.passOk) * .06 + Math.min(.6, s.key * .2) + s.assists * .45 + s.goals * .75
-        + Math.min(.3, s.onT * .1) - (s.shots - s.onT) * .04 + Math.min(.5, (s.tackles + s.inter) * .08) - s.fouls * .06 - s.yellow * .25 + res * .2;
+        + Math.min(.3, s.onT * .1) - (s.shots - s.onT) * .04 + Math.min(.5, (s.tackles + s.inter) * .08) - s.fouls * .06 - s.yellow * .25 - s.red * 1.5 + res * .2;
       if (p.role === 'GK') r += Math.min(1, s.saves * .25) - s.conceded * .3;
       else if (DEF_ROLES.includes(p.role)) r -= conceded * .1;
       if (s.mins < 20) r = 6 + (r - 6) * .5;
-      out.push({ p, team: i, s, r: clamp(r, 3.5, 10), cond: sim.cond[p.id] ?? 100, off: sim.lineup[tk(i)].indexOf(p) < 0 });
+      out.push({ p, team: i, s, r: clamp(r, 3.5, 10), cond: condOf(p.id), off: sim.lineup[tk(i)].indexOf(p) < 0 });
     }
   }
   return out;
@@ -3614,12 +3950,13 @@ const simUI = {
     $('#simFeed').prepend(li);
   },
   score() { $('#sbScore').textContent = `${sim.goalsShown[0]}–${sim.goalsShown[1]}`; },
-  goal(i, shooter) {
+  goal(i, shooter) { simUI.flash('MÅL!', `${cap(simName(shooter))} · ${(i === 0 ? sim.A : sim.B).name}`, 2.2); },
+  flash(big, small, secs) {
     if (sim.quiet) return;
-    $('#simFlashBig').textContent = 'MÅL!';
-    $('#simFlashTeam').textContent = `${cap(simName(shooter))} · ${(i === 0 ? sim.A : sim.B).name}`;
+    $('#simFlashBig').textContent = big;
+    $('#simFlashTeam').textContent = small;
     $('#simFlash').hidden = false;
-    sim.hold = 2.2 / Math.sqrt(sim.speed);
+    sim.hold = secs / Math.sqrt(sim.speed);
   },
   halfTime() {
     sim.playing = false;
@@ -3663,7 +4000,8 @@ function simDraw() {
   if (!v) return;
   simCtx.setTransform(1, 0, 0, 1, 0, 0);
   simCtx.clearRect(0, 0, simCv.width, simCv.height);
-  const vis = [...sim.lineup.away.map(p => ({ p, team: 'away' })), ...sim.lineup.home.map(p => ({ p, team: 'home' }))];
+  const vis = [...sim.lineup.away.map(p => ({ p, team: 'away' })), ...sim.lineup.home.map(p => ({ p, team: 'home' })),
+    ...Object.values(sim.leaving).map(o => ({ p: o.p, team: tk(o.team) }))];
   drawScene(simCtx, v, v.dpr, { pos: sim.pos, ball: sim.ball, ballH: sim.ballH, drawings: [], drawAlpha: 1, ghost: null },
     { colors, labels: 'none', selected: null, highlight: sim.carrier, fillBg: true, vis });
 }
@@ -3702,7 +4040,8 @@ function simRenderStats() {
   const rows = [['Boldbesiddelse', pct(a.possMin), pct(b.possMin)], ['Skud', a.shots, b.shots], ['Skud på mål', a.onTarget, b.onTarget],
     ['xG (forventede mål)', dec(a.xg), dec(b.xg)], ['Store chancer', a.big, b.big], ['Afleveringer', ta.passes || 0, tb.passes || 0],
     ['Afleveringspræcision', acc(ta), acc(tb)], ['Tacklinger', ta.tackles || 0, tb.tackles || 0], ['Opsnapninger', ta.inter || 0, tb.inter || 0],
-    ['Hjørnespark', a.corners, b.corners], ['Frispark begået', ta.fouls || 0, tb.fouls || 0], ['Gule kort', ta.yellow || 0, tb.yellow || 0],
+    ['Hjørnespark', a.corners, b.corners], ['Frispark begået', a.fouls ?? 0, b.fouls ?? 0], ['Gule kort', a.yellow ?? 0, b.yellow ?? 0],
+    ...((a.red || b.red) ? [['Røde kort', a.red, b.red]] : []), ...((a.pens || b.pens) ? [['Straffespark', a.pens, b.pens]] : []),
     ['Offside', a.offsides, b.offsides], ['Erobringer højt på banen', a.pressWins, b.pressWins]];
   $('#simStats').innerHTML = `<thead><tr><th>${esc(sim.A.name)}</th><th></th><th>${esc(sim.B.name)}</th></tr></thead><tbody>${rows.map(r => `<tr><td>${r[1]}</td><td>${r[0]}</td><td>${r[2]}</td></tr>`).join('')}</tbody>`;
 }
@@ -3710,8 +4049,9 @@ function simRenderPlayers() {
   const rs = simRatings(), best = rs.slice().sort((a, b) => b.r - a.r)[0];
   const col = i => rs.filter(o => o.team === i).map(o => {
     const cls = o.r >= 7.5 ? 'good' : o.r < 6 ? 'bad' : '';
-    const marks = `${'⚽'.repeat(o.s.goals)}${o.s.assists ? ' 🅰' : ''}${o.s.yellow ? ' 🟨' : ''}`;
-    const nm = o.p.name.trim(), sub = [nm ? o.p.role : '', marks, o.off ? 'udskiftet' : ''].filter(Boolean).join(' · ');
+    const marks = `${'⚽'.repeat(o.s.goals)}${o.s.assists ? ' 🅰' : ''}${o.s.yellow && !o.s.red ? ' 🟨' : ''}${o.s.red ? ' 🟥' : ''}`;
+    const gone = o.p.sentOff ? 'udvist' : o.p.injured ? 'skadet' : o.off ? 'udskiftet' : '';
+    const nm = o.p.name.trim(), sub = [nm ? o.p.role : '', marks, gone].filter(Boolean).join(' · ');
     return `<li${o.off ? ' class="off"' : ''}><span class="pn">${esc(o.p.num || '–')}</span><span class="pl">${esc(nm || o.p.role)}${sub ? `<small>${esc(sub)}</small>` : ''}</span>
       ${i === 0 ? `<span class="cond" title="Kondition ${Math.round(o.cond)} %"><i style="width:${Math.round(o.cond)}%"></i></span>` : '<span></span>'}
       <span class="rt ${cls}">${fmtRating(o.r)}${best && best.p === o.p && sim.ended ? ' ★' : ''}</span></li>`;
@@ -3727,7 +4067,7 @@ function simRenderAnalysis() {
       <p class="muted small">Gennemsnit: ${m.g[0].toFixed(1).replace('.', ',')}–${m.g[1].toFixed(1).replace('.', ',')} i mål · xG ${m.x[0].toFixed(2).replace('.', ',')}–${m.x[1].toFixed(2).replace('.', ',')} · boldbesiddelse ${Math.round(m.poss * 100)}–${100 - Math.round(m.poss * 100)} %.</p></div>` : '';
   $('#simPanelAnalysis').innerHTML = `<div><h3>Det afgør kampen</h3>${f.length ? `<ul>${f.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '<p class="muted small">Holdene er taktisk jævnbyrdige. Tilfældigheder og afslutninger afgør kampen.</p>'}</div>
     ${manyHTML}
-    <p class="muted small">Simuleringen bruger kun formation, udgangspunkt, instruktioner og dødboldtaktik – ikke spillernes kvalitet.</p>`;
+    <p class="muted small">Simuleringen bruger formation, udgangspunkt, instruktioner, dødboldtaktik og spillernes egenskaber (1–10). ${esc(sim.B.name)} har en manager, der skifter ud og ændrer taktik sent i kampen.</p>`;
 }
 // Taktik undervejs: kun for eget hold, gælder kun i denne kamp og fra næste minut.
 const SHOUTS = [
@@ -3748,12 +4088,13 @@ function simRenderTactic() {
     <div class="btn-row">${SHOUTS.map(s => `<button type="button" class="btn btn-sm" data-shout="${s.id}">${s.label}</button>`).join('')}</div>
     <div class="sub-label">Udskiftninger (${sim.subs[0]} af 5)</div>
     ${sim.bench.length ? `<div class="subs-row">
-      <label class="field-inline">Ud <select id="simSubOut">${sim.lineup.home.filter(p => p.role !== 'GK').map(p => `<option value="${esc(p.id)}">${esc(p.num || '–')} ${esc(p.name.trim() || p.role)} · ${Math.round(sim.cond[p.id] ?? 100)} %</option>`).join('')}</select></label>
+      <label class="field-inline">Ud <select id="simSubOut">${sim.lineup.home.filter(p => p.role !== 'GK').map(p => `<option value="${esc(p.id)}">${esc(p.num || '–')} ${esc(p.name.trim() || p.role)} · ${Math.round(condOf(p.id))} %</option>`).join('')}</select></label>
       <label class="field-inline">Ind <select id="simSubIn">${benchFree.map(b => `<option value="${esc(b.p.id)}">${esc(b.p.num || '–')} ${esc(b.p.name.trim() || 'Udskifter')}</option>`).join('')}</select></label>
       <button type="button" class="btn btn-sm" id="simSubGo"${!benchFree.length || sim.subs[0] >= 5 || sim.ended ? ' disabled' : ''}>Skift</button></div>`
       : '<p class="muted small">Tilføj udskiftere under Udskiftere i panelet for at kunne skifte undervejs.</p>'}`;
 }
 function simApplyTactic(note) {
+  simFlushMirrors(true);
   sim.A = simProfile(0);
   sim.mt.setProfile(0, sim.A);
   simUI.event({ type: 'meta', text: `Taktisk ændring hos ${sim.A.name}: ${note}.` }, sim.rec ? sim.rec.label : "0'");
@@ -3769,11 +4110,11 @@ $('#simPanelTactic').addEventListener('click', e => {
     const slot = sim.lineup.home.findIndex(p => p.id === outId), b = sim.bench.find(x => x.p.id === inId && !x.used);
     if (slot < 0 || !b) return;
     const outP = sim.lineup.home[slot];
-    const inP = { ...b.p, role: outP.role, autoNum: false };
+    const inP = { ...b.p, role: outP.role, slot: outP.slot, autoNum: false };
+    outP.subbedOff = true;
     b.p = inP; b.used = true; b.team = 0;
     sim.bench.push({ p: outP, used: true, team: 0, off: true });
     sim.lineup.home[slot] = inP;
-    sim.cond[inP.id] = 100;
     const edge = relToPitch(0, 0, simF().L / 2);
     sim.pos[inP.id] = { ...(sim.pos[outP.id] || edge) };
     if (sim.carrier === outP.id) sim.carrier = inP.id;
@@ -3797,11 +4138,12 @@ function simControls() {
   $('#simSkip').disabled = sim.ended;
 }
 function simNewMatch() {
-  sim.lineup = { home: board.home.map(p => ({ ...p })), away: board.away.map(p => ({ ...p })) };
+  sim.lineup = { home: board.home.map((p, k) => ({ ...p, slot: k })), away: board.away.map((p, k) => ({ ...p, slot: k })) };
+  sim.men0 = [sim.lineup.home, sim.lineup.away].map(l => l.filter(p => p.role !== 'GK').length);
   sim.bench = board.bench.map(p => ({ p: { ...p, role: 'CM' }, used: false, team: 0 }));
   sim.formation = { home: board.homeFormation, away: board.awayFormation };
   sim.tac = { home: { ...board.tactics.home, style: board.homeStyle || 'normal' }, away: { ...board.tactics.away, style: board.awayStyle || 'normal' } };
-  sim.subs = [0, 0]; sim.ps = {}; sim.ts = [{}, {}]; sim.mom = []; sim.cond = {}; sim.goalsShown = [0, 0]; sim.lastPass = [null, null];
+  sim.subs = [0, 0]; sim.ps = {}; sim.ts = [{}, {}]; sim.mom = []; sim.leaving = {}; sim.mirrors = []; sim.goalsShown = [0, 0]; sim.lastPass = [null, null];
   sim.A = simProfile(0); sim.B = simProfile(1);
   const seed = (Math.random() * 4294967296) >>> 0;
   sim.mt = createMatch(sim.A, sim.B, seed);

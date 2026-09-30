@@ -1,5 +1,5 @@
 // Service worker til Taktiktavle. Genereres af build.py (versionen skifter, når app.html ændres).
-const CACHE = 'taktiktavle-46b62f478a';
+const CACHE = 'taktiktavle-ef18847e90';
 const FONT_CACHE = 'tt-fonts-v1';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png'];
 
