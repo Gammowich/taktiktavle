@@ -2826,14 +2826,33 @@ const WHO = {
   setpiece: { CB: 5, CF: 3, DM: 1.5, SS: 1, CM: .8, LB: .5, RB: .5 },
 };
 const DESC = {
-  central: ['efter et flot kombinationsspil gennem midten', 'efter en stikning mellem linjerne', 'efter tålmodigt opspil'],
-  wing: ['på et indlæg fra kanten', 'på et fladt indlæg fra baglinjen', 'på hovedet efter et indlæg'],
-  behind: ['efter en dyb bold bag forsvaret', 'alene med målmanden efter en stikning i dybden'],
-  longshot: ['fra distancen', 'med et hårdt skud uden for feltet'],
-  counter: ['på et lynhurtigt kontraangreb', 'efter en hurtig omstilling'],
-  press: ['efter en bolderobring højt på banen', 'efter at have presset modstanderen til en fejl'],
-  setpiece: ['efter et hjørnespark', 'på et hjørnespark'],
-  freekick: ['efter et frispark', 'på et frispark med indlæg'],
+  central: ['efter et flot kombinationsspil gennem midten', 'efter en stikning mellem linjerne', 'efter tålmodigt opspil', 'efter en væg på kanten af feltet',
+    'efter et hurtigt sammenspil på midten', 'efter en lang periode med boldbesiddelse', 'efter en dribling forbi to forsvarere'],
+  wing: ['på et indlæg fra kanten', 'på et fladt indlæg fra baglinjen', 'på hovedet efter et indlæg', 'på et skruet indlæg mod den lange stolpe',
+    'på en tilbagelægning fra baglinjen', 'efter et overlap ude på kanten'],
+  behind: ['efter en dyb bold bag forsvaret', 'alene med målmanden efter en stikning i dybden', 'efter et løb bag om forsvaret',
+    'efter en lang bold over forsvaret', 'efter at have slået offsidefælden'],
+  longshot: ['fra distancen', 'med et hårdt skud uden for feltet', 'med et langskud fra 25 meter', 'med et skud fra kanten af feltet', 'med et halvflugtningsskud fra distancen'],
+  counter: ['på et lynhurtigt kontraangreb', 'efter en hurtig omstilling', 'på en kontra over hele banen', 'efter et lynhurtigt modangreb', 'på et kontraangreb tre mod to'],
+  press: ['efter en bolderobring højt på banen', 'efter at have presset modstanderen til en fejl', 'efter en fejlaflevering i opbygningen',
+    'efter et aggressivt genpres', 'efter at have stjålet bolden fra en forsvarer'],
+  setpiece: ['efter et hjørnespark', 'på et hjørnespark', 'på hovedet efter et hjørnespark', 'i tumulten efter et hjørnespark', 'efter et hjørnespark, der bliver forlænget'],
+  freekick: ['efter et frispark', 'på et frispark med indlæg', 'på hovedet efter et frispark', 'efter et indøvet frispark'],
+};
+// Ordlyden i kommentarerne. Den vælges med motorens egen tekst-tilfældighed, så kampens forløb ikke ændres.
+const SAY = {
+  save: ['målmanden redder', 'målmanden er hurtigt nede og redder', 'målmanden bokser bolden væk', 'målmanden griber sikkert',
+    'målmanden redder med fødderne', 'målmanden vrider bolden over overliggeren', 'målmanden står godt placeret og griber'],
+  wide: ['det går forbi', 'skuddet går lige forbi stolpen', 'bolden triller forbi den lange stolpe', 'det går et godt stykke forbi', 'skuddet strejfer stolpen og går ud'],
+  over: ['skuddet går over', 'bolden ryger højt over mål', 'skuddet går lige over overliggeren', 'afslutningen bliver for høj'],
+  block: ['bolden bliver blokeret', 'en forsvarer kaster sig ind foran skuddet', 'skuddet bliver blokeret af forsvaret', 'forsvaret får et ben imellem'],
+  bigSave: ['Stor chance! ', 'Kæmpe mulighed! ', 'Hvilken chance! '],
+  bigMiss: ['Stor chance! ', 'Kæmpe mulighed! ', 'Den burde have siddet! '],
+  yellow: ['for en sen tackling', 'for at stoppe et kontraangreb', 'for at trække i en modspiller', 'efter en hård duel', 'for en tackling bagfra',
+    'for at sparke bolden væk', 'for gentagne frispark'],
+  red: ['for en grov tackling', 'for at stoppe en oplagt scoringschance', 'for en voldsom tackling med strakt ben', 'for en farlig tackling med begge ben'],
+  offside: ['er offside på vej i dybden', 'står offside, da bolden bliver spillet', 'starter løbet for tidligt og er offside', 'bliver fanget i offsidefælden'],
+  penGoal: ['scorer sikkert på straffesparket', 'sender målmanden den forkerte vej', 'hamrer straffesparket op i nettaget', 'placerer straffesparket roligt i hjørnet'],
 };
 const cap = t => t.charAt(0).toUpperCase() + t.slice(1);
 
@@ -2913,6 +2932,36 @@ function createMatch(A, B, seed, opts = {}) {
     return cands[0];
   };
   const label = p => p ? (p.name.trim() || `nr. ${p.num}`) : 'en spiller';
+  // Ordlyden vælges med sin egen tilfældighed, så kampens forløb og tal er de samme, uanset formuleringen.
+  const trnd = mulberry32((seed ^ 0x2545F491) >>> 0), say = arr => arr[Math.floor(trnd() * arr.length)];
+  const scorers = {};
+  let lastGoal = null;
+  // Målet i sammenhæng: udligning, føring, øget føring, reducering, sent mål, andet mål og hattrick.
+  function goalContext(xi, p) {
+    const X = T[xi], Y = T[1 - xi], ours = st[xi].goals, theirs = st[1 - xi].goals, late = cur.m >= 85, out = [];
+    const n = scorers[p.id] = (scorers[p.id] || 0) + 1;
+    if (n === 3) out.push(say([`Hattrick til ${label(p)}!`, `Det er hattrick! ${cap(label(p))} har scoret tre gange.`]));
+    else if (n === 2) out.push(say([`Det er andet mål i kampen for ${label(p)}.`, `${cap(label(p))} scorer sit andet mål i kampen.`]));
+    if (ours === theirs) out.push(late ? say([`${X.name} udligner sent i kampen!`, 'Sen udligning – alt er lige igen!']) : say([`${X.name} udligner!`, 'Alt er lige igen.', 'Og så er der balance i regnskabet igen.']));
+    else if (ours === theirs + 1) out.push(ours + theirs === 1 ? say(['Første mål i kampen!', 'Dødvandet er brudt.', `${X.name} kommer foran.`])
+      : late ? say(['Er det sejrsmålet?', `${X.name} kommer foran i slutminutterne!`]) : say([`${X.name} kommer foran igen.`, `${X.name} fører igen.`]));
+    else if (ours > theirs + 1) out.push(say([`${X.name} øger føringen.`, `Nu ser det godt ud for ${X.name}.`, `${Y.name} er i problemer.`]));
+    else out.push(say([`${X.name} reducerer.`, `Der er liv i ${X.name} igen.`, `Kan ${X.name} komme tilbage?`]));
+    lastGoal = { m: cur.m, team: xi, eq: ours === theirs };
+    return out.join(' ');
+  }
+  const f2 = v => v.toFixed(2).replace('.', ',');
+  const summary = () => { const pm = (st[0].possMin + st[1].possMin) || 1, pc = Math.round(st[0].possMin / pm * 100);
+    return `Boldbesiddelse ${pc}–${100 - pc} %, skud ${st[0].shots}–${st[1].shots}, xG ${f2(st[0].xg)}–${f2(st[1].xg)}.`; };
+  function verdict() {
+    const g0 = st[0].goals, g1 = st[1].goals, x0 = st[0].xg, x1 = st[1].xg;
+    if (g0 === g1) return Math.abs(x0 - x1) < .5 ? say(['Et retfærdigt resultat.', 'Uafgjort er fair efter kampens forløb.', 'Ingen af holdene fortjente at tabe.'])
+      : `${T[x0 > x1 ? 0 : 1].name} skabte mest (xG ${f2(Math.max(x0, x1))} mod ${f2(Math.min(x0, x1))}) og må ærgre sig over kun at få ét point.`;
+    const w = g0 > g1 ? 0 : 1, l = 1 - w, xw = st[w].xg, xl = st[l].xg;
+    if (xw >= xl + .3) return say([`En fortjent sejr til ${T[w].name}.`, `${T[w].name} var det bedste hold og vinder fortjent.`, `${T[w].name} styrede kampen og tager alle tre point.`]);
+    if (xl >= xw + .3) return say([`${T[l].name} skabte mest (xG ${f2(xl)} mod ${f2(xw)}), men ${T[w].name} var mest effektive.`, `${T[w].name} vinder trods færre chancer – kynisme betaler sig.`]);
+    return say([`En tæt kamp, som ${T[w].name} lige akkurat vinder.`, `Små marginer afgjorde kampen til fordel for ${T[w].name}.`]);
+  }
   const score = () => `${st[0].goals}–${st[1].goals}`;
   // Færre mand på banen (rødt kort, skade uden flere udskiftninger) giver mindre af bolden og færre angreb.
   const short = X => X.men0 == null || X.men == null ? 0 : Math.max(0, X.men0 - X.men);
@@ -2964,18 +3013,18 @@ function createMatch(A, B, seed, opts = {}) {
     reprofile(i, players, extra);
     return { moved: moved ? moved.id : null, role: moved ? (p.role === 'GK' ? 'GK' : p.role) : null, gkIn, gkOut: gkOut ? gkOut.id : null };
   }
-  function book(i, p, kind) {
+  function book(i, p, kind, why) {
     const X = T[i];
     if (kind === 'yellow') {
       cards[p.id] = (cards[p.id] || 0) + 1; st[i].yellow++;
-      if (cards[p.id] < 2) { cur.events.push({ type: 'card', team: i, text: `Gult kort til ${label(p)} (${X.name}).` }); return { card: 'yellow' }; }
+      if (cards[p.id] < 2) { cur.events.push({ type: 'card', team: i, text: `Gult kort til ${label(p)} (${X.name}) ${why || say(SAY.yellow)}.` }); return { card: 'yellow' }; }
       kind = 'second';
     }
     st[i].red++;
     const off = sendOff(i, p), left = T[i].men + 1;
     cur.events.push({ type: 'red', team: i, text: kind === 'second'
-      ? `Andet gule kort til ${label(p)} (${X.name}) – rødt kort! ${X.name} spiller videre med ${left} mand.`
-      : `Rødt kort til ${label(p)} (${X.name})! ${X.name} spiller videre med ${left} mand.` });
+      ? `Andet gule kort til ${label(p)} (${X.name}) ${why || say(SAY.yellow)} – rødt kort! ${X.name} spiller videre med ${left} mand.`
+      : `Rødt kort til ${label(p)} (${X.name}) ${why || say(SAY.red)}! ${X.name} spiller videre med ${left} mand.` });
     return { card: kind, off };
   }
   function rollCard(i, p, yP, rP) {
@@ -2997,8 +3046,9 @@ function createMatch(A, B, seed, opts = {}) {
     const victim = who(X, type === 'wing' ? 'central' : type), fouler = pickFouler(1 - xi, true);
     st[1 - xi].fouls++; s.pens++;
     cur.poss = xi; cur.zone = { x: .5 + (rnd() - .5) * .1, p: .95 };
-    cur.events.push({ type: 'pen', team: xi, text: `Straffespark til ${X.name}! ${cap(label(fouler))} lægger ${label(victim)} ned i feltet.` });
-    const r = rnd(), card = r < .08 ? book(1 - xi, fouler, 'red') : r < .5 ? book(1 - xi, fouler, 'yellow') : { card: null };
+    cur.events.push({ type: 'pen', team: xi, text: say([`Straffespark til ${X.name}! ${cap(label(fouler))} lægger ${label(victim)} ned i feltet.`,
+      `Dommeren peger på pletten! ${cap(label(fouler))} fælder ${label(victim)} i feltet.`, `Straffespark! ${cap(label(victim))} (${X.name}) bliver revet ned af ${label(fouler)} i feltet.`]) });
+    const r = rnd(), card = r < .08 ? book(1 - xi, fouler, 'red', 'for at stoppe en oplagt scoringschance') : r < .5 ? book(1 - xi, fouler, 'yellow', 'for at lave straffespark') : { card: null };
     // Straffesparket tages af holdets bedste afslutter.
     const taker = outfieldOf(T[xi].players).reduce((b, p) => !b || attrOf(p, 'shoot') > attrOf(b, 'shoot') || (attrOf(p, 'shoot') === attrOf(b, 'shoot') && rank(p) > rank(b)) ? p : b, null);
     const xg = .76, conv = clamp(xg * (1 + .12 * dv(attrOf(taker, 'shoot'))) * (1 - .15 * T[1 - xi].a.gk), .5, .92);
@@ -3006,8 +3056,11 @@ function createMatch(A, B, seed, opts = {}) {
     const goal = rnd() < conv, saved = !goal && rnd() < .72;
     if (goal || saved) s.onTarget++;
     if (goal) { s.goals++; s.penGoals++; }
-    cur.events.push({ type: goal ? 'goal' : 'shot', team: xi, xg, text: goal ? `MÅL! ${cap(label(taker))} scorer sikkert på straffesparket for ${X.name}. ${score()}.`
-      : saved ? `Målmanden redder straffesparket fra ${label(taker)} (${X.name})!` : `${cap(label(taker))} (${X.name}) skyder straffesparket forbi!` });
+    const tk2 = label(taker);
+    cur.events.push({ type: goal ? 'goal' : 'shot', team: xi, xg, text: goal ? `MÅL! ${cap(tk2)} ${say(SAY.penGoal)} for ${X.name}. ${score()}. ${goalContext(xi, taker)}`
+      : saved ? say([`Målmanden redder straffesparket fra ${tk2} (${X.name})!`, `Redning! Målmanden går den rigtige vej og tager straffesparket fra ${tk2} (${X.name}).`,
+        `${cap(tk2)} (${X.name}) brænder straffesparket – målmanden redder!`])
+      : say([`${cap(tk2)} (${X.name}) skyder straffesparket forbi!`, `${cap(tk2)} (${X.name}) sparker straffesparket på stolpen og ud!`, `${cap(tk2)} (${X.name}) skyder straffesparket uden for målet!`]) });
     cur.acts.push({ kind: 'pen', team: xi, fouler, victim, taker, outcome: goal ? 'goal' : saved ? 'save' : 'wide', xg, ...card });
   }
   function injury(i) {
@@ -3016,11 +3069,14 @@ function createMatch(A, B, seed, opts = {}) {
     st[i].injuries++;
     if ((X.subsUsed || 0) < MAX_SUBS) {
       const inP = reserve(i, p.role); substitute(i, p, inP);
-      cur.events.push({ type: 'injury', team: i, text: `${cap(label(p))} (${X.name}) er skadet og må udskiftes. ${cap(label(inP))} kommer ind.` });
+      cur.events.push({ type: 'injury', team: i, text: say([`${cap(label(p))} (${X.name}) er skadet og må udskiftes. ${cap(label(inP))} kommer ind.`,
+        `${cap(label(p))} (${X.name}) kan ikke fortsætte efter et sammenstød. ${cap(label(inP))} kommer ind i stedet.`,
+        `Skade hos ${X.name}: ${label(p)} må udgå, og ${label(inP)} kommer ind.`, `${cap(label(p))} (${X.name}) vrider om og må bæres ud. ${cap(label(inP))} erstatter.`]) });
       cur.acts.push({ kind: 'injury', team: i, player: p, sub: inP });
     } else {
       const off = sendOff(i, p);
-      cur.events.push({ type: 'injury', team: i, text: `${cap(label(p))} (${X.name}) er skadet, og der er ikke flere udskiftninger. ${X.name} spiller videre med ${T[i].men + 1} mand.` });
+      cur.events.push({ type: 'injury', team: i, text: say([`${cap(label(p))} (${X.name}) er skadet, og der er ikke flere udskiftninger. ${X.name} spiller videre med ${T[i].men + 1} mand.`,
+        `Skade hos ${X.name}: ${label(p)} må udgå, og da udskiftningerne er brugt, spiller de videre med ${T[i].men + 1} mand.`]) });
       cur.acts.push({ kind: 'injury', team: i, player: p, sub: null, off });
     }
   }
@@ -3043,18 +3099,21 @@ function createMatch(A, B, seed, opts = {}) {
       if (c0 && c0.s > 12) {
         const out = c0.p, cnd = Math.round(cond[out.id] ?? 100), why = risk(out) && cnd >= 80 ? 'har gult kort' : `${cnd} % kondition${risk(out) ? ' og gult kort' : ''}`;
         const inP = reserve(i, out.role); substitute(i, out, inP); P.made++; P.last = mn;
-        cur.events.push({ type: 'sub', team: i, text: P.label ? `${P.label} skifter: ${cap(label(inP))} ind for ${label(out)} (${why}).`
-          : `Udskiftning hos ${X.name}: ${cap(label(inP))} ind for ${label(out)} (${why}).` });
+        cur.events.push({ type: 'sub', team: i, text: P.label
+          ? say([`${P.label} skifter: ${cap(label(inP))} ind for ${label(out)} (${why}).`, `${P.label} sender ${label(inP)} på banen for ${label(out)} (${why}).`])
+          : say([`Udskiftning hos ${X.name}: ${cap(label(inP))} ind for ${label(out)} (${why}).`, `${X.name} skifter: ${label(out)} går ud (${why}), og ${label(inP)} kommer ind.`]) });
         cur.acts.push({ kind: 'sub', team: i, player: out, sub: inP });
       }
     }
     const set = (ch, text, mood) => { T[i] = { ...T[i], ...ch }; P.mood = mood; text = P.label ? `${P.label}: ${text}` : text; cur.events.push({ type: 'tactic', team: i, text }); cur.acts.push({ kind: 'tactic', team: i, change: ch }); };
     const Z = T[i];
     if (diff < 0 && mn >= 65 && P.mood !== 1) set({ style: Math.min(1, Z.style + 1), tempo: Math.min(5, Z.tempo + 1), press: Math.min(5, Z.press + 1), line: Math.min(5, Z.line + 1) },
-      `${Z.name} ${diff === -1 ? 'går efter udligningen' : 'forsøger at komme tilbage i kampen'}: mere offensivt, højere tempo og højere pres.`, 1);
+      diff === -1 ? say([`${Z.name} går efter udligningen: mere offensivt, højere tempo og højere pres.`, `${Z.name} kaster flere folk frem i jagten på udligningen.`,
+        `${Z.name} skruer op for presset og tempoet – de vil have udligningen.`])
+        : say([`${Z.name} forsøger at komme tilbage i kampen: mere offensivt, højere tempo og højere pres.`, `${Z.name} må satse nu og sender flere spillere frem.`]), 1);
     else if (diff > 0 && mn >= 75 && P.mood !== -1) set({ style: Math.max(-1, Z.style - 1), line: Math.max(1, Z.line - 1), tempo: Math.max(1, Z.tempo - 1) },
-      `${Z.name} trækker sig tilbage for at holde føringen.`, -1);
-    else if (P.mood === 0 && short(Z) > 0 && diff >= 0) set({ style: Math.max(-1, Z.style - 1), line: Math.max(1, Z.line - 1) }, `${Z.name} lukker ned med en mand mindre.`, -1);
+      say([`${Z.name} trækker sig tilbage for at holde føringen.`, `${Z.name} lægger sig dybere og vil ride stormen af.`, `${Z.name} sænker tempoet og passer på føringen.`]), -1);
+    else if (P.mood === 0 && short(Z) > 0 && diff >= 0) set({ style: Math.max(-1, Z.style - 1), line: Math.max(1, Z.line - 1) }, say([`${Z.name} lukker ned med en mand mindre.`, `${Z.name} trækker sig tilbage og forsvarer sig med en mand mindre.`]), -1);
   }
 
   function shot(xi, type, xg, sub) {
@@ -3069,14 +3128,18 @@ function createMatch(A, B, seed, opts = {}) {
     if (onT) s.onTarget++;
     if (goal) s.goals++;
     cur.poss = xi; cur.zone = { x: .5 + (rnd() - .5) * .16, p: goal ? 1.03 : .95 };
-    const d = choose(DESC[sub || type]), big = xg >= BIG ? 'Stor chance! ' : '';
+    const d = choose(DESC[sub || type]), L = cap(label(p)), big = xg >= BIG;
+    const frame = (pre, out) => say([`${pre}${L} (${X.name}) kommer til skud ${d}, men ${out}.`, `${pre}${L} (${X.name}) afslutter ${d}, men ${out}.`,
+      `${pre}Chance til ${X.name} ${d}: ${label(p)} afslutter, men ${out}.`]);
     let text, outcome;
-    if (goal) { outcome = 'goal'; text = `MÅL! ${cap(label(p))} scorer for ${X.name} ${d}. ${score()}.`; }
-    else if (onT) { outcome = 'save'; text = `${big}${cap(label(p))} (${X.name}) kommer til skud ${d}, men målmanden redder.`; }
+    if (goal) {
+      outcome = 'goal';
+      text = say([`MÅL! ${L} scorer for ${X.name} ${d}. ${score()}.`, `MÅL til ${X.name}! ${L} sender bolden i nettet ${d}. ${score()}.`, `MÅL! ${L} gør det for ${X.name} ${d}. ${score()}.`]) + ' ' + goalContext(xi, p);
+    } else if (onT) { outcome = 'save'; text = frame(big ? say(SAY.bigSave) : '', say(SAY.save)); }
     else {
       const mi = Math.floor(rnd() * 3);
       outcome = ['wide', 'over', 'block'][mi];
-      text = `${big}${cap(label(p))} (${X.name}) kommer til skud ${d}, men ${['det går forbi', 'skuddet går over', 'bolden bliver blokeret'][mi]}.`;
+      text = frame(big ? say(mi < 2 ? SAY.bigMiss : SAY.bigSave) : '', say(SAY[outcome]));
     }
     cur.events.push({ type: goal ? 'goal' : 'shot', team: xi, xg, text });
     cur.acts.push({ kind: 'shot', team: xi, type, sub: sub || type, outcome, shooter: p, xg });
@@ -3096,7 +3159,7 @@ function createMatch(A, B, seed, opts = {}) {
     if (type === 'behind' && rnd() < .1 + .07 * c(Y.line)) {
       s.offsides++; cur.poss = xi; cur.zone = { x: .35 + rnd() * .3, p: .86 };
       let runner = null;
-      if (rnd() < .5) { runner = who(X, 'behind'); cur.events.push({ type: 'offside', team: xi, text: `${cap(label(runner))} (${X.name}) er offside på vej i dybden.` }); }
+      if (rnd() < .5) { runner = who(X, 'behind'); cur.events.push({ type: 'offside', team: xi, text: `${cap(label(runner))} (${X.name}) ${say(SAY.offside)}.` }); }
       cur.acts.push({ kind: 'offside', team: xi, player: runner });
       return;
     }
@@ -3123,12 +3186,16 @@ function createMatch(A, B, seed, opts = {}) {
     const dom = share >= .62 ? 0 : share <= .38 ? 1 : -1;
     if (dom >= 0) {
       const X = T[dom], Y = T[1 - dom];
-      return X.passing <= 2 ? `${X.name} holder bolden i lange perioder med korte afleveringer.`
-        : Y.style < 0 ? `${X.name} har bolden, men ${Y.name} ligger dybt og lukker rummene.`
-        : `${X.name} har overtaget og presser ${Y.name} tilbage.`;
+      return X.passing <= 2 ? say([`${X.name} holder bolden i lange perioder med korte afleveringer.`, `${X.name} spiller tålmodigt rundt og venter på åbningen.`,
+          `${X.name} dominerer boldbesiddelsen med kort pasningsspil.`])
+        : Y.style < 0 ? say([`${X.name} har bolden, men ${Y.name} ligger dybt og lukker rummene.`, `${Y.name} står kompakt, og ${X.name} har svært ved at finde vej igennem.`,
+          `${X.name} banker på, men ${Y.name} holder tæt.`])
+        : say([`${X.name} har overtaget og presser ${Y.name} tilbage.`, `${X.name} sætter sig på kampen.`, `Det er ${X.name}, der styrer slagets gang.`]);
     }
     const P = T[0].press >= T[1].press ? T[0] : T[1];
-    return P.press >= 4 ? `Kampen bølger frem og tilbage. ${P.name} presser højt, hver gang bolden er tabt.` : 'Kampen er afbalanceret, og ingen af holdene tager for alvor over.';
+    if (P.press >= 4) return say([`Kampen bølger frem og tilbage. ${P.name} presser højt, hver gang bolden er tabt.`, `Højt tempo og mange dueller – ${P.name} jagter bolden højt på banen.`]);
+    const calm = ['Kampen er afbalanceret, og ingen af holdene tager for alvor over.', 'Der er ikke meget at skille holdene ad.', 'En lige kamp, hvor begge hold venter på en fejl.'];
+    return say(st[0].big + st[1].big <= 1 ? [...calm, 'Kampen mangler tempo og store chancer.'] : calm);
   }
 
   const ex1 = 1 + Math.floor(rnd() * 3), ex2 = 2 + Math.floor(rnd() * 4), win = [];
@@ -3141,7 +3208,7 @@ function createMatch(A, B, seed, opts = {}) {
     if (idx >= mins.length) return null;
     const [mn, half] = mins[idx++];
     cur = { m: mn, half, label: (half === 1 && mn > 45 ? `45+${mn - 45}` : half === 2 && mn > 90 ? `90+${mn - 90}` : mn) + "'", poss: 0, zone: null, events: [], acts: [] };
-    if (mn === 46) cur.events.push({ type: 'meta', text: 'Anden halvleg er i gang.' });
+    if (half === 2 && mn === 46) cur.events.push({ type: 'meta', text: say(['Anden halvleg er i gang.', 'Så er vi i gang igen.', 'Holdene er tilbage, og anden halvleg er fløjtet i gang.']) });
     const mm = Math.min(mn, 90), diff = st[0].goals - st[1].goals;
     let poss = clamp(ctrl(T[0], T[1]) / (ctrl(T[0], T[1]) + ctrl(T[1], T[0])), .28, .72);
     if (mm > 65 && diff !== 0) poss += diff < 0 ? .05 : -.05;
@@ -3168,6 +3235,15 @@ function createMatch(A, B, seed, opts = {}) {
       }));
     }
     if ([14, 31, 59, 76].includes(mn) && !cur.events.length) cur.events.push({ type: 'meta', text: flavor(win) });
+    else if (!cur.events.length && lastGoal && mn === lastGoal.m + 1 && trnd() < .6) {
+      const g = lastGoal.team;
+      cur.events.push({ type: 'meta', text: lastGoal.eq ? say(['Alt er åbent igen.', 'Nu er der kamp igen!', `${T[1 - g].name} må starte forfra.`])
+        : say([`${T[1 - g].name} skal nu svare igen.`, `${T[g].name} har momentum.`, `Stemningen er tydeligvis løftet hos ${T[g].name}.`]) });
+    } else if (!cur.events.length && mn === 85 && Math.abs(st[0].goals - st[1].goals) <= 1) {
+      const d0 = st[0].goals - st[1].goals, ld = d0 > 0 ? 0 : 1;
+      cur.events.push({ type: 'meta', text: d0 === 0 ? say([`Fem minutter tilbage, og det står ${score()}. Hvem tør satse?`, `Slutminutterne nærmer sig – stadig ${score()}.`, 'Kan nogen af holdene finde et sent vindermål?'])
+        : say([`${T[ld].name} er tæt på sejren, men ${T[1 - ld].name} giver ikke op.`, `Fem minutter tilbage. ${T[1 - ld].name} jagter udligningen.`, `${T[ld].name} skal holde ud i de sidste minutter.`]) });
+    }
     if (EV) {
       // Frispark: oftest begået af holdet uden bold, men også af holdet med bolden (efter et boldtab).
       if (rnd() < .135 * (1 + .12 * c(Y.press)) * Math.max(.3, 1 + .12 * X.a.attTech - .1 * Y.a.defDef)) foul(1 - ai);
@@ -3176,8 +3252,8 @@ function createMatch(A, B, seed, opts = {}) {
     }
     tire();
     for (const i of [0, 1]) manage(i, mn);
-    if (half === 1 && mn === 45 + ex1) { cur.events.push({ type: 'meta', text: `Pause: ${T[0].name} ${score()} ${T[1].name}.` }); cur.halfTime = true; }
-    if (half === 2 && mn === 90 + ex2) { cur.events.push({ type: 'end', text: `Slutfløjt: ${T[0].name} ${score()} ${T[1].name}.` }); cur.fullTime = true; }
+    if (half === 1 && mn === 45 + ex1) { cur.events.push({ type: 'meta', ht: true, text: `Pause: ${T[0].name} ${score()} ${T[1].name}. ${summary()}` }); cur.halfTime = true; }
+    if (half === 2 && mn === 90 + ex2) { cur.events.push({ type: 'end', text: `Slutfløjt: ${T[0].name} ${score()} ${T[1].name}. ${verdict()} ${summary()}` }); cur.fullTime = true; }
     cur.stats = snap();
     timeline.push(cur);
     return cur;
@@ -3365,7 +3441,8 @@ function pickMate(i, fromId, want, o = {}) {
 /* ---- Handlinger. Hver handling beregnes først, når den begynder (prep), så den bygger videre
    på, hvor bolden og spillerne faktisk er. ---- */
 const A = prep => ({ prep });
-const vary = (arr, k) => arr[Math.abs(k) % arr.length];
+// Ordlyd i tickeren: egen tilfældighed pr. kamp, så kampens forløb ikke ændres af formuleringen.
+const sayV = arr => arr[Math.floor((sim.vrng || Math.random)() * arr.length)];
 function carryInfo(i, want, text) {
   const id = sim.carrier; if (!id) return null;
   const f = simF(), from = { ...sim.ball };
@@ -3373,8 +3450,8 @@ function carryInfo(i, want, text) {
   const maxD = 22 * f.L / 105;   // en enkelt dribling er højst ca. 22 m
   if (d > maxD) { to = { x: from.x + (to.x - from.x) * maxD / d, y: from.y + (to.y - from.y) * maxD / d }; d = maxD; }
   return { dur: .15 + d / 6.2, from, to, owner: i, carrierAfter: id, dribbler: id, move: { [id]: to }, shapeBall: to, team: i,
-    text: text || (sim.crng() < .3 * (1 + .15 * (attrOf(simPlayer(id), 'tech') - 5)) ? `${cap(simName(id))} ${vary(['går forbi sin mand', 'dribler sig fri', 'snyder sin modstander'], sim.qDone)}`
-      : `${cap(simName(id))} ${vary(['fører bolden frem', 'trækker op ad banen', 'driver bolden fremad'], sim.qDone)}`) };
+    text: text || (sim.crng() < .3 * (1 + .15 * (attrOf(simPlayer(id), 'tech') - 5)) ? `${cap(simName(id))} ${sayV(['går forbi sin mand', 'dribler sig fri', 'snyder sin modstander', 'tager sin mand på', 'vrister sig fri'])}`
+      : `${cap(simName(id))} ${sayV(['fører bolden frem', 'trækker op ad banen', 'driver bolden fremad', 'løber med bolden', 'tager bolden med frem'])}`) };
 }
 function passInfo(i, want, kind = 'short', o = {}) {
   const f = simF(), passer = sim.carrier;
@@ -3389,9 +3466,11 @@ function passInfo(i, want, kind = 'short', o = {}) {
   const d = Math.hypot(at.x - from.x, at.y - from.y), runD = Math.hypot(at.x - rq.x, at.y - rq.y);
   const lofted = kind === 'long' || kind === 'cross' || (kind !== 'through' && d > 30);
   const speed = kind === 'through' ? 16 : lofted ? 18 : 13.5;
-  const text = o.text || (kind === 'cross' ? `Indlæg fra ${simName(passer)}` : kind === 'through' ? `Stikning til ${simName(r.id)}`
-    : lofted ? `Lang bold fra ${simName(passer)} mod ${simName(r.id)}`
-    : vary([`${cap(simName(passer))} til ${simName(r.id)}`, `${cap(simName(passer))} til ${simName(r.id)}`, `${cap(simName(passer))} finder ${simName(r.id)}`, `${cap(simName(passer))} lægger den til ${simName(r.id)}`], sim.qDone + (sim.rec ? sim.rec.m : 0)));
+  const P1 = cap(simName(passer)), R1 = simName(r.id);
+  const text = o.text || (kind === 'cross' ? sayV([`Indlæg fra ${simName(passer)}`, `${P1} sender et indlæg ind i feltet`, `${P1} slår bolden ind foran mål`, `${P1} svinger et indlæg ind`])
+    : kind === 'through' ? sayV([`Stikning til ${R1}`, `${P1} stikker ${R1} i dybden`, `Fin stikning fra ${simName(passer)} til ${R1}`, `${P1} sender ${R1} af sted i dybden`])
+    : lofted ? sayV([`Lang bold fra ${simName(passer)} mod ${R1}`, `${P1} slår den lange bold mod ${R1}`, `${P1} sparker langt mod ${R1}`, `Diagonalbold fra ${simName(passer)} mod ${R1}`])
+    : sayV([`${P1} til ${R1}`, `${P1} til ${R1}`, `${P1} finder ${R1}`, `${P1} lægger den til ${R1}`, `${P1} spiller ${R1}`, `${P1} sender bolden videre til ${R1}`]));
   const ballT = .2 + d / speed;
   return { dur: Math.min(Math.max(ballT, runD / 7.5), ballT + 1.2), from, to: at, h: lofted ? Math.min(kind === 'cross' ? 6 : 9, d * .14) : 0,
     owner: i, carrierAfter: r.id, move: { [r.id]: at }, shapeBall: at, text, team: i,
@@ -3400,7 +3479,8 @@ function passInfo(i, want, kind = 'short', o = {}) {
 function misplacedInfo(i) {
   const info = winInfo(1 - i, 'intercept'); if (!info) return null;
   const base = info.end;
-  info.text = `Fejlaflevering fra ${simName(sim.carrier)}`;
+  info.text = sayV([`Fejlaflevering fra ${simName(sim.carrier)}`, `${cap(simName(sim.carrier))} spiller bolden direkte til modstanderen`, `Upræcis aflevering fra ${simName(sim.carrier)}`,
+    `${cap(simName(sim.carrier))} mister bolden på en dårlig aflevering`]);
   info.end = () => { if (base) base(); sim.pendingRegain = i; };
   return info;
 }
@@ -3420,13 +3500,15 @@ function winInfo(w, how) {
     const win = nearestOf(w, cut); if (!win) return null;
     const d = Math.hypot(cut.x - sim.ball.x, cut.y - sim.ball.y), rd = Math.hypot(sim.pos[win.id].x - cut.x, sim.pos[win.id].y - cut.y);
     return { dur: Math.min(Math.max(.25 + d / 13, rd / 7.5), .25 + d / 13 + 1), from: { ...sim.ball }, to: cut, owner: lt, ownerAfter: w, carrierAfter: win.id, move: { [win.id]: cut }, shapeBall: cut,
-      text: `${cap(simName(win.id))} opsnapper afleveringen`, team: w,
+      text: sayV([`${cap(simName(win.id))} opsnapper afleveringen`, `${cap(simName(win.id))} læser spillet og snupper bolden`, `${cap(simName(win.id))} når først til bolden`,
+        `${cap(simName(win.id))} skærer afleveringen af`]), team: w,
       end() { pstat(loser, 'passes'); tstat(lt, 'passes'); pstat(win.id, 'inter'); tstat(w, 'inter'); } };
   }
   const win = nearestOf(w, sim.ball); if (!win) return null;
   const q = sim.pos[win.id], d = Math.hypot(q.x - sim.ball.x, q.y - sim.ball.y);
   return { dur: clamp(d / 7, .6, 2.2), from: { ...sim.ball }, to: { ...sim.ball }, owner: lt, ownerAfter: w, carrierAfter: win.id, move: { [win.id]: { ...sim.ball } }, shapeBall: sim.ball,
-    text: `${cap(simName(win.id))} vinder bolden`, team: w, end() { pstat(win.id, 'tackles'); tstat(w, 'tackles'); } };
+    text: sayV([`${cap(simName(win.id))} vinder bolden`, `${cap(simName(win.id))} tackler sig til bolden`, `${cap(simName(win.id))} erobrer bolden`, `Fin tackling af ${simName(win.id)}`,
+      `${cap(simName(win.id))} snupper bolden fra sin modstander`]), team: w, end() { pstat(win.id, 'tackles'); tstat(w, 'tackles'); } };
 }
 function ensureOwnerInfo(i) {
   if (sim.carrier && simTeamOf(sim.carrier) === i) { sim.owner = i; return null; }
@@ -3455,7 +3537,7 @@ function kickoffAct(kicker) {
   return A(() => {
     const f = simF(), k = kickoffPlaces(kicker), c = { x: f.W / 2, y: f.L / 2 };
     return { dur: 1.6, fast: true, from: c, to: c, owner: kicker, carrierAfter: k.taker, place: k.place, shapeBall: c, team: kicker,
-      text: `Afspark – ${(kicker === 0 ? sim.A : sim.B).name}` };
+      text: sayV([`Afspark – ${(kicker === 0 ? sim.A : sim.B).name}`, `${(kicker === 0 ? sim.A : sim.B).name} sætter bolden i spil`]) };
   });
 }
 function whistleAct(text) {
@@ -3495,21 +3577,23 @@ function shotAct(sh, header = false, pen = false) {
     const d = Math.hypot(to.x - from.x, to.y - from.y);
     (sim.shots || (sim.shots = [])).push({ team: i, x: from.x, y: from.y, xg: sh.xg || .05, outcome: sh.outcome, m: sim.rec ? sim.rec.m : 0, pen, header });
     return { dur: .15 + d / 26, from, to, h, owner: i, ownerAfter: sh.outcome === 'goal' ? i : 1 - i, carrierAfter: null, move, shapeBall: from, team: i, keep: pen,
-      text: pen ? `${cap(simName(shooter))} sparker!` : header ? `Hovedstød fra ${simName(shooter)}!` : `${cap(simName(shooter))} skyder!`,
+      text: pen ? `${cap(simName(shooter))} sparker!` : header ? sayV([`Hovedstød fra ${simName(shooter)}!`, `${cap(simName(shooter))} header mod mål!`, `${cap(simName(shooter))} kommer op i luften og header!`])
+        : sayV([`${cap(simName(shooter))} skyder!`, `${cap(simName(shooter))} afslutter!`, `${cap(simName(shooter))} prøver lykken!`, `Skud fra ${simName(shooter)}!`]),
       end() {
         pstat(shooter, 'shots');
         if (sh.outcome === 'goal' || sh.outcome === 'save') pstat(shooter, 'onT');
         const lp = sim.lastPass[i], assist = lp && lp.to === shooter && lp.from !== shooter ? lp.from : null;
         if (assist) pstat(assist, 'key');
         const ev = sim.rec.events.find(e => (e.type === 'goal' || e.type === 'shot') && e.team === i && !e.shown);
-        if (ev && sh.outcome === 'goal') ev.replay = simReplayCapture(i, shooter);
+        if (ev && sh.outcome === 'goal') { ev.replay = simReplayCapture(i, shooter); if (assist && !ev.assistTxt) { ev.assistTxt = true; ev.text += ` Oplæg: ${simName(assist)}.`; } }
         if (ev) { ev.shown = true; simUI.event(ev, sim.rec.label); }
         if (sh.outcome === 'goal') {
           pstat(shooter, 'goals'); if (assist) pstat(assist, 'assists');
           pstat(keeper.id, 'conceded'); sim.goalsShown[i]++; sim.pendingKickoff = 1 - i;
           simUI.score(); simUI.goal(i, shooter);
         } else if (sh.outcome === 'save') pstat(keeper.id, 'saves');
-        simUI.ticker({ goal: 'MÅL!', save: 'Redning!', wide: 'Forbi!', over: 'Over mål!', block: 'Blokeret!' }[sh.outcome], i);
+        simUI.ticker(sayV({ goal: ['MÅL!'], save: ['Redning!', 'Flot redning!', 'Målmanden redder!'], wide: ['Forbi!', 'Lige forbi!', 'Ved siden af!'],
+          over: ['Over mål!', 'Over overliggeren!', 'Højt over!'], block: ['Blokeret!', 'En forsvarer blokerer!'] }[sh.outcome]), i);
       } };
   });
 }
@@ -3518,20 +3602,20 @@ function afterShot(sh) {
   if (sh.outcome === 'goal') return [A(() => {
     const f = simF(), sc = sh.shooter.id, flag = relToPitch(i, sim.crng() < .5 ? 2 : f.W - 2, f.L - 2), move = { [sc]: flag };
     sim.lineup[tk(i)].forEach(p => { if (p.role !== 'GK' && p.id !== sc) move[p.id] = { x: flag.x + (sim.crng() - .5) * 8, y: flag.y + (i === 0 ? 5 : -5) + (sim.crng() - .5) * 6 }; });
-    return { dur: 3, from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: null, move, shapeBall: { x: f.W / 2, y: f.L / 2 }, team: i, text: `MÅL! ${cap(simName(sc))} jubler med holdkammeraterne` };
+    return { dur: 3, from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: null, move, shapeBall: { x: f.W / 2, y: f.L / 2 }, team: i, text: sayV([`MÅL! ${cap(simName(sc))} jubler med holdkammeraterne`, `${cap(simName(sc))} løber mod hjørneflaget og fejrer målet`, `Holdkammeraterne kaster sig over ${simName(sc)}`]) };
   })];
   if (sh.outcome === 'save') return [
-    A(() => { const k = keeperOf(d), at = { ...sim.pos[k.id] }; return { dur: .9, from: { ...sim.ball }, to: at, owner: d, carrierAfter: k.id, move: { [k.id]: at }, shapeBall: sim.ball, team: d, text: 'Målmanden griber bolden' }; }),
-    A(() => passInfo(d, { u: simF().W * (sim.crng() < .5 ? .2 : .8), v: simF().L * .22 }, 'short', { text: 'Målmanden sætter spillet i gang' })),
+    A(() => { const k = keeperOf(d), at = { ...sim.pos[k.id] }; return { dur: .9, from: { ...sim.ball }, to: at, owner: d, carrierAfter: k.id, move: { [k.id]: at }, shapeBall: sim.ball, team: d, text: sayV(['Målmanden griber bolden', 'Målmanden har bolden sikkert', 'Målmanden samler bolden op']) }; }),
+    A(() => passInfo(d, { u: simF().W * (sim.crng() < .5 ? .2 : .8), v: simF().L * .22 }, 'short', { text: sayV(['Målmanden sætter spillet i gang', 'Målmanden kaster bolden ud', 'Målmanden ruller bolden ud til en forsvarer']) })),
   ];
   if (sh.outcome === 'block') return [reachAct(d), A(() => sim.carrier && simTeamOf(sim.carrier) === d
-    ? passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .55 }, 'long', { text: `${cap(simName(sim.carrier))} rydder` }) : null)];
+    ? passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .55 }, 'long', { text: sayV([`${cap(simName(sim.carrier))} rydder`, `${cap(simName(sim.carrier))} sparker bolden væk`, `${cap(simName(sim.carrier))} får bolden ryddet`]) }) : null)];
   return [
     A(() => {
       const f = simF(), k = keeperOf(d), spot = relToPitch(d, f.W / 2 + (sim.crng() < .5 ? -1 : 1) * 8 * f.W / 68, 5.5 * f.L / 105);
       return { dur: 2, fast: true, from: { ...sim.ball }, to: spot, owner: d, carrierAfter: k.id, move: { [k.id]: spot }, shapeBall: spot, team: d, text: 'Målspark' };
     }),
-    A(() => passInfo(d, { u: simF().W * (.25 + .5 * sim.crng()), v: simF().L * .55 }, 'long', { text: 'Målmanden sparker langt' })),
+    A(() => passInfo(d, { u: simF().W * (.25 + .5 * sim.crng()), v: simF().L * .55 }, 'long', { text: sayV(['Målmanden sparker langt', 'Langt udspark fra målmanden']) })),
   ];
 }
 // Lader en spiller løbe mod et sted under hele handlingen (fx skytten ind i feltet).
@@ -3548,13 +3632,13 @@ function finishing(sh) {
     out.push(shotAct(sh, true));
   } else if (sh.type === 'behind') {
     out.push(A(() => passInfo(i, null, 'long', { to: sc, at: at(W / 2 + side * 6 * sx, L - 14 * sy), text: `Lang bold i dybden mod ${simName(sc)}` })));
-    out.push(A(() => carryInfo(i, { u: W / 2 + side * 3 * sx, v: L - 10 * sy }, `${cap(simName(sc))} er fri!`)));
+    out.push(A(() => carryInfo(i, { u: W / 2 + side * 3 * sx, v: L - 10 * sy }, sayV([`${cap(simName(sc))} er fri!`, `${cap(simName(sc))} er alene med målmanden!`, `${cap(simName(sc))} slipper fri af forsvaret!`]))));
     out.push(shotAct(sh));
   } else if (sh.type === 'longshot') {
     out.push(A(() => passInfo(i, null, 'short', { to: sc, at: at(W / 2 + side * 9 * sx, L - 26 * sy) })));
     out.push(shotAct(sh));
   } else if (sh.type === 'counter') {
-    out.push(A(() => passInfo(i, { u: W / 2 + side * 12 * sx, v: L * .55 }, 'long', { notId: sc, text: 'Hurtig omstilling!' })));
+    out.push(A(() => passInfo(i, { u: W / 2 + side * 12 * sx, v: L * .55 }, 'long', { notId: sc, text: sayV(['Hurtig omstilling!', 'Kontraangreb!', 'Nu går det stærkt!']) })));
     out.push(A(() => carryInfo(i, { u: W / 2 + side * 8 * sx, v: L - 24 * sy })));
     out.push(A(() => passInfo(i, null, 'through', { to: sc, at: at(W / 2 - side * 4 * sx, L - 13 * sy) })));
     out.push(shotAct(sh));
@@ -3608,7 +3692,7 @@ function reachAct(d) {
 function headedClear(i) {
   const d = 1 - i;
   return [reachAct(d), A(() => sim.carrier && simTeamOf(sim.carrier) === d
-    ? passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .5 }, 'long', { text: `${cap(simName(sim.carrier))} header bolden væk` }) : null)];
+    ? passInfo(d, { u: simF().W * (.2 + .6 * sim.crng()), v: simF().L * .5 }, 'long', { text: sayV([`${cap(simName(sim.carrier))} header bolden væk`, `${cap(simName(sim.carrier))} vinder luftduellen og rydder`, `${cap(simName(sim.carrier))} får hovedet på bolden og rydder`]) }) : null)];
 }
 // Viser næste endnu ikke viste hændelse fra motoren, der passer (kort, straffespark, skade …).
 function showEv(pred) {
@@ -3631,7 +3715,8 @@ function foulAct(i, f, o = {}) {
     const q = sim.pos[fid], d = Math.hypot(q.x - sim.ball.x, q.y - sim.ball.y), card = f && f.card;
     const cardTxt = card === 'yellow' ? ' Gult kort!' : card === 'second' ? ' Andet gule kort – rødt!' : card === 'red' ? ' Rødt kort!' : '';
     return { dur: clamp(d / 7.5, 1.1, 2.4), from: { ...sim.ball }, to: { ...sim.ball }, owner: i, carrierAfter: victim, move: { [fid]: { ...sim.ball }, [victim]: { ...sim.pos[victim] || sim.ball } }, shapeBall: sim.ball, team: 1 - i,
-      text: (o.text || `Frispark – ${simName(fid)} lægger ${simName(victim)} ned.`) + cardTxt,
+      text: (o.text || sayV([`Frispark – ${simName(fid)} lægger ${simName(victim)} ned.`, `${cap(simName(fid))} fælder ${simName(victim)} – frispark.`,
+        `Frispark! ${cap(simName(fid))} tager benene væk under ${simName(victim)}.`, `${cap(simName(fid))} stopper ${simName(victim)} ulovligt – frispark.`])) + cardTxt,
       end() {
         if (f) recordFoul(f); else pstat(fid, 'fouls');
         if (o.pen) showEv(e => e.type === 'pen' && e.team === i);
@@ -3665,7 +3750,7 @@ function penaltySeq(pa) {
   const into = { u: W / 2 + side * (4 + 6 * sim.crng()) * sx, v: L - 11 * sy };
   const S = [...buildUp(i, 2, .6)];
   S.push(A(() => passInfo(i, null, 'through', { to: vic, at: relToPitch(i, W / 2 + side * 10 * sx, L - 21 * sy), text: `Stikning til ${simName(vic)}` })));
-  S.push(withRun(A(() => carryInfo(i, into, `${cap(simName(vic))} trænger ind i feltet`)), pa.fouler.id, () => relToPitch(i, into.u - side * 1.2 * sx, into.v + 1.2 * sy)));
+  S.push(withRun(A(() => carryInfo(i, into, sayV([`${cap(simName(vic))} trænger ind i feltet`, `${cap(simName(vic))} går mod mål`, `${cap(simName(vic))} drejer op i feltet`]))), pa.fouler.id, () => relToPitch(i, into.u - side * 1.2 * sx, into.v + 1.2 * sy)));
   S.push(foulAct(i, pa, { text: `Straffespark! ${cap(simName(pa.fouler.id))} lægger ${simName(vic)} ned.`, pen: true }));
   if (pa.off) S.push(walkOffAct(pa, null, 1 - i));
   S.push(penSetupAct(pa));
@@ -3765,14 +3850,14 @@ function simMirror(a) {
 function blockedToCorner(i) {
   return A(() => {
     const f = simF(), to = relToPitch(i, sim.crng() < .5 ? 1 : f.W - 1, f.L + 1.5);
-    return { dur: 1.2, from: { ...sim.ball }, to, owner: i, carrierAfter: null, shapeBall: to, team: i, text: 'Blokeret – hjørnespark' };
+    return { dur: 1.2, from: { ...sim.ball }, to, owner: i, carrierAfter: null, shapeBall: to, team: i, text: sayV(['Blokeret – hjørnespark', 'En forsvarer får en fod på – hjørnespark']) };
   });
 }
 function throwInAct(i) {
   return [
     A(() => {
       const f = simF(), side = sim.ball.x < f.W / 2 ? -.5 : f.W + .5, to = { x: side, y: sim.ball.y + (sim.crng() - .5) * 8 };
-      return { dur: 1.1, from: { ...sim.ball }, to, owner: 1 - i, carrierAfter: null, shapeBall: to, team: 1 - i, text: 'Bolden går ud over sidelinjen' };
+      return { dur: 1.1, from: { ...sim.ball }, to, owner: 1 - i, carrierAfter: null, shapeBall: to, team: 1 - i, text: sayV(['Bolden går ud over sidelinjen', 'Bolden ryger ud til indkast', 'Ud over sidelinjen']) };
     }),
     A(() => {
       const t = nearestOf(i, sim.ball); if (!t) return null;
@@ -3795,7 +3880,7 @@ function offsideAct(o) {
       if (base) base();
       const ev = sim.rec.events.find(e => e.type === 'offside' && !e.shown);
       if (ev) { ev.shown = true; simUI.event(ev, sim.rec.label); }
-      simUI.ticker(`Offside! ${cap(simName(runner.id))} stod for langt fremme`, i);
+      simUI.ticker(sayV([`Offside! ${cap(simName(runner.id))} stod for langt fremme`, `Linjedommeren vifter med flaget – ${simName(runner.id)} er offside`]), i);
       const d = nearestOf(1 - i, sim.ball); if (d) { sim.pendingCarrier = d.id; }
     };
     return info;
@@ -3830,7 +3915,7 @@ function buildScript(rec) {
     const v = 1 - f.team, out = [A(() => ensureOwnerInfo(v)),
       A(() => { const q = sim.pos[f.fouler.id]; return q ? passInfo(v, pitchToRel(v, q), 'short') : null; }), foulAct(v, f)];
     if (f.off) out.push(walkOffAct(f));
-    out.push(A(() => passInfo(v, { ...pitchToRel(v, sim.ball), v: pitchToRel(v, sim.ball).v + 8 }, 'short', { text: 'Frisparket tages hurtigt' })));
+    out.push(A(() => passInfo(v, { ...pitchToRel(v, sim.ball), v: pitchToRel(v, sim.ball).v + 8 }, 'short', { text: sayV(['Frisparket tages hurtigt', 'Hurtigt frispark', 'Frisparket bliver taget med det samme']) })));
     return out;
   };
   const fkLead = team => [foulAct(team, fkFoul), ...(fkFoul && fkFoul.off ? [walkOffAct(fkFoul)] : [])];
@@ -3959,7 +4044,7 @@ function simLoadMinute() {
   sim.rec = rec; sim.queue = buildScript(rec); sim.qLen = sim.queue.length; sim.qDone = 0; sim.minuteOpen = true;
   simTickCondition();
   sim.mom[rec.m] = simMomentum(rec);
-  rec.events.filter(e => e.type === 'meta').forEach(e => { e.shown = true; simUI.event(e, rec.label); });
+  rec.events.filter(e => e.type === 'meta' && !e.ht).forEach(e => { e.shown = true; simUI.event(e, rec.label); });
   return true;
 }
 function simAfterMinute() {
@@ -4375,7 +4460,7 @@ function simNewMatch() {
   sim.A = simProfile(0); sim.B = simProfile(1);
   const seed = (Math.random() * 4294967296) >>> 0;
   sim.mt = createMatch(sim.A, sim.B, seed, { ai: [ui.simAssist ? 'Assistenten' : false, true] });
-  sim.crng = mulberry32(seed ^ 0x5bd1e995);
+  sim.crng = mulberry32(seed ^ 0x5bd1e995); sim.vrng = mulberry32(seed ^ 0x68e31da4);
   sim.rec = null; sim.queue = []; sim.act = null; sim.qLen = 0; sim.qDone = 0; sim.playing = false; sim.ended = false; sim.hold = 0; sim.statsShown = null;
   sim.pendingKickoff = 0; sim.pendingCarrier = null; sim.pendingRegain = null; sim.sp = null; sim.minuteOpen = false;
   const k = kickoffPlaces(0);
