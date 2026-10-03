@@ -12,7 +12,7 @@ Banen står i midten. Resten er delt i fire faner efter, hvad du er i gang med:
 - **Tegn:** tegneværktøjer, stregfarve, trin med noter og *Afspil*. Kun her tegner man; i de andre faner flytter banen kun spillere.
 - **Kamp:** forventet udfald, *Spil kampen*, assistenten, 500 simulerede kampe og feedback med styrker og svagheder.
 
-Øverst i Hold og Taktik skifter *Mit hold | Modstander* mellem holdene, og øjet viser eller skjuler modstanderen på banen. Tryk på tavlens navn for **tavlemenuen**: navn, mine tavler (ny, åbn fil, indsæt tekst, kopi, slet) og udseende (kampformat, holdfarver, logoer og navne/roller på banen). På telefonen ligger fanerne nederst, og panelet kan gøres større med håndtaget.
+Øverst i Hold og Taktik skifter *Mit hold | Modstander* mellem holdene, og øjet viser eller skjuler modstanderen på banen. Tryk på tavlens navn for **tavlemenuen**: navn, mine tavler (ny, åbn fil, indsæt tekst, kopi, slet) og udseende (kampformat, holdfarver, logoer og navne/roller på banen). På telefonen på højkant ligger fanerne nederst, og panelet kan gøres større med håndtaget. På tværs står banen til venstre og fanerne og panelet til højre, ligesom på computer og tablet.
 
 ## Hvad den kan
 

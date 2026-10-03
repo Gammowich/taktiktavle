@@ -350,34 +350,42 @@ button.role:hover { background: var(--accent-soft); color: var(--fg); }
 .switch input:checked + span::after { transform: translateX(18px); }
 .switch input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
 
-@media (min-width: 740px) and (min-height: 520px) {
-  .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 330px; grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "stage tabs" "stage panel"; gap: 12px 16px; }
-  .stage { grid-area: stage; }
-  .tabs { grid-area: tabs; }
-  .panel { grid-area: panel; }
+/* Bred opstilling (computer, tablet og telefon på tværs): banen til venstre, faner og panel til højre.
+   Smal opstilling (telefon på højkant): banen øverst, panelet under og fanerne nederst.
+   Klassen sættes af scriptet ud fra layoutQuery. */
+.wide-layout .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 330px; grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "stage tabs" "stage panel"; gap: 12px 16px; }
+.wide-layout .stage { grid-area: stage; }
+.wide-layout .tabs { grid-area: tabs; }
+.wide-layout .panel { grid-area: panel; }
+@media (min-width: 1100px) {
+  .wide-layout .workspace { grid-template-columns: minmax(0, 1fr) 370px; }
 }
-@media (min-width: 1100px) and (min-height: 520px) {
-  .workspace { grid-template-columns: minmax(0, 1fr) 370px; }
+@media (max-width: 739px) {
+  .wide-layout .workspace { grid-template-columns: minmax(0, 1fr) 290px; }
 }
-@media not all and (min-width: 740px) and (min-height: 520px) {
-  .workspace { gap: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)); }
-  .board { min-height: 170px; }
-  .panel { flex: 0 0 auto; height: 42vh; height: 42dvh; padding: 0 12px 12px; }
-  .panel.expanded { height: 74vh; height: 74dvh; }
-  .panel-grip { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; flex: none; height: 24px; margin: 0 -12px 4px; border: 0; background: var(--surface); }
-  .panel-grip span { width: 40px; height: 5px; border-radius: 3px; background: var(--line); }
-  .workspace[data-tab="tegn"] .panel { display: none; }
-  .workspace[data-tab="kamp"] .stage { display: none; }
-  .workspace[data-tab="kamp"] .panel { flex: 1 1 auto; height: auto; padding-top: 12px; }
-  .workspace[data-tab="kamp"] .panel-grip { display: none; }
-  .tabs { order: 3; flex: none; }
-  .tabs button { height: 52px; }
-  .stage-hint { display: none; }
-  /* Trin: knapperne og Afspil øverst, noten og slet under */
-  .stepbar #playBtn { margin-left: auto; }
-  .stepbar .note { order: 4; flex: 1 1 calc(100% - 52px); }
-  .stepbar #delStep { order: 5; }
+@media (max-height: 500px) {
+  .wide-layout .stage-hint { display: none; }
+  .wide-layout .workspace { gap: 8px 12px; padding-bottom: 8px; }
+  .wide-layout .tabs button { height: 42px; flex-direction: row; gap: 6px; }
+  .wide-layout .panel { padding: 10px; }
 }
+.narrow-layout .workspace { gap: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)); }
+.narrow-layout .board { min-height: 170px; }
+.narrow-layout .panel { flex: 0 0 auto; height: 42vh; height: 42dvh; padding: 0 12px 12px; }
+.narrow-layout .panel.expanded { height: 74vh; height: 74dvh; }
+.narrow-layout .panel-grip { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; flex: none; height: 24px; margin: 0 -12px 4px; border: 0; background: var(--surface); }
+.narrow-layout .panel-grip span { width: 40px; height: 5px; border-radius: 3px; background: var(--line); }
+.narrow-layout .workspace[data-tab="tegn"] .panel { display: none; }
+.narrow-layout .workspace[data-tab="kamp"] .stage { display: none; }
+.narrow-layout .workspace[data-tab="kamp"] .panel { flex: 1 1 auto; height: auto; padding-top: 12px; }
+.narrow-layout .workspace[data-tab="kamp"] .panel-grip { display: none; }
+.narrow-layout .tabs { order: 3; flex: none; }
+.narrow-layout .tabs button { height: 52px; }
+.narrow-layout .stage-hint { display: none; }
+/* Trin på telefonen: knapperne og Afspil øverst, noten og slet under */
+.narrow-layout .stepbar #playBtn { margin-left: auto; }
+.narrow-layout .stepbar .note { order: 4; flex: 1 1 calc(100% - 52px); }
+.narrow-layout .stepbar #delStep { order: 5; }
 @media (max-height: 500px) {
   .topbar { min-height: 48px; padding-block: 4px; }
   .note { display: none; }
@@ -571,6 +579,25 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 
 /* ---------- Feedback ---------- */
 dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
+/* Telefon: kampvisning og feedback fylder hele bredden som de andre dialoger (reglerne ovenfor gav dem bredde uden margin). */
+@media (max-width: 599px) {
+  dialog.dlg.sim, dialog.dlg.fb { width: 100%; max-width: 100%; }
+}
+/* Lav skærm (telefon på tværs): hele kampvisningen ruller, knapperne står over banen, og banen og
+   kommentarerne står side om side i skærmens højde. */
+@media (max-height: 500px) and (min-width: 600px) {
+  dialog.dlg.sim { height: calc(100% - 16px); overflow-y: auto; }
+  dialog.dlg.sim[open] { display: block; }
+  .sim-body { height: auto; grid-template-rows: none; gap: 8px; padding: 10px 16px 14px; }
+  .sim-body .dlg-head h2 { font-size: 22px; }
+  .scoreboard { padding: 6px 14px; }
+  .sb-score { font-size: 28px; }
+  .momentum { display: none; }
+  .sim-controls { order: 1; }
+  .sim-more { bottom: auto; top: calc(100% + 8px); }
+  .sim-grid { order: 2; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-rows: none; }
+  .sim-pitch, .sim-side { height: max(240px, calc(100vh - 32px)); min-height: 0; }
+}
 .fb-outlook:empty { display: none; }
 .fb-grid { display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr); gap: 18px; align-items: start; }
 .fb-pitch { margin: 0; display: flex; flex-direction: column; gap: 8px; position: sticky; top: 0; }
@@ -2477,7 +2504,7 @@ $('#labelSeg').addEventListener('click', e => {
 $('#ghostToggle').addEventListener('change', e => { ui.ghost = e.target.checked; savePrefs(); render(); });
 
 /* ---- Faner: Hold, Taktik, Tegn og Kamp ---- */
-const workspace = $('#workspace'), layoutQuery = matchMedia('(min-width: 740px) and (min-height: 520px)');
+const workspace = $('#workspace'), layoutQuery = matchMedia('(min-width: 740px) and (min-height: 520px), (min-width: 600px) and (orientation: landscape)');
 const TABS = ['hold', 'taktik', 'tegn', 'kamp'];
 // Værktøjerne står i panelet på store skærme og under banen på telefonen.
 function placeToolbar() {
@@ -2502,7 +2529,13 @@ $('#tabs').addEventListener('keydown', e => {
   const k = TABS.indexOf(ui.tab), d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
   if (d) { e.preventDefault(); setTab(TABS[(k + d + TABS.length) % TABS.length], true); }
 });
-layoutQuery.addEventListener('change', () => { placeToolbar(); resize(); });
+function applyLayout() {
+  const wide = layoutQuery.matches;
+  document.documentElement.classList.toggle('wide-layout', wide);
+  document.documentElement.classList.toggle('narrow-layout', !wide);
+  placeToolbar(); resize();
+}
+layoutQuery.addEventListener('change', applyLayout);
 $('#panelGrip').addEventListener('click', () => {
   const on = !panel.classList.contains('expanded');
   panel.classList.toggle('expanded', on);
@@ -5000,7 +5033,7 @@ function refreshAll() {
   for (const c of candidates) { try { b = normalizeBoard(c); break; } catch (_) {} }
   board = b || exampleBoard();
   buildToolbar();
-  placeToolbar();
+  applyLayout();
   resetHistory();
   nameInput.value = board.name;
   renderPanel(); updateToolbar();
