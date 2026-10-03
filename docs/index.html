@@ -276,13 +276,13 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .card-title { margin: 0; font: 800 24px/1 var(--font-display); letter-spacing: .02em; text-transform: uppercase; }
 .btn-big { height: 50px; font-size: 16px; font-weight: 700; }
 .switch-row { justify-content: space-between; font-size: 14px; }
-.link-btn { align-self: flex-start; padding: 4px 0; border: 0; background: none; color: var(--accent); font-weight: 700; }
+.link-btn { align-self: flex-start; padding: 4px 0; border: 0; background: none; color: color-mix(in srgb, var(--accent) 80%, var(--fg)); font-weight: 700; }
 #manyResult:empty { display: none; }
 #manyResult { display: flex; flex-direction: column; gap: 6px; }
 #fbBrief { display: flex; flex-direction: column; gap: 10px; }
 .brief h4, #manyResult h4 { margin: 0 0 4px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
-.brief.good h4 { color: var(--good); }
-.brief.bad h4 { color: var(--danger); }
+.brief.good h4 { color: color-mix(in srgb, var(--good) 80%, var(--fg)); }
+.brief.bad h4 { color: color-mix(in srgb, var(--danger) 80%, var(--fg)); }
 .brief ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; line-height: 1.45; }
 /* Værktøjerne i panelets Tegn-fane (store skærme) */
 .pane .toolbar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 0; background: none; border: 0; border-radius: 0; overflow: visible; }
@@ -544,7 +544,7 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .sim-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .sim-controls { position: relative; }
 .sim-controls .spacer { flex: 1 1 auto; }
-.speed-btn { min-width: 56px; font: 800 18px/1 var(--font-display); }
+.speed-btn { min-width: 56px; font: 800 16px/1 var(--font-ui); font-variant-numeric: tabular-nums; }
 .sim-more {
   position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 5; min-width: 250px; display: flex; flex-direction: column; padding: 6px;
   background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
