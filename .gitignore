@@ -7,3 +7,8 @@ __pycache__/
 
 # Lokale Claude-indstillinger (personlige)
 .claude/settings.local.json
+
+# Byggede programmer (mac/build.sh, windows/build.sh)
+mac/build/
+windows/build/
+windows/.godot/

@@ -47,19 +47,67 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | `docs/` | Den færdige webapp. GitHub Pages udgiver denne mappe. |
 | `tools/make_icons.py` | Tegner app-ikonerne i `docs/icons/`. |
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
-| `launcher/Taktiktavle.html` | Startsiden i MG Games-launcheren. Den åbner appen på GitHub Pages. |
+| `mac/` | Mac-programmet til MG Games-launcheren: appen i sit eget vindue (Swift, WKWebView). `mac/build.sh` bygger det. |
+| `windows/` | Windows-programmet til launcheren (Godot 4.7): appen i sit eget vindue via Edge eller Chrome. `windows/build.sh` bygger det. |
+| `launcher/Taktiktavle.html` | Den første startside i launcheren (build 1). Den åbnede appen i browseren. Bruges ikke længere. |
 | `launcher/omslag.html` | Kilden til omslaget i launcheren (1920 × 700). |
 | `launcher/GRAFIK_LAUNCHER.md` | Hvad nye billeder til launcheren skal opfylde (omslag og ikon). |
 | `launcher/omslag_zoner.png` | Skabelon i 1920 × 700, der viser, hvilke dele af omslaget launcheren viser. |
 
 ## I MG Games-launcheren
 
-Launcheren installerer `launcher/Taktiktavle.html` og åbner den i standardbrowseren. Siden sender videre til
-https://gammowich.github.io/taktiktavle/. Det betyder:
+I MG Games-launcheren åbner Taktiktavle i sit eget vindue, ligesom Viking Legacy og SWAAG. Begge programmer henter appen
+fra https://gammowich.github.io/taktiktavle/. Derfor er appen altid i nyeste udgave. Programmerne skal kun bygges og
+udgives igen, når de selv ændres.
 
-- Launcheren åbner altid nyeste udgave.
-- Tavlerne er de samme som i den browser.
-- Launcheren skal kun udgives igen, hvis startsiden eller omslaget ændres.
+- **Mac:** `mac/Taktiktavle.swift` er et lille program med et indbygget browservindue (WKWebView). Det fylder ca. 800 KB
+  og er bygget til Apple silicon og Intel med macOS 12 eller nyere. Det er kun afprøvet på macOS 26.
+  - Del → Gem bruger Macens gem-vindue, og Åbn fil bruger Macens filvalg.
+  - ⌘Z går til appens fortryd.
+  - Programmet sender `pagehide`, når det lukker, så appen når at gemme.
+  - Andre links åbner i standardbrowseren.
+  - Uden net åbner den udgave, der blev hentet sidst. Er der intet hentet, viser programmet en side, der forklarer det.
+- **Windows (ikke afprøvet på en Windows-pc):** `windows/main.gd` er et Godot-program uden eget vindue. Det åbner appen i Edge, som følger med Windows, i
+  app-tilstand: eget vindue uden faner og adresselinje.
+  - Edge bruger sin egen profil i `%LOCALAPPDATA%\Taktiktavle\browser`.
+  - Programmet venter, til vinduet lukkes, så launcheren viser "Kører".
+  - Uden Edge bruges Chrome. Er der ingen af dem, eller lukker browseren med det samme, åbnes appen i standardbrowseren.
+- **iPad, iPhone og Android:** her findes launcheren ikke. Appen lægges på hjemmeskærmen fra browseren (se nedenfor).
+
+**Tavlerne** gemmes i hvert program for sig, adskilt fra browseren. En tavle flyttes med Del → Gem som fil og Tavlen →
+Åbn fil.
+
+Byg og afprøv Mac-programmet:
+
+```bash
+mac/build.sh
+```
+
+```bash
+mac/build/Taktiktavle.app/Contents/MacOS/Taktiktavle --smoke
+```
+
+Røgtesten (`--smoke`) prøver disse ting af:
+
+- at appen bliver indlæst,
+- lageret, og at en ændring lige før lukning bliver gemt,
+- ⌘Z,
+- Gem billede og Gem som fil,
+- Kopiér billede (udklipsholderen lægges tilbage),
+- Åbn fil.
+
+Den bruger sit eget lager, så de rigtige tavler ikke bliver rørt. Med `--headless` kører den uden vindue og springer
+⌘Z, udklipsholderen og Åbn fil over, fordi de kræver rigtige klik. `TAKTIKTAVLE_URL` peger den mod en anden adresse,
+fx en lokal server med `docs/`.
+
+Byg Windows-programmet:
+
+```bash
+windows/build.sh
+```
+
+Det kan ikke køres på Macen. Logikken kan dog afprøves på Macen med Chrome: `Godot --path windows -- --smoke` og
+`TAKTIKTAVLE_DRY=1 Godot --path windows`.
 
 Omslag og ikon ligger i `~/Claude/MGGamesLauncher/games/taktiktavle/`. Ikonet er `docs/icons/icon-512.png` skaleret til
 256 × 256. Omslaget laves sådan:

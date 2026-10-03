@@ -1,0 +1,25 @@
+; Taktiktavle til Windows i MG Games-launcheren: åbner appen i sit eget vindue (Edge eller Chrome i app-tilstand).
+; Godot 4.7.x project file. Byg: windows/build.sh
+
+config_version=5
+
+[application]
+
+config/name="Taktiktavle"
+config/description="Taktiktavle i sit eget vindue til MG Games-launcheren"
+run/main_scene="res://main.tscn"
+config/features=PackedStringArray("4.7")
+run/low_processor_mode=true
+run/max_fps=5
+boot_splash/show_image=false
+config/icon="res://icon.png"
+
+[audio]
+
+driver/driver="Dummy"
+
+[display]
+
+display_server/driver="headless"
+display_server/driver.windows="headless"
+display_server/driver.macos="headless"
