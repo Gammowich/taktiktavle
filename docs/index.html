@@ -465,6 +465,7 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .wdl-legend { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .sim-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .sim-controls .segmented { grid-auto-columns: 44px; }
+.assist-row { font-size: 14px; margin-bottom: 2px; }
 .sim-controls .btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 @media (max-width: 760px) {
   .sim-grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(200px, 44%) minmax(0, 1fr); }
@@ -1263,7 +1264,7 @@ const store = {
    ========================================================= */
 let board;
 const ui = { tool: 'move', ink: '#ffffff', frame: 0, selected: null, highlight: null, labels: 'name', ghost: true,
-  playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false } };
+  playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false }, simAssist: false };
 const hist = { stack: [], idx: -1 };
 const curFrame = () => board.frames[ui.frame];
 
@@ -1303,7 +1304,7 @@ function flushSave() {
     toast('Tavlen kunne ikke gemmes, fordi browserens lager er fuldt. Gem den som fil under Del.');
   }
 }
-function savePrefs() { store.setPrefs({ labels: ui.labels, ghost: ui.ghost, ink: ui.ink, hintSeen: ui.hintSeen }); }
+function savePrefs() { store.setPrefs({ labels: ui.labels, ghost: ui.ghost, ink: ui.ink, hintSeen: ui.hintSeen, simAssist: ui.simAssist }); }
 
 /* =========================================================
    Visning: bane ↔ skærm
@@ -2898,6 +2899,9 @@ const BOX_FOUL_W = { CB: 3, LB: 2, RB: 2, LWB: 2, RWB: 2, DM: 1.5, CM: .8, GK: .
 const PEN_P = { central: .0065, behind: .01, counter: .009, press: .0065, wing: .0026 };
 const roleLoad = r => r === 'GK' ? .2 : ['LB', 'RB', 'LWB', 'RWB', 'LW', 'RW', 'LM', 'RM'].includes(r) ? 1.15 : ['CM', 'DM', 'CAM'].includes(r) ? 1.08 : .88;
 const MAX_SUBS = 5;
+// Hvilke egenskaber en udskifter skal have til en given plads (bruges, når bænken vælges).
+const FIT_ATTRS = { GK: ['gk'], CB: ['def', 'phys'], LB: ['def', 'pace'], RB: ['def', 'pace'], LWB: ['pace', 'def'], RWB: ['pace', 'def'], DM: ['def', 'tech'],
+  CM: ['tech', 'phys'], CAM: ['tech', 'shoot'], LM: ['pace', 'tech'], RM: ['pace', 'tech'], LW: ['pace', 'tech'], RW: ['pace', 'tech'], SS: ['shoot', 'tech'], CF: ['shoot', 'phys'] };
 
 // opts.events = false slår frispark, kort, straffespark og skader fra, og opts.ai = [false, false] slår
 // managerne fra. Så trækker motoren præcis de samme tilfældige tal som den oprindeligt kalibrerede.
@@ -2908,7 +2912,9 @@ function createMatch(A, B, seed, opts = {}) {
     fouls: 0, yellow: 0, red: 0, pens: 0, penGoals: 0, injuries: 0, subs: 0 }));
   const cards = {}, cond = {}, nums = [0, 1].map(i => new Set(T[i].players.map(p => String(p.num))));
   // Modstanderens manager: udskiftninger omkring 60., 70. og 80. minut og taktikskift sent i kampen.
-  const mgr = [0, 1].map(i => AIS[i] ? { subsAt: [57 + Math.floor(rnd() * 7), 67 + Math.floor(rnd() * 7), 77 + Math.floor(rnd() * 6)], mood: 0 } : null);
+  // ai[i] kan være true eller en betegnelse til kommentarerne (fx 'Assistenten' for eget hold).
+  const newMgr = label => ({ subsAt: [57 + Math.floor(rnd() * 7), 67 + Math.floor(rnd() * 7), 77 + Math.floor(rnd() * 6)], mood: 0, made: 0, last: 0, on: true, label: typeof label === 'string' ? label : null });
+  const mgr = [0, 1].map(i => AIS[i] ? newMgr(AIS[i]) : null);
   const snap = () => st.map(x => ({ ...x }));
   const timeline = [];
   let cur = null;
@@ -2943,7 +2949,11 @@ function createMatch(A, B, seed, opts = {}) {
   // Udskifter: først fra holdets bænk, ellers en reserve med gennemsnitlige egenskaber.
   function reserve(i, role) {
     const X = T[i];
-    if (X.bench && X.bench.length) { const b = X.bench[0]; T[i] = { ...X, bench: X.bench.slice(1) }; nums[i].add(String(b.num)); return { ...b, role }; }
+    if (X.bench && X.bench.length) {
+      const ks = FIT_ATTRS[role] || ['tech', 'phys'], fit = p => ks.reduce((a, k) => a + attrOf(p, k), 0);
+      const b = X.bench.reduce((best, p) => fit(p) > fit(best) ? p : best, X.bench[0]);
+      T[i] = { ...X, bench: X.bench.filter(p => p !== b) }; nums[i].add(String(b.num)); return { ...b, role };
+    }
     let n = 12; while (nums[i].has(String(n))) n++;
     nums[i].add(String(n));
     return { id: `${X.key || 'hold' + i}-res${n}`, role, num: String(n), name: '', reserve: true };
@@ -3038,17 +3048,23 @@ function createMatch(A, B, seed, opts = {}) {
     }
   }
   function manage(i, mn) {
-    const P = mgr[i]; if (!P) return;
+    const P = mgr[i]; if (!P || !P.on) return;
     const X = T[i], diff = st[i].goals - st[1 - i].goals;
-    if (P.subsAt.includes(mn) && (X.subsUsed || 0) < MAX_SUBS) {
-      const tired = outfieldOf(X.players).sort((a, b) => (cond[a.id] ?? 100) - (cond[b.id] ?? 100))[0];
-      if (tired && (cond[tired.id] ?? 100) < 88) {
-        const inP = reserve(i, tired.role); substitute(i, tired, inP);
-        cur.events.push({ type: 'sub', team: i, text: `Udskiftning hos ${X.name}: ${cap(label(inP))} ind for ${label(tired)}.` });
-        cur.acts.push({ kind: 'sub', team: i, player: tired, sub: inP });
+    // Udskiftninger i tre vinduer (ca. 60., 70. og 80. minut): den mest trætte markspiller, eller en forsvarer/midtbanespiller
+    // med gult kort. Et hold med egen bænk skifter kun ind fra bænken.
+    const benchOk = !Array.isArray(X.bench) || X.bench.length > 0;
+    if (P.made < P.subsAt.length && mn >= P.subsAt[P.made] && mn - P.last >= 4 && (X.subsUsed || 0) < MAX_SUBS && benchOk) {
+      const risk = p => cards[p.id] && ['CB', 'LB', 'RB', 'LWB', 'RWB', 'DM', 'CM'].includes(p.role) ? 15 : 0;
+      const c0 = outfieldOf(X.players).map(p => ({ p, s: 100 - (cond[p.id] ?? 100) + risk(p) })).sort((a, b) => b.s - a.s)[0];
+      if (c0 && c0.s > 12) {
+        const out = c0.p, cnd = Math.round(cond[out.id] ?? 100), why = risk(out) && cnd >= 80 ? 'har gult kort' : `${cnd} % kondition${risk(out) ? ' og gult kort' : ''}`;
+        const inP = reserve(i, out.role); substitute(i, out, inP); P.made++; P.last = mn;
+        cur.events.push({ type: 'sub', team: i, text: P.label ? `${P.label} skifter: ${cap(label(inP))} ind for ${label(out)} (${why}).`
+          : `Udskiftning hos ${X.name}: ${cap(label(inP))} ind for ${label(out)} (${why}).` });
+        cur.acts.push({ kind: 'sub', team: i, player: out, sub: inP });
       }
     }
-    const set = (ch, text, mood) => { T[i] = { ...T[i], ...ch }; P.mood = mood; cur.events.push({ type: 'tactic', team: i, text }); cur.acts.push({ kind: 'tactic', team: i, change: ch }); };
+    const set = (ch, text, mood) => { T[i] = { ...T[i], ...ch }; P.mood = mood; text = P.label ? `${P.label}: ${text}` : text; cur.events.push({ type: 'tactic', team: i, text }); cur.acts.push({ kind: 'tactic', team: i, change: ch }); };
     const Z = T[i];
     if (diff < 0 && mn >= 65 && P.mood !== 1) set({ style: Math.min(1, Z.style + 1), tempo: Math.min(5, Z.tempo + 1), press: Math.min(5, Z.press + 1), line: Math.min(5, Z.line + 1) },
       `${Z.name} ${diff === -1 ? 'går efter udligningen' : 'forsøger at komme tilbage i kampen'}: mere offensivt, højere tempo og højere pres.`, 1);
@@ -3192,6 +3208,12 @@ function createMatch(A, B, seed, opts = {}) {
     score: () => [st[0].goals, st[1].goals],
     cond: id => cond[id] ?? 100,
     cards: id => cards[id] || 0,
+    // Slår en manager til eller fra undervejs (assistenten for eget hold).
+    setManager(i, on, label) {
+      if (on && !mgr[i]) mgr[i] = newMgr(label);
+      if (mgr[i]) { mgr[i].on = !!on; if (label !== undefined) mgr[i].label = typeof label === 'string' ? label : null; }
+    },
+    manager: i => !!(mgr[i] && mgr[i].on),
   };
 }
 function simulateMatch(A, B, seed, opts) {
@@ -3200,10 +3222,10 @@ function simulateMatch(A, B, seed, opts) {
   return { timeline: mt.timeline, stats: mt.stats(), score: mt.score(), seed };
 }
 
-function simulateMany(A, B, n) {
+function simulateMany(A, B, n, opts) {
   const r = { n, w: 0, d: 0, l: 0, g: [0, 0], x: [0, 0], poss: 0 };
   for (let i = 0; i < n; i++) {
-    const m = simulateMatch(A, B, (Math.random() * 4294967296) >>> 0), [a, b] = m.score;
+    const m = simulateMatch(A, B, (Math.random() * 4294967296) >>> 0, opts), [a, b] = m.score;
     if (a > b) r.w++; else if (a === b) r.d++; else r.l++;
     r.g[0] += a / n; r.g[1] += b / n; r.x[0] += m.stats[0].xg / n; r.x[1] += m.stats[1].xg / n;
     r.poss += m.stats[0].possMin / (m.stats[0].possMin + m.stats[1].possMin) / n;
@@ -3730,6 +3752,7 @@ function simMirror(a) {
     const t = sim.tac[key], ch = a.change;
     if ('style' in ch) t.style = ['def', 'normal', 'off'][ch.style + 1];
     for (const k of ['press', 'line', 'tempo']) if (k in ch) t[k] = ch[k];
+    if (i === 0) simRenderTactic();
     return;
   }
   const outId = a.kind === 'foul' || a.kind === 'pen' ? a.fouler.id : a.player.id;
@@ -3740,6 +3763,7 @@ function simMirror(a) {
     line[k] = inP; useBench(inP.id); sim.subs[i]++;
     leave(outP, a.kind === 'injury' ? 'injured' : 'subbedOff');
     sim.pos[inP.id] = entry();
+    if (i === 0) simRenderTactic();
     return;
   }
   // Uden afløser: spilleren forlader banen, og den mest offensive overtager pladsen (motoren afgør hvem).
@@ -4274,7 +4298,7 @@ function simRenderAnalysis() {
       <p class="muted small">Gennemsnit: ${m.g[0].toFixed(1).replace('.', ',')}–${m.g[1].toFixed(1).replace('.', ',')} i mål · xG ${m.x[0].toFixed(2).replace('.', ',')}–${m.x[1].toFixed(2).replace('.', ',')} · boldbesiddelse ${Math.round(m.poss * 100)}–${100 - Math.round(m.poss * 100)} %.</p></div>` : '';
   $('#simPanelAnalysis').innerHTML = `<div><h3>Det afgør kampen</h3>${f.length ? `<ul>${f.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : '<p class="muted small">Holdene er taktisk jævnbyrdige. Tilfældigheder og afslutninger afgør kampen.</p>'}</div>
     ${manyHTML}
-    <p class="muted small">Simuleringen bruger formation, udgangspunkt, instruktioner, dødboldtaktik og spillernes egenskaber (1–10). ${esc(sim.B.name)} har en manager, der skifter ud og ændrer taktik sent i kampen.</p>`;
+    <p class="muted small">Simuleringen bruger formation, udgangspunkt, instruktioner, dødboldtaktik og spillernes egenskaber (1–10). ${esc(sim.B.name)} har en manager, der skifter ud og ændrer taktik sent i kampen${ui.simAssist ? ` – og assistenten styrer ${esc(sim.A.name)}` : ''}. De ${m ? m.n : 500} simulerede kampe bruger de samme managere.</p>`;
 }
 // Taktik undervejs: kun for eget hold, gælder kun i denne kamp og fra næste minut.
 const SHOUTS = [
@@ -4287,7 +4311,9 @@ const SHOUTS = [
 function simRenderTactic() {
   const t = sim.tac.home;
   const benchFree = sim.bench.filter(b => !b.used);
-  $('#simPanelTactic').innerHTML = `<p class="muted small">Ændringer gælder kun i denne kamp og virker fra næste minut.</p>
+  $('#simPanelTactic').innerHTML = `<label class="check assist-row"><span class="switch"><input type="checkbox" id="simAssist"${ui.simAssist ? ' checked' : ''}><span></span></span><b>Assistenten styrer mit hold</b></label>
+    <p class="muted small">Assistenten skifter trætte spillere (og forsvarere med gult kort) ud fra bænken omkring 60., 70. og 80. minut og vælger den udskifter, der passer bedst til pladsen. Sent i kampen går den efter udligningen, når I er bagud, og lukker ned, når I fører. Du kan stadig selv gribe ind.${sim.bench.some(b => !b.used) ? '' : ' Bænken er tom, så assistenten kan kun ændre taktikken.'}</p>
+    <p class="muted small">Ændringer gælder kun i denne kamp og virker fra næste minut.</p>
     <div class="sub-label">Udgangspunkt</div>
     <div class="segmented" role="radiogroup" aria-label="Udgangspunkt">${Object.entries(STYLES).map(([k, l]) => `<button type="button" role="radio" data-sim-style="${k}" aria-checked="${k === t.style}">${l}</button>`).join('')}</div>
     <div class="sliders">${TACTIC_KEYS.map(k => `<label class="slider"><span class="sl-name">${k.label}</span><input type="range" min="1" max="5" step="1" data-sim-tk="${k.key}" value="${t[k.key]}" aria-valuetext="${k.vals[t[k.key] - 1]}"><span class="sl-val">${k.vals[t[k.key] - 1]}</span></label>`).join('')}</div>
@@ -4300,6 +4326,8 @@ function simRenderTactic() {
       <button type="button" class="btn btn-sm" id="simSubGo"${!benchFree.length || sim.subs[0] >= 5 || sim.ended ? ' disabled' : ''}>Skift</button></div>`
       : '<p class="muted small">Tilføj udskiftere under Udskiftere i panelet for at kunne skifte undervejs.</p>'}`;
 }
+// Simulerede kampe bruger de samme managere som kampen: modstanderens og (hvis slået til) assistenten.
+const simManyOpts = () => ({ ai: [ui.simAssist, true] });
 function simApplyTactic(note) {
   simFlushMirrors(true);
   sim.A = simProfile(0);
@@ -4331,6 +4359,15 @@ $('#simPanelTactic').addEventListener('click', e => {
   }
 });
 $('#simPanelTactic').addEventListener('change', e => {
+  if (e.target.id === 'simAssist') {
+    ui.simAssist = e.target.checked; savePrefs();
+    if (sim.mt && !sim.ended) {
+      sim.mt.setManager(0, ui.simAssist, 'Assistenten');
+      simUI.event({ type: 'meta', text: ui.simAssist ? `Assistenten styrer nu ${sim.A.name}.` : `Du styrer selv ${sim.A.name} igen.` }, sim.rec ? sim.rec.label : "0'");
+    }
+    simRenderTactic();
+    return;
+  }
   const el = e.target.closest('[data-sim-tk]'); if (!el) return;
   const k = TACTIC_KEYS.find(x => x.key === el.dataset.simTk);
   sim.tac.home[k.key] = clamp(Number(el.value), 1, 5);
@@ -4353,7 +4390,7 @@ function simNewMatch() {
   sim.subs = [0, 0]; sim.ps = {}; sim.ts = [{}, {}]; sim.mom = []; sim.leaving = {}; sim.mirrors = []; sim.vel = {}; sim.shots = []; sim.avg = {}; sim.tape = []; sim.replays = {}; sim.replay = null; sim.doneMin = 0; sim.goalsShown = [0, 0]; sim.lastPass = [null, null];
   sim.A = simProfile(0); sim.B = simProfile(1);
   const seed = (Math.random() * 4294967296) >>> 0;
-  sim.mt = createMatch(sim.A, sim.B, seed);
+  sim.mt = createMatch(sim.A, sim.B, seed, { ai: [ui.simAssist ? 'Assistenten' : false, true] });
   sim.crng = mulberry32(seed ^ 0x5bd1e995);
   sim.rec = null; sim.queue = []; sim.act = null; sim.qLen = 0; sim.qDone = 0; sim.playing = false; sim.ended = false; sim.hold = 0; sim.statsShown = null;
   sim.pendingKickoff = 0; sim.pendingCarrier = null; sim.pendingRegain = null; sim.sp = null; sim.minuteOpen = false;
@@ -4364,8 +4401,8 @@ function simNewMatch() {
   $('#simFeed').innerHTML = ''; $('#simFlash').hidden = true; $('#simTicker').hidden = true;
   $('#sbHome').textContent = sim.A.name; $('#sbAway').textContent = sim.B.name;
   $('#sbHomeDot').style.setProperty('--c', sim.A.kit); $('#sbAwayDot').style.setProperty('--c', sim.B.kit);
-  const pre = simulateMany(sim.A, sim.B, 300), pc = v => Math.round(v / pre.n * 100), kf = keyFactors(sim.A, sim.B)[0];
-  simUI.event({ type: 'meta', text: `Før kampen (300 simulerede kampe): ${sim.A.name} vinder ${pc(pre.w)} %, uafgjort ${pc(pre.d)} %, ${sim.B.name} vinder ${pc(pre.l)} %.${kf ? ' ' + kf : ''}` }, 'Før');
+  const pre = simulateMany(sim.A, sim.B, 300, simManyOpts()), pc = v => Math.round(v / pre.n * 100), kf = keyFactors(sim.A, sim.B)[0];
+  simUI.event({ type: 'meta', text: `Før kampen (300 simulerede kampe): ${sim.A.name} vinder ${pc(pre.w)} %, uafgjort ${pc(pre.d)} %, ${sim.B.name} vinder ${pc(pre.l)} %.${kf ? ' ' + kf : ''}${ui.simAssist ? ` Assistenten styrer ${sim.A.name}.` : ''}` }, 'Før');
   sim.mt.timeline[0].events.forEach(e => simUI.event(e, "0'"));
   simUI.score(); simUI.minute(); simRenderAnalysis(); simRenderTactic(); simControls();
   simUI.ticker(`${sim.A.name} mod ${sim.B.name} – klar til afspark`, null);
@@ -4414,7 +4451,7 @@ $('#simLabels').addEventListener('click', e => {
 $('#simSkip').addEventListener('click', () => { sim.playing = false; sim.hold = 0; $('#simFlash').hidden = true; simSkipToEnd(); simDraw(); });
 $('#simNew').addEventListener('click', () => { simNewMatch(); simSetTab('feed'); simDraw(); });
 $('#simMany').addEventListener('click', () => {
-  sim.many = simulateMany(simProfile(0), simProfile(1), 500);
+  sim.many = simulateMany(simProfile(0), simProfile(1), 500, simManyOpts());
   simRenderAnalysis(); simSetTab('analysis');
 });
 simDlg.addEventListener('close', () => { sim.playing = false; if (sim.raf) cancelAnimationFrame(sim.raf); sim.raf = 0; });
@@ -4702,6 +4739,7 @@ function refreshAll() {
   if (typeof prefs.ghost === 'boolean') ui.ghost = prefs.ghost;
   if (isHex(prefs.ink) && INKS.some(([c]) => c === prefs.ink)) ui.ink = prefs.ink;
   ui.hintSeen = !!prefs.hintSeen;
+  ui.simAssist = prefs.simAssist === true;
   const all = store.readAll();
   const lastId = store.lastId();
   const candidates = [all[lastId], ...Object.values(all).sort((a, b) => (b.updated || 0) - (a.updated || 0))].filter(Boolean);
