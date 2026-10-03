@@ -47,6 +47,27 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | `docs/` | Den færdige webapp. GitHub Pages udgiver denne mappe. |
 | `tools/make_icons.py` | Tegner app-ikonerne i `docs/icons/`. |
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
+| `launcher/Taktiktavle.html` | Startsiden i MG Games-launcheren. Den åbner appen på GitHub Pages. |
+| `launcher/omslag.html` | Kilden til omslaget i launcheren (1920 × 700). |
+
+## I MG Games-launcheren
+
+Launcheren installerer `launcher/Taktiktavle.html` og åbner den i standardbrowseren. Siden sender videre til
+https://gammowich.github.io/taktiktavle/. Det betyder:
+
+- Launcheren åbner altid nyeste udgave.
+- Tavlerne er de samme som i den browser.
+- Launcheren skal kun udgives igen, hvis startsiden eller omslaget ændres.
+
+Omslag og ikon ligger i `~/Claude/MGGamesLauncher/games/taktiktavle/`. Ikonet er `docs/icons/icon-512.png` skaleret til
+256 × 256. Omslaget laves sådan:
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu --hide-scrollbars --window-size=1920,700 \
+  --virtual-time-budget=8000 --screenshot=omslag.png "file://$PWD/launcher/omslag.html"
+```
+
+Gem det derefter som jpg i 1920 × 700. Udgivelsen følger `docs/NYT_SPIL.md` i launcher-repoet.
 
 ## Kør den lokalt
 
