@@ -3,6 +3,17 @@
 En webapp til fodboldopstillinger og taktik, der kører på computer, tablet og telefon.
 Den kan installeres som app på hjemmeskærmen (PWA) og virker uden net, når den først er hentet.
 
+## Sådan er den bygget op
+
+Banen står i midten. Resten er delt i fire faner efter, hvad du er i gang med:
+
+- **Hold:** formation, udgangspunkt, spillere (tryk for spillerkortet med nummer, navn, rolle og egenskaber), bænk og niveau for hele holdet.
+- **Taktik:** klassisk taktik, instruktioner, dødboldtaktik og *Stil op i et nyt trin*.
+- **Tegn:** tegneværktøjer, stregfarve, trin med noter og *Afspil*. Kun her tegner man; i de andre faner flytter banen kun spillere.
+- **Kamp:** forventet udfald, *Spil kampen*, assistenten, 500 simulerede kampe og feedback med styrker og svagheder.
+
+Øverst i Hold og Taktik skifter *Mit hold | Modstander* mellem holdene, og øjet viser eller skjuler modstanderen på banen. Tryk på tavlens navn for **tavlemenuen**: navn, mine tavler (ny, åbn fil, indsæt tekst, kopi, slet) og udseende (kampformat, holdfarver, logoer og navne/roller på banen). På telefonen ligger fanerne nederst, og panelet kan gøres større med håndtaget.
+
 ## Hvad den kan
 
 - **Kampformat:** 11 mod 11, 8 mod 8 og 5 mod 5 med tilpasset banestørrelse og mål.
@@ -10,10 +21,10 @@ Den kan installeres som app på hjemmeskærmen (PWA) og virker uden net, når de
 - **Udgangspunkt:** Defensiv, Normal eller Offensiv for hver formation – for eget hold og modstanderen hver for sig. Defensiv ligger dybere, smallere og mere kompakt (kanterne trækker ned). Offensiv ligger højt og bredt (backs skubber op, kanterne højt, 10'eren foran 8'eren).
 - **Positioner:** engelske forkortelser – GK, LB, CB, RB, LWB, RWB, DM, CM, CAM, LM, RM, LW, RW, SS og CF.
 - **Klassiske numre:** 1 GK · 2 RB · 3 LB · 4/5 CB · 6 DM · 7 RW/RM · 8 CM · 9 CF · 10 SS/CAM · 11 LW/LM. Numrene følger positionen, når formationen skiftes. Skriver du selv et nummer (fx spillerens rigtige trøjenummer), beholder spilleren det.
-- **Spillere:** træk dem rundt. Tryk på en spiller for at rette nummer, navn og rolle. Holdfarver og målmandsfarve kan vælges.
-- **Egenskaber (1–10):** hver spiller – også udskiftere og modstanderen – har fart, teknik, afslutning, forsvar, fysik og målmand. 5 er gennemsnit. Åbn spillerkortet ved at trykke på spilleren eller på rollen i holdlisten; *Niveau for hele holdet* sætter alle egenskaber på én gang. Tavler fra før egenskaberne åbnes med 5 overalt.
+- **Spillere:** træk dem rundt. Tryk på en spiller (på banen eller i listen under Hold) for at rette nummer, navn, rolle og egenskaber. Holdfarver og målmandsfarve vælges i tavlemenuen.
+- **Egenskaber (1–10):** hver spiller – også udskiftere og modstanderen – har fart, teknik, afslutning, forsvar, fysik og målmand. 5 er gennemsnit. Åbn spillerkortet ved at trykke på spilleren på banen eller i listen under Hold; *Sæt niveau for hele holdet* sætter alle egenskaber på én gang. Tavler fra før egenskaberne åbnes med 5 overalt.
 - **Logoer:** læg eget og modstanderens logo som vandmærke i hver sin banehalvdel, med justerbar styrke. Kommer også med på det delte billede.
-- **Udskiftere:** tilføj dem, og skift dem ind for en starter.
+- **Udskiftere:** tilføj dem under Hold, og skift dem ind fra spillerkortet (fra starterens eller udskifterens kort).
 - **Modstander:** vis modstanderen med sin egen formation og farve.
 - **Taktik:** vælg en klassisk taktik – Manchester City (Guardiola 2022/23, 3-2-4-1), FC Bayern (Nagelsmann 2021/22), Liverpool (Klopp 2019/20), FC Barcelona (Guardiola 2010/11), Arsenal (Arteta 2023/24), Chelsea (Conte 2016/17), Real Madrid (Ancelotti 2021/22), Inter (Mourinho 2009/10), Atlético (Simeone 2013/14), Leicester (Ranieri 2015/16) og Danmark (EM 1992) – eller indstil jeres egen: pres, forsvarslinje, tempo, bredde og afleveringer. Gælder eget hold og modstanderen hver for sig.
 - **Dødbolde:** variant i angreb (nærmeste stolpe, bageste stolpe, kort, blandet) og opdækning i forsvar (zone, mand, blandet). Knappen *Stil op i et nyt trin* stiller begge hold op til hjørnespark eller frispark med løb og afleveringer tegnet ind.

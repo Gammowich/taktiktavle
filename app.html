@@ -79,13 +79,13 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .brand { display: flex; align-items: center; gap: 10px; flex: none; }
 .brand-mark { width: 32px; height: 32px; flex: none; display: block; }
 .brand-name { font: 800 23px/1 var(--font-display); letter-spacing: .05em; text-transform: uppercase; }
-.board-name {
-  flex: 1 1 auto; min-width: 0; height: 40px; padding: 0 10px;
-  font-weight: 600; font-size: 15px; text-overflow: ellipsis;
-  border: 1px solid transparent; border-radius: 10px; background: transparent;
+.board-btn {
+  flex: 0 1 auto; min-width: 0; height: 40px; display: inline-flex; align-items: center; gap: 4px; padding: 0 8px 0 12px;
+  border: 0; border-radius: 10px; background: var(--surface-2); font-weight: 600; font-size: 15px;
 }
-.board-name:hover { border-color: var(--line); }
-.board-name:focus { background: var(--surface); border-color: var(--line); outline: none; box-shadow: 0 0 0 2px var(--focus); }
+.board-btn:hover { background: var(--line); }
+.board-btn-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.top-spacer { flex: 1 1 auto; }
 .top-actions { display: flex; align-items: center; gap: 4px; flex: none; }
 
 .icon-btn {
@@ -117,8 +117,11 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 }
 
 /* ---------- Arbejdsflade ---------- */
-.workspace { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; min-height: 0; padding-bottom: 12px; }
-.stage { container-type: inline-size; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto; gap: 8px; min-height: 0; min-width: 0; }
+.workspace { display: flex; flex-direction: column; gap: 10px; min-height: 0; padding-bottom: 12px; }
+.stage { container-type: inline-size; display: flex; flex-direction: column; gap: 8px; min-height: 0; min-width: 0; flex: 1 1 auto; }
+.workspace:not([data-tab="tegn"]) .tegn-only, .workspace[data-tab="tegn"] .not-tegn { display: none; }
+.tools-slot:empty { display: none; }
+.stage-hint { margin: 0; font-size: 13px; color: var(--muted); }
 
 .toolbar {
   display: flex; align-items: center; gap: 2px; padding: 4px; min-width: 0;
@@ -160,7 +163,7 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
   background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
 }
 
-.board { position: relative; min-height: 0; border-radius: 16px; overflow: hidden; background: var(--surround); box-shadow: var(--shadow); }
+.board { position: relative; flex: 1 1 auto; min-height: 0; border-radius: 16px; overflow: hidden; background: var(--surround); box-shadow: var(--shadow); }
 .board canvas {
   position: absolute; inset: 0; width: 100%; height: 100%; display: block;
   touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
@@ -174,7 +177,7 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .board-hint.fade { opacity: 0; }
 
 .note {
-  display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; min-width: 0;
+  flex: 1 1 220px; display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 12px; min-width: 0;
   background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
 }
 .note:focus-within { box-shadow: 0 0 0 2px var(--focus); }
@@ -182,31 +185,104 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .note input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; outline: none; font-size: 14px; }
 .note input::placeholder { color: var(--muted); opacity: .8; }
 
-.stepbar { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.stepbar .spacer { flex: 1 1 0; }
-.steps { display: flex; align-items: center; }
-.step-label { min-width: 88px; text-align: center; font-weight: 600; font-variant-numeric: tabular-nums; }
-.step-label .short { display: none; }
-.hold-btn { display: inline-flex; }
-@container (max-width: 480px) {
-  .stepbar { gap: 2px; }
-  .stepbar .icon-btn { width: 38px; }
-  .stepbar .btn:not(.hold-btn) { width: 38px; padding: 0; }
-  .stepbar .btn:not(.hold-btn) .lbl { display: none; }
-  .hold-btn { padding: 0 10px; }
-  .step-label { min-width: 40px; }
-  .step-label .long { display: none; }
-  .step-label .short { display: inline; }
+.stepbar { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.step-chips { display: flex; gap: 6px; min-width: 0; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.step-chips::-webkit-scrollbar { display: none; }
+.step-chip { flex: none; width: 40px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); font: 800 18px/1 var(--font-display); }
+.step-chip:hover:not([aria-pressed="true"]):not(:disabled) { background: var(--surface-2); }
+.step-chip[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.step-chip.add { display: inline-grid; place-items: center; border-style: dashed; background: transparent; }
+.step-chip:disabled { opacity: .45; }
+
+/* ---------- Faner ---------- */
+.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface-2); border-radius: 14px; }
+.tabs button {
+  height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-weight: 700; font-size: 12.5px;
 }
+.tabs button:hover:not([aria-selected="true"]) { background: var(--surface); color: var(--fg); }
+.tabs button[aria-selected="true"] { background: var(--fg); color: var(--bg); }
 
 /* ---------- Opstillingspanel ---------- */
 .panel {
   min-height: 0; min-width: 0; overflow-y: auto; overscroll-behavior: contain;
   background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
-  padding: 16px; display: flex; flex-direction: column; gap: 22px;
+  padding: 14px; display: flex; flex-direction: column;
 }
-.sheet-head { display: none; }
-.scrim { display: none; }
+.panel-grip { display: none; }
+.pane { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.pane[hidden] { display: none; }
+.side-row { display: flex; gap: 8px; align-items: center; }
+.side-seg { flex: 1 1 auto; min-width: 0; }
+.side-seg button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
+.side-dot { width: 10px; height: 10px; flex: none; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(128, 128, 128, .6); }
+.side-name { overflow: hidden; text-overflow: ellipsis; }
+.eye-toggle { position: relative; width: 42px; height: 40px; flex: none; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 10px; color: var(--muted); cursor: pointer; }
+.eye-toggle input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; margin: 0; cursor: pointer; }
+.eye-toggle:has(input:checked) { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.eye-toggle:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.team-head { display: flex; align-items: center; gap: 6px; color: var(--muted); }
+.team-name {
+  flex: 1; min-width: 0; height: 42px; padding: 0 6px; border: 1px solid transparent; border-radius: 10px; background: transparent;
+  font: 800 28px/1 var(--font-display) !important; letter-spacing: .02em; text-transform: uppercase; color: var(--fg);
+}
+.team-name:hover { border-color: var(--line); }
+.team-name:focus { outline: none; border-color: var(--line); background: var(--bg); box-shadow: 0 0 0 2px var(--focus); }
+.formation-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.fld { display: flex; flex-direction: column; gap: 6px; flex: 1 1 110px; min-width: 0; }
+.fld > span { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.fld-wide { flex: 2 1 200px; }
+.fld select, .fld input { height: 40px; min-width: 0; padding: 0 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+.fld select { font-weight: 700; font-size: 15px; }
+.list-head { display: flex; justify-content: space-between; margin-bottom: -10px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.prow {
+  width: 100%; min-height: 40px; display: grid; grid-template-columns: 30px 42px minmax(0, 1fr) 78px; align-items: center; gap: 10px;
+  padding: 0 8px; border: 0; border-radius: 10px; background: transparent; text-align: left;
+}
+.prow:hover { background: var(--surface-2); }
+.pnum { width: 28px; height: 28px; border-radius: 50%; background: var(--c); color: var(--ink); display: grid; place-items: center; font: 800 15px/1 var(--font-display); box-shadow: inset 0 0 0 1px rgba(128, 128, 128, .5); }
+.prole { justify-self: start; padding: 3px 7px; border-radius: 6px; background: var(--fg); color: var(--bg); font-size: 11px; font-weight: 700; letter-spacing: .03em; }
+.prole.bench { background: var(--surface-2); color: var(--muted); }
+.pname { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pname.empty { color: var(--muted); }
+.plvl { display: flex; align-items: center; gap: 6px; }
+.plvl .bar { flex: 1; height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; }
+.plvl .bar i { display: block; height: 100%; background: var(--good); }
+.plvl b { width: 26px; text-align: right; font: 700 14px/1 var(--font-display); }
+.bench-block { display: flex; flex-direction: column; gap: 10px; }
+.bench-block[hidden] { display: none; }
+.bench-block > .btn { align-self: flex-start; }
+.level-details summary { cursor: pointer; font-size: 14px; font-weight: 600; color: var(--accent); }
+.level-details .level { margin-top: 10px; }
+.tactic-box, .tactic-body { display: flex; flex-direction: column; gap: 12px; }
+.pane .field-inline { grid-template-columns: 96px minmax(0, 1fr); }
+.card { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+.card-title { margin: 0; font: 800 24px/1 var(--font-display); letter-spacing: .02em; text-transform: uppercase; }
+.btn-big { height: 50px; font-size: 16px; font-weight: 700; }
+.switch-row { justify-content: space-between; font-size: 14px; }
+.link-btn { align-self: flex-start; padding: 4px 0; border: 0; background: none; color: var(--accent); font-weight: 700; }
+#manyResult:empty { display: none; }
+#manyResult { display: flex; flex-direction: column; gap: 6px; }
+#fbBrief { display: flex; flex-direction: column; gap: 10px; }
+.brief h4, #manyResult h4 { margin: 0 0 4px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+.brief.good h4 { color: var(--good); }
+.brief.bad h4 { color: var(--danger); }
+.brief ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 4px; font-size: 13.5px; line-height: 1.45; }
+/* Værktøjerne i panelets Tegn-fane (store skærme) */
+.pane .toolbar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; padding: 0; background: none; border: 0; border-radius: 0; overflow: visible; }
+.pane .toolbar .tool { height: 62px; flex-direction: column; gap: 4px; padding: 0 4px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.pane .toolbar .tool .lbl { display: inline; }
+.pane .toolbar .tool[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.pane .toolbar .tool-sep, .pane .toolbar .ink-inline, .pane .toolbar .spacer { display: none; }
+.pane .toolbar .ink-btn { display: inline-flex; grid-column: span 2; height: 46px; flex-direction: row; justify-content: flex-start; gap: 10px; padding: 0 12px; }
+.pane .toolbar #delBtn { height: 46px; flex-direction: row; gap: 6px; }
+/* Tavlemenuen */
+.dlg .fld .board-name { height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-size: 16px; font-weight: 600; }
+.appear { display: flex; flex-direction: column; gap: 12px; }
+.appear-row { display: grid; grid-template-columns: 92px minmax(0, 1fr); align-items: center; gap: 10px; font-size: 13.5px; }
+.appear-row > span { color: var(--muted); }
+.logos { display: flex; flex-direction: column; gap: 8px; }
+.dlg-foot .spacer { flex: 1 1 auto; }
 .group { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .group-title {
   margin: 0; display: flex; align-items: baseline; justify-content: space-between; gap: 8px;
@@ -275,35 +351,36 @@ button.role:hover { background: var(--accent-soft); color: var(--fg); }
 .switch input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
 
 @media (min-width: 740px) and (min-height: 520px) {
-  .workspace { grid-template-columns: minmax(0, 1fr) 300px; }
-  .hold-btn { display: none; }
+  .workspace { display: grid; grid-template-columns: minmax(0, 1fr) 330px; grid-template-rows: auto minmax(0, 1fr); grid-template-areas: "stage tabs" "stage panel"; gap: 12px 16px; }
+  .stage { grid-area: stage; }
+  .tabs { grid-area: tabs; }
+  .panel { grid-area: panel; }
 }
 @media (min-width: 1100px) and (min-height: 520px) {
-  .workspace { grid-template-columns: minmax(0, 1fr) 340px; }
+  .workspace { grid-template-columns: minmax(0, 1fr) 370px; }
 }
 @media not all and (min-width: 740px) and (min-height: 520px) {
-  .panel {
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; margin: 0 auto; max-width: 560px;
-    max-height: min(80%, 680px); border-radius: 20px 20px 0 0; border-bottom: 0;
-    padding: 0 16px calc(20px + env(safe-area-inset-bottom, 0px));
-    box-shadow: var(--shadow);
-    transform: translateY(105%); visibility: hidden;
-    transition: transform .28s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .28s;
-  }
-  .panel.open { transform: none; visibility: visible; transition: transform .28s cubic-bezier(.2, .8, .2, 1); }
-  .sheet-head {
-    display: flex; align-items: center; justify-content: space-between; gap: 8px;
-    position: sticky; top: 0; z-index: 1; margin: 0 -16px -8px; padding: 12px 12px 8px 16px;
-    background: var(--surface); border-bottom: 1px solid var(--line);
-  }
-  .sheet-head h2 { margin: 0; font: 800 22px/1 var(--font-display); letter-spacing: .04em; text-transform: uppercase; }
-  .scrim { display: block; position: fixed; inset: 0; z-index: 39; background: var(--scrim); opacity: 0; pointer-events: none; transition: opacity .2s; }
-  .scrim.show { opacity: 1; pointer-events: auto; }
+  .workspace { gap: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)); }
+  .board { min-height: 170px; }
+  .panel { flex: 0 0 auto; height: 42vh; height: 42dvh; padding: 0 12px 12px; }
+  .panel.expanded { height: 74vh; height: 74dvh; }
+  .panel-grip { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; flex: none; height: 24px; margin: 0 -12px 4px; border: 0; background: var(--surface); }
+  .panel-grip span { width: 40px; height: 5px; border-radius: 3px; background: var(--line); }
+  .workspace[data-tab="tegn"] .panel { display: none; }
+  .workspace[data-tab="kamp"] .stage { display: none; }
+  .workspace[data-tab="kamp"] .panel { flex: 1 1 auto; height: auto; padding-top: 12px; }
+  .workspace[data-tab="kamp"] .panel-grip { display: none; }
+  .tabs { order: 3; flex: none; }
+  .tabs button { height: 52px; }
+  .stage-hint { display: none; }
+  /* Trin: knapperne og Afspil øverst, noten og slet under */
+  .stepbar #playBtn { margin-left: auto; }
+  .stepbar .note { order: 4; flex: 1 1 calc(100% - 52px); }
+  .stepbar #delStep { order: 5; }
 }
 @media (max-height: 500px) {
   .topbar { min-height: 48px; padding-block: 4px; }
   .note { display: none; }
-  .stage { grid-template-rows: auto minmax(0, 1fr) auto; }
 }
 
 /* ---------- Dialoger ---------- */
@@ -389,7 +466,8 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .sim-tabs button { padding: 0 10px; }
 .sim-controls .segmented.mode { grid-auto-columns: auto; }
 .sim-controls .segmented.mode button { padding: 0 10px; }
-.players > div { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+#simPlayers { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+#simPanelTactic { display: flex; flex-direction: column; gap: 10px; }
 .players h3 { margin: 0 0 6px; }
 .ratings { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
 .ratings li { display: grid; grid-template-columns: 26px minmax(0, 1fr) 44px 36px; align-items: center; gap: 6px; font-size: 13px; padding: 4px 6px; border-radius: 8px; background: var(--surface-2); }
@@ -448,7 +526,25 @@ dialog.dlg.sim { width: min(1120px, calc(100% - 32px)); height: min(820px, calc(
 .wdl span { display: block; height: 100%; }
 .wdl-legend { display: flex; justify-content: space-between; gap: 8px; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .sim-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.sim-controls .segmented { grid-auto-columns: 44px; }
+.sim-controls { position: relative; }
+.sim-controls .spacer { flex: 1 1 auto; }
+.speed-btn { min-width: 56px; font: 800 18px/1 var(--font-display); }
+.sim-more {
+  position: absolute; right: 0; bottom: calc(100% + 8px); z-index: 5; min-width: 250px; display: flex; flex-direction: column; padding: 6px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+}
+.sim-more[hidden] { display: none; }
+#simMode { display: flex; flex-direction: column; }
+.sim-more button {
+  width: 100%; height: 42px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  border: 0; border-radius: 9px; background: transparent; text-align: left; font-weight: 600; font-size: 14.5px;
+}
+.sim-more button:hover:not(:disabled), .sim-more button:focus-visible { background: var(--surface-2); }
+.sim-more button[aria-checked="true"]::after { content: "✓"; font-weight: 800; color: var(--accent); }
+.sim-more button:disabled { opacity: .45; }
+.sim-more .menu-sep { height: 1px; margin: 4px 6px; background: var(--line); }
+.sim-sub { margin: 16px 0 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+#simPanelStats .analysis { margin-bottom: 16px; }
 .assist-row { font-size: 14px; margin-bottom: 2px; }
 .sim-controls .btn[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 @media (max-width: 760px) {
@@ -536,125 +632,108 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       </svg>
       <span class="brand-name">Taktiktavle</span>
     </div>
-    <input id="boardName" class="board-name" type="text" maxlength="80" autocomplete="off" spellcheck="false" aria-label="Navn på tavlen">
+    <button type="button" class="board-btn" id="boardBtn" aria-haspopup="dialog" title="Tavlen: navn, mine tavler og udseende"><span class="board-btn-name" id="boardBtnName">Tavle</span><span data-icon="chevron"></span></button>
+    <span class="top-spacer"></span>
     <div class="top-actions">
       <button type="button" class="icon-btn" id="undoBtn" aria-label="Fortryd" title="Fortryd (Ctrl+Z)"><span data-icon="undo"></span></button>
       <button type="button" class="icon-btn" id="redoBtn" aria-label="Gentag" title="Gentag (Ctrl+Shift+Z)"><span data-icon="redo"></span></button>
-      <button type="button" class="btn" id="boardsBtn" aria-label="Mine tavler"><span data-icon="folder"></span><span class="lbl">Mine tavler</span></button>
       <button type="button" class="btn btn-accent" id="shareBtn" aria-label="Del"><span data-icon="share"></span><span class="lbl">Del</span></button>
     </div>
   </header>
 
-  <main class="workspace">
+  <main class="workspace" id="workspace" data-tab="hold">
     <section class="stage" aria-label="Taktiktavle">
-      <div class="toolbar" role="toolbar" aria-label="Værktøjer" id="toolbar"></div>
       <div class="board" id="board">
         <canvas id="pitch" role="img" aria-label="Fodboldbane"></canvas>
         <div class="board-hint" id="hint" hidden></div>
       </div>
-      <div class="note">
-        <label for="stepNote" id="noteLabel">Trin 1</label>
-        <input id="stepNote" type="text" maxlength="200" autocomplete="off">
-      </div>
-      <div class="stepbar">
-        <button type="button" class="btn hold-btn" id="holdBtn" aria-controls="panel" aria-expanded="false"><span data-icon="users"></span><span>Hold</span></button>
-        <span class="spacer"></span>
-        <div class="steps" role="group" aria-label="Trin">
-          <button type="button" class="icon-btn" id="prevStep" aria-label="Forrige trin"><span data-icon="left"></span></button>
-          <span class="step-label" id="stepLabel" aria-live="polite"></span>
-          <button type="button" class="icon-btn" id="nextStep" aria-label="Næste trin"><span data-icon="right"></span></button>
-        </div>
-        <button type="button" class="btn" id="addStep" aria-label="Nyt trin"><span data-icon="plus"></span><span class="lbl">Nyt trin</span></button>
+      <div class="tools-slot tegn-only" id="toolsSlotStage"></div>
+      <div class="stepbar tegn-only">
+        <div class="step-chips" id="stepChips" role="group" aria-label="Trin"></div>
+        <button type="button" class="step-chip add" id="addStep" aria-label="Nyt trin" title="Nyt trin"><span data-icon="plus"></span></button>
+        <label class="note"><span id="noteLabel">Trin 1</span><input id="stepNote" type="text" maxlength="200" autocomplete="off"></label>
         <button type="button" class="icon-btn" id="delStep" aria-label="Slet dette trin" title="Slet dette trin"><span data-icon="trash"></span></button>
         <button type="button" class="btn btn-accent" id="playBtn" aria-label="Afspil trin"><span data-icon="play" id="playIcon"></span><span class="lbl" id="playLbl">Afspil</span></button>
       </div>
+      <p class="stage-hint not-tegn" id="stageHint">Træk spillerne rundt. Tryk på en spiller for nummer, navn og egenskaber.</p>
     </section>
 
-    <aside class="panel" id="panel" aria-label="Opstilling">
-      <div class="sheet-head">
-        <h2>Opstilling</h2>
-        <button type="button" class="icon-btn" id="panelClose" aria-label="Luk opstilling"><span data-icon="close"></span></button>
-      </div>
-      <section class="group">
-        <h2 class="group-title">Kampformat</h2>
-        <div class="segmented" id="formatSeg" role="radiogroup" aria-label="Kampformat"></div>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Faner">
+      <button type="button" role="tab" id="tab-hold" data-tab="hold" aria-controls="pane-hold" aria-selected="true"><span data-icon="users"></span><span>Hold</span></button>
+      <button type="button" role="tab" id="tab-taktik" data-tab="taktik" aria-controls="pane-taktik" aria-selected="false"><span data-icon="sliders"></span><span>Taktik</span></button>
+      <button type="button" role="tab" id="tab-tegn" data-tab="tegn" aria-controls="pane-tegn" aria-selected="false"><span data-icon="pen"></span><span>Tegn</span></button>
+      <button type="button" role="tab" id="tab-kamp" data-tab="kamp" aria-controls="pane-kamp" aria-selected="false"><span data-icon="match"></span><span>Kamp</span></button>
+    </nav>
+
+    <aside class="panel" id="panel" aria-label="Panel">
+      <button type="button" class="panel-grip" id="panelGrip" aria-label="Gør panelet større" aria-expanded="false"><span></span></button>
+
+      <section class="pane" id="pane-hold" role="tabpanel" aria-labelledby="tab-hold">
+        <div class="side-row">
+          <div class="segmented side-seg" role="radiogroup" aria-label="Vælg hold" data-side-seg></div>
+          <label class="eye-toggle" title="Vis modstanderen på banen"><input type="checkbox" id="showAway" aria-label="Vis modstanderen på banen"><span data-icon="eye"></span></label>
+        </div>
+        <label class="team-head"><input class="team-name" id="teamName" data-team-name="home" maxlength="40" autocomplete="off" aria-label="Holdnavn"><span data-icon="pen"></span></label>
+        <div class="formation-row">
+          <label class="fld"><span>Formation</span><select id="formationSel"></select></label>
+          <div class="fld fld-wide"><span id="styleLabel">Udgangspunkt</span><div class="segmented" id="styleSeg" role="radiogroup" aria-labelledby="styleLabel"></div></div>
+        </div>
+        <p class="group-note" id="formationHint" hidden></p>
+        <div class="list-head"><span>Startopstilling</span><span>Niveau</span></div>
+        <ol class="roster" id="rosterList"></ol>
+        <div class="bench-block" id="benchBlock">
+          <div class="list-head"><span>Bænk</span></div>
+          <ul class="roster" id="benchList"></ul>
+          <button type="button" class="btn btn-sm" id="addBench"><span data-icon="plus"></span>Tilføj udskifter</button>
+        </div>
+        <details class="level-details">
+          <summary id="levelLabel">Sæt niveau for hele holdet</summary>
+          <div class="level"><input type="range" min="1" max="10" step="1" id="teamLevel" aria-labelledby="levelLabel"><span class="sl-val" id="teamLevelVal">5</span><button type="button" class="btn btn-sm" id="levelApply">Sæt alle</button></div>
+        </details>
       </section>
-      <section class="group">
-        <h2 class="group-title">Formation <span class="hint" id="formationHint"></span></h2>
-        <div class="chips" id="homeFormations"></div>
-        <div class="sub-label" id="homeStyleLabel">Udgangspunkt</div>
-        <div class="segmented" id="homeStyleSeg" role="radiogroup" aria-labelledby="homeStyleLabel"></div>
-      </section>
-      <section class="group">
-        <h2 class="group-title">Taktik</h2>
-        <label class="field-inline">Holdnavn <input type="text" id="homeTeamName" data-team-name="home" maxlength="40" autocomplete="off"></label>
-        <div class="sub-label" id="homeLevelLabel">Niveau for hele holdet</div>
-        <div class="level"><input type="range" min="1" max="10" step="1" id="homeLevel" aria-labelledby="homeLevelLabel"><span class="sl-val" id="homeLevelVal">5</span><button type="button" class="btn btn-sm" data-level-apply="home">Sæt alle</button></div>
-        <div class="tactics" id="homeTactics"></div>
-        <div class="btn-row">
-          <button type="button" class="btn btn-accent" data-sim><span data-icon="play"></span>Simulér kamp</button>
-          <button type="button" class="btn" data-feedback><span data-icon="bulb"></span>Få feedback</button>
+
+      <section class="pane" id="pane-taktik" role="tabpanel" aria-labelledby="tab-taktik" hidden>
+        <div class="segmented side-seg" role="radiogroup" aria-label="Vælg hold" data-side-seg></div>
+        <div class="tactic-box" id="tacticBox"></div>
+        <div class="group">
+          <h3 class="group-title">Vis en dødbold på banen</h3>
+          <label class="field-inline">Situation <select id="spKind">
+            <option value="corner-att">Hjørnespark, vi angriber</option>
+            <option value="corner-def">Hjørnespark, vi forsvarer</option>
+            <option value="fk-att">Frispark med indlæg, vi angriber</option>
+            <option value="fk-def">Frispark, vi forsvarer</option>
+          </select></label>
+          <label class="field-inline">Side <select id="spSide"><option value="right">Fra højre</option><option value="left">Fra venstre</option></select></label>
+          <button type="button" class="btn" id="spApply">Stil op i et nyt trin</button>
+          <p class="group-note">Opstillingen følger holdenes dødboldtaktik ovenfor: variant i angreb og opdækning i forsvar.</p>
         </div>
       </section>
-      <section class="group">
-        <h2 class="group-title">Holdfarver</h2>
-        <div class="swatch-row"><span>Spillere</span><div class="swatches" id="kitHome"></div></div>
-        <div class="swatch-row"><span>Målmand</span><div class="swatches" id="kitKeeper"></div></div>
+
+      <section class="pane" id="pane-tegn" role="tabpanel" aria-labelledby="tab-tegn" hidden>
+        <div class="tools-slot" id="toolsSlotPanel"><div class="toolbar" role="toolbar" aria-label="Tegneværktøjer" id="toolbar"></div></div>
+        <label class="check switch-row">Vis forrige trin som skygge <span class="switch"><input type="checkbox" id="ghostToggle"><span></span></span></label>
+        <p class="group-note">Træk på banen for at tegne. Pile fra og til en spiller sættes automatisk ved spilleren. Under Hold, Taktik og Kamp flytter banen kun spillere.</p>
       </section>
-      <section class="group">
-        <h2 class="group-title">Logoer på banen</h2>
-        <div class="logo-row"><span>Eget hold</span><span class="logo-thumb" id="logoThumbHome"></span><button type="button" class="btn btn-sm" data-logo-pick="home">Vælg billede</button><button type="button" class="icon-btn sm" data-logo-clear="home" aria-label="Fjern logoet for eget hold"><span data-icon="close"></span></button></div>
-        <div class="logo-row"><span>Modstander</span><span class="logo-thumb" id="logoThumbAway"></span><button type="button" class="btn btn-sm" data-logo-pick="away">Vælg billede</button><button type="button" class="icon-btn sm" data-logo-clear="away" aria-label="Fjern modstanderens logo"><span data-icon="close"></span></button></div>
-        <label class="field-inline" id="logoOpacityRow">Styrke <input type="range" id="logoOpacity" min="5" max="50" step="1"></label>
-        <p class="group-note">Dit logo ligger som vandmærke i egen banehalvdel, modstanderens i den anden.</p>
-        <input type="file" id="logoFile" accept="image/*" hidden>
-      </section>
-      <section class="group">
-        <h2 class="group-title">Startopstilling</h2>
-        <ol class="roster" id="homeList"></ol>
-      </section>
-      <section class="group">
-        <h2 class="group-title">Udskiftere</h2>
-        <ul class="roster" id="benchList"></ul>
-        <button type="button" class="btn btn-ghost" id="addBench"><span data-icon="plus"></span>Tilføj udskifter</button>
-      </section>
-      <section class="group">
-        <div class="group-head">
-          <h2 class="group-title">Modstander</h2>
-          <label class="check small">Vis på banen <span class="switch"><input type="checkbox" id="showAway" aria-label="Vis modstanderen på banen"><span></span></span></label>
+
+      <section class="pane" id="pane-kamp" role="tabpanel" aria-labelledby="tab-kamp" hidden>
+        <div class="card">
+          <h3 class="card-title" id="matchTitle">Mit hold mod Modstander</h3>
+          <div id="forecast" aria-live="polite"></div>
+          <button type="button" class="btn btn-accent btn-big" data-sim><span data-icon="play"></span>Spil kampen</button>
+          <label class="check switch-row">Assistenten styrer mit hold <span class="switch"><input type="checkbox" id="assistToggle"><span></span></span></label>
+          <button type="button" class="link-btn" id="many500">Simulér 500 kampe</button>
+          <div id="manyResult" aria-live="polite"></div>
         </div>
-        <div class="group" id="awayOpts">
-          <label class="field-inline">Holdnavn <input type="text" id="awayTeamName" data-team-name="away" maxlength="40" autocomplete="off"></label>
-          <label class="field-inline">Formation <select id="awayFormation"></select></label>
-          <label class="field-inline">Udgangspunkt <select id="awayStyle"></select></label>
-          <div class="swatch-row"><span>Farve</span><div class="swatches" id="kitAway"></div></div>
-          <div class="sub-label" id="awayLevelLabel">Niveau for hele holdet</div>
-          <div class="level"><input type="range" min="1" max="10" step="1" id="awayLevel" aria-labelledby="awayLevelLabel"><span class="sl-val" id="awayLevelVal">5</span><button type="button" class="btn btn-sm" data-level-apply="away">Sæt alle</button></div>
-          <div class="tactics" id="awayTactics"></div>
+        <div class="card">
+          <h3 class="card-title">Feedback</h3>
+          <div id="fbBrief"></div>
+          <div class="btn-row"><button type="button" class="btn" data-feedback><span data-icon="bulb"></span>Se alle tips</button></div>
+          <label class="check switch-row">Over- og undertal på banen <span class="switch"><input type="checkbox" id="zonesToggle"><span></span></span></label>
         </div>
-      </section>
-      <section class="group">
-        <h2 class="group-title">Dødbolde</h2>
-        <label class="field-inline">Situation <select id="spKind">
-          <option value="corner-att">Hjørnespark, vi angriber</option>
-          <option value="corner-def">Hjørnespark, vi forsvarer</option>
-          <option value="fk-att">Frispark med indlæg, vi angriber</option>
-          <option value="fk-def">Frispark, vi forsvarer</option>
-        </select></label>
-        <label class="field-inline">Side <select id="spSide"><option value="right">Fra højre</option><option value="left">Fra venstre</option></select></label>
-        <button type="button" class="btn" id="spApply"><span data-icon="plus"></span>Stil op i et nyt trin</button>
-        <p class="group-note">Opstillingen følger holdenes dødboldtaktik under Taktik: variant i angreb og opdækning i forsvar.</p>
-      </section>
-      <section class="group">
-        <h2 class="group-title">Visning</h2>
-        <div class="segmented" id="labelSeg" role="radiogroup" aria-label="Tekst under spillerne"></div>
-        <label class="check"><input type="checkbox" id="ghostToggle"> Vis forrige trin som skygge</label>
-        <label class="check"><input type="checkbox" id="zonesToggle"> Vis overtal og undertal i zoner</label>
       </section>
     </aside>
   </main>
 </div>
-<div class="scrim" id="scrim"></div>
 <div class="ink-pop" id="inkPop" role="group" aria-label="Stregfarve" hidden></div>
 
 <dialog class="dlg" id="playerDlg" aria-labelledby="pdTitle">
@@ -673,32 +752,52 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       <div class="sliders attrs" id="pdAttrs"></div>
     </div>
     <div id="pdSwapWrap">
-      <h3>Skift med udskifter</h3>
+      <h3 id="pdSwapTitle">Skift med udskifter</h3>
       <div class="swap-list" id="pdSwap"></div>
     </div>
-    <div class="dlg-foot"><button type="submit" class="btn btn-accent" value="done">Færdig</button></div>
+    <div class="dlg-foot"><button type="button" class="btn btn-danger" id="pdRemove" hidden>Fjern fra bænken</button><span class="spacer"></span><button type="submit" class="btn btn-accent" value="done">Færdig</button></div>
   </form>
 </dialog>
 
 <dialog class="dlg wide" id="boardsDlg" aria-labelledby="bdTitle">
   <div class="dlg-body">
     <div class="dlg-head">
-      <h2 id="bdTitle">Mine tavler</h2>
+      <h2 id="bdTitle">Tavlen</h2>
       <button type="button" class="icon-btn" data-close aria-label="Luk"><span data-icon="close"></span></button>
     </div>
+    <label class="fld"><span>Navn</span><input id="boardName" class="board-name" type="text" maxlength="80" autocomplete="off" spellcheck="false"></label>
+
+    <h3>Mine tavler</h3>
+    <ul class="board-list" id="boardList"></ul>
     <div class="btn-row">
       <button type="button" class="btn btn-accent" id="newBoardBtn"><span data-icon="plus"></span>Ny tavle</button>
       <button type="button" class="btn" id="importBtn"><span data-icon="upload"></span>Åbn fil…</button>
       <input type="file" id="importFile" accept=".json,application/json" hidden>
     </div>
-    <p class="muted small" id="storageNote"></p>
-    <ul class="board-list" id="boardList"></ul>
     <details class="paste">
       <summary>Indsæt en tavle som tekst</summary>
       <textarea id="pasteArea" rows="4" placeholder="Indsæt teksten fra “Kopiér som tekst”"></textarea>
       <button type="button" class="btn" id="pasteOpen">Åbn tavlen</button>
       <p class="err" id="pasteErr" hidden></p>
     </details>
+    <p class="muted small" id="storageNote"></p>
+
+    <h3>Udseende</h3>
+    <div class="appear">
+      <div class="appear-row"><span>Kampformat</span><div class="segmented" id="formatSeg" role="radiogroup" aria-label="Kampformat"></div></div>
+      <div class="appear-row"><span>Mit hold</span><div class="swatches" id="kitHome" role="group" aria-label="Farve, mit hold"></div></div>
+      <div class="appear-row"><span>Målmand</span><div class="swatches" id="kitKeeper" role="group" aria-label="Farve, målmand"></div></div>
+      <div class="appear-row"><span>Modstander</span><div class="swatches" id="kitAway" role="group" aria-label="Farve, modstander"></div></div>
+      <div class="appear-row"><span>Logoer</span>
+        <div class="logos" id="logoBox">
+          <div class="logo-row"><span>Eget hold</span><span class="logo-thumb" id="logoThumbHome"></span><button type="button" class="btn btn-sm" data-logo-pick="home">Vælg billede</button><button type="button" class="icon-btn sm" data-logo-clear="home" aria-label="Fjern eget logo" hidden><span data-icon="close"></span></button></div>
+          <div class="logo-row"><span>Modstander</span><span class="logo-thumb" id="logoThumbAway"></span><button type="button" class="btn btn-sm" data-logo-pick="away">Vælg billede</button><button type="button" class="icon-btn sm" data-logo-clear="away" aria-label="Fjern modstanderens logo" hidden><span data-icon="close"></span></button></div>
+          <label class="field-inline" id="logoOpacityRow">Styrke <input type="range" id="logoOpacity" min="5" max="50" step="1"></label>
+          <input type="file" id="logoFile" accept="image/*" hidden>
+        </div>
+      </div>
+      <div class="appear-row"><span>På banen</span><div class="segmented" id="labelSeg" role="radiogroup" aria-label="Vis på banen"></div></div>
+    </div>
   </div>
 </dialog>
 
@@ -724,12 +823,11 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
         <div class="segmented sim-tabs" id="simTabs" role="tablist" aria-label="Visning">
           <button type="button" role="tab" data-tab="feed" aria-selected="true" aria-checked="true">Kommentarer</button>
           <button type="button" role="tab" data-tab="stats" aria-selected="false" aria-checked="false">Statistik</button>
-          <button type="button" role="tab" data-tab="players" aria-selected="false" aria-checked="false">Spillere</button>
-          <button type="button" role="tab" data-tab="tactic" aria-selected="false" aria-checked="false">Taktik</button>
-          <button type="button" role="tab" data-tab="analysis" aria-selected="false" aria-checked="false">Analyse</button>
+          <button type="button" role="tab" data-tab="hold" aria-selected="false" aria-checked="false">Hold</button>
         </div>
         <div class="sim-panel" id="simPanelFeed"><ol class="feed" id="simFeed"></ol></div>
         <div class="sim-panel" id="simPanelStats" hidden>
+          <div class="analysis" id="simPanelAnalysis"></div>
           <table class="stats" id="simStats"></table>
           <div class="sim-charts">
             <h3>xG gennem kampen</h3>
@@ -741,27 +839,29 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
             <canvas class="mini-pitch" id="simAvg" role="img" aria-label="Spillernes gennemsnitlige positioner i kampen"></canvas>
           </div>
         </div>
-        <div class="sim-panel players" id="simPanelPlayers" hidden><div id="simPlayers"></div></div>
-        <div class="sim-panel tactic" id="simPanelTactic" hidden></div>
-        <div class="sim-panel analysis" id="simPanelAnalysis" hidden></div>
+        <div class="sim-panel players" id="simPanelPlayers" hidden>
+          <div class="tactic" id="simPanelTactic"></div>
+          <h3 class="sim-sub">Karakterer</h3>
+          <div id="simPlayers"></div>
+        </div>
       </div>
     </div>
     <div class="sim-controls">
       <button type="button" class="btn btn-accent" id="simPlay"><span data-icon="play"></span><span id="simPlayLbl">Start kampen</span></button>
-      <div class="segmented" id="simSpeed" role="radiogroup" aria-label="Hastighed">
-        <button type="button" role="radio" data-speed="1" aria-checked="true">1×</button>
-        <button type="button" role="radio" data-speed="2" aria-checked="false">2×</button>
-        <button type="button" role="radio" data-speed="4" aria-checked="false">4×</button>
-        <button type="button" role="radio" data-speed="8" aria-checked="false">8×</button>
+      <button type="button" class="btn speed-btn" id="simSpeedBtn" aria-label="Hastighed 1 gang. Tryk for at skifte">1×</button>
+      <span class="spacer"></span>
+      <button type="button" class="btn" id="simMoreBtn" aria-haspopup="menu" aria-expanded="false" aria-controls="simMore"><span data-icon="more"></span>Mere</button>
+      <div class="sim-more" id="simMore" role="menu" aria-label="Mere" hidden>
+        <div id="simMode" role="group" aria-label="Visning af kampen">
+          <button type="button" role="menuitemradio" data-mode="highlights" aria-checked="true">Vis højdepunkter</button>
+          <button type="button" role="menuitemradio" data-mode="full" aria-checked="false">Vis hele kampen</button>
+        </div>
+        <button type="button" role="menuitemcheckbox" id="simLabels" aria-checked="false">Navne på banen</button>
+        <span class="menu-sep" role="separator"></span>
+        <button type="button" role="menuitem" id="simSkip">Spring til slut</button>
+        <button type="button" role="menuitem" id="simNew">Ny kamp</button>
+        <button type="button" role="menuitem" id="simMany">Simulér 500 kampe</button>
       </div>
-      <div class="segmented mode" id="simMode" role="radiogroup" aria-label="Visning af kampen">
-        <button type="button" role="radio" data-mode="highlights" aria-checked="true">Højdepunkter</button>
-        <button type="button" role="radio" data-mode="full" aria-checked="false">Hele kampen</button>
-      </div>
-      <button type="button" class="btn" id="simLabels" aria-pressed="false" title="Vis navne (eller position) under spillerne">Navne</button>
-      <button type="button" class="btn" id="simSkip">Spring til slut</button>
-      <button type="button" class="btn" id="simNew">Ny kamp</button>
-      <button type="button" class="btn" id="simMany">Simulér 500 kampe</button>
     </div>
   </div>
 </dialog>
@@ -876,6 +976,10 @@ const ICONS = {
   alert: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/>',
   up: '<path d="M12 19V5M6 11l6-6 6 6"/>',
   sliders: '<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>',
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+  eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
+  match: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z" fill="currentColor"/>',
+  more: '<circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/>',
 };
 const ic = name => `<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
@@ -1248,7 +1352,7 @@ const store = {
    ========================================================= */
 let board;
 const ui = { tool: 'move', ink: '#ffffff', frame: 0, selected: null, highlight: null, labels: 'name', ghost: true,
-  playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false }, simAssist: false };
+  playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false }, simAssist: false, tab: 'hold', side: 'home' };
 const hist = { stack: [], idx: -1 };
 const curFrame = () => board.frames[ui.frame];
 
@@ -2053,7 +2157,7 @@ function stopPlay() {
    ========================================================= */
 const toolbarEl = $('#toolbar'), inkPop = $('#inkPop');
 const hintEl = $('#hint'), noteInput = $('#stepNote'), nameInput = $('#boardName');
-const panel = $('#panel'), scrim = $('#scrim');
+const panel = $('#panel');
 
 document.querySelectorAll('[data-icon]').forEach(el => { el.outerHTML = ic(el.dataset.icon); });
 
@@ -2062,7 +2166,7 @@ function buildToolbar() {
   const inks = INKS.map(([c, n]) => `<button type="button" class="ink-swatch" data-ink="${c}" aria-pressed="false" title="${n} streg" aria-label="${n} streg"><span class="ink-dot" style="--c:${c}"></span></button>`).join('');
   toolbarEl.innerHTML = `${tools}<span class="tool-sep" aria-hidden="true"></span>
     <div class="ink-inline" role="group" aria-label="Stregfarve">${inks}</div>
-    <button type="button" class="tool ink-btn" id="inkBtn" aria-label="Stregfarve" aria-haspopup="true" aria-expanded="false"><span class="ink-dot" style="--c:#ffffff"></span></button>
+    <button type="button" class="tool ink-btn" id="inkBtn" aria-label="Stregfarve" aria-haspopup="true" aria-expanded="false"><span class="ink-dot" style="--c:#ffffff"></span><span class="lbl">Stregfarve</span></button>
     <span class="spacer"></span>
     <button type="button" class="tool" id="delBtn" aria-pressed="false">${ic('trash')}<span class="lbl" id="delLbl">Slet</span></button>`;
   inkPop.innerHTML = inks;
@@ -2156,9 +2260,9 @@ function describeBoard() {
 }
 function renderSteps() {
   const n = board.frames.length, i = ui.frame;
-  $('#stepLabel').innerHTML = `<span class="long">Trin </span>${i + 1}<span class="long"> af </span><span class="short">/</span>${n}`;
-  $('#prevStep').disabled = ui.playing || i === 0;
-  $('#nextStep').disabled = ui.playing || i >= n - 1;
+  $('#stepChips').innerHTML = board.frames.map((fr, k) =>
+    `<button type="button" class="step-chip" data-step="${k}" aria-pressed="${k === i}" aria-label="Trin ${k + 1}${fr.note ? ': ' + esc(fr.note) : ''}"${ui.playing ? ' disabled' : ''}>${k + 1}</button>`).join('');
+  const cur = $('#stepChips').querySelector('[aria-pressed="true"]'); if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   $('#addStep').disabled = ui.playing;
   $('#delStep').disabled = ui.playing || n < 2;
   $('#noteLabel').textContent = `Trin ${i + 1}`;
@@ -2170,54 +2274,52 @@ function renderSteps() {
   $('#playLbl').textContent = ui.playing ? 'Stop' : 'Afspil';
   pb.setAttribute('aria-label', ui.playing ? 'Stop afspilning' : 'Afspil trin');
   cv.setAttribute('aria-label', describeBoard());
-  const fh = $('#formationHint'); if (fh) fh.textContent = n > 1 ? `placerer spillerne i trin ${i + 1}` : '';
+  const fh = $('#formationHint'); if (fh) { fh.textContent = n > 1 ? `Formationen placerer spillerne i trin ${i + 1} af ${n}.` : ''; fh.hidden = n < 2; }
 }
-$('#prevStep').addEventListener('click', () => goFrame(-1));
-$('#nextStep').addEventListener('click', () => goFrame(1));
+$('#stepChips').addEventListener('click', e => { const b = e.target.closest('[data-step]'); if (b) goFrame(Number(b.dataset.step) - ui.frame); });
 $('#addStep').addEventListener('click', addStep);
 $('#delStep').addEventListener('click', deleteStep);
 $('#playBtn').addEventListener('click', play);
 noteInput.addEventListener('input', () => { curFrame().note = noteInput.value.slice(0, 200); });
-noteInput.addEventListener('change', () => { commit(); cv.setAttribute('aria-label', describeBoard()); });
+noteInput.addEventListener('change', () => { commit(); renderSteps(); });
 noteInput.addEventListener('keydown', e => { if (e.key === 'Enter') noteInput.blur(); });
 
 /* ---- Topbjælke ---- */
 function updateUndo() { $('#undoBtn').disabled = hist.idx <= 0; $('#redoBtn').disabled = hist.idx >= hist.stack.length - 1; }
 $('#undoBtn').addEventListener('click', undo);
 $('#redoBtn').addEventListener('click', redo);
-nameInput.addEventListener('input', () => { board.name = nameInput.value.slice(0, 80); });
-nameInput.addEventListener('change', () => { if (!board.name.trim()) { board.name = 'Uden navn'; nameInput.value = board.name; } commit(); });
+nameInput.addEventListener('input', () => { board.name = nameInput.value.slice(0, 80); $('#boardBtnName').textContent = board.name || 'Uden navn'; });
+nameInput.addEventListener('change', () => { if (!board.name.trim()) { board.name = 'Uden navn'; nameInput.value = board.name; } $('#boardBtnName').textContent = board.name; commit(); });
 nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') nameInput.blur(); });
 
 /* ---- Panel ---- */
 const swatchesHTML = (kit, current) => KITS.map(([c, n]) =>
   `<button type="button" class="swatch" data-kit="${kit}" data-color="${c}" style="--c:${c}" aria-pressed="${c === current}" title="${n}" aria-label="${n}"></button>`).join('');
 function roleName(r) { return ROLE_NAMES[r] || r; }
+const avgAttr = p => ATTRS.reduce((a, x) => a + attrOf(p, x.k), 0) / ATTRS.length;
+const fmt1 = v => v.toFixed(1).replace('.', ',');
+// Én række pr. spiller: nummer, rolle, navn og niveau. Et tryk åbner spillerkortet.
+function rosterRow(p, team) {
+  const kit = team === 'away' ? kitFor(p, 'away') : kitFor(p, 'home'), name = p.name.trim(), lvl = avgAttr(p);
+  const who = name || (team === 'bench' ? 'udskifter' : roleName(p.role));
+  return `<li><button type="button" class="prow" data-edit="${team}" data-id="${esc(p.id)}" aria-label="Nr. ${esc(p.num || '–')}, ${esc(who)}, niveau ${fmt1(lvl)}. Åbn spillerkortet">
+    <span class="pnum" style="--c:${kit};--ink:${inkOn(kit)}">${esc(p.num || '–')}</span>
+    <span class="prole${team === 'bench' ? ' bench' : ''}">${team === 'bench' ? 'UDS' : esc(p.role)}</span>
+    <span class="pname${name ? '' : ' empty'}">${esc(name || 'Tilføj navn')}</span>
+    <span class="plvl" aria-hidden="true"><span class="bar"><i style="width:${Math.round(lvl * 10)}%"></i></span><b>${fmt1(lvl)}</b></span>
+  </button></li>`;
+}
+function sideSegHTML() {
+  return ['home', 'away'].map(k => `<button type="button" role="radio" data-side="${k}" aria-checked="${k === ui.side}"><span class="side-dot" style="--c:${board.kit[k]}"></span><span class="side-name">${esc(board.teamNames[k])}</span></button>`).join('');
+}
 function renderPanel() {
+  const side = ui.side, isHome = side === 'home';
+  // Tavlemenuen: kampformat, farver, logoer og visning
   $('#formatSeg').innerHTML = Object.entries(FORMATS).map(([k, f]) =>
     `<button type="button" role="radio" data-format="${k}" aria-checked="${k === board.format}">${f.label}</button>`).join('');
-  $('#homeFormations').innerHTML = Object.keys(FORMATIONS[board.format]).map(n =>
-    `<button type="button" class="chip" data-formation="${n}" aria-pressed="${n === board.homeFormation}">${n}</button>`).join('');
   $('#kitHome').innerHTML = swatchesHTML('home', board.kit.home);
   $('#kitKeeper').innerHTML = swatchesHTML('keeper', board.kit.keeper);
   $('#kitAway').innerHTML = swatchesHTML('away', board.kit.away);
-  $('#homeList').innerHTML = board.home.map(p => `<li class="row" data-id="${esc(p.id)}">
-    <button type="button" class="role" data-edit="home" title="${esc(roleName(p.role))} – egenskaber" aria-label="Egenskaber for ${esc(p.name.trim() || roleName(p.role))}">${esc(p.role)}</button>
-    <input class="num" id="num-${esc(p.id)}" inputmode="numeric" pattern="[0-9]*" maxlength="2" value="${esc(p.num)}" autocomplete="off" aria-label="Nummer, ${esc(roleName(p.role))}">
-    <input class="name" id="name-${esc(p.id)}" maxlength="30" value="${esc(p.name)}" placeholder="Navn" autocomplete="off" aria-label="Navn, ${esc(roleName(p.role))}">
-  </li>`).join('');
-  const starters = board.home.map(p => `<option value="${esc(p.id)}">${esc(p.num || '–')} ${esc(p.name.trim() || roleName(p.role))}</option>`).join('');
-  $('#benchList').innerHTML = board.bench.length ? board.bench.map(b => `<li class="row bench" data-id="${esc(b.id)}">
-    <input class="num" id="bnum-${esc(b.id)}" inputmode="numeric" pattern="[0-9]*" maxlength="2" value="${esc(b.num)}" autocomplete="off" aria-label="Nummer, udskifter">
-    <input class="name" id="bname-${esc(b.id)}" maxlength="30" value="${esc(b.name)}" placeholder="Navn" autocomplete="off" aria-label="Navn, udskifter">
-    <select class="swap" id="bswap-${esc(b.id)}" aria-label="Skift ${esc(b.name || 'udskifteren')} ind for"><option value="">Skift ind…</option>${starters}</select>
-    <button type="button" class="icon-btn sm" data-edit="bench" aria-label="Egenskaber for ${esc(b.name || 'udskifter')}" title="Egenskaber">${ic('sliders')}</button>
-    <button type="button" class="icon-btn sm" data-remove aria-label="Fjern ${esc(b.name || 'udskifter')}">${ic('close')}</button>
-  </li>`).join('') : '<li class="empty">Ingen udskiftere endnu.</li>';
-  $('#homeStyleSeg').innerHTML = Object.entries(STYLES).map(([k, l]) =>
-    `<button type="button" role="radio" data-style="${k}" aria-checked="${k === (board.homeStyle || 'normal')}">${l}</button>`).join('');
-  $('#awayStyle').innerHTML = Object.entries(STYLES).map(([k, l]) =>
-    `<option value="${k}"${k === (board.awayStyle || 'normal') ? ' selected' : ''}>${l}</option>`).join('');
   for (const team of ['home', 'away']) {
     const src = board.logos[team], thumb = $(team === 'home' ? '#logoThumbHome' : '#logoThumbAway');
     thumb.classList.toggle('has', !!src);
@@ -2227,23 +2329,31 @@ function renderPanel() {
   }
   $('#logoOpacity').value = String(Math.round((board.logoOpacity ?? .16) * 100));
   $('#logoOpacityRow').hidden = !board.logos.home && !board.logos.away;
-  $('#homeTeamName').value = board.teamNames.home;
-  $('#awayTeamName').value = board.teamNames.away;
-  for (const team of ['home', 'away']) {
-    const ps = team === 'home' ? [...board.home, ...board.bench] : board.away;
-    const avg = ps.reduce((s2, p) => s2 + ATTRS.reduce((a2, a) => a2 + attrOf(p, a.k), 0) / ATTRS.length, 0) / Math.max(1, ps.length);
-    const el = $(team === 'home' ? '#homeLevel' : '#awayLevel');
-    el.value = String(Math.round(avg)); $(team === 'home' ? '#homeLevelVal' : '#awayLevelVal').textContent = String(Math.round(avg));
-    $(team === 'home' ? '#homeLevelLabel' : '#awayLevelLabel').textContent = `Niveau for hele holdet (nu Ø ${avg.toFixed(1).replace('.', ',')})`;
-  }
-  $('#homeTactics').innerHTML = tacticsHTML('home');
-  $('#awayTactics').innerHTML = tacticsHTML('away');
-  $('#showAway').checked = board.showAway;
-  $('#awayFormation').innerHTML = Object.keys(FORMATIONS[board.format]).map(n =>
-    `<option value="${n}"${n === board.awayFormation ? ' selected' : ''}>${n}</option>`).join('');
   $('#labelSeg').innerHTML = [['name', 'Navn'], ['role', 'Rolle'], ['none', 'Kun nummer']].map(([k, l]) =>
     `<button type="button" role="radio" data-labels="${k}" aria-checked="${k === ui.labels}">${l}</button>`).join('');
+  $('#boardBtnName').textContent = board.name || 'Uden navn';
+  // Hold: samme kontroller for begge hold
+  document.querySelectorAll('[data-side-seg]').forEach(el => { el.innerHTML = sideSegHTML(); });
+  $('#showAway').checked = board.showAway;
+  const tn = $('#teamName'); tn.dataset.teamName = side; if (document.activeElement !== tn) tn.value = board.teamNames[side];
+  $('#formationSel').innerHTML = Object.keys(FORMATIONS[board.format]).map(n =>
+    `<option value="${n}"${n === board[side + 'Formation'] ? ' selected' : ''}>${n}</option>`).join('');
+  $('#styleSeg').innerHTML = Object.entries(STYLES).map(([k, l]) =>
+    `<button type="button" role="radio" data-style="${k}" aria-checked="${k === (board[side + 'Style'] || 'normal')}">${l}</button>`).join('');
+  $('#rosterList').innerHTML = board[side].map(p => rosterRow(p, side)).join('');
+  $('#benchBlock').hidden = !isHome;
+  $('#benchList').innerHTML = board.bench.length ? board.bench.map(b => rosterRow(b, 'bench')).join('') : '<li class="empty">Ingen udskiftere endnu.</li>';
+  const ps = isHome ? [...board.home, ...board.bench] : board.away;
+  const avg = ps.reduce((a, p) => a + avgAttr(p), 0) / Math.max(1, ps.length);
+  if (document.activeElement !== $('#teamLevel')) { $('#teamLevel').value = String(Math.round(avg)); $('#teamLevelVal').textContent = String(Math.round(avg)); }
+  $('#levelLabel').textContent = `Sæt niveau for hele holdet (nu Ø ${fmt1(avg)})`;
+  // Taktik
+  $('#tacticBox').innerHTML = tacticsHTML(side);
+  // Tegn og Kamp
   $('#ghostToggle').checked = ui.ghost;
+  $('#assistToggle').checked = ui.simAssist;
+  $('#zonesToggle').checked = !!ui.showZones;
+  if (ui.tab === 'kamp') renderKamp();
   renderSteps();
 }
 
@@ -2253,53 +2363,29 @@ $('#formatSeg').addEventListener('click', e => {
   changeFormat(b.dataset.format);
   toast(`Skiftet til ${FORMATS[board.format].label}. Trin og tegninger er nulstillet.`, { label: 'Fortryd', fn: undo });
 });
-$('#homeFormations').addEventListener('click', e => {
-  const b = e.target.closest('[data-formation]'); if (b) applyFormation('home', b.dataset.formation);
-});
 document.querySelectorAll('#kitHome, #kitKeeper, #kitAway').forEach(el => el.addEventListener('click', e => {
   const b = e.target.closest('[data-kit]'); if (!b) return;
   board.kit[b.dataset.kit] = b.dataset.color;
   commit(); renderPanel(); render();
 }));
-function rosterInput(list, e) {
-  const row = e.target.closest('[data-id]'); if (!row) return;
-  const p = list.find(x => x.id === row.dataset.id); if (!p) return;
-  if (e.target.classList.contains('num')) { const v = cleanNum(e.target.value); if (v !== e.target.value) e.target.value = v; p.num = v; if ('autoNum' in p) p.autoNum = false; }
-  else if (e.target.classList.contains('name')) p.name = e.target.value.slice(0, 30);
-  render();
-}
-const homeList = $('#homeList'), benchList = $('#benchList');
-homeList.addEventListener('input', e => rosterInput(board.home, e));
-homeList.addEventListener('change', () => commit());
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-edit]'); if (!b) return;
   const row = b.closest('[data-id]'); if (row) openPlayerEditor(b.dataset.edit, row.dataset.id);
 });
-homeList.addEventListener('focusin', e => { const row = e.target.closest('[data-id]'); if (row) { ui.highlight = row.dataset.id; render(); } });
-homeList.addEventListener('focusout', () => { ui.highlight = null; render(); });
-homeList.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) e.target.blur(); });
-benchList.addEventListener('input', e => { if (e.target.matches('input')) rosterInput(board.bench, e); });
-benchList.addEventListener('change', e => {
-  if (e.target.matches('select.swap')) {
-    const row = e.target.closest('[data-id]');
-    const b = board.bench.find(x => x.id === row.dataset.id), s = board.home.find(x => x.id === e.target.value);
-    if (b && s) {
-      const inName = b.name.trim() || `nr. ${b.num || '?'}`;
-      swapPlayers(b, s);
-      commit(); renderPanel(); render();
-      toast(`${inName} er skiftet ind.`, { label: 'Fortryd', fn: undo });
-    }
-    return;
-  }
-  commit();
-});
-benchList.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('input')) e.target.blur(); });
-benchList.addEventListener('click', e => {
-  const rm = e.target.closest('[data-remove]'); if (!rm) return;
-  const row = rm.closest('[data-id]');
-  board.bench = board.bench.filter(x => x.id !== row.dataset.id);
-  commit(); renderPanel();
-});
+// Skift mellem eget hold og modstanderen (Hold og Taktik)
+function setSide(side) {
+  if (side === ui.side) return;
+  ui.side = side;
+  if (side === 'away' && !board.showAway) { board.showAway = true; commit(); toast('Modstanderen vises nu på banen.', { label: 'Fortryd', fn: undo }); }
+  renderPanel(); render();
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-side-seg] [data-side]'); if (b) setSide(b.dataset.side); });
+for (const id of ['#rosterList', '#benchList']) {
+  $(id).addEventListener('focusin', e => { const r = e.target.closest('[data-id]'); if (r) { ui.highlight = r.dataset.id; render(); } });
+  $(id).addEventListener('focusout', () => { ui.highlight = null; render(); });
+  $(id).addEventListener('pointerover', e => { const r = e.target.closest('[data-id]'); if (r && ui.highlight !== r.dataset.id) { ui.highlight = r.dataset.id; render(); } });
+  $(id).addEventListener('pointerleave', () => { if (!document.activeElement || !document.activeElement.closest(id)) { ui.highlight = null; render(); } });
+}
 function swapPlayers(bench, starter) {
   [bench.num, starter.num] = [starter.num, bench.num];
   [bench.name, starter.name] = [starter.name, bench.name];
@@ -2315,14 +2401,26 @@ $('#addBench').addEventListener('click', () => {
   const b = { id: uid(), num: nextFreeNum(), name: '', attrs: defaultAttrs() };
   board.bench.push(b);
   commit(); renderPanel();
-  const el = document.getElementById('bname-' + b.id); if (el) el.focus();
+  openPlayerEditor('bench', b.id);
+  setTimeout(() => pdName.focus(), 60);
 });
-$('#showAway').addEventListener('change', e => { board.showAway = e.target.checked; commit(); renderPanel(); render(); });
-$('#awayFormation').addEventListener('change', e => applyFormation('away', e.target.value));
-$('#awayStyle').addEventListener('change', e => applyFormation('away', board.awayFormation, e.target.value));
-$('#homeStyleSeg').addEventListener('click', e => {
+$('#showAway').addEventListener('change', e => {
+  board.showAway = e.target.checked;
+  if (!board.showAway && ui.side === 'away') ui.side = 'home';
+  commit(); renderPanel(); render();
+});
+$('#formationSel').addEventListener('change', e => applyFormation(ui.side, e.target.value));
+$('#styleSeg').addEventListener('click', e => {
   const b = e.target.closest('[data-style]');
-  if (b && b.dataset.style !== (board.homeStyle || 'normal')) applyFormation('home', board.homeFormation, b.dataset.style);
+  if (b && b.dataset.style !== (board[ui.side + 'Style'] || 'normal')) applyFormation(ui.side, board[ui.side + 'Formation'], b.dataset.style);
+});
+$('#teamLevel').addEventListener('input', e => { $('#teamLevelVal').textContent = e.target.value; });
+$('#levelApply').addEventListener('click', () => {
+  const team = ui.side, v = clamp(Number($('#teamLevel').value), 1, 10);
+  const ps = team === 'home' ? [...board.home, ...board.bench] : board.away;
+  ps.forEach(p => { p.attrs = { pace: v, tech: v, shoot: v, def: v, phys: v, gk: v }; });
+  commit(); renderPanel();
+  toast(`Alle egenskaber for ${board.teamNames[team]} er sat til ${v}.`, { label: 'Fortryd', fn: undo });
 });
 
 /* ---- Logoer som vandmærke ---- */
@@ -2349,7 +2447,7 @@ async function readLogo(file) {
     return data;
   } finally { URL.revokeObjectURL(url); }
 }
-panel.addEventListener('click', e => {
+$('#logoBox').addEventListener('click', e => {
   const pick = e.target.closest('[data-logo-pick]');
   if (pick) { logoTarget = pick.dataset.logoPick; $('#logoFile').click(); return; }
   const clr = e.target.closest('[data-logo-clear]');
@@ -2378,14 +2476,39 @@ $('#labelSeg').addEventListener('click', e => {
 });
 $('#ghostToggle').addEventListener('change', e => { ui.ghost = e.target.checked; savePrefs(); render(); });
 
-/* ---- Ark på smalle skærme ---- */
-const sheetQuery = matchMedia('not all and (min-width: 740px) and (min-height: 520px)');
-function openSheet() { panel.classList.add('open'); scrim.classList.add('show'); $('#holdBtn').setAttribute('aria-expanded', 'true'); setTimeout(() => $('#panelClose').focus(), 60); }
-function closeSheet() { if (!panel.classList.contains('open')) return; panel.classList.remove('open'); scrim.classList.remove('show'); $('#holdBtn').setAttribute('aria-expanded', 'false'); }
-$('#holdBtn').addEventListener('click', openSheet);
-$('#panelClose').addEventListener('click', () => { closeSheet(); $('#holdBtn').focus(); });
-scrim.addEventListener('click', closeSheet);
-sheetQuery.addEventListener('change', () => { if (!sheetQuery.matches) closeSheet(); });
+/* ---- Faner: Hold, Taktik, Tegn og Kamp ---- */
+const workspace = $('#workspace'), layoutQuery = matchMedia('(min-width: 740px) and (min-height: 520px)');
+const TABS = ['hold', 'taktik', 'tegn', 'kamp'];
+// Værktøjerne står i panelet på store skærme og under banen på telefonen.
+function placeToolbar() {
+  const slot = layoutQuery.matches ? $('#toolsSlotPanel') : $('#toolsSlotStage');
+  if (toolbarEl.parentNode !== slot) slot.appendChild(toolbarEl);
+}
+function setTab(tab, focus) {
+  if (!TABS.includes(tab)) return;
+  if (ui.playing && tab !== 'tegn') stopPlay();
+  closeInkPop();
+  ui.tab = tab; workspace.dataset.tab = tab;
+  $('#tabs').querySelectorAll('[data-tab]').forEach(b => { const on = b.dataset.tab === tab; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
+  for (const t of TABS) $('#pane-' + t).hidden = t !== tab;
+  // Uden for Tegn flytter banen kun spillere.
+  if (tab !== 'tegn' && ui.tool !== 'move') { ui.tool = 'move'; ui.selected = null; cv.style.cursor = ''; updateToolbar(); }
+  if (tab === 'kamp') renderKamp();
+  if (focus) $('#tab-' + tab).focus();
+  placeToolbar(); resize(); render();
+}
+$('#tabs').addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) setTab(b.dataset.tab); });
+$('#tabs').addEventListener('keydown', e => {
+  const k = TABS.indexOf(ui.tab), d = e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : e.key === 'ArrowLeft' || e.key === 'ArrowUp' ? -1 : 0;
+  if (d) { e.preventDefault(); setTab(TABS[(k + d + TABS.length) % TABS.length], true); }
+});
+layoutQuery.addEventListener('change', () => { placeToolbar(); resize(); });
+$('#panelGrip').addEventListener('click', () => {
+  const on = !panel.classList.contains('expanded');
+  panel.classList.toggle('expanded', on);
+  $('#panelGrip').setAttribute('aria-expanded', String(on));
+  $('#panelGrip').setAttribute('aria-label', on ? 'Gør panelet mindre' : 'Gør panelet større');
+});
 
 /* ---- Spillerkort ---- */
 const playerDlg = $('#playerDlg'), pdNum = $('#pdNum'), pdName = $('#pdName'), pdRole = $('#pdRole');
@@ -2414,16 +2537,31 @@ $('#pdAttrs').addEventListener('input', e => {
   el.nextElementSibling.textContent = v; el.setAttribute('aria-valuetext', String(v));
 });
 function renderSwapList() {
-  const show = editing && editing.team === 'home' && board.bench.length > 0;
+  const team = editing && editing.team;
+  const show = (team === 'home' && board.bench.length > 0) || team === 'bench';
   $('#pdSwapWrap').hidden = !show;
+  $('#pdRemove').hidden = team !== 'bench';
   if (!show) return;
-  $('#pdSwap').innerHTML = board.bench.map(b =>
-    `<button type="button" class="btn btn-sm" data-swap="${esc(b.id)}">${ic('swap')}${esc(b.num || '–')} ${esc(b.name.trim() || 'Udskifter')}</button>`).join('');
+  $('#pdSwapTitle').textContent = team === 'bench' ? 'Skift ind for' : 'Skift med udskifter';
+  $('#pdSwap').innerHTML = team === 'bench'
+    ? board.home.map(s2 => `<button type="button" class="btn btn-sm" data-swapin="${esc(s2.id)}">${ic('swap')}${esc(s2.num || '–')} ${esc(s2.name.trim() || s2.role)}</button>`).join('')
+    : board.bench.map(b => `<button type="button" class="btn btn-sm" data-swap="${esc(b.id)}">${ic('swap')}${esc(b.num || '–')} ${esc(b.name.trim() || 'Udskifter')}</button>`).join('');
 }
 pdNum.addEventListener('input', () => { const p = editingPlayer(); if (!p) return; const v = cleanNum(pdNum.value); if (v !== pdNum.value) pdNum.value = v; p.num = v; p.autoNum = false; render(); });
 pdName.addEventListener('input', () => { const p = editingPlayer(); if (!p) return; p.name = pdName.value.slice(0, 30); render(); });
 pdRole.addEventListener('input', () => { const p = editingPlayer(); if (!p) return; const v = cleanRole(pdRole.value); if (v !== pdRole.value) pdRole.value = v; if (v) p.role = v; render(); });
 $('#pdSwap').addEventListener('click', e => {
+  const sin = e.target.closest('[data-swapin]');
+  if (sin) {
+    const bp = editingPlayer(), st = board.home.find(x => x.id === sin.dataset.swapin);
+    if (!bp || !st) return;
+    const inName = bp.name.trim() || `nr. ${bp.num || '?'}`;
+    swapPlayers(bp, st);
+    editing = null; commit(); renderPanel(); render();
+    playerDlg.close();
+    toast(`${cap(inName)} er skiftet ind.`, { label: 'Fortryd', fn: undo });
+    return;
+  }
   const b = e.target.closest('[data-swap]'); if (!b) return;
   const bp = board.bench.find(x => x.id === b.dataset.swap), p = editingPlayer();
   if (!bp || !p) return;
@@ -2431,6 +2569,13 @@ $('#pdSwap').addEventListener('click', e => {
   renderAttrEditor(p);
   pdNum.value = p.num; pdName.value = p.name;
   renderSwapList(); render();
+});
+$('#pdRemove').addEventListener('click', () => {
+  const p = editingPlayer(); if (!p || editing.team !== 'bench') return;
+  board.bench = board.bench.filter(x => x.id !== p.id);
+  editing = null; commit(); renderPanel(); render();
+  playerDlg.close();
+  toast('Udskifteren er fjernet.', { label: 'Fortryd', fn: undo });
 });
 playerDlg.addEventListener('close', () => { editing = null; ui.highlight = null; commit(); renderPanel(); render(); });
 
@@ -2463,7 +2608,7 @@ function renderBoardList() {
     </li>`;
   }).join('');
 }
-$('#boardsBtn').addEventListener('click', () => { flushSave(); renderBoardList(); $('#pasteErr').hidden = true; boardsDlg.showModal(); });
+$('#boardBtn').addEventListener('click', () => { flushSave(); renderBoardList(); $('#pasteErr').hidden = true; nameInput.value = board.name; boardsDlg.showModal(); });
 $('#boardList').addEventListener('click', e => {
   const btn = e.target.closest('[data-act]'); if (!btn) return;
   const id = btn.closest('[data-id]').dataset.id;
@@ -2646,11 +2791,13 @@ function tacticsHTML(team) {
   return `<label class="field-inline">Klassisk taktik <select id="${team}-preset" data-tteam="${team}" data-tk="preset"${is11 ? '' : ' disabled'}>
       <option value="">Egen taktik</option>${PRESETS.map(p => `<option value="${p.id}"${p.id === t.preset ? ' selected' : ''}>${esc(presetLabel(p))}</option>`).join('')}</select></label>
     <p class="group-note">${esc(note)}</p>
-    <details class="tactic-details" data-tteam="${team}"${ui.tacticOpen[team] ? ' open' : ''}><summary>Instruktioner og dødbolde</summary>
+    <h3 class="group-title">Instruktioner</h3>
+    <div class="tactic-body">
       <div class="sliders">${TACTIC_KEYS.map(k => `<label class="slider"><span class="sl-name">${k.label}</span><input type="range" min="1" max="5" step="1" id="${team}-${k.key}" data-tteam="${team}" data-tk="${k.key}" value="${t[k.key]}" aria-valuetext="${k.vals[t[k.key] - 1]}"><span class="sl-val">${k.vals[t[k.key] - 1]}</span></label>`).join('')}</div>
-      <label class="field-inline">Dødbold i angreb <select id="${team}-setAtt" data-tteam="${team}" data-tk="setAtt">${opts(SET_ATT, t.setAtt)}</select></label>
-      <label class="field-inline">Dødbold i forsvar <select id="${team}-setDef" data-tteam="${team}" data-tk="setDef">${opts(SET_DEF, t.setDef)}</select></label>
-    </details>`;
+      <h3 class="group-title">Dødbolde</h3>
+      <label class="field-inline">I angreb <select id="${team}-setAtt" data-tteam="${team}" data-tk="setAtt">${opts(SET_ATT, t.setAtt)}</select></label>
+      <label class="field-inline">I forsvar <select id="${team}-setDef" data-tteam="${team}" data-tk="setDef">${opts(SET_DEF, t.setDef)}</select></label>
+    </div>`;
 }
 function applyPreset(team, id) {
   const t = board.tactics[team], p = PRESETS.find(x => x.id === id);
@@ -2677,7 +2824,7 @@ panel.addEventListener('change', e => {
     const team = el.dataset.teamName;
     board.teamNames[team] = el.value.trim().slice(0, 40) || DEFAULT_NAMES[team];
     el.value = board.teamNames[team];
-    commit(); return;
+    commit(); renderPanel(); return;
   }
   if (!el.dataset.tteam || el.tagName === 'DETAILS') return;
   const team = el.dataset.tteam, t = board.tactics[team];
@@ -2689,17 +2836,6 @@ panel.addEventListener('change', e => {
 panel.addEventListener('toggle', e => { const d = e.target; if (d.classList && d.classList.contains('tactic-details')) ui.tacticOpen[d.dataset.tteam] = d.open; }, true);
 panel.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset && e.target.dataset.teamName) e.target.blur(); });
 
-for (const team of ['home', 'away']) {
-  $(team === 'home' ? '#homeLevel' : '#awayLevel').addEventListener('input', e => { $(team === 'home' ? '#homeLevelVal' : '#awayLevelVal').textContent = e.target.value; });
-}
-panel.addEventListener('click', e => {
-  const b = e.target.closest('[data-level-apply]'); if (!b) return;
-  const team = b.dataset.levelApply, v = clamp(Number($(team === 'home' ? '#homeLevel' : '#awayLevel').value), 1, 10);
-  const ps = team === 'home' ? [...board.home, ...board.bench] : board.away;
-  ps.forEach(p => { p.attrs = { pace: v, tech: v, shoot: v, def: v, phys: v, gk: v }; });
-  commit(); renderPanel();
-  toast(`Alle egenskaber for ${board.teamNames[team]} er sat til ${v}.`, { label: 'Fortryd', fn: undo });
-});
 
 /* ---- Dødbolde: stil begge hold op i et nyt trin ---- */
 // Placerer begge hold til en dødbold. Bruges både af tavlen (nyt trin) og af kampsimuleringen.
@@ -2799,7 +2935,7 @@ function setPieceStep(kind, side) {
   ui.frame++; ui.selected = null; ui.anim = null;
   board.showAway = true;
   commit(); renderPanel(); renderSteps(); updateToolbar(); render();
-  closeSheet();
+  setTab('tegn');
   toast(`${what} er stillet op i trin ${ui.frame + 1}.`, { label: 'Fortryd', fn: undo });
 }
 $('#spApply').addEventListener('click', () => setPieceStep($('#spKind').value, $('#spSide').value));
@@ -4449,6 +4585,7 @@ function simControls() {
   $('#simPlayLbl').textContent = sim.ended ? 'Slut' : sim.playing ? 'Pause' : ht ? '2. halvleg' : sim.rec && sim.rec.m > 0 ? 'Fortsæt' : 'Start kampen';
   btn.disabled = sim.ended;
   $('#simSkip').disabled = sim.ended;
+  simSpeedLabel();
 }
 function simNewMatch() {
   sim.lineup = { home: board.home.map((p, k) => ({ ...p, slot: k })), away: board.away.map((p, k) => ({ ...p, slot: k })) };
@@ -4478,7 +4615,6 @@ function simNewMatch() {
 }
 function openSim() {
   if (ui.playing) stopPlay();
-  closeSheet();
   sim.many = null;
   simDlg.showModal();
   simSetTab('feed');
@@ -4489,7 +4625,7 @@ function openSim() {
 }
 function simSetTab(tab) {
   $('#simTabs').querySelectorAll('[data-tab]').forEach(b => { const on = b.dataset.tab === tab; b.setAttribute('aria-selected', String(on)); b.setAttribute('aria-checked', String(on)); });
-  for (const [k, id] of [['feed', '#simPanelFeed'], ['stats', '#simPanelStats'], ['players', '#simPanelPlayers'], ['tactic', '#simPanelTactic'], ['analysis', '#simPanelAnalysis']]) $(id).hidden = tab !== k;
+  for (const [k, id] of [['feed', '#simPanelFeed'], ['stats', '#simPanelStats'], ['hold', '#simPanelPlayers']]) $(id).hidden = tab !== k;
   if (tab === 'stats') simRenderCharts();
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-sim]')) openSim(); });
@@ -4502,11 +4638,23 @@ $('#simPlay').addEventListener('click', () => {
   if (sim.playing) { $('#simFlash').hidden = true; sim.hold = 0; sim.last = 0; if (!$('#simPanelStats').hidden && sim.rec && sim.rec.halfTime) simSetTab('feed'); }
   simControls();
 });
-$('#simSpeed').addEventListener('click', e => {
-  const b = e.target.closest('[data-speed]'); if (!b) return;
-  sim.speed = Number(b.dataset.speed);
-  $('#simSpeed').querySelectorAll('[data-speed]').forEach(x => x.setAttribute('aria-checked', String(x === b)));
+const SPEEDS = [1, 2, 4, 8];
+function simSpeedLabel() { const b = $('#simSpeedBtn'); b.textContent = sim.speed + '×'; b.setAttribute('aria-label', `Hastighed ${sim.speed} gange. Tryk for at skifte`); }
+$('#simSpeedBtn').addEventListener('click', () => { sim.speed = SPEEDS[(SPEEDS.indexOf(sim.speed) + 1) % SPEEDS.length]; simSpeedLabel(); });
+// Mere-menuen: visning, navne, spring til slut, ny kamp og 500 kampe
+function simMenu(open) {
+  const m = $('#simMore'), b = $('#simMoreBtn'); open = open ?? m.hidden;
+  m.hidden = !open; b.setAttribute('aria-expanded', String(open));
+  if (open) { const f = m.querySelector('button:not(:disabled)'); if (f) f.focus(); }
+}
+$('#simMoreBtn').addEventListener('click', () => simMenu());
+$('#simMore').addEventListener('click', e => { if (e.target.closest('button')) simMenu(false); });
+$('#simMore').addEventListener('keydown', e => {
+  const items = [...$('#simMore').querySelectorAll('button:not(:disabled)')], k = items.indexOf(document.activeElement);
+  if (e.key === 'Escape') { e.stopPropagation(); e.preventDefault(); simMenu(false); $('#simMoreBtn').focus(); }
+  else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); items[(k + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length].focus(); }
 });
+document.addEventListener('pointerdown', e => { if (!$('#simMore').hidden && !e.target.closest('#simMore, #simMoreBtn')) simMenu(false); });
 $('#simMode').addEventListener('click', e => {
   const b = e.target.closest('[data-mode]'); if (!b) return;
   sim.mode = b.dataset.mode;
@@ -4514,14 +4662,15 @@ $('#simMode').addEventListener('click', e => {
 });
 $('#simLabels').addEventListener('click', e => {
   sim.labels = sim.labels === 'name' ? 'none' : 'name';
-  e.currentTarget.setAttribute('aria-pressed', String(sim.labels === 'name'));
+  e.currentTarget.setAttribute('aria-checked', String(sim.labels === 'name'));
   simDraw();
 });
 $('#simSkip').addEventListener('click', () => { sim.playing = false; sim.hold = 0; $('#simFlash').hidden = true; simSkipToEnd(); simDraw(); });
 $('#simNew').addEventListener('click', () => { simNewMatch(); simSetTab('feed'); simDraw(); });
 $('#simMany').addEventListener('click', () => {
   sim.many = simulateMany(simProfile(0), simProfile(1), 500, simManyOpts());
-  simRenderAnalysis(); simSetTab('analysis');
+  simRenderAnalysis(); simSetTab('stats');
+  $('#simPanelStats').scrollTop = 0;
 });
 simDlg.addEventListener('close', () => { sim.playing = false; if (sim.raf) cancelAnimationFrame(sim.raf); sim.raf = 0; });
 
@@ -4700,12 +4849,46 @@ function fbDraw(zones) {
 }
 const pctTxt = v => Math.round(v * 100) + ' %';
 const epTxt = v => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2).replace('.', ',');
+/* ---- Kamp-fanen: forventet udfald, simulering og feedback i kort form ---- */
+let forecastKey = '', forecastTimer = 0, forecastVal = null;
+const kampOpts = () => ({ ai: [ui.simAssist, true] });
+function wdlHTML(r) {
+  const pc = v => Math.round(v / r.n * 100);
+  return `<div class="wdl" aria-hidden="true"><span style="width:${pc(r.w)}%;background:${board.kit.home}"></span><span style="width:${pc(r.d)}%;background:var(--line)"></span><span style="width:${pc(r.l)}%;background:${board.kit.away}"></span></div>
+    <div class="wdl-legend"><span>Sejr ${pc(r.w)} %</span><span>Uafgjort ${pc(r.d)} %</span><span>Nederlag ${pc(r.l)} %</span></div>`;
+}
+function renderKamp() {
+  $('#matchTitle').textContent = `${board.teamNames.home} mod ${board.teamNames.away}`;
+  // Forventet udfald i 300 kampe – regnes kun igen, når hold, egenskaber, taktik eller assistenten ændres.
+  const A = teamProfile(board, 'home'), B = teamProfile(board, 'away');
+  const key = JSON.stringify([board.format, A.formation, B.formation, board.home.map(p => [p.role, p.attrs]), board.away.map(p => [p.role, p.attrs]), board.tactics, ui.simAssist]);
+  const show = r => { $('#forecast').innerHTML = wdlHTML(r) + '<p class="muted small">Forventet udfald i 300 simulerede kampe.</p>'; };
+  if (key !== forecastKey) {
+    forecastKey = key; forecastVal = null;
+    $('#forecast').innerHTML = '<p class="muted small">Beregner forventet udfald …</p>';
+    $('#manyResult').innerHTML = '';
+    clearTimeout(forecastTimer);
+    forecastTimer = setTimeout(() => {
+      if (key !== forecastKey) return;
+      forecastVal = simulateMany(A, B, 300, kampOpts());
+      show(forecastVal);
+    }, 60);
+  } else if (forecastVal) show(forecastVal);
+  // Feedback i kort form: de to vigtigste styrker og svagheder.
+  const F = feedbackFindings(), items = (list, empty) => list.length ? list.slice(0, 2).map(o => `<li>${esc(o.text)}</li>`).join('') : `<li class="fb-empty">${empty}</li>`;
+  $('#fbBrief').innerHTML = `<div class="brief good"><h4>Styrker</h4><ul>${items(F.S, 'Ingen tydelige styrker endnu.')}</ul></div>
+    <div class="brief bad"><h4>Svagheder</h4><ul>${items(F.K, 'Ingen tydelige svagheder fundet.')}</ul></div>`;
+}
+$('#many500').addEventListener('click', () => {
+  const m = simulateMany(teamProfile(board, 'home'), teamProfile(board, 'away'), 500, kampOpts()), f1 = v => v.toFixed(1).replace('.', ','), f2 = v => v.toFixed(2).replace('.', ',');
+  $('#manyResult').innerHTML = `<h4>500 simulerede kampe</h4>${wdlHTML(m)}<p class="muted small">Gennemsnit: ${f1(m.g[0])}–${f1(m.g[1])} i mål · xG ${f2(m.x[0])}–${f2(m.x[1])} · boldbesiddelse ${Math.round(m.poss * 100)}–${100 - Math.round(m.poss * 100)} %.</p>`;
+});
+$('#assistToggle').addEventListener('change', e => { ui.simAssist = e.target.checked; savePrefs(); renderKamp(); });
 function fbItem(o, icon) {
   return `<li>${ic(icon)}<span><span class="tag">${esc(o.tag)}</span>${esc(o.text)}</span></li>`;
 }
 async function openFeedback() {
   if (ui.playing) stopPlay();
-  closeSheet();
   if (!fbDlg.open) fbDlg.showModal();
   const run = ++fbRun;
   const F = feedbackFindings();
@@ -4772,11 +4955,11 @@ document.addEventListener('keydown', e => {
   if (mod && !typing && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); return; }
   if (typing || mod || e.altKey || document.querySelector('dialog[open]')) return;
   if ((e.key === 'Delete' || e.key === 'Backspace') && ui.selected) { e.preventDefault(); deleteAction(); return; }
-  if (e.key === 'Escape') { closeInkPop(); closeSheet(); if (ui.selected) { ui.selected = null; updateToolbar(); render(); } return; }
+  if (e.key === 'Escape') { closeInkPop(); if (ui.selected) { ui.selected = null; updateToolbar(); render(); } return; }
   if (e.key === 'ArrowLeft') { goFrame(-1); return; }
   if (e.key === 'ArrowRight') { goFrame(1); return; }
   const t = TOOLS.find(x => x.key === e.key.toLowerCase());
-  if (t) setTool(t.id);
+  if (t) { if (t.id !== 'move' && ui.tab !== 'tegn') setTab('tegn'); setTool(t.id); }
 });
 
 /* ---- Tema, størrelse, gem ved lukning ---- */
@@ -4795,6 +4978,7 @@ fontsReady.then(() => render());
 
 function refreshAll() {
   nameInput.value = board.name;
+  if (ui.side === 'away' && !board.showAway) ui.side = 'home';
   if (view) resize();
   renderPanel(); updateToolbar(); updateUndo(); render();
 }
@@ -4816,10 +5000,11 @@ function refreshAll() {
   for (const c of candidates) { try { b = normalizeBoard(c); break; } catch (_) {} }
   board = b || exampleBoard();
   buildToolbar();
+  placeToolbar();
   resetHistory();
   nameInput.value = board.name;
   renderPanel(); updateToolbar();
-  resize();
+  setTab('hold');
   if (!b) flushSave();
   if (!ui.hintSeen) showHint(TOOLS[0].hint, 6000);
 })();
