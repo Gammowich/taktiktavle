@@ -49,6 +49,8 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
 | `launcher/Taktiktavle.html` | Startsiden i MG Games-launcheren. Den åbner appen på GitHub Pages. |
 | `launcher/omslag.html` | Kilden til omslaget i launcheren (1920 × 700). |
+| `launcher/GRAFIK_LAUNCHER.md` | Hvad nye billeder til launcheren skal opfylde (omslag og ikon). |
+| `launcher/omslag_zoner.png` | Skabelon i 1920 × 700, der viser, hvilke dele af omslaget launcheren viser. |
 
 ## I MG Games-launcheren
 
