@@ -46,6 +46,7 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | `build.py` | Laver `docs/index.html` og `docs/sw.js` ud fra `app.html`. |
 | `docs/` | Den færdige webapp. GitHub Pages udgiver denne mappe. |
 | `tools/make_icons.py` | Tegner app-ikonerne i `docs/icons/`. |
+| `tools/konto_test.mjs` | Test af MG Games-kontoen: to "enheder" i headless Chrome mod MG Games-serveren kørt lokalt. |
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
 | `mac/` | Mac-programmet til MG Games-launcheren: appen i sit eget vindue (Swift, WKWebView). `mac/build.sh` bygger det. |
 | `windows/` | Windows-programmet til launcheren (Godot 4.7): appen i sit eget vindue via Edge eller Chrome. `windows/build.sh` bygger det. |
@@ -74,8 +75,8 @@ udgives igen, når de selv ændres.
   - Uden Edge bruges Chrome. Er der ingen af dem, eller lukker browseren med det samme, åbnes appen i standardbrowseren.
 - **iPad, iPhone og Android:** her findes launcheren ikke. Appen lægges på hjemmeskærmen fra browseren (se nedenfor).
 
-**Tavlerne** gemmes i hvert program for sig, adskilt fra browseren. En tavle flyttes med Del → Gem som fil og Tavlen →
-Åbn fil.
+**Tavlerne** gemmes i hvert program for sig, adskilt fra browseren. Med login på MG Games-kontoen følger de med
+mellem dem (se "MG Games-kontoen" herunder); ellers flyttes en tavle med Del → Gem som fil og Tavlen → Åbn fil.
 
 Byg og afprøv Mac-programmet:
 
@@ -139,5 +140,53 @@ Efter en ændring: ret `app.html`, kør `python3 build.py`, commit og push – s
 
 ## Data
 
-Tavlerne gemmes i browserens lager på den enkelte enhed. De synkroniseres ikke mellem enheder.
-Brug *Del → Gem som fil* og *Mine tavler → Åbn fil* for at flytte en tavle til en anden enhed.
+Tavlerne gemmes altid i lageret på den enkelte enhed, også uden login og uden net. En tavle kan flyttes med *Del → Gem
+som fil* og *Tavlen → Åbn fil*.
+
+### MG Games-kontoen
+
+Under *Tavlen → MG Games-konto* kan man logge ind eller oprette en konto. Så gemmes tavlerne også på kontoen og følger
+med på alle enheder: Mac, Windows, iPad og telefon. Morten 4/10: *"gem lokalt uden login, nyeste vinder"*.
+
+- **Hver tavle sin plads.** Hver tavle har sin egen plads under spillet `taktiktavle` på MG Games-serveren, og pladsen
+  hedder det samme som tavlens id.
+- **Den nyeste vinder.** Er en tavle ændret flere steder, vinder den udgave, der er ændret senest (tavlens `updated`).
+- **Sletninger.** De huskes i pladsen `-slettede`, så de når de andre enheder. Er tavlen ændret dér efter sletningen,
+  kommer den tilbage. Kun sletninger fjerner tavler. Forsvinder en tavle fra kontoen på anden vis, lægger enheder, der
+  stadig har den, den op igen.
+- **Eksempeltavlen.** Den urørte eksempeltavle bliver på enheden. Hver enhed laver sin egen.
+- **Hvornår der synkroniseres.** Ved login og start, 4 s efter en ændring, når appen skjules eller lukkes, hvert andet
+  minut, mens den er åben, og med *Synkronisér nu*. Mac-programmet venter ved lukning på synkroniseringen, højst 4 s.
+- **Uden net.** Appen siger det og lægger tavlerne op senere.
+- **Mac via launcheren.** Programmet bruger launcherens login (`session.json`), så man kun logger ind ét sted. Log ud i
+  appen forlader kun login'et i appen.
+- **Slet mine tavler på kontoen.** Fjerner alle pladserne og logger ud. Tavlerne bliver på enheden. Andre enheder, der
+  stadig er logget ind, lægger deres tavler op igen.
+- **Claude-udgaven.** Kontoen vises ikke dér, for siden kan ikke kalde MG Games.
+
+Serveren svarer kun websider fra `https://gammowich.github.io` og lokale tests (CORS, se `server/src/index.js` i
+MGGamesLauncher).
+
+Test:
+
+```bash
+python3 build.py
+```
+
+```bash
+node tools/konto_test.mjs
+```
+
+Testen bruger to "enheder", appen på `127.0.0.1` og på `localhost`. Den prøver af:
+
+- at tavler gemmes uden login,
+- oprettelse af konto og login,
+- at tavler hentes til den anden enhed,
+- at den nyeste vinder, begge veje,
+- uden net,
+- sletning, og at en ændring efter en sletning bringer tavlen tilbage,
+- at der ikke er kald til serveren i tomgang,
+- udløbet login, log ud og forkert adgangskode,
+- "Slet mine tavler på kontoen".
+
+Testen bruger `?mgapi=http://127.0.0.1:<port>/v1`. Den adresse godtager appen kun for localhost og 127.0.0.1.

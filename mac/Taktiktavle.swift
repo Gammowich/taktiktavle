@@ -7,6 +7,24 @@ import WebKit
 let defaultURL = "https://gammowich.github.io/taktiktavle/"
 let appURL = URL(string: ProcessInfo.processInfo.environment["TAKTIKTAVLE_URL"] ?? defaultURL)!
 
+/// MG Games-launcherens login (<data>/MG Games/session.json, som spillene læser; MG_SESSION overstyrer stien), som
+/// appen bruger til at gemme tavlerne på kontoen. Kun id, navn, e-mail, token og serverens adresse. nil uden login.
+func launcherSession(smoke: Bool) -> [String: Any]? {
+    let env = ProcessInfo.processInfo.environment["MG_SESSION"] ?? ""
+    if smoke && env.isEmpty { return nil }   // (røgtesten må aldrig bruge det rigtige login: kun MG_SESSION fra testen)
+    let path = env.isEmpty
+        ? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library/Application Support/MG Games/session.json").path
+        : env
+    guard let data = FileManager.default.contents(atPath: path),
+          let o = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+          let token = o["token"] as? String, token.count >= 20 else { return nil }
+    let user = o["user"] as? [String: Any] ?? o   // (launcheren gemmer {api, token, user: {id, name, email}})
+    var out: [String: Any] = ["token": token]
+    if let v = o["api"] as? String { out["api"] = v }
+    for k in ["id", "name", "email"] { if let v = user[k] { out[k] = v } }
+    return out
+}
+
 func say(_ s: String) {
     print("[taktiktavle] " + s)
     fflush(stdout)
@@ -55,6 +73,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNa
     var smokeDownloadDone: ((URL?) -> Void)? = nil
     var smokeGen = 0
     var exitCode: Int32 = 0
+    var hasLauncherSession = false
 
     // MARK: start
 
@@ -62,6 +81,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNa
         buildMenu()
         let cfg = WKWebViewConfiguration()
         cfg.applicationNameForUserAgent = "TaktiktavleMac/1.0"
+        if let sess = launcherSession(smoke: opts.smoke != nil), let json = try? JSONSerialization.data(withJSONObject: sess),
+           let text = String(data: json, encoding: .utf8), let origin = appURL.scheme.map({ "\($0)://\(appURL.host ?? "")" + (appURL.port.map { ":\($0)" } ?? "") }) {
+            // Kun på Taktiktavles egen side (ikke fx forklaringssiden uden net).
+            let src = "if (location.origin === \(jsString(origin))) window.__mgLauncherSession = \(text);"
+            cfg.userContentController.addUserScript(WKUserScript(source: src, injectionTime: .atDocumentStart, forMainFrameOnly: true))
+            hasLauncherSession = true
+        }
         if opts.smoke != nil {
             // Røgtesten bruger sit eget lager, så den aldrig rører de rigtige tavler.
             if #available(macOS 14.0, *) {
@@ -122,8 +148,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNa
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
     /// Ved lukning: appen gemmer 300 ms efter en ændring og straks ved "pagehide" (flushSave). Programmet sender
-    /// pagehide, som en browser gør, når en side lukkes, og venter lidt, før det lukker. (Appens funktioner er ikke
-    /// globale, så de kan ikke kaldes direkte.)
+    /// pagehide, som en browser gør, når en side lukkes, og venter på appens taktiktavleBeforeQuit (synkronisering med
+    /// MG Games-kontoen), dog højst 4 s. (Appens øvrige funktioner er ikke globale.)
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         if terminating || web == nil { return .terminateNow }
         terminating = true
@@ -133,10 +159,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNa
             replied = true
             NSApp.reply(toApplicationShouldTerminate: true)
         }
-        web.evaluateJavaScript("window.dispatchEvent(new Event('pagehide')); true") { _, _ in
-            runLoopTimer(0.4) { reply() }
+        // Appen gemmer på enheden (pagehide) og, med login, på MG Games-kontoen (taktiktavleBeforeQuit). Højst 4 s.
+        web.callAsyncJavaScript("""
+            window.dispatchEvent(new Event('pagehide'));
+            if (window.taktiktavleBeforeQuit) await window.taktiktavleBeforeQuit();
+            return true;
+            """, arguments: [:], in: nil, in: .page) { _ in
+            runLoopTimer(0.2) { reply() }
         }
-        runLoopTimer(2.5) { reply() }   // (hvis siden ikke svarer)
+        runLoopTimer(4.0) { reply() }   // (hvis siden eller nettet ikke svarer)
         return .terminateLater
     }
 
@@ -445,6 +476,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, WKNa
             } else {
                 say("(første røgtest i dette lager: lagring ved lukning tjekkes ved næste)")
             }
+            if self.hasLauncherSession { self.smokeAccount() } else if self.opts.headless { self.smokeShare() } else { self.smokeKeys() }
+        }
+    }
+
+    /// Med launcherens login (MG_SESSION i testen): appen er logget ind via launcheren og har gemt på kontoen.
+    func smokeAccount(_ tries: Int = 0) {
+        js("""
+        JSON.stringify({ state: document.getElementById('acct').dataset.state, source: document.getElementById('acct').dataset.source,
+          status: document.getElementById('acctStatus').textContent })
+        """) { r in
+            let s = r as? String ?? ""
+            let d = (try? JSONSerialization.jsonObject(with: Data(s.utf8))) as? [String: Any] ?? [:]
+            let ok = (d["state"] as? String) == "in" && (d["source"] as? String) == "launcher" && ((d["status"] as? String) ?? "").hasPrefix("Gemt")
+            if !ok && tries < 40 { self.after(0.25) { self.smokeAccount(tries + 1) }; return }
+            self.check("MG Games-kontoen: logget ind via launcheren, og tavlerne er gemt på kontoen", ok, s)
             if self.opts.headless { self.smokeShare() } else { self.smokeKeys() }
         }
     }

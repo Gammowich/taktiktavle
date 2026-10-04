@@ -449,6 +449,12 @@ dialog::backdrop { background: rgba(10, 16, 12, .5); }
 }
 .paste .btn { margin-top: 8px; }
 .err { color: var(--danger); font-size: 13px; }
+.acct { display: flex; flex-direction: column; gap: 8px; }
+.acct[data-state="out"] .acct-in, .acct[data-state="in"] .acct-out { display: none; }
+.acct-form { display: flex; flex-direction: column; gap: 10px; max-width: 420px; }
+.acct-form .fld { flex: none; }
+.acct-who { margin: 0; font-weight: 600; }
+.acct p { margin: 0; }
 .export-preview {
   margin: 0; display: grid; place-items: center; min-height: 180px; padding: 10px;
   background: var(--surface-2); border-radius: 12px;
@@ -824,6 +830,34 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       <p class="err" id="pasteErr" hidden></p>
     </details>
     <p class="muted small" id="storageNote"></p>
+
+    <section class="acct" id="acct" data-state="out" hidden>
+      <h3>MG Games-konto</h3>
+      <div class="acct-out">
+        <p class="muted small">Log ind for også at gemme tavlerne på din MG Games-konto og have dem på alle dine enheder. Uden login gemmes de kun her.</p>
+        <form class="acct-form" id="acctForm" novalidate>
+          <div class="segmented" id="acctMode" role="radiogroup" aria-label="Konto">
+            <button type="button" role="radio" data-mode="login" aria-checked="true">Log ind</button>
+            <button type="button" role="radio" data-mode="register" aria-checked="false">Opret konto</button>
+          </div>
+          <label class="fld acct-reg" hidden><span>Navn</span><input id="acctName" type="text" maxlength="16" autocomplete="nickname" spellcheck="false"></label>
+          <label class="fld"><span>E-mail</span><input id="acctEmail" type="email" autocomplete="username" spellcheck="false"></label>
+          <label class="fld"><span>Adgangskode</span><input id="acctPass" type="password" autocomplete="current-password"></label>
+          <label class="fld acct-reg" hidden><span>Gentag adgangskode</span><input id="acctPass2" type="password" autocomplete="new-password"></label>
+          <p class="err" id="acctErr" role="alert" hidden></p>
+          <div class="btn-row"><button type="submit" class="btn btn-accent" id="acctSubmit">Log ind</button></div>
+        </form>
+      </div>
+      <div class="acct-in">
+        <p class="acct-who" id="acctWho"></p>
+        <p class="muted small" id="acctStatus" role="status"></p>
+        <div class="btn-row">
+          <button type="button" class="btn" id="acctSync">Synkronisér nu</button>
+          <button type="button" class="btn" id="acctLogout">Log ud</button>
+          <button type="button" class="btn btn-danger" id="acctWipe">Slet mine tavler på kontoen</button>
+        </div>
+      </div>
+    </section>
 
     <h3>Udseende</h3>
     <div class="appear">
@@ -1304,7 +1338,7 @@ function normalizeBoard(o) {
   const f = FORMATS[format], m = marginFor(f);
   const base = newBoard({ format });
   const b = clone(base);
-  if (validId(o.id)) b.id = o.id;
+  if (validId(o.id) && o.id[0] !== '-') b.id = o.id;   // ("-…" er kontoens egne pladser, fx "-slettede")
   b.name = cleanText(o.name, 80).trim() || 'Uden navn';
   if (finite(o.updated)) b.updated = o.updated;
   if (FORMATIONS[format][o.homeFormation]) b.homeFormation = o.homeFormation;
@@ -1376,6 +1410,7 @@ function normalizeBoard(o) {
    Lager i browseren (kun på denne enhed)
    ========================================================= */
 const KEY = 'taktiktavle:v1:boards', LAST = 'taktiktavle:v1:last', PREFS = 'taktiktavle:v1:prefs';
+let syncHook = null;   // (MG Games-kontoen: får besked, når en tavle gemmes eller slettes; sættes længere nede)
 const store = {
   available: (() => { try { const k = 'taktiktavle:probe'; localStorage.setItem(k, '1'); localStorage.removeItem(k); return true; } catch (_) { return false; } })(),
   readAll() {
@@ -1383,8 +1418,8 @@ const store = {
     try { const o = JSON.parse(localStorage.getItem(KEY) || '{}'); return o && typeof o === 'object' ? o : {}; } catch (_) { return {}; }
   },
   writeAll(all) { if (!this.available) return false; try { localStorage.setItem(KEY, JSON.stringify(all)); return true; } catch (_) { return false; } },
-  save(b) { const all = this.readAll(); all[b.id] = b; const ok = this.writeAll(all); if (ok) { try { localStorage.setItem(LAST, b.id); } catch (_) {} } return ok; },
-  remove(id) { const all = this.readAll(); delete all[id]; return this.writeAll(all); },
+  save(b) { const all = this.readAll(); all[b.id] = b; const ok = this.writeAll(all); if (ok) { try { localStorage.setItem(LAST, b.id); } catch (_) {} if (syncHook) syncHook('save', b.id); } return ok; },
+  remove(id) { const all = this.readAll(); delete all[id]; const ok = this.writeAll(all); if (syncHook) syncHook('remove', id); return ok; },
   lastId() { try { return localStorage.getItem(LAST); } catch (_) { return null; } },
   prefs() { try { const p = JSON.parse(localStorage.getItem(PREFS) || '{}'); return p && typeof p === 'object' ? p : {}; } catch (_) { return {}; } },
   setPrefs(p) { try { localStorage.setItem(PREFS, JSON.stringify(p)); } catch (_) {} },
@@ -2639,9 +2674,10 @@ function openBoard(b, msg) {
   if (msg) toast(msg);
 }
 function renderBoardList() {
-  $('#storageNote').textContent = store.available
-    ? 'Tavlerne gemmes automatisk i denne browser på denne enhed. Brug Del → Gem som fil for at flytte en tavle til en anden enhed.'
-    : 'Denne browser tillader ikke, at appen gemmer. Brug Del → Gem som fil for at beholde tavlen.';
+  $('#storageNote').textContent = !store.available
+    ? 'Denne browser tillader ikke, at appen gemmer. Brug Del → Gem som fil for at beholde tavlen.'
+    : acct.session ? 'Tavlerne gemmes automatisk på denne enhed og på din MG Games-konto.'
+    : 'Tavlerne gemmes automatisk på denne enhed. Log ind på din MG Games-konto herunder for at have dem på alle dine enheder, eller brug Del → Gem som fil.';
   const all = Object.values(store.readAll()).sort((a, b) => (b.updated || 0) - (a.updated || 0));
   if (!all.some(b => b.id === board.id)) all.unshift(board);
   $('#boardList').innerHTML = all.map(b => {
@@ -4996,6 +5032,323 @@ $('#zonesToggle').addEventListener('change', e => {
   render();
 });
 
+/* ---- MG Games-kontoen (Morten 4/10: "gem lokalt uden login, nyeste vinder") ----
+   Tavlerne gemmes altid på enheden. Med login synkroniseres de med kontoen: én plads pr. tavle under spillet
+   "taktiktavle" (pladsens navn er tavlens id), og den nyeste udgave vinder (tavlens "updated"). Slettede tavler huskes i
+   pladsen "-slettede" (id → tidspunkt), så sletningen når de andre enheder, medmindre tavlen er ændret senere dér. Kun
+   sletninger fjerner tavler: en tavle, der forsvinder fra kontoen uden at være slettet (fx "Slet mine tavler på kontoen"),
+   lægges op igen af enheder, der stadig har den. Uændrede eksempeltavler bliver på enheden. På Mac via
+   MG Games-launcheren bruges launcherens login (window.__mgLauncherSession, sat af Mac-programmet). */
+const MG_GAME = 'taktiktavle', TOMB_SLOT = '-slettede', TOMB_DAYS = 180;
+const ACCT = 'taktiktavle:v1:account', SYNC = 'taktiktavle:v1:sync', LAUNCHER_OFF = 'taktiktavle:v1:launcher-off';
+const MG_API = 'https://mg-games.mg-games-server.workers.dev/v1';
+const EXAMPLE_NAME = 'Eksempel: opbygning fra målmanden';
+const localApi = v => typeof v === 'string' && /^http:\/\/(localhost|127\.0\.0\.1)(:\d{1,5})?\/v1$/.test(v);
+const okApi = v => typeof v === 'string' && (v === MG_API || localApi(v) || /^https:\/\/[a-z0-9.-]+(:\d{1,5})?\/v1$/.test(v));
+const acct = { session: null, status: '', running: false, again: false, timer: null, lastSync: 0, mode: 'login', quiet: false, current: null };
+const readJSON = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v && typeof v === 'object' ? v : d; } catch (_) { return d; } };
+const writeJSON = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} };
+
+/** Serverens adresse til login: den rigtige, eller (kun til test) ?mgapi=http://127.0.0.1:<port>/v1 i adressen. */
+function apiBase() {
+  try {
+    const q = new URLSearchParams(location.search).get('mgapi');
+    if (localApi(q)) sessionStorage.setItem('taktiktavle:mgapi', q);
+    const v = sessionStorage.getItem('taktiktavle:mgapi');
+    if (localApi(v)) return v;
+  } catch (_) {}
+  return MG_API;
+}
+
+function loadSession() {
+  const own = readJSON(ACCT, null);
+  if (own && typeof own.token === 'string' && own.token.length >= 20 && okApi(own.api))
+    return { token: own.token, id: own.id, name: String(own.name || ''), email: String(own.email || ''), api: own.api, source: 'app' };
+  const l = window.__mgLauncherSession;
+  let off = false;
+  try { off = localStorage.getItem(LAUNCHER_OFF) === '1'; } catch (_) {}
+  if (!off && l && typeof l === 'object' && typeof l.token === 'string' && l.token.length >= 20) {
+    const api = String(l.api || MG_API).replace(/\/+$/, '');
+    if (okApi(api)) return { token: l.token, id: l.id, name: String(l.name || ''), email: String(l.email || ''), api, source: 'launcher' };
+  }
+  return null;
+}
+
+/** Et kald til MG Games' server. Fejl: .offline (intet net), .expired (login udløbet) eller serverens besked. */
+async function mg(path, { method = 'GET', body, auth = true, base, token } = {}) {
+  const headers = {};
+  if (auth) headers.authorization = 'Bearer ' + (token || acct.session.token);
+  if (body !== undefined) headers['content-type'] = 'application/json';
+  let r;
+  try { r = await fetch((base || acct.session.api) + path, { method, headers, body, cache: 'no-store' }); }
+  catch (_) { throw Object.assign(new Error('Ingen forbindelse til MG Games.'), { offline: true }); }
+  if (r.status === 401 && auth) throw Object.assign(new Error('Login er udløbet. Log ind igen.'), { expired: true });
+  if (!r.ok) {
+    let m = '';
+    try { m = (await r.json()).message || ''; } catch (_) {}
+    throw new Error(m || `MG Games svarede ${r.status}.`);
+  }
+  return r;
+}
+
+function syncState() {
+  const s = readJSON(SYNC, {});
+  return { user: s.user ?? null, known: s.known && typeof s.known === 'object' ? s.known : {},
+    tomb: s.tomb && typeof s.tomb === 'object' ? s.tomb : {}, tombSha: typeof s.tombSha === 'string' ? s.tombSha : '' };
+}
+function parseTomb(text) {
+  const out = {};
+  try {
+    const o = JSON.parse(text);
+    if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) if (validId(k) && finite(v)) out[k] = v;
+  } catch (_) {}
+  return out;
+}
+function mergeTombs(a, b) {
+  const out = {}, cut = Date.now() - TOMB_DAYS * 864e5;
+  for (const o of [a, b]) for (const [k, v] of Object.entries(o)) if (v > cut && v > (out[k] || 0)) out[k] = v;
+  return out;
+}
+const sameTombs = (a, b) => JSON.stringify(Object.entries(a).sort()) === JSON.stringify(Object.entries(b).sort());
+
+/** En eksempeltavle, ingen har rørt (hver enhed laver sin egen; de skal ikke alle på kontoen). */
+function isPristineExample(b) {
+  if (!b || b.name !== EXAMPLE_NAME) return false;
+  try {
+    const strip = o => JSON.stringify(normalizeBoard(clone(o)), (k, v) => k === 'id' || k === 'updated' ? undefined : v);
+    return strip(b) === strip(exampleBoard());
+  } catch (_) { return false; }
+}
+
+// Lagringens kroge: en gemt tavle giver en synkronisering om lidt; en slettet tavle huskes (også uden login).
+syncHook = (kind, id) => {
+  if (kind === 'remove') {
+    const S = syncState();
+    S.tomb[id] = Date.now();
+    writeJSON(SYNC, S);
+  }
+  if (acct.session && !acct.quiet) scheduleSync(kind === 'remove' ? 500 : 4000);   // (ikke når synkroniseringen selv gemmer)
+};
+function scheduleSync(ms) {
+  clearTimeout(acct.timer);
+  acct.timer = setTimeout(() => syncNow(), ms);
+}
+
+function setAcctStatus(text) {
+  acct.status = text;
+  $('#acctStatus').textContent = text;
+}
+
+/** Synkronisér med kontoen: 1) læs listen, sletningerne og de tavler, der er ændret på kontoen; 2) afgør pr. tavle,
+ *  hvilken udgave der er nyest (på den nyeste lokale tilstand, uden pauser); 3) læg op, slet og gem sletningerne. */
+function syncNow() {
+  if (!acct.session || framed) return Promise.resolve();
+  if (acct.running) { acct.again = true; return acct.current; }
+  acct.current = runSync();
+  return acct.current;
+}
+async function runSync() {
+  const sess = acct.session;
+  clearTimeout(acct.timer);   // (en bestilt synkronisering er overflødig: denne tager det hele)
+  acct.running = true; acct.again = false;
+  setAcctStatus('Synkroniserer …');
+  let S = syncState();
+  if (S.user !== sess.id) S = { user: sess.id, known: {}, tomb: S.tomb, tombSha: '' };
+  try {
+    const list = (await (await mg(`/saves/${MG_GAME}`)).json()).saves || [];
+    const remote = new Map(list.filter(x => x && typeof x.slot === 'string').map(x => [x.slot, x]));
+    const rtomb = remote.has(TOMB_SLOT) ? parseTomb(await (await mg(`/saves/${MG_GAME}/${TOMB_SLOT}`)).text()) : {};
+    const before = store.readAll(), fetched = {};
+    for (const [id, R] of remote) {
+      if (id[0] === '-' || !validId(id)) continue;
+      const K = S.known[id];
+      if (K && K.sha === R.sha256 && before[id]) continue;
+      try { fetched[id] = { b: normalizeBoard(JSON.parse(await (await mg(`/saves/${MG_GAME}/${id}`)).text())), sha: R.sha256 }; }
+      catch (e) { if (e.offline || e.expired) throw e; }   // (en plads, der ikke er en tavle, springes over)
+    }
+    if (acct.session !== sess) return;
+
+    // 2) afgør (uden pauser, så brugeren ikke kan nå at ændre noget imens)
+    acct.quiet = true;
+    try { flushSave(); } finally { acct.quiet = false; }
+    const all = store.readAll(), tomb = mergeTombs(S.tomb, rtomb);
+    const up = [], del = [], got = [], gone = [];
+    const ids = new Set([...Object.keys(all), ...[...remote.keys()].filter(k => k[0] !== '-' && validId(k))]);
+    for (const id of ids) {
+      const L = all[id], R = remote.get(id), K = S.known[id], F = fetched[id], T = tomb[id] || 0;
+      const lt = L ? (L.updated || 0) : 0;
+      const rt = F ? (F.b.updated || 0) : K ? (K.upd || 0) : 0;
+      if (L && !R && isPristineExample(L)) continue;
+      if (L && R) {
+        if (T > lt && T > rt) { delete all[id]; gone.push(id); del.push(id); }
+        else if (F && rt > lt) { all[id] = F.b; S.known[id] = { sha: F.sha, upd: rt }; got.push(id); }
+        else if (lt > rt) up.push(id);
+        else if (F) S.known[id] = { sha: F.sha, upd: rt };
+      } else if (L) {
+        if (T && T >= lt) { delete all[id]; gone.push(id); delete S.known[id]; }
+        else up.push(id);
+      } else if (R) {
+        if (T && T >= rt) del.push(id);
+        else if (F) { all[id] = F.b; S.known[id] = { sha: F.sha, upd: rt }; got.push(id); }
+      }
+    }
+    if (got.length || gone.length) {
+      store.writeAll(all);
+      const open = board.id;
+      if (got.includes(open)) {
+        board = all[open]; ui.frame = Math.min(ui.frame, board.frames.length - 1); ui.selected = null; ui.anim = null;
+        resetHistory(); refreshAll();
+        toast('Tavlen er hentet i en nyere udgave fra din MG Games-konto.');
+      } else if (gone.includes(open)) {
+        const rest = Object.values(all).sort((a, b) => (b.updated || 0) - (a.updated || 0));
+        let next = null;
+        for (const r of rest) { try { next = normalizeBoard(r); break; } catch (_) {} }
+        board = next || newBoard(); ui.frame = 0; ui.selected = null; resetHistory(); refreshAll();
+        acct.quiet = true;
+        try { flushSave(); } finally { acct.quiet = false; }
+        toast('Tavlen er slettet på en anden enhed.');
+      } else if (got.length) {
+        toast(got.length === 1 ? 'En tavle er hentet fra din MG Games-konto.' : `${got.length} tavler er hentet fra din MG Games-konto.`);
+      }
+      if (boardsDlg.open) renderBoardList();
+    }
+
+    // 3) skriv til kontoen
+    for (const id of up) {
+      const L = all[id];
+      const j = await (await mg(`/saves/${MG_GAME}/${id}`, { method: 'PUT', body: JSON.stringify(L) })).json();
+      S.known[id] = { sha: j.sha256, upd: L.updated || 0 };
+    }
+    for (const id of del) {
+      await mg(`/saves/${MG_GAME}/${id}`, { method: 'DELETE' });
+      delete S.known[id];
+    }
+    if (!sameTombs(tomb, rtomb) && Object.keys(tomb).length) {
+      const j = await (await mg(`/saves/${MG_GAME}/${TOMB_SLOT}`, { method: 'PUT', body: JSON.stringify(tomb) })).json();
+      S.tombSha = j.sha256;
+    }
+    S.tomb = tomb;
+    acct.lastSync = Date.now();
+    setAcctStatus(`Gemt på kontoen kl. ${new Date().toLocaleTimeString('da-DK', { hour: '2-digit', minute: '2-digit' })}.`);
+  } catch (e) {
+    if (e.expired) { endSession(e.message); return; }
+    setAcctStatus(e.offline ? 'Ingen forbindelse til MG Games. Tavlerne er gemt på enheden og lægges op, når der er net.' : e.message);
+  } finally {
+    if (acct.session === sess) writeJSON(SYNC, S);
+    acct.running = false;
+    if (acct.again && acct.session) scheduleSync(1000);
+  }
+}
+
+/** Log ud på denne enhed (tavlerne bliver liggende). Launcherens login forlades kun her, ikke i launcheren. */
+async function endSession(msg) {
+  const s = acct.session;
+  acct.session = null;
+  clearTimeout(acct.timer);
+  if (s && s.source === 'app') {
+    try { localStorage.removeItem(ACCT); } catch (_) {}
+    if (!msg) { try { await mg('/logout', { method: 'POST', base: s.api, token: s.token }); } catch (_) {} }
+  }
+  // (logger man selv ud, eller udløber launcherens login, bruges launcherens login ikke igen, før man logger ind her)
+  if (s && (!msg || s.source === 'launcher')) { try { localStorage.setItem(LAUNCHER_OFF, '1'); } catch (_) {} }
+  acct.status = '';
+  renderAcct();
+  if (boardsDlg.open) renderBoardList();
+  if (msg) {
+    const err = $('#acctErr');
+    err.textContent = msg; err.hidden = false;
+    toast(msg);
+  }
+}
+
+function renderAcct() {
+  const el = $('#acct');
+  el.hidden = framed;   // (i Claude-udgaven kan siden ikke kalde MG Games)
+  const s = acct.session;
+  el.dataset.state = s ? 'in' : 'out';
+  el.dataset.source = s ? s.source : '';
+  if (s) {
+    $('#acctWho').textContent = `Logget ind som ${s.name || 'ukendt'}${s.email ? ' (' + s.email + ')' : ''}${s.source === 'launcher' ? ' via MG Games-launcheren' : ''}.`;
+    $('#acctStatus').textContent = acct.status;
+  }
+  const reg = acct.mode === 'register';
+  $('#acctMode').querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === acct.mode)));
+  $('#acct').querySelectorAll('.acct-reg').forEach(x => { x.hidden = !reg; });
+  $('#acctPass').autocomplete = reg ? 'new-password' : 'current-password';
+  $('#acctSubmit').textContent = reg ? 'Opret konto' : 'Log ind';
+}
+
+$('#acctMode').addEventListener('click', e => {
+  const b = e.target.closest('[data-mode]'); if (!b) return;
+  acct.mode = b.dataset.mode; $('#acctErr').hidden = true; renderAcct();
+});
+$('#acctForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const reg = acct.mode === 'register', err = $('#acctErr'), btn = $('#acctSubmit');
+  const email = $('#acctEmail').value.trim(), pass = $('#acctPass').value;
+  err.hidden = true;
+  if (!email || !pass) { err.textContent = 'Skriv e-mail og adgangskode.'; err.hidden = false; return; }
+  if (reg && pass !== $('#acctPass2').value) { err.textContent = 'Adgangskoderne er ikke ens.'; err.hidden = false; return; }
+  const device = /TaktiktavleMac/.test(navigator.userAgent) ? 'Taktiktavle (Mac)' : 'Taktiktavle (browser)';
+  const body = reg ? { name: $('#acctName').value.trim(), email, password: pass, device } : { email, password: pass, device };
+  const base = apiBase();
+  btn.disabled = true;
+  try {
+    const j = await (await mg(reg ? '/register' : '/login', { method: 'POST', body: JSON.stringify(body), auth: false, base })).json();
+    acct.session = { token: j.token, id: j.user.id, name: j.user.name, email: j.user.email, api: base, source: 'app' };
+    writeJSON(ACCT, { token: j.token, id: j.user.id, name: j.user.name, email: j.user.email, api: base });
+    try { localStorage.removeItem(LAUNCHER_OFF); } catch (_) {}
+    $('#acctPass').value = ''; $('#acctPass2').value = '';
+    renderAcct(); renderBoardList();
+    toast(reg ? `Kontoen er oprettet. Velkommen, ${j.user.name}.` : `Logget ind som ${j.user.name}.`);
+    syncNow();
+  } catch (x) {
+    err.textContent = x.offline ? 'Ingen forbindelse til MG Games. Prøv igen, når der er net.' : x.message;
+    err.hidden = false;
+  } finally { btn.disabled = false; }
+});
+$('#acctSync').addEventListener('click', () => syncNow());
+$('#acctLogout').addEventListener('click', () => { endSession(); toast('Du er logget ud. Tavlerne ligger stadig på denne enhed.'); });
+$('#acctWipe').addEventListener('click', async e => {
+  const btn = e.currentTarget;
+  if (!btn.classList.contains('armed')) { btn.classList.add('armed'); btn.textContent = 'Bekræft: slet dem på kontoen'; return; }
+  btn.classList.remove('armed'); btn.textContent = 'Slet mine tavler på kontoen';
+  if (!acct.session) return;
+  btn.disabled = true;
+  try {
+    const list = (await (await mg(`/saves/${MG_GAME}`)).json()).saves || [];
+    for (const x of list) await mg(`/saves/${MG_GAME}/${encodeURIComponent(x.slot)}`, { method: 'DELETE' });
+    const S = syncState();
+    writeJSON(SYNC, { user: null, known: {}, tomb: S.tomb, tombSha: '' });
+    await endSession();
+    toast(`${list.length === 1 ? 'Én plads' : list.length + ' pladser'} er slettet fra kontoen, og du er logget ud. Tavlerne ligger stadig på denne enhed.`);
+  } catch (x) {
+    if (x.expired) endSession(x.message); else setAcctStatus(x.offline ? 'Ingen forbindelse til MG Games. Intet er slettet.' : x.message);
+  } finally { btn.disabled = false; }
+});
+boardsDlg.addEventListener('close', () => { const w = $('#acctWipe'); w.classList.remove('armed'); w.textContent = 'Slet mine tavler på kontoen'; });
+// Når siden skjules eller lukkes, synkroniseres der med det samme (så en ændring lige før når de andre enheder). I en
+// browser er det et forsøg; Mac-programmet venter på taktiktavleBeforeQuit, før det lukker.
+document.addEventListener('visibilitychange', () => {
+  if (!acct.session) return;
+  if (document.hidden) { flushSave(); syncNow(); }
+  else if (Date.now() - acct.lastSync > 30000) syncNow();
+});
+window.addEventListener('pagehide', () => { if (acct.session) { flushSave(); syncNow(); } });
+window.taktiktavleBeforeQuit = async () => {
+  flushSave();
+  if (!acct.session) return;
+  while (acct.running) await acct.current;
+  await syncNow();
+};
+window.addEventListener('online', () => { if (acct.session) syncNow(); });
+setInterval(() => { if (!document.hidden && acct.session) syncNow(); }, 120000);
+function acctStart() {
+  acct.session = framed ? null : loadSession();
+  renderAcct();
+  if (acct.session) setTimeout(() => syncNow(), 800);
+}
+
 /* ---- Tastatur ---- */
 document.addEventListener('keydown', e => {
   const typing = e.target.closest && e.target.closest('input, textarea, select, [contenteditable="true"]');
@@ -5056,6 +5409,7 @@ function refreshAll() {
   setTab('hold');
   if (!b) flushSave();
   if (!ui.hintSeen) showHint(TOOLS[0].hint, 6000);
+  acctStart();
 })();
 
 if ('serviceWorker' in navigator && document.querySelector('link[rel="manifest"]') && /^https?:$/.test(location.protocol)) {
