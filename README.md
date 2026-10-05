@@ -158,6 +158,8 @@ med på alle enheder: Mac, Windows, iPad og telefon. Morten 4/10: *"gem lokalt u
 - **Hvornår der synkroniseres.** Ved login og start, 4 s efter en ændring, når appen skjules eller lukkes, hvert andet
   minut, mens den er åben, og med *Synkronisér nu*. Mac-programmet venter ved lukning på synkroniseringen, højst 4 s.
 - **Uden net.** Appen siger det og lægger tavlerne op senere.
+- **Husk mig på denne enhed.** Feltet ved login er slået til som standard. Så huskes login'et, til det udløber efter 180
+  dage, og e-mailen står udfyldt næste gang. Slået fra glemmes login'et, når fanen eller browseren lukkes (Morten 5/10).
 - **Mac via launcheren.** Programmet bruger launcherens login (`session.json`), så man kun logger ind ét sted. Log ud i
   appen forlader kun login'et i appen.
 - **Slet mine tavler på kontoen.** Fjerner alle pladserne og logger ud. Tavlerne bliver på enheden. Andre enheder, der
