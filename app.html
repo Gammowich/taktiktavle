@@ -828,6 +828,7 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
           <label class="fld"><span>E-mail</span><input id="acctEmail" type="email" autocomplete="username" spellcheck="false"></label>
           <label class="fld"><span>Adgangskode</span><input id="acctPass" type="password" autocomplete="current-password"></label>
           <label class="fld acct-reg" hidden><span>Gentag adgangskode</span><input id="acctPass2" type="password" autocomplete="new-password"></label>
+          <label class="check"><input type="checkbox" id="acctRemember" checked> Husk mig på denne enhed</label>
           <p class="err" id="acctErr" role="alert" hidden></p>
           <div class="btn-row"><button type="submit" class="btn btn-accent" id="acctSubmit">Log ind</button></div>
         </form>
@@ -5024,7 +5025,7 @@ $('#zonesToggle').addEventListener('change', e => {
    lægges op igen af enheder, der stadig har den. Uændrede eksempeltavler bliver på enheden. På Mac via
    MG Games-launcheren bruges launcherens login (window.__mgLauncherSession, sat af Mac-programmet). */
 const MG_GAME = 'taktiktavle', TOMB_SLOT = '-slettede', TOMB_DAYS = 180;
-const ACCT = 'taktiktavle:v1:account', SYNC = 'taktiktavle:v1:sync', LAUNCHER_OFF = 'taktiktavle:v1:launcher-off';
+const ACCT = 'taktiktavle:v1:account', SYNC = 'taktiktavle:v1:sync', LAUNCHER_OFF = 'taktiktavle:v1:launcher-off', EMAIL = 'taktiktavle:v1:email';
 const MG_API = 'https://mg-games.mg-games-server.workers.dev/v1';
 const EXAMPLE_NAME = 'Eksempel: opbygning fra målmanden';
 const localApi = v => typeof v === 'string' && /^http:\/\/(localhost|127\.0\.0\.1)(:\d{1,5})?\/v1$/.test(v);
@@ -5044,8 +5045,13 @@ function apiBase() {
   return MG_API;
 }
 
+// "Husk mig" (Morten 5/10): login'et gemmes i localStorage (huskes, til det udløber efter 180 dage) eller, slået fra, i
+// sessionStorage (glemmes, når fanen eller browseren lukkes).
+function readSessionStore() {
+  try { const v = JSON.parse(sessionStorage.getItem(ACCT) || 'null'); return v && typeof v === 'object' ? v : null; } catch (_) { return null; }
+}
 function loadSession() {
-  const own = readJSON(ACCT, null);
+  const own = readJSON(ACCT, null) || readSessionStore();
   if (own && typeof own.token === 'string' && own.token.length >= 20 && okApi(own.api))
     return { token: own.token, id: own.id, name: String(own.name || ''), email: String(own.email || ''), api: own.api, source: 'app' };
   const l = window.__mgLauncherSession;
@@ -5231,6 +5237,7 @@ async function endSession(msg) {
   clearTimeout(acct.timer);
   if (s && s.source === 'app') {
     try { localStorage.removeItem(ACCT); } catch (_) {}
+    try { sessionStorage.removeItem(ACCT); } catch (_) {}
     if (!msg) { try { await mg('/logout', { method: 'POST', base: s.api, token: s.token }); } catch (_) {} }
   }
   // (logger man selv ud, eller udløber launcherens login, bruges launcherens login ikke igen, før man logger ind her)
@@ -5256,6 +5263,7 @@ function renderAcct() {
     $('#acctStatus').textContent = acct.status;
   }
   const reg = acct.mode === 'register';
+  if (!s && !$('#acctEmail').value) { try { $('#acctEmail').value = localStorage.getItem(EMAIL) || ''; } catch (_) {} }
   $('#acctMode').querySelectorAll('[data-mode]').forEach(b => b.setAttribute('aria-checked', String(b.dataset.mode === acct.mode)));
   $('#acct').querySelectorAll('.acct-reg').forEach(x => { x.hidden = !reg; });
   $('#acctPass').autocomplete = reg ? 'new-password' : 'current-password';
@@ -5280,7 +5288,13 @@ $('#acctForm').addEventListener('submit', async e => {
   try {
     const j = await (await mg(reg ? '/register' : '/login', { method: 'POST', body: JSON.stringify(body), auth: false, base })).json();
     acct.session = { token: j.token, id: j.user.id, name: j.user.name, email: j.user.email, api: base, source: 'app' };
-    writeJSON(ACCT, { token: j.token, id: j.user.id, name: j.user.name, email: j.user.email, api: base });
+    const saved = { token: j.token, id: j.user.id, name: j.user.name, email: j.user.email, api: base };
+    if ($('#acctRemember').checked) {
+      writeJSON(ACCT, saved);
+      try { sessionStorage.removeItem(ACCT); localStorage.setItem(EMAIL, j.user.email); } catch (_) {}
+    } else {
+      try { localStorage.removeItem(ACCT); localStorage.removeItem(EMAIL); sessionStorage.setItem(ACCT, JSON.stringify(saved)); } catch (_) {}
+    }
     try { localStorage.removeItem(LAUNCHER_OFF); } catch (_) {}
     $('#acctPass').value = ''; $('#acctPass2').value = '';
     renderAcct(); renderBoardList();

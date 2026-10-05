@@ -89,9 +89,10 @@ async function device(host) {
 			await ev("document.getElementById('acctStatus').textContent = ''; document.getElementById('acctSync').click(); true");
 			return until(async () => { const s = await d.status(); return s && !s.startsWith("Synkroniserer") ? s : null; });
 		},
-		async account(mode, { name, email, password }) {
+		async account(mode, { name, email, password }, remember = true) {
 			await ev(`(() => { document.getElementById('boardBtn').click();
 				document.querySelector('#acctMode [data-mode="${mode}"]').click();
+				document.getElementById('acctRemember').checked = ${remember};
 				const set = (id, v) => { const e = document.getElementById(id); if (e) e.value = v; };
 				set('acctName', ${JSON.stringify(name || "")}); set('acctEmail', ${JSON.stringify(email)});
 				set('acctPass', ${JSON.stringify(password)}); set('acctPass2', ${JSON.stringify(password)});
@@ -130,6 +131,8 @@ const a1 = await A.newBoard("Tavle A1");
 await A.account("register", USER);
 const stA = await until(async () => (await A.state()) === "in" && (await A.status()).startsWith("Gemt") ? A.status() : null);
 check("opret konto på A: logget ind, og første synkronisering er gemt", !!stA, String(stA));
+await A.open();
+check("Husk mig (standard): A er stadig logget ind efter genindlæsning", (await A.state()) === "in");
 const tA = await A.token();
 let L = await slots(tA);
 check("kontoen har A's nye tavle, men ikke den urørte eksempeltavle", L.some(x => x.slot === a1) && L.length === 1, JSON.stringify(L.map(x => x.slot)));
@@ -220,6 +223,26 @@ const t3 = await (await fetch(`${API}/login`, { method: "POST", headers: { "cont
 L = await slots(t3.token);
 check("slet mine tavler på kontoen: kontoen er tom, A er logget ud, tavlerne ligger stadig på A",
 	L.length === 0 && (await A.state()) === "out" && !!(await A.boards())[a1], JSON.stringify(L.map(x => x.slot)));
+
+// Husk mig: e-mailen huskes; uden Husk mig glemmes login'et i en ny fane (sessionStorage), med Husk mig huskes det
+check("efter log ud: e-mailen står udfyldt", (await A.ev("document.getElementById('acctEmail').value")) === USER.email,
+	await A.ev("document.getElementById('acctEmail').value"));
+await A.account("login", USER, false);
+await until(async () => (await A.state()) === "in");
+const stores = await A.ev("({ fast: !!localStorage.getItem('taktiktavle:v1:account'), fane: !!sessionStorage.getItem('taktiktavle:v1:account') })");
+check("uden Husk mig: login'et ligger kun i fanen, ikke i det faste lager", stores.fane && !stores.fast, JSON.stringify(stores));
+await A.open();
+check("uden Husk mig: stadig logget ind efter genindlæsning i samme fane", (await A.state()) === "in");
+const C = await device("127.0.0.1");
+await C.open();
+check("uden Husk mig: en ny fane er logget ud", (await C.state()) === "out");
+await A.ev("document.getElementById('boardBtn').click(); document.getElementById('acctLogout').click(); true");
+await until(async () => (await A.state()) === "out");
+await A.account("login", USER, true);
+await until(async () => (await A.state()) === "in");
+const D = await device("127.0.0.1");
+await D.open();
+check("med Husk mig: en ny fane er logget ind", (await D.state()) === "in");
 
 console.log(`RESULTAT: ${fails === 0 ? "PASS" : "FAIL"}  ${passes} OK, ${fails} FEJL`);
 ws.close();
