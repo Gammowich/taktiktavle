@@ -5,19 +5,20 @@ Den kan installeres som app på hjemmeskærmen (PWA) og virker uden net, når de
 
 ## Sådan er den bygget op
 
-Banen står i midten. Resten er delt i fire faner efter, hvad du er i gang med:
+Banen står i midten. Resten er delt i fem faner efter, hvad du er i gang med:
 
 - **Hold:** formation, udgangspunkt, spillere (tryk for spillerkortet med nummer, navn, rolle og egenskaber), bænk og niveau for hele holdet.
 - **Taktik:** klassisk taktik, instruktioner, dødboldtaktik og *Stil op i et nyt trin*.
-- **Tegn:** tegneværktøjer, stregfarve, trin med noter og *Afspil*. Kun her tegner man; i de andre faner flytter banen kun spillere.
+- **Tegn:** tegneværktøjer, udstyr, zoom, stregfarve, trin med noter og *Afspil*. Kun her tegner man; i de andre faner flytter banen kun spillere.
+- **Træning:** 24 træningsøvelser med beskrivelse og forløb, som kan åbnes på tavlen.
 - **Kamp:** forventet udfald, *Spil kampen*, assistenten, 500 simulerede kampe og feedback med styrker og svagheder.
 
-Øverst i Hold og Taktik skifter *Mit hold | Modstander* mellem holdene, og øjet viser eller skjuler modstanderen på banen. Tryk på tavlens navn for **tavlemenuen**: navn, mine tavler (ny, åbn fil, indsæt tekst, kopi, slet) og udseende (kampformat, holdfarver, logoer og navne/roller på banen). På telefonen på højkant ligger fanerne nederst, og panelet kan gøres større med håndtaget. På tværs står banen til venstre og fanerne og panelet til højre, ligesom på computer og tablet.
+Øverst i Hold og Taktik skifter *Mit hold | Modstander* mellem holdene, og øjet viser eller skjuler modstanderen på banen. Tryk på tavlens navn for **tavlemenuen**: navn, mine tavler (ny, åbn fil, indsæt tekst, kopi, slet) og udseende (holdfarver, jokernes farve, logoer og navne/roller på banen). På telefonen på højkant ligger fanerne nederst, og panelet kan gøres større med håndtaget. På tværs står banen til venstre og fanerne og panelet til højre, ligesom på computer og tablet.
 
 ## Hvad den kan
 
-- **Kampformat:** 11 mod 11, 8 mod 8 og 5 mod 5 med tilpasset banestørrelse og mål.
-- **Formationer:** 9 til 11 mod 11, 5 til 8 mod 8 og 4 til 5 mod 5. Ved skift beholder spillerne navn og får den nærmeste plads i den nye formation.
+- **Bane:** 11 mod 11. Tavler, der er gemt i et andet kampformat i en ældre udgave, kan ikke åbnes.
+- **Formationer:** 10 formationer. Ved skift beholder spillerne navn og får den nærmeste plads i den nye formation.
 - **Udgangspunkt:** Defensiv, Normal eller Offensiv for hver formation – for eget hold og modstanderen hver for sig. Defensiv ligger dybere, smallere og mere kompakt (kanterne trækker ned). Offensiv ligger højt og bredt (backs skubber op, kanterne højt, 10'eren foran 8'eren).
 - **Positioner:** engelske forkortelser – GK, LB, CB, RB, LWB, RWB, DM, CM, CAM, LM, RM, LW, RW, SS og CF.
 - **Klassiske numre:** 1 GK · 2 RB · 3 LB · 4/5 CB · 6 DM · 7 RW/RM · 8 CM · 9 CF · 10 SS/CAM · 11 LW/LM. Numrene følger positionen, når formationen skiftes. Skriver du selv et nummer (fx spillerens rigtige trøjenummer), beholder spilleren det.
@@ -32,11 +33,15 @@ Banen står i midten. Resten er delt i fire faner efter, hvad du er i gang med:
 - **Feedback:** styrker og svagheder i taktikken, i opstillingen på banen (kompakthed, bredde, bagkæde på linje, huller, isolerede angribere, overtal/undertal i zoner) mod modstanderen og ud fra spillernes egenskaber (fart i forsvaret mod linjens højde, dueller på kanterne, midtbanens teknik, målmand, luftdueller, afsluttere). Tips beregnes ved at afprøve ændringer i 400 simulerede kampe; hvert tip har en *Anvend*-knap. Overtal og undertal kan også vises som farvede zoner direkte på tavlen.
 - **Tegning:** løb, aflevering (stiplet), dribling (bølget), zone og fri streg i fem farver. Pile fra og til en spiller sættes automatisk ved spilleren.
 - **Trin:** byg en sekvens i flere trin med en note til hvert. *Afspil* animerer bevægelserne, og forrige trin vises som skygge.
+- **Træningsøvelser:** 24 øvelser i otte kategorier (opvarmning, teknik og pasninger, rondo og boldbesiddelse, afslutninger, smålagsspil, forsvar og pres, omstilling og opbygning) til børn, ungdom og senior, hver med alder, antal spillere, område og tid. Hver øvelse har formål, organisering, forløb trin for trin, fokuspunkter og variationer (lettere og sværere) og en forhåndsvisning af hvert trin. *Åbn på tavlen* laver øvelsen som en ny tavle: kun de spillere, der er med, nummereret 1, 2, 3 …, udstyret stillet op, banen zoomet ind på området og trinene klar til *Afspil*. Tavlen kan rettes som alle andre, og billedet under *Del* får øvelsens formål og fokuspunkter med.
+- **Udstyr:** kegler (i stregfarverne), stænger, småmål og mål sættes med *Udstyr* under Tegn og flyttes med *Flyt*. Mål drejes 45° ad gangen med *Drej*.
+- **Zoom:** træk et felt op med *Zoom*, så viser banen kun det område. *Hele banen* zoomer ud igen. Billedet under *Del* følger udsnittet.
+- **Spillere uden for banen og jokere:** i spillerkortet kan en spiller tages af banen (*På banen*) eller gøres til joker i en neutral farve. Holdlisten viser, hvem der ikke er med, og *Vis alle* sætter dem på banen igen.
 - **Fortryd/gentag:** Ctrl/Cmd+Z og Ctrl/Cmd+Shift+Z.
 - **Del:** gem et billede (PNG) af det aktuelle trin, eller gem hele tavlen som fil/tekst og åbn den på en anden enhed.
 - **Mine tavler:** alle tavler gemmes automatisk i browseren på enheden.
 
-Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg · ←/→ skift trin · Delete sletter valgt tegning.
+Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg · U udstyr · O zoom · R drej valgt mål · ←/→ skift trin · Delete sletter valgt tegning eller udstyr.
 
 ## Filer
 
@@ -47,6 +52,7 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | `docs/` | Den færdige webapp. GitHub Pages udgiver denne mappe. |
 | `tools/make_icons.py` | Tegner app-ikonerne i `docs/icons/`. |
 | `tools/konto_test.mjs` | Test af MG Games-kontoen: to "enheder" i headless Chrome mod MG Games-serveren kørt lokalt. |
+| `tools/oevelser_test.mjs` | Test af træningsøvelserne, udstyr, zoom og spillere uden for banen i headless Chrome. Gemmer billeder af hvert trin. |
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
 | `mac/` | Mac-programmet til MG Games-launcheren: appen i sit eget vindue (Swift, WKWebView). `mac/build.sh` bygger det. |
 | `windows/` | Windows-programmet til launcheren (Godot 4.7): appen i sit eget vindue via Edge eller Chrome. `windows/build.sh` bygger det. |

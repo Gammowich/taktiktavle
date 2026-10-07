@@ -195,7 +195,7 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .step-chip:disabled { opacity: .45; }
 
 /* ---------- Faner ---------- */
-.tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface-2); border-radius: 14px; }
+.tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; padding: 4px; background: var(--surface-2); border-radius: 14px; }
 .tabs button {
   height: 54px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
   border: 0; border-radius: 10px; background: transparent; color: var(--muted); font-weight: 700; font-size: 12.5px;
@@ -275,7 +275,43 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .pane .toolbar .tool[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .pane .toolbar .tool-sep, .pane .toolbar .ink-inline, .pane .toolbar .spacer { display: none; }
 .pane .toolbar .ink-btn { display: inline-flex; grid-column: span 2; height: 46px; flex-direction: row; justify-content: flex-start; gap: 10px; padding: 0 12px; }
-.pane .toolbar #delBtn { height: 46px; flex-direction: row; gap: 6px; }
+.pane .toolbar #delBtn, .pane .toolbar #rotBtn, .pane .toolbar #fullBtn, .pane .toolbar .item-btn { height: 46px; flex-direction: row; gap: 6px; }
+/* Udstyr: valg af kegle, stang, småmål eller mål */
+.ink-pop .item-choice { height: 50px; min-width: 66px; flex-direction: column; gap: 2px; font-size: 11.5px; font-weight: 600; }
+.ink-pop .item-choice[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.roster li.off .prow { opacity: .5; }
+.pname small { color: var(--muted); font-weight: 500; }
+.pd-flags { display: flex; flex-direction: column; gap: 8px; }
+.link-btn.inline { padding: 0; align-self: auto; }
+/* Træning: øvelsesbiblioteket */
+.drill-browse, .drill-detail { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.drill-browse[hidden], .drill-detail[hidden], .drill-now[hidden] { display: none; }
+.drill-now { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 10px 12px; border-radius: 12px; background: var(--surface-2); }
+.drill-now b { font-size: 14px; }
+.drill-now .link-btn { padding: 0; margin-left: auto; }
+.drill-groups, .drill-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.drill-groups { gap: 16px; }
+.drill-group .group-title { margin: 0 0 8px; }
+.drill-card { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 12px; align-items: center; width: 100%; padding: 6px; text-align: left; border: 1px solid var(--line); border-radius: 12px; background: var(--bg); color: var(--fg); font: inherit; cursor: pointer; }
+.drill-card:hover { border-color: color-mix(in srgb, var(--accent) 50%, var(--line)); }
+.drill-thumb { width: 96px; height: 72px; border-radius: 8px; display: block; }
+.dc-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dc-title { font-weight: 700; font-size: 14px; line-height: 1.25; }
+.dc-meta { font-size: 12px; color: var(--muted); }
+.drill-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+.drill-tag { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 999px; background: var(--surface-2); color: var(--muted); }
+.drill-head { display: flex; flex-direction: column; gap: 4px; }
+.drill-head h3 { margin: 0; font: 800 22px/1.1 var(--font-display); letter-spacing: .01em; }
+.drill-preview { width: 100%; height: auto; aspect-ratio: 4 / 3; border-radius: 12px; display: block; }
+.drill-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.drill-facts div { padding: 7px 9px; border-radius: 10px; background: var(--surface-2); font-size: 12.5px; line-height: 1.3; }
+.drill-facts b { display: block; margin-bottom: 2px; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.drill-sec h4 { margin: 0 0 4px; font-size: 13px; }
+.drill-sec p { margin: 0; font-size: 13.5px; line-height: 1.45; }
+.drill-sec ul, .drill-sec ol { margin: 0; padding-left: 20px; font-size: 13.5px; line-height: 1.45; }
+.drill-sec li + li { margin-top: 3px; }
+.drill-steps button { display: block; width: calc(100% + 6px); margin-left: -6px; padding: 4px 6px; border: 0; border-radius: 8px; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.drill-steps button[aria-pressed="true"] { background: var(--surface-2); font-weight: 600; }
 /* Tavlemenuen */
 .dlg .fld .board-name { height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-size: 16px; font-weight: 600; }
 .appear { display: flex; flex-direction: column; gap: 12px; }
@@ -366,7 +402,8 @@ button.role:hover { background: var(--accent-soft); color: var(--fg); }
 @media (max-height: 500px) {
   .wide-layout .stage-hint { display: none; }
   .wide-layout .workspace { gap: 8px 12px; padding-bottom: 8px; }
-  .wide-layout .tabs button { height: 42px; flex-direction: row; gap: 6px; }
+  .wide-layout .tabs button { height: 44px; gap: 1px; font-size: 11.5px; }
+  .wide-layout .tabs button svg.i { width: 17px; height: 17px; }
   .wide-layout .panel { padding: 10px; }
 }
 .narrow-layout .workspace { gap: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom, 0px)); }
@@ -376,9 +413,9 @@ button.role:hover { background: var(--accent-soft); color: var(--fg); }
 .narrow-layout .panel-grip { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; flex: none; height: 24px; margin: 0 -12px 4px; border: 0; background: var(--surface); }
 .narrow-layout .panel-grip span { width: 40px; height: 5px; border-radius: 3px; background: var(--line); }
 .narrow-layout .workspace[data-tab="tegn"] .panel { display: none; }
-.narrow-layout .workspace[data-tab="kamp"] .stage { display: none; }
-.narrow-layout .workspace[data-tab="kamp"] .panel { flex: 1 1 auto; height: auto; padding-top: 12px; }
-.narrow-layout .workspace[data-tab="kamp"] .panel-grip { display: none; }
+.narrow-layout .workspace[data-tab="kamp"] .stage, .narrow-layout .workspace[data-tab="traening"] .stage { display: none; }
+.narrow-layout .workspace[data-tab="kamp"] .panel, .narrow-layout .workspace[data-tab="traening"] .panel { flex: 1 1 auto; height: auto; padding-top: 12px; }
+.narrow-layout .workspace[data-tab="kamp"] .panel-grip, .narrow-layout .workspace[data-tab="traening"] .panel-grip { display: none; }
 .narrow-layout .tabs { order: 3; flex: none; }
 .narrow-layout .tabs button { height: 52px; }
 .narrow-layout .stage-hint { display: none; }
@@ -695,6 +732,7 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       <button type="button" role="tab" id="tab-hold" data-tab="hold" aria-controls="pane-hold" aria-selected="true"><span data-icon="users"></span><span>Hold</span></button>
       <button type="button" role="tab" id="tab-taktik" data-tab="taktik" aria-controls="pane-taktik" aria-selected="false"><span data-icon="sliders"></span><span>Taktik</span></button>
       <button type="button" role="tab" id="tab-tegn" data-tab="tegn" aria-controls="pane-tegn" aria-selected="false"><span data-icon="pen"></span><span>Tegn</span></button>
+      <button type="button" role="tab" id="tab-traening" data-tab="traening" aria-controls="pane-traening" aria-selected="false"><span data-icon="cone"></span><span>Træning</span></button>
       <button type="button" role="tab" id="tab-kamp" data-tab="kamp" aria-controls="pane-kamp" aria-selected="false"><span data-icon="match"></span><span>Kamp</span></button>
     </nav>
 
@@ -714,6 +752,7 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
         <p class="group-note" id="formationHint" hidden></p>
         <div class="list-head"><span>Startopstilling</span><span>Niveau</span></div>
         <ol class="roster" id="rosterList"></ol>
+        <p class="group-note" id="offNote" hidden><span id="offNoteText"></span> <button type="button" class="link-btn inline" id="showAllBtn">Vis alle</button></p>
         <div class="bench-block" id="benchBlock">
           <div class="list-head"><span>Bænk</span></div>
           <ul class="roster" id="benchList"></ul>
@@ -748,6 +787,17 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
         <p class="group-note">Træk på banen for at tegne. Pile fra og til en spiller sættes automatisk ved spilleren. Under Hold, Taktik og Kamp flytter banen kun spillere.</p>
       </section>
 
+      <section class="pane" id="pane-traening" role="tabpanel" aria-labelledby="tab-traening" hidden>
+        <div class="drill-browse" id="drillBrowse">
+          <div class="drill-now" id="drillNow" hidden></div>
+          <div class="segmented" id="drillLevelSeg" role="radiogroup" aria-label="Niveau"></div>
+          <label class="field-inline">Kategori <select id="drillCat"></select></label>
+          <p class="group-note" id="drillCount" aria-live="polite"></p>
+          <ul class="drill-groups" id="drillList"></ul>
+        </div>
+        <div class="drill-detail" id="drillDetail" hidden></div>
+      </section>
+
       <section class="pane" id="pane-kamp" role="tabpanel" aria-labelledby="tab-kamp" hidden>
         <div class="card">
           <h3 class="card-title" id="matchTitle">Mit hold mod Modstander</h3>
@@ -768,6 +818,7 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
   </main>
 </div>
 <div class="ink-pop" id="inkPop" role="group" aria-label="Stregfarve" hidden></div>
+<div class="ink-pop" id="itemPop" role="group" aria-label="Udstyr" hidden></div>
 
 <dialog class="dlg" id="playerDlg" aria-labelledby="pdTitle">
   <form method="dialog" class="dlg-body">
@@ -779,6 +830,10 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
       <label class="field">Nummer<input id="pdNum" class="num" inputmode="numeric" pattern="[0-9]*" maxlength="2" autocomplete="off"></label>
       <label class="field">Navn<input id="pdName" maxlength="30" autocomplete="off" placeholder="Skriv navn"></label>
       <label class="field">Rolle<input id="pdRole" maxlength="4" autocomplete="off"></label>
+    </div>
+    <div class="pd-flags" id="pdFlags">
+      <label class="check switch-row">På banen <span class="switch"><input type="checkbox" id="pdOn"><span></span></span></label>
+      <label class="check switch-row">Joker (neutral farve) <span class="switch"><input type="checkbox" id="pdJoker"><span></span></span></label>
     </div>
     <div id="pdAttrsWrap">
       <h3>Egenskaber (1–10)</h3>
@@ -846,10 +901,10 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
 
     <h3>Udseende</h3>
     <div class="appear">
-      <div class="appear-row"><span>Kampformat</span><div class="segmented" id="formatSeg" role="radiogroup" aria-label="Kampformat"></div></div>
       <div class="appear-row"><span>Mit hold</span><div class="swatches" id="kitHome" role="group" aria-label="Farve, mit hold"></div></div>
       <div class="appear-row"><span>Målmand</span><div class="swatches" id="kitKeeper" role="group" aria-label="Farve, målmand"></div></div>
       <div class="appear-row"><span>Modstander</span><div class="swatches" id="kitAway" role="group" aria-label="Farve, modstander"></div></div>
+      <div class="appear-row"><span>Jokere</span><div class="swatches" id="kitNeutral" role="group" aria-label="Farve, jokere"></div></div>
       <div class="appear-row"><span>Logoer</span>
         <div class="logos" id="logoBox">
           <div class="logo-row"><span>Eget hold</span><span class="logo-thumb" id="logoThumbHome"></span><button type="button" class="btn btn-sm" data-logo-pick="home">Vælg billede</button><button type="button" class="icon-btn sm" data-logo-clear="home" aria-label="Fjern eget logo" hidden><span data-icon="close"></span></button></div>
@@ -1042,11 +1097,19 @@ const ICONS = {
   eye: '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
   match: '<circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l5.5-3.5z" fill="currentColor"/>',
   more: '<circle cx="5" cy="12" r="1.3" fill="currentColor"/><circle cx="12" cy="12" r="1.3" fill="currentColor"/><circle cx="19" cy="12" r="1.3" fill="currentColor"/>',
+  item: '<path d="M12 3.5 6.6 18h10.8z"/><path d="M9.2 11h5.6"/><path d="M4.5 18.5h15"/>',
+  cone: '<path d="M12 3.5 6.6 18h10.8z"/><path d="M9.2 11h5.6"/><path d="M4.5 18.5h15"/>',
+  pole: '<path d="M12 3v15"/><path d="M12 6.5h0M12 11h0" stroke-width="4"/><ellipse cx="12" cy="19.5" rx="3.5" ry="1.5"/>',
+  minigoal: '<path d="M5 17.5V9.5h14v8"/><path d="M5 9.5 7.5 12.5h9l2.5-3M7.5 12.5v5M16.5 12.5v5"/>',
+  goal: '<path d="M3 18V6h18v12"/><path d="M3 6l3 3.5h12L21 6M6 9.5V18M18 9.5V18M9 9.5V18M12 9.5V18M15 9.5V18"/>',
+  area: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5"/>',
+  full: '<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M5 12h14"/><circle cx="12" cy="12" r="2.5"/>',
+  rotate: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4.5H15"/>',
 };
 const ic = name => `<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
 /* =========================================================
-   Kampformater og formationer
+   Banen og formationer (11 mod 11)
    Positioner er i meter: x på tværs (0 = venstre side set fra eget mål),
    y på langs (0 = modstanderens mållinje, L = egen mållinje).
    ========================================================= */
@@ -1054,12 +1117,6 @@ const FORMATS = {
   '11': { label: '11 mod 11', W: 68, L: 105, yGK: .955, yDef: .835, yAtt: .605, stripes: 12, discF: .036,
           styles: { def: { yGK: .96, yDef: .85, yAtt: .64, spread: .84 }, off: { yGK: .9, yDef: .57, yAtt: .2, spread: 1.08 } },
           mk: { box: [40.32, 16.5], six: [18.32, 5.5], spot: 11, arc: 9.15, circle: 9.15, goal: 7.32, goalDepth: 2, corner: 1 } },
-  '8':  { label: '8 mod 8', W: 52, L: 68, yGK: .95, yDef: .82, yAtt: .6, stripes: 10, discF: .044,
-          styles: { def: { yGK: .955, yDef: .84, yAtt: .64, spread: .84 }, off: { yGK: .9, yDef: .58, yAtt: .22, spread: 1.08 } },
-          mk: { box: [26, 9], six: [12, 3], spot: 8, arc: null, circle: 6, goal: 5, goalDepth: 1.5, corner: 1 } },
-  '5':  { label: '5 mod 5', W: 22, L: 32, yGK: .935, yDef: .78, yAtt: .6, stripes: 8, discF: .06,
-          styles: { def: { yGK: .94, yDef: .8, yAtt: .64, spread: .86 }, off: { yGK: .88, yDef: .6, yAtt: .26, spread: 1.06 } },
-          mk: { box: [12, 5], six: null, spot: null, arc: null, circle: 3, goal: 3, goalDepth: 1, corner: null } },
 };
 const STYLES = { def: 'Defensiv', normal: 'Normal', off: 'Offensiv' };
 const marginFor = f => f.W * .05 + 1.5;
@@ -1086,22 +1143,9 @@ const FORMATIONS = {
     '5-3-2':     [['LWB', .1, .12], ['CB', .3, 0], ['CB', .5, 0], ['CB', .7, 0], ['RWB', .9, .12], ['CM', .3, .52], ['DM', .5, .45], ['CM', .7, .52], ['SS', .39, 1], ['CF', .61, 1]],
     '5-4-1':     [['LWB', .1, .1], ['CB', .3, 0], ['CB', .5, 0], ['CB', .7, 0], ['RWB', .9, .1], ['LM', .14, .56], ['CM', .38, .5], ['CM', .62, .5], ['RM', .86, .56], ['CF', .5, 1]],
   },
-  '8': {
-    '3-3-1': [['LB', .2, .05], ['CB', .5, 0], ['RB', .8, .05], ['LM', .16, .52], ['CM', .5, .45], ['RM', .84, .52], ['CF', .5, 1]],
-    '2-3-2': [['CB', .33, 0], ['CB', .67, 0], ['LM', .15, .52], ['CM', .5, .42], ['RM', .85, .52], ['SS', .35, 1], ['CF', .65, 1]],
-    '3-2-2': [['LB', .2, .05], ['CB', .5, 0], ['RB', .8, .05], ['CM', .35, .46], ['CM', .65, .46], ['SS', .32, 1], ['CF', .68, 1]],
-    '2-4-1': [['CB', .33, 0], ['CB', .67, 0], ['LM', .12, .52], ['CM', .38, .45], ['CM', .62, .45], ['RM', .88, .52], ['CF', .5, 1]],
-    '3-1-3': [['LB', .2, .05], ['CB', .5, 0], ['RB', .8, .05], ['CM', .5, .45], ['LW', .16, .92], ['CF', .5, 1], ['RW', .84, .92]],
-  },
-  '5': {
-    '1-2-1': [['CB', .5, 0], ['LM', .18, .5], ['RM', .82, .5], ['CF', .5, 1]],
-    '2-2':   [['LB', .3, 0], ['RB', .7, 0], ['LW', .3, 1], ['RW', .7, 1]],
-    '2-1-1': [['LB', .3, 0], ['RB', .7, 0], ['CM', .5, .5], ['CF', .5, 1]],
-    '3-1':   [['LB', .18, .1], ['CB', .5, 0], ['RB', .82, .1], ['CF', .5, 1]],
-  },
 };
-const DEFAULT_FORMATION = { '11': '4-3-3', '8': '3-3-1', '5': '1-2-1' };
-const DEFAULT_AWAY = { '11': '4-4-2', '8': '2-3-2', '5': '2-2' };
+const DEFAULT_FORMATION = { '11': '4-3-3' };
+const DEFAULT_AWAY = { '11': '4-4-2' };
 
 const KITS = [['#d62828', 'Rød'], ['#ffffff', 'Hvid'], ['#1d4ed8', 'Blå'], ['#7cc4f5', 'Lyseblå'], ['#16181d', 'Sort'],
   ['#f5c518', 'Gul'], ['#15803d', 'Grøn'], ['#f97316', 'Orange'], ['#7c3aed', 'Lilla'], ['#8a1538', 'Bordeaux']];
@@ -1113,6 +1157,8 @@ const TOOLS = [
   { id: 'dribble', label: 'Dribling', key: 'd', hint: 'Dribling: tegn den vej, spilleren fører bolden.' },
   { id: 'zone', label: 'Zone', key: 'z', hint: 'Zone: træk et felt op for at markere et rum.' },
   { id: 'pen', label: 'Streg', key: 's', hint: 'Streg: tegn frit, fx en forsvarslinje.' },
+  { id: 'item', label: 'Udstyr', key: 'u', hint: 'Udstyr: tryk på banen for at sætte en kegle, en stang eller et mål. Vælg hvad i knappen ved siden af.' },
+  { id: 'area', label: 'Zoom', key: 'o', hint: 'Zoom: træk et felt op om øvelsesområdet. Hele banen zoomer ud igen.' },
 ];
 const DRAW_TYPES = new Set(['run', 'pass', 'dribble', 'zone', 'pen']);
 
@@ -1273,8 +1319,10 @@ function newBoard({ format = '11', formation, name = 'Ny tavle', homeStyle = 'no
   return {
     v: 2, id: uid(), name, updated: Date.now(), format,
     homeFormation: hf, awayFormation: af, homeStyle, awayStyle, showAway: false,
-    kit: { home: '#d62828', keeper: '#f5c518', away: '#1d4ed8', awayKeeper: '#16181d' },
+    kit: { home: '#d62828', keeper: '#f5c518', away: '#1d4ed8', awayKeeper: '#16181d', neutral: '#f97316' },
     home, away, bench: [],
+    // Øvelser (Morten 7/10): udstyr på banen, spillere der ikke er med, jokere i neutral farve og et zoom-udsnit.
+    items: [], off: [], neutral: [], view: null,
     logos: { home: '', away: '' }, logoOpacity: .16,
     tactics: { home: defaultTactic(), away: defaultTactic() }, teamNames: { ...DEFAULT_NAMES },
     frames: [{ note: '', pos, ball: { x: f.W / 2, y: f.L / 2 }, drawings: [] }],
@@ -1306,6 +1354,600 @@ function exampleBoard() {
   return b;
 }
 
+/* =========================================================
+   Træningsøvelser (Morten 7/10: "tilføj forskellige træningsøvelser i appen")
+   Hver øvelse bliver en tavle på 11-mands-banen med de spillere, der er med, udstyr, et zoom-udsnit og
+   trin, der viser forløbet. Koordinater i meter som resten af appen: x på tværs (0–68), y på langs
+   (0 = målet øverst, 105 = målet nederst). Rød (mit hold) spiller opad.
+   Trin: p = spillernes pladser (i første trin alle, der er med, i nummerrækkefølge; derefter kun dem, der
+   flytter sig), b = hvem der har bolden (eller [x, y]), d = tegninger [type, fra, (via …,) til], hvor et
+   punkt er [x, y], en spiller ('h4') eller '>h4' = spillerens plads i næste trin. 'shot' er et skud.
+   classic: rød beholder de klassiske trøjenumre (ellers nummereres spillerne 1, 2, 3 … pr. hold).
+   ========================================================= */
+const DRILL_CATS = { opvarmning: 'Opvarmning', teknik: 'Teknik og pasninger', rondo: 'Rondo og boldbesiddelse', afslutning: 'Afslutninger',
+  spil: 'Smålagsspil', forsvar: 'Forsvar og pres', omstilling: 'Omstilling', opbygning: 'Opbygning' };
+const DRILL_LEVELS = { born: 'Børn', ungdom: 'Ungdom', senior: 'Senior' };
+const DRILL_INK = { pass: '#ffffff', dribble: '#ffffff', run: '#ffd43b', shot: '#ff8a3d', zone: '#ffd43b', pen: '#ffffff' };
+const CONE = { orange: '#ff8a3d', gul: '#ffd43b', bla: '#74c0fc', hvid: '#ffffff' };
+const cone = (x, y, c = CONE.orange) => ['cone', x, y, c];
+// Kegler i hjørnerne af et felt (nx/ny > 1: også jævnt fordelt langs siderne).
+function coneRect(x0, y0, x1, y1, c = CONE.orange, nx = 1, ny = 1) {
+  const out = [];
+  for (let i = 0; i <= nx; i++) for (let j = 0; j <= ny; j++)
+    if (i === 0 || i === nx || j === 0 || j === ny) out.push(cone(round2(x0 + (x1 - x0) * i / nx), round2(y0 + (y1 - y0) * j / ny), c));
+  return out;
+}
+// En port af to kegler: 'h' = keglerne ved siden af hinanden (man spiller op eller ned igennem), 'v' = over hinanden.
+const gate = (x, y, w, dir, c) => dir === 'v' ? [cone(x, y - w / 2, c), cone(x, y + w / 2, c)] : [cone(x - w / 2, y, c), cone(x + w / 2, y, c)];
+
+const DRILLS = [
+  /* ---- Opvarmning ---- */
+  { id: 'farveporte', cat: 'opvarmning', lv: ['born'], age: 'U6–U10', title: 'Farveporte',
+    players: '6–12 spillere', area: '20 × 20 m', time: '10 min',
+    goal: 'Boldkontrol og overblik: bolden tæt på foden og hovedet oppe.',
+    setup: 'Et felt på 20 × 20 m med porte af to kegler i tre farver. Alle spillere har en bold.',
+    points: ['Små berøringer med begge fødder', 'Kig op mellem berøringerne', 'Skift tempo, når du er igennem en port'],
+    vary: ['Lettere: gå med bolden, eller brug færre farver', 'Sværere: kun venstre fod, eller træneren viser farven i stedet for at råbe den'],
+    view: [20, 38, 48, 66],
+    items: [...coneRect(24, 42, 44, 62, CONE.hvid), ...gate(29, 47, 2, 'h', CONE.gul), ...gate(39, 48, 2, 'v', CONE.orange),
+      ...gate(30, 57, 2, 'v', CONE.bla), ...gate(39, 57.5, 2, 'h', CONE.gul)],
+    frames: [
+      { n: 'Alle har en bold og driblér frit rundt i feltet med små berøringer. Kig op, så I ikke støder ind i hinanden.',
+        p: { h2: [26, 45], h3: [35, 44], h4: [42, 52], h5: [27, 53], h6: [34, 60], h7: [42, 60] }, b: 'h2',
+        d: [['dribble', 'h2', [26.4, 47], '>h2'], ['dribble', 'h3', [33.5, 44.4], '>h3'], ['dribble', 'h4', [42.6, 54], '>h4'],
+          ['dribble', 'h5', [26.6, 54.6], '>h5'], ['dribble', 'h6', [35.6, 60.4], '>h6'], ['dribble', 'h7', [40.6, 61.4], '>h7']] },
+      { n: 'Træneren råber en farve, fx »gul«. Alle driblér gennem en gul port så hurtigt som muligt og fortsætter derefter frit.',
+        p: { h2: [27, 48.8], h3: [32, 46], h4: [41.5, 55.5], h5: [26.5, 56], h6: [36.5, 60], h7: [38.5, 61.5] }, b: 'h2',
+        d: [['dribble', 'h2', [29, 48.4], '>h2'], ['dribble', 'h6', [38.6, 59.4], '>h6'], ['dribble', 'h5', [27.4, 51.5], '>h5']] },
+      { n: 'Nyt kald, ny farve. Prøv også »stop« (sålen på bolden) og »skift« (byt bold med en anden).',
+        p: { h2: [29, 45.2], h6: [39, 55.4], h5: [28.6, 49.6] }, b: 'h2' },
+    ] },
+  { id: 'spil-og-loeb', cat: 'opvarmning', lv: ['born', 'ungdom', 'senior'], age: 'Alle aldre', title: 'Spil og løb efter',
+    players: '5–8 spillere', area: '12 × 12 m', time: '10 min',
+    goal: 'Præcise pasninger, en god første berøring og bevægelse efter pasningen.',
+    setup: 'Fire kegler i en firkant på 12 × 12 m. En spiller ved hver kegle og to ved startkeglen.',
+    points: ['Spil med indersiden, og hold bolden på jorden', 'Tag imod med foden længst fra bolden', 'Løb med det samme efter pasningen'],
+    vary: ['Lettere: to berøringer og god tid', 'Sværere: én berøring, eller skift retning, når træneren råber'],
+    view: [22, 40, 46, 65],
+    items: coneRect(28, 46, 40, 58),
+    frames: [
+      { n: '1 spiller til 2 og løber efter sin pasning hen til 2’s kegle.',
+        p: { h2: [27, 59], h4: [41, 59], h5: [41, 45], h6: [27, 45], h3: [25.6, 60.6] }, b: 'h2',
+        d: [['pass', 'h2', 'h4'], ['run', 'h2', [34, 60.3], '>h2']] },
+      { n: '2 tager imod med foden længst fra bolden, spiller videre til 3 og løber efter. 5 rykker frem til startkeglen.',
+        p: { h2: [39.6, 60.6] }, b: 'h4',
+        d: [['pass', 'h4', 'h5'], ['run', 'h4', [42.3, 52], '>h4'], ['run', 'h3', '>h3']] },
+      { n: 'Bolden går rundt i firkanten. Skift retning efter et par minutter, så begge fødder bliver brugt.',
+        p: { h4: [42.4, 46.4], h2: [41, 59], h3: [27, 59] }, b: 'h5',
+        d: [['pass', 'h5', 'h6'], ['run', 'h5', [34, 43.7], [28.4, 43.6]]] },
+    ] },
+  { id: 'y-pasning', cat: 'opvarmning', lv: ['ungdom', 'senior'], age: 'U12+', title: 'Y-pasning med væg',
+    players: '6–10 spillere', area: '25 × 16 m', time: '12 min',
+    goal: 'Pasninger i tempo, timing i løbene og spil med én berøring.',
+    setup: 'Fire kegler formet som et Y: start, midte og to kegler i toppen. Kø ved startkeglen.',
+    points: ['Kom ned mod bolden med åben krop', 'Læg af med én berøring og en fast fod', 'Pasningen til toppen skal ramme løbet'],
+    vary: ['Lettere: to berøringer', 'Sværere: en stang som modspiller ved midterkeglen, eller afslut i et lille mål'],
+    view: [20, 40, 48, 74],
+    items: [cone(34, 68.5), cone(34, 58), cone(26, 45), cone(42, 45)],
+    frames: [
+      { n: '1 spiller op til 2, der kommer ned mod bolden.',
+        p: { h2: [34, 66.8], h4: [36.2, 55.2], h5: [26.6, 46.6], h6: [41.4, 46.6], h3: [34, 70.4] }, b: 'h2',
+        d: [['pass', 'h2', '>h4'], ['run', 'h4', [35.2, 57.6], '>h4']] },
+      { n: '2 lægger af til 1 med én berøring. Imens kommer 3 ned langs siden.',
+        p: { h4: [34.4, 59.6], h2: [34, 65.4] }, b: 'h4',
+        d: [['pass', 'h4', 'h2'], ['run', 'h5', [26, 49.5], '>h5']] },
+      { n: '1 spiller diagonalt op til 3. 2 vender og løber op til 3’s kegle.',
+        p: { h5: [27.2, 51.4] }, b: 'h2',
+        d: [['pass', 'h2', 'h5'], ['run', 'h4', [31.6, 53.6], '>h4']] },
+      { n: '3 driblér tilbage til start. 1 tager 2’s plads, og 2 tager 3’s. Skift til højre side efter et par minutter.',
+        p: { h4: [29.6, 45.6] }, b: 'h5',
+        d: [['dribble', 'h5', [24.4, 58], [30.6, 70.4]], ['run', 'h2', [34.6, 61.6], [35.6, 57.4]]] },
+    ] },
+  { id: 'slalom', cat: 'opvarmning', lv: ['born'], age: 'U6–U10', title: 'Slalom og pasning',
+    players: '4–8 spillere', area: '35 × 8 m', time: '10 min',
+    goal: 'Føre bolden tæt med begge sider af foden og slutte af med en præcis pasning.',
+    setup: 'Fem stænger på en linje med 3 m imellem og en kegle i hver ende. En kø ved hver kegle.',
+    points: ['Bolden tæt på foden mellem stængerne', 'Brug både inder- og yderside', 'Kig op, før du spiller'],
+    vary: ['Lettere: større afstand mellem stængerne', 'Sværere: kun venstre fod, eller på tid'],
+    view: [26, 28, 42, 70],
+    items: [['pole', 34, 46], ['pole', 34, 49], ['pole', 34, 52], ['pole', 34, 55], ['pole', 34, 58], cone(34, 63), cone(34, 41)],
+    frames: [
+      { n: '1 driblér slalom mellem stængerne med små berøringer på begge sider af foden.',
+        p: { h2: [34, 64.6], h4: [34, 36], h3: [34, 66.8], h5: [34, 33.8] }, b: 'h2',
+        d: [['dribble', 'h2', [33.6, 61], [32.6, 58], [35.4, 55], [32.6, 52], [35.4, 49], [32.6, 46], '>h2']] },
+      { n: 'Ved keglen spiller 1 bolden til 2 i den anden kø og løber om bag køen.',
+        p: { h2: [35.6, 42] }, b: 'h2',
+        d: [['pass', 'h2', 'h4'], ['run', 'h2', [36.4, 37], [36, 32.6], '>h2']] },
+      { n: '2 driblér slalom den anden vej. Næste runde: kun venstre fod, kun højre fod eller med sålen.',
+        p: { h2: [34, 31.6] }, b: 'h4',
+        d: [['dribble', 'h4', [35.6, 40], [35.4, 46], [32.6, 49], [35.4, 52], [32.6, 55], [35.4, 58], [32.4, 62.2]]] },
+    ] },
+
+  /* ---- Teknik og pasninger ---- */
+  { id: 'trekant', cat: 'teknik', lv: ['ungdom', 'senior'], age: 'U12+', title: 'Førsteberøring i trekant',
+    players: '4–6 spillere', area: '12 × 12 m', time: '12 min',
+    goal: 'Retningsbestemt førsteberøring: tag bolden med i den retning, du skal spille.',
+    setup: 'Tre kegler i en trekant med 12–13 m imellem. To spillere ved den øverste kegle og én ved hver af de andre.',
+    points: ['Åben krop: stå halvt vendt mod den næste modtager', 'Første berøring væk fra keglen og ud foran dig', 'Spil på anden berøring'],
+    vary: ['Lettere: tre berøringer', 'Sværere: én berøring, eller en passiv modspiller bag modtageren'],
+    view: [21, 39, 47, 64],
+    items: [cone(34, 46), cone(40.5, 57), cone(27.5, 57)],
+    frames: [
+      { n: '1 spiller til 2 og løber efter bolden. 2 står halvt åben mod 3.',
+        p: { h2: [34, 44.6], h4: [41.8, 58.2], h5: [26.2, 58.2], h3: [34, 42.4] }, b: 'h2',
+        d: [['pass', 'h2', 'h4'], ['run', 'h2', [37.8, 50.6], '>h2']] },
+      { n: '2 tager bolden med på første berøring – væk fra keglen og i retning af 3.',
+        p: { h2: [40.8, 53.8] }, b: 'h4',
+        d: [['dribble', 'h4', [40.6, 58.8], '>h4']] },
+      { n: '… og spiller til 3 på anden berøring og løber efter. Skift retning, så begge fødder bliver trænet.',
+        p: { h4: [38.4, 58.6] }, b: 'h4',
+        d: [['pass', 'h4', 'h5'], ['run', 'h4', [33, 60.2], [28.8, 60]]] },
+    ] },
+  { id: 'porte-par', cat: 'teknik', lv: ['born'], age: 'U7–U11', title: 'Pasning gennem porte',
+    players: '6–16 spillere, to og to', area: '24 × 20 m', time: '10 min',
+    goal: 'Præcise pasninger med indersiden og en god første berøring.',
+    setup: 'Et felt på 24 × 20 m med 6–8 små porte (1,5 m brede). To og to med en bold.',
+    points: ['Støttefoden ved siden af bolden og peger mod makkeren', 'Tag imod, så bolden ligger klar', 'Find hurtigt en ny port'],
+    vary: ['Lettere: bredere porte', 'Sværere: én berøring, eller man må ikke bruge den samme port to gange i træk'],
+    view: [19, 39, 49, 65],
+    items: [...coneRect(22, 42, 46, 62, CONE.hvid), ...gate(28, 47, 1.5, 'h', CONE.gul), ...gate(38, 46, 1.5, 'v', CONE.orange),
+      ...gate(33, 52.5, 1.5, 'h', CONE.bla), ...gate(41, 54, 1.5, 'h', CONE.gul), ...gate(27, 57, 1.5, 'v', CONE.orange), ...gate(36, 59, 1.5, 'h', CONE.bla)],
+    frames: [
+      { n: 'To og to med en bold: spil til makkeren gennem en port.',
+        p: { h2: [28, 44], h3: [28, 50.5], h4: [35, 46], h5: [41, 46] }, b: 'h2',
+        d: [['pass', 'h2', 'h3'], ['pass', 'h4', 'h5']] },
+      { n: 'Modtageren driblér hen til en ny port, og makkeren løber om på den anden side af den.',
+        p: {}, b: 'h3',
+        d: [['dribble', 'h3', [30.4, 52.6], '>h3'], ['run', 'h2', [31, 47.6], '>h2'], ['dribble', 'h5', [42.8, 49], '>h5'], ['run', 'h4', [36.5, 51], '>h4']] },
+      { n: 'Spil gennem den nye port. Hvor mange porte kan I nå på ét minut?',
+        p: { h3: [31.6, 55], h2: [33.4, 49.6], h5: [41.2, 51.2], h4: [40.6, 56.6] }, b: 'h3',
+        d: [['pass', 'h3', 'h2'], ['pass', 'h5', 'h4']] },
+    ] },
+  { id: 'tredjemand', cat: 'teknik', lv: ['ungdom', 'senior'], age: 'U13+', title: 'Tredjemandsløb',
+    players: '6–9 spillere', area: '30 × 20 m', time: '12 min',
+    goal: 'Spil en makker fri med en tredje spiller: læg af, og spil i dybden til den, der løber.',
+    setup: 'Tre spillere i en trekant og en port af to kegler 25 m længere fremme. Kø ved startkeglen.',
+    points: ['Løbet starter, idet bolden spilles til den, der lægger af', 'Aflægningen går på én berøring', 'Dybdepasningen spilles foran løberen'],
+    vary: ['Lettere: stå stille, og spil fast', 'Sværere: en forsvarer følger løberen, eller afslut på mål'],
+    view: [17, 37, 51, 76],
+    items: [cone(30, 71.8), ...gate(28, 43, 5, 'h', CONE.gul)],
+    frames: [
+      { n: '1 spiller op til 2, der kommer ned mod bolden.',
+        p: { h2: [30, 70], h4: [34.6, 55], h5: [41, 63.5], h3: [30, 73.6] }, b: 'h2',
+        d: [['pass', 'h2', '>h4'], ['run', 'h4', '>h4']] },
+      { n: '2 lægger af til 3 på én berøring. Samtidig starter 1 sit løb forbi 2 og i dybden – det er tredjemandsløbet.',
+        p: { h4: [33.6, 59] }, b: 'h4',
+        d: [['pass', 'h4', 'h5'], ['run', 'h2', [29, 62], '>h2']] },
+      { n: '3 spiller med det samme i dybden foran 1, som har fart på mod porten.',
+        p: { h2: [28.4, 51.6] }, b: 'h5',
+        d: [['pass', 'h5', '>h2'], ['run', 'h2', '>h2']] },
+      { n: '1 tager bolden med gennem porten. Rotér: 1 bliver 2, 2 bliver 3, og 3 stiller sig i køen.',
+        p: { h2: [28.2, 47.2] }, b: 'h2',
+        d: [['dribble', 'h2', [28, 40]]] },
+    ] },
+
+  /* ---- Rondo og boldbesiddelse ---- */
+  { id: 'rondo-4-1', cat: 'rondo', lv: ['born', 'ungdom'], age: 'U9+', title: 'Rondo 4 mod 1',
+    players: '5 spillere', area: '8 × 8 m', time: '3 × 3 min',
+    goal: 'Holde bolden under pres: spil væk fra presset, og vær klar til næste pasning.',
+    setup: 'En firkant på 8 × 8 m. Fire spillere på siderne og én forsvarer i midten.',
+    points: ['Højst to berøringer', 'Bevæg dig langs linjen, så du altid kan modtage', 'Spil til den side, forsvareren ikke dækker'],
+    vary: ['Lettere: 10 × 10 m eller tre berøringer', 'Sværere: én berøring, eller 5 mod 2'],
+    view: [26, 44.5, 42, 60.5],
+    items: coneRect(30, 48.5, 38, 56.5),
+    frames: [
+      { n: 'Fire spillere holder bolden mod én i midten. Bolden spilles væk fra forsvareren.',
+        p: { h2: [29.6, 52.5], h3: [34, 48.1], h4: [38.4, 52.5], h5: [34, 56.9], a2: [33.4, 54] }, b: 'h5',
+        d: [['pass', 'h5', 'h4'], ['run', 'a2', '>a2']] },
+      { n: 'Forsvareren flytter sig. Modtageren står åben og spiller videre på første berøring.',
+        p: { a2: [36, 53.4] }, b: 'h4',
+        d: [['pass', 'h4', 'h3'], ['run', 'a2', '>a2']] },
+      { n: 'Taber man bolden eller spiller den ud, bytter man plads med forsvareren.',
+        p: { a2: [35.2, 50.2] }, b: 'h3',
+        d: [['pass', 'h3', 'h2'], ['run', 'a2', [32.4, 51.4]]] },
+    ] },
+  { id: 'rondo-5-2', cat: 'rondo', lv: ['ungdom', 'senior'], age: 'U12+', title: 'Rondo 5 mod 2',
+    players: '7 spillere', area: '12 × 12 m', time: '4 × 3 min',
+    goal: 'Hurtigt kombinationsspil under pres og splitpasningen mellem to forsvarere.',
+    setup: 'En firkant på 12 × 12 m. Fem spillere rundt om firkanten og to forsvarere inde i den.',
+    points: ['Tempo i pasningerne: én eller to berøringer', 'Vinkler: altid to muligheder til den med bolden', 'Splitpasningen, når forsvarerne står for langt fra hinanden'],
+    vary: ['Lettere: større felt', 'Sværere: én berøring, eller forsvarerne får point for at vinde bolden'],
+    view: [24, 42.5, 44, 62.5],
+    items: coneRect(28, 46.5, 40, 58.5),
+    frames: [
+      { n: 'Fem spillere holder bolden mod to. Bolden går hurtigt rundt, så forsvarerne må løbe.',
+        p: { h2: [27.6, 50.5], h3: [34, 46.1], h4: [40.4, 51], h5: [37, 58.9], h6: [29.8, 58.9], a2: [31.4, 55.6], a3: [35.6, 51.4] }, b: 'h6',
+        d: [['pass', 'h6', 'h5'], ['run', 'a2', '>a2'], ['run', 'a3', '>a3']] },
+      { n: 'Forsvarerne står for langt fra hinanden: bolden spilles imellem dem. Det er splitpasningen.',
+        p: { a2: [33.6, 55.6], a3: [38.4, 52] }, b: 'h5',
+        d: [['pass', 'h5', 'h3']] },
+      { n: 'To nye muligheder til den med bolden. Den, der vinder bolden, bytter med den, der tabte den.',
+        p: {}, b: 'h3',
+        d: [['pass', 'h3', 'h2'], ['run', 'a2', [32.4, 51.4]], ['run', 'a3', [36.4, 49.2]]] },
+    ] },
+  { id: '4-mod-4-jokere', cat: 'rondo', lv: ['ungdom', 'senior'], age: 'U13+', title: '4 mod 4 + 3 jokere',
+    players: '11 spillere', area: '25 × 20 m', time: '4 × 4 min',
+    goal: 'Boldbesiddelse i overtal: gør banen stor, skab vinkler, og flyt bolden fra side til side.',
+    setup: 'Et felt på 25 × 20 m. To hold á fire og tre jokere (orange): én i hver ende og én inde i feltet. Jokerne spiller altid med holdet, der har bolden.',
+    points: ['Gør banen stor, når I har bolden', 'Brug jokerne til at vende spillet', 'Pres samlet med det samme, når bolden er tabt'],
+    vary: ['Lettere: to jokere inde i feltet', 'Sværere: højst to berøringer, eller jokerne må kun røre bolden én gang'],
+    view: [17.5, 38.5, 50.5, 66.5],
+    neutral: ['h9', 'h10', 'h11'],
+    items: coneRect(21.5, 42.5, 46.5, 62.5, CONE.orange, 1, 2),
+    frames: [
+      { n: 'Rød har bolden og spiller med jokerne: 7 mod 4. Gør banen stor, og brug jokeren i enden.',
+        p: { h2: [25.5, 46.5], h3: [42.5, 47], h4: [25.5, 58.5], h5: [41.5, 58.5], a2: [30, 49.5], a3: [38, 50], a4: [30.5, 56], a5: [37.5, 55.5],
+          h9: [34, 41.6], h10: [34, 52.5], h11: [34, 63.4] }, b: 'h4',
+        d: [['pass', 'h4', 'h11'], ['run', 'h3', '>h3'], ['run', 'a4', '>a4']] },
+      { n: 'Blå presser jokeren. Jokeren spiller videre til den frie spiller i siden.',
+        p: { h3: [44.4, 52.5], a4: [32.6, 60] }, b: 'h11',
+        d: [['pass', 'h11', 'h5'], ['run', 'a5', '>a5']] },
+      { n: 'Når blå skubber over, er der plads længere fremme i samme side.',
+        p: { a5: [39.6, 56.4] }, b: 'h5',
+        d: [['pass', 'h5', 'h3']] },
+      { n: 'Spil over toppen til jokeren i den anden ende. Mister rød bolden, spiller jokerne med blå. Point for 8 afleveringer i træk.',
+        p: {}, b: 'h3',
+        d: [['pass', 'h3', 'h9']] },
+    ] },
+
+  /* ---- Afslutninger ---- */
+  { id: 'vaeg-afslutning', cat: 'afslutning', lv: ['born', 'ungdom', 'senior'], age: 'U10+', title: 'Afslutning efter væggespil',
+    players: '4–10 spillere + målmand', area: '35 × 30 m foran mål', time: '15 min',
+    goal: 'Kombinere sig frem og afslutte på første berøring.',
+    setup: 'Kø ved en kegle 30 m fra mål. En vægspiller står med ryggen til mål ved feltets kant, og en stang er forsvarer. Målmand i målet.',
+    points: ['Spil fast til vægspillerens fod', 'Løb med det samme efter pasningen', 'Afslut lavt i hjørnet på første berøring'],
+    vary: ['Lettere: tag en berøring før skuddet', 'Sværere: en forsvarer følger løberen, eller væggen spiller på én berøring'],
+    view: [12, -4.9, 56, 37],
+    items: [cone(30.5, 32.2), ['pole', 37.8, 18.2]],
+    frames: [
+      { n: '1 spiller fast op til 2, som står med ryggen til mål.',
+        p: { h2: [31, 30.6], h4: [37.6, 20.6], h3: [29.4, 33.4], a1: [34, 1.4] }, b: 'h2',
+        d: [['pass', 'h2', 'h4'], ['run', 'h2', [31.4, 26], '>h2']] },
+      { n: '2 lægger bolden af på én berøring ind i løbet på 1.',
+        p: { h2: [32, 23.6] }, b: 'h4',
+        d: [['pass', 'h4', '>h2'], ['run', 'h2', '>h2']] },
+      { n: '1 afslutter på første berøring – lavt og hårdt i hjørnet.',
+        p: { h2: [33.2, 19.2] }, b: 'h2',
+        d: [['shot', 'h2', [31.2, 0]]] },
+      { n: 'Mål! 1 henter bolden og bliver ny vægspiller, og 2 stiller sig i køen.',
+        p: { a1: [32.8, 1.4] }, b: [31.4, -0.8] },
+    ] },
+  { id: 'indlaeg', cat: 'afslutning', lv: ['ungdom', 'senior'], age: 'U13+', title: 'Indlæg og afslutning',
+    players: '6–12 spillere + målmand', area: 'Halv bane', time: '15 min',
+    goal: 'Indlæg fra kanten og angribernes timing og løb i feltet.',
+    setup: 'En midtbanespiller, en kant og to angribere mod en målmand. Angriberne venter uden for feltet.',
+    points: ['Kanten tager bolden med i fart mod baglinjen', 'Angriberne løber på tværs af hinanden: én til første og én til anden stolpe', 'Indlægget slås hårdt ind mellem målmand og forsvar'],
+    vary: ['Lettere: indlæg fra stillestående bold', 'Sværere: to forsvarere i feltet'],
+    view: [16, -4.9, 72.9, 47],
+    items: [cone(40, 44), cone(59, 41.6)],
+    frames: [
+      { n: '1 spiller ud i løbet til kanten, 2.',
+        p: { h7: [40, 42], h11: [59, 39.5], h10: [36.5, 25], h9: [29, 27.5], a1: [34, 1.4] }, b: 'h7',
+        d: [['pass', 'h7', '>h11'], ['run', 'h11', [60.6, 33], '>h11']] },
+      { n: '2 driblér mod baglinjen. Angriberne venter og løber så på tværs af hinanden: én mod første stolpe og én mod anden.',
+        p: { h11: [61.4, 26] }, b: 'h11',
+        d: [['dribble', 'h11', [62, 18], '>h11'], ['run', 'h10', [34, 18.5], '>h10'], ['run', 'h9', [32.4, 15.6], '>h9']] },
+      { n: 'Indlægget slås hårdt ind mod første stolpe.',
+        p: { h11: [61, 11], h10: [29.5, 8], h9: [38.6, 7], a1: [36.4, 1.6] }, b: 'h11',
+        d: [['pass', 'h11', 'h9']] },
+      { n: 'Afslut på første berøring. Skift side, så indlæggene også kommer fra venstre.',
+        p: {}, b: 'h9',
+        d: [['shot', 'h9', [31, 0]]] },
+    ] },
+  { id: '1-mod-1-maal', cat: 'afslutning', lv: ['born', 'ungdom'], age: 'U9+', title: '1 mod 1 mod målmanden',
+    players: '4–10 spillere + målmand', area: '30 × 25 m foran mål', time: '12 min',
+    goal: 'Angribe en forsvarer i fart og afslutte, før forsvareren når igen.',
+    setup: 'Angriberne står 30 m fra mål, forsvarerne ved målstolpen med boldene. Målmand i målet.',
+    points: ['Første berøring fremad og i fart', 'Finte eller retningsskift tæt på forsvareren', 'Afslut tidligt – vent ikke, til forsvareren er tilbage'],
+    vary: ['Lettere: forsvareren starter længere væk', 'Sværere: forsvareren starter tættere på, eller angriberen har kun 6 sekunder'],
+    view: [16, -4.9, 52, 37],
+    items: [cone(34, 33)],
+    frames: [
+      { n: 'Forsvareren spiller bolden op til angriberen og løber ud.',
+        p: { h2: [34, 31], a1: [34, 1.4], a2: [39.4, 1.8] }, b: 'a2',
+        d: [['pass', 'a2', 'h2'], ['run', 'a2', [39.2, 9.5], '>a2']] },
+      { n: 'Angriberen tager bolden med fremad i fart. Forsvareren skal nå at lukke af.',
+        p: { a2: [37.2, 15.4] }, b: 'h2',
+        d: [['dribble', 'h2', [33.4, 26], '>h2'], ['run', 'a2', '>a2']] },
+      { n: 'Kom forbi med en finte eller et retningsskift.',
+        p: { h2: [32.6, 21.6], a2: [34.4, 18.4] }, b: 'h2',
+        d: [['dribble', 'h2', [30, 18.6], '>h2'], ['run', 'a2', '>a2']] },
+      { n: 'Afslut, før forsvareren når igen. Byt roller efter hver tur.',
+        p: { h2: [29.6, 14.8], a2: [32, 16.8], a1: [32.4, 3.4] }, b: 'h2',
+        d: [['shot', 'h2', [36.6, 0]]] },
+    ] },
+  { id: 'skud-retur', cat: 'afslutning', lv: ['born', 'ungdom'], age: 'U10+', title: 'Skud udefra og returbold',
+    players: '6–10 spillere + målmand', area: '25 × 30 m foran mål', time: '12 min',
+    goal: 'Skud fra distance og at følge op på returbolde.',
+    setup: 'En spiller lægger bolden ud til skytten ved feltets kant. En medspiller står klar til at følge op. Målmand i målet.',
+    points: ['Støttefoden ved siden af bolden, og ram den med vristen', 'Overkroppen over bolden, så skuddet holder sig lavt', 'Følg op, så snart skuddet går'],
+    vary: ['Lettere: skyd fra 14–16 m', 'Sværere: skyd på første berøring, eller en forsvarer presser skytten'],
+    view: [16, -4.9, 52, 33],
+    items: [cone(25.6, 26.4), cone(42.6, 25)],
+    frames: [
+      { n: '1 lægger bolden ud til 2, som kommer i løb mod feltets kant.',
+        p: { h6: [36, 29], h2: [27, 25], h3: [41, 23.5], a1: [34, 1.4] }, b: 'h6',
+        d: [['pass', 'h6', '>h2'], ['run', 'h2', '>h2']] },
+      { n: '2 skyder på første eller anden berøring. 3 starter sit løb mod mål, så snart skuddet går.',
+        p: { h2: [29.4, 20.4] }, b: 'h2',
+        d: [['shot', 'h2', [35, 1.6]], ['run', 'h3', [39, 13], '>h3']] },
+      { n: 'Målmanden redder ud i feltet. 3 følger op og sender returbolden i mål.',
+        p: { h3: [36.6, 7.6], a1: [35.4, 2.4] }, b: 'h3',
+        d: [['shot', 'h3', [31, 0]]] },
+      { n: 'Mål! Byt roller: den, der lagde op, skyder, skytten følger op, og opfølgeren lægger op.',
+        p: {}, b: [31.2, -0.8] },
+    ] },
+
+  /* ---- Smålagsspil ---- */
+  { id: '1-mod-1-smaamaal', cat: 'spil', lv: ['born', 'ungdom'], age: 'U7+', title: '1 mod 1 til småmål',
+    players: '2 spillere ad gangen', area: '15 × 10 m', time: '6 × 1 min',
+    goal: 'Turde gå 1 mod 1: finter, retningsskift og fart forbi modstanderen.',
+    setup: 'En bane på 15 × 10 m med et lille mål i hver ende. En kø ved hvert mål.',
+    points: ['Angrib forsvareren i fart', 'Finte: kroppen den ene vej og bolden den anden', 'Accelerér forbi, når forsvareren er sat af'],
+    vary: ['Lettere: bredere bane', 'Sværere: smallere bane, eller kun 6 sekunder til at score'],
+    view: [25, 41.5, 43, 63.5],
+    items: [...coneRect(29, 45, 39, 60), ['minigoal', 34, 45, 0], ['minigoal', 34, 60, 180]],
+    frames: [
+      { n: 'Blå spiller bolden til rød og løber ud som forsvarer. Rød angriber det øverste mål.',
+        p: { h2: [34, 58.6], a2: [34, 46.6] }, b: 'a2',
+        d: [['pass', 'a2', 'h2'], ['run', 'a2', '>a2']] },
+      { n: 'Rød driver mod forsvareren og finter – kroppen til højre og bolden til venstre.',
+        p: { a2: [34, 51.4] }, b: 'h2',
+        d: [['dribble', 'h2', [35.4, 56], '>h2'], ['run', 'a2', '>a2']] },
+      { n: 'Forsvareren er sat af: rød accelererer forbi.',
+        p: { h2: [32.8, 54.4], a2: [35.4, 52.6] }, b: 'h2',
+        d: [['dribble', 'h2', [31.6, 51], '>h2'], ['run', 'a2', '>a2']] },
+      { n: 'Mål i det lille mål. Vinder blå bolden, angriber blå det nederste mål. Ny duel efter mål eller 30 sekunder.',
+        p: { h2: [33, 47.8], a2: [34.6, 50.2] }, b: 'h2',
+        d: [['shot', 'h2', [34, 45.2]]] },
+    ] },
+  { id: '2-mod-1', cat: 'spil', lv: ['born', 'ungdom'], age: 'U9+', title: '2 mod 1 – brug overtallet',
+    players: '3 spillere + målmand', area: '25 × 40 m foran mål', time: '12 min',
+    goal: 'Udnytte et overtal: bind forsvareren, og spil i det rigtige øjeblik.',
+    setup: 'To angribere starter 38 m fra mål, én forsvarer ved feltets kant. Målmand i målet.',
+    points: ['Driv direkte mod forsvareren, så forsvareren må tage stilling', 'Makkeren holder bredden og er klar', 'Spil, når forsvareren går på bolden – ellers driv selv igennem'],
+    vary: ['Lettere: forsvareren må kun gå baglæns', 'Sværere: en ekstra forsvarer starter bagfra efter 3 sekunder (2 mod 2)'],
+    view: [16, -4.9, 52, 42],
+    items: [cone(28, 39.6), cone(40, 39.6)],
+    frames: [
+      { n: 'Den med bolden driver direkte mod forsvareren. Makkeren holder bredden.',
+        p: { h2: [28, 38], h3: [40, 38], a1: [34, 1.4], a2: [34, 22] }, b: 'h2',
+        d: [['dribble', 'h2', [29.6, 33], '>h2'], ['run', 'h3', [40.6, 32], '>h3'], ['run', 'a2', '>a2']] },
+      { n: 'Forsvareren går på bolden. Så er makkeren fri: spil til makkeren i løbet.',
+        p: { h2: [31.2, 28], h3: [40.4, 27], a2: [32, 24.2] }, b: 'h2',
+        d: [['pass', 'h2', '>h3'], ['run', 'h3', '>h3']] },
+      { n: 'Makkeren tager bolden med mod mål. Går forsvareren i stedet mod makkeren, driver den med bolden selv igennem.',
+        p: { h3: [39.4, 20.6], a2: [35.2, 22.4] }, b: 'h3',
+        d: [['dribble', 'h3', [38.4, 17], '>h3'], ['run', 'h2', [32, 20], '>h2']] },
+      { n: 'Afslut lavt i det lange hjørne. Byt roller efter hver tur.',
+        p: { h3: [37.4, 14.6], h2: [31.4, 15.5], a1: [35.6, 2.4], a2: [35.6, 18.4] }, b: 'h3',
+        d: [['shot', 'h3', [30.9, 0]]] },
+    ] },
+  { id: '3-mod-3-fire-maal', cat: 'spil', lv: ['born', 'ungdom'], age: 'U8–U13', title: '3 mod 3 til fire småmål',
+    players: '6 spillere', area: '20 × 25 m', time: '4 × 4 min',
+    goal: 'Se og bruge pladsen: når modstanderen samler sig i den ene side, er der plads i den anden.',
+    setup: 'En bane på 20 × 25 m med to små mål i hver ende. Hvert hold angriber to mål og forsvarer to.',
+    points: ['Spil væk fra presset mod det frie mål', 'Hold bredden, så der er to muligheder', 'Skyd, så snart der er en chance'],
+    vary: ['Lettere: 4 mod 3 med en joker', 'Sværere: højst tre berøringer'],
+    view: [20, 36.5, 48, 68.5],
+    items: [...coneRect(24, 40, 44, 65), ['minigoal', 27.5, 40, 0], ['minigoal', 40.5, 40, 0], ['minigoal', 27.5, 65, 180], ['minigoal', 40.5, 65, 180]],
+    frames: [
+      { n: 'Rød angriber de to øverste mål. Rød driver ind i venstre side, og blå samler sig om bolden.',
+        p: { h2: [30, 58], h3: [38, 57], h4: [34, 61.6], a2: [33, 46], a3: [29, 50.5], a4: [38.6, 50] }, b: 'h2',
+        d: [['dribble', 'h2', [29, 56], '>h2'], ['run', 'a3', '>a3'], ['run', 'a2', '>a2'], ['run', 'a4', '>a4'], ['run', 'h3', [40, 53], '>h3']] },
+      { n: 'Blå har lukket venstre side. Rød spiller bolden tilbage til makkeren …',
+        p: { h2: [28.6, 54], a3: [28.8, 51.2], a2: [30.6, 47.4], a4: [34.4, 49.6], h3: [40.6, 49.4] }, b: 'h2',
+        d: [['pass', 'h2', 'h4']] },
+      { n: '… som vender spillet til den frie spiller i højre side.',
+        p: {}, b: 'h4',
+        d: [['pass', 'h4', 'h3']] },
+      { n: 'Afslut i det frie mål. Vinder blå bolden, angriber blå de to nederste mål.',
+        p: { a4: [37.4, 47.2], a2: [34.6, 44.8] }, b: 'h3',
+        d: [['shot', 'h3', [40.5, 40.4]]] },
+    ] },
+  { id: 'endezone', cat: 'spil', lv: ['ungdom', 'senior'], age: 'U12+', title: 'Spil til endezone',
+    players: '10 spillere, to hold á fem', area: '30 × 40 m med to zoner på 5 m', time: '4 × 5 min',
+    goal: 'Spille fremad og time løbene ind bag modstanderen.',
+    setup: 'En bane på 30 × 40 m med en zone på 5 m i hver ende. Et hold scorer ved at modtage en pasning inde i den zone, det angriber.',
+    points: ['Spil fremad, når det er muligt', 'Løb ind i zonen, idet pasningen spilles – ikke før', 'Bredde og dybde: brug hele banen'],
+    vary: ['Lettere: 6 mod 4', 'Sværere: modtageren skal stoppe bolden med sålen inde i zonen'],
+    view: [15, 28.5, 53, 76.5],
+    marks: [['zone', [19, 32.5], [49, 37.5]], ['zone', [19, 67.5], [49, 72.5]]],
+    items: [...coneRect(19, 32.5, 49, 72.5), cone(19, 37.5), cone(49, 37.5), cone(19, 67.5), cone(49, 67.5)],
+    frames: [
+      { n: 'Rød angriber den øverste zone. Spil fremad, og løb ind i zonen, idet pasningen kommer.',
+        p: { h2: [24, 62], h3: [44, 60], h4: [33, 56], h5: [25, 47], h6: [43, 45], a2: [28.4, 56.4], a3: [38.6, 57], a4: [32.4, 49], a5: [27, 42], a6: [38, 41] }, b: 'h2',
+        d: [['pass', 'h2', 'h4'], ['run', 'h6', [45, 41.5], '>h6']] },
+      { n: 'Pasningen spilles ind i zonen foran løberen.',
+        p: { h6: [44.4, 38.8], a6: [37.4, 40.4] }, b: 'h4',
+        d: [['pass', 'h4', '>h6'], ['run', 'h6', '>h6'], ['run', 'a6', '>a6']] },
+      { n: 'Point! Modtageren skal have bolden under kontrol inde i zonen. Nu angriber blå den nederste zone.',
+        p: { h6: [42.6, 35.2], a6: [40.4, 37.4] }, b: 'h6' },
+    ] },
+
+  /* ---- Forsvar og pres ---- */
+  { id: '1-mod-1-forsvar', cat: 'forsvar', lv: ['born', 'ungdom'], age: 'U10+', title: '1 mod 1 i forsvar',
+    players: '2 spillere ad gangen', area: '10 × 20 m', time: '10 min',
+    goal: 'Forsvare 1 mod 1: luk hurtigt ned, brems i tide, og styr angriberen væk fra målet.',
+    setup: 'En kanal på 10 × 20 m med et lille mål for enden. Forsvareren spiller bolden til angriberen og løber ud.',
+    points: ['Sprint ud, men brems ned 2–3 m fra angriberen', 'Stå sidelæns og lavt, og styr ud mod siden', 'Tackl først, når bolden er for langt fra angriberens fod'],
+    vary: ['Lettere: angriberen må kun drible i gå-tempo', 'Sværere: angriberen kan score i to mål'],
+    view: [25, 39, 43, 66],
+    items: [...coneRect(29, 42.5, 39, 62.5), ['minigoal', 34, 62.5, 180]],
+    frames: [
+      { n: 'Rød (forsvareren) spiller bolden op til blå og sprinter ud.',
+        p: { h2: [34, 60.6], a2: [34, 44.4] }, b: 'h2',
+        d: [['pass', 'h2', 'a2'], ['run', 'h2', '>h2']] },
+      { n: 'Blå angriber målet. Rød bremser ned 2–3 m fra blå, står sidelæns og lukker vejen ind mod midten.',
+        p: { h2: [33.4, 52.6] }, b: 'a2',
+        d: [['dribble', 'a2', [34.4, 46.6], '>a2'], ['run', 'h2', '>h2']] },
+      { n: 'Rød styrer blå ud mod siden og venter på chancen.',
+        p: { a2: [35.2, 48.4], h2: [33.8, 50.6] }, b: 'a2',
+        d: [['dribble', 'a2', [37, 50.8], '>a2'], ['run', 'h2', [35.2, 52], '>h2']] },
+      { n: 'Blå får bolden for langt fra foden: rød tackler og vinder den. Bagefter må rød selv angribe linjen i den anden ende.',
+        p: { a2: [37.6, 53], h2: [36.2, 54.2] }, b: [36, 55.6] },
+    ] },
+  { id: 'makkerpar', cat: 'forsvar', lv: ['ungdom', 'senior'], age: 'U12+', title: 'Første og anden forsvarer',
+    players: '4 spillere ad gangen', area: '20 × 25 m', time: '12 min',
+    goal: 'Forsvare som makkerpar: én presser bolden, den anden dækker bagved – og I bytter roller, når bolden flytter sig.',
+    setup: 'En bane på 20 × 25 m med to små mål i hver ende. Blå angriber med to mod et rødt makkerpar.',
+    points: ['Første forsvarer: pres bolden, og luk vejen frem', 'Anden forsvarer: 3–5 m skråt bagved, så makkeren er dækket', 'Byt roller, mens bolden er på vej'],
+    vary: ['Lettere: angriberne må kun spille én pasning', 'Sværere: 3 mod 2 – rød forsvarer i undertal'],
+    view: [20, 36.5, 48, 68.5],
+    items: [...coneRect(24, 40, 44, 65), ['minigoal', 28, 65, 180], ['minigoal', 40, 65, 180], ['minigoal', 28, 40, 0], ['minigoal', 40, 40, 0]],
+    frames: [
+      { n: 'Blå angriber de nederste mål. Rød 1 går på bolden (første forsvarer), rød 2 dækker skråt bagved (anden forsvarer).',
+        p: { h2: [30, 58], h3: [38, 59], a2: [29, 47], a3: [39, 46.4] }, b: 'a2',
+        d: [['run', 'h2', '>h2'], ['run', 'h3', '>h3']] },
+      { n: 'Blå spiller over til makkeren. Mens bolden ruller, bytter rød roller.',
+        p: { h2: [29.6, 50.6], h3: [33.4, 54.6] }, b: 'a2',
+        d: [['pass', 'a2', 'a3'], ['run', 'h3', [36.4, 52.2], '>h3'], ['run', 'h2', [30.6, 54.6], '>h2']] },
+      { n: 'Nu er rød 2 første forsvarer og rød 1 anden. Vinder rød bolden, angriber rød de øverste mål.',
+        p: { h3: [38.6, 50.2], h2: [35.2, 57] }, b: 'a3',
+        d: [['dribble', 'a3', [40.8, 49.6], [41.4, 52.4]], ['run', 'h3', [39.8, 52.8]]] },
+    ] },
+  { id: 'forskydning', cat: 'forsvar', lv: ['ungdom', 'senior'], age: 'U14+', title: 'Forskydning i firerkæden',
+    players: '9 spillere + målmand', area: 'Egen halvdel', time: '15 min', classic: true,
+    goal: 'Bagkæden flytter sig som en enhed efter bolden og holder korte afstande.',
+    setup: 'Fire forsvarere og en målmand mod fem angribere, som spiller bolden rundt foran kæden og prøver at spille i dybden.',
+    points: ['Den nærmeste går på bolden, resten skubber over og dækker', 'Højst 10–15 m mellem forsvarerne', 'Flyt jer, mens bolden er i luften'],
+    vary: ['Lettere: angriberne må kun spille på tværs', 'Sværere: angriberne må løbe i dybden og afslutte'],
+    view: [-4.9, 60, 72.9, 109.9],
+    frames: [
+      { n: 'Bolden er i venstre side. Venstre back går på, midterforsvarerne skubber over, og højre back lukker ind mod midten.',
+        p: { h1: [34, 102.6], h2: [10.4, 80.6], h3: [21.4, 86.6], h4: [33.2, 88.2], h5: [45.6, 87.4],
+          a2: [7.6, 74.4], a3: [22, 70.6], a4: [44, 69.4], a5: [60, 73], a6: [33, 79.6] }, b: 'a2',
+        d: [['pass', 'a2', 'a3']] },
+      { n: 'Bolden kommer ind i midten. Kæden retter sig ind efter bolden.',
+        p: { h2: [14.4, 85], h3: [26.4, 86.8], h4: [38, 87.4], h5: [50, 85.6] }, b: 'a3',
+        d: [['pass', 'a3', 'a5']] },
+      { n: 'Spillet vendes. Hele kæden skubber over, mens bolden er i luften: højre back går på, og venstre back lukker ind.',
+        p: { h5: [57.6, 80.2], h4: [46.6, 86.6], h3: [34.8, 88.2], h2: [23.4, 87.2] }, b: 'a5',
+        d: [['pass', 'a5', 'a6']] },
+      { n: 'Bolden spilles ind til angriberen: den nærmeste midterforsvarer går tæt på, og de andre dækker bagved.',
+        p: { h3: [33.4, 83.4], h4: [42, 87.6], h2: [25, 88.6], h5: [53.6, 85] }, b: 'a6' },
+    ] },
+
+  /* ---- Omstilling ---- */
+  { id: 'genpres', cat: 'omstilling', lv: ['ungdom', 'senior'], age: 'U13+', title: 'Genpres efter boldtab',
+    players: '10 spillere', area: '25 × 30 m', time: '4 × 4 min',
+    goal: 'Vinde bolden tilbage med det samme efter et boldtab.',
+    setup: 'To hold á fem på en bane på 25 × 30 m. Mister et hold bolden, har det 6 sekunder til at vinde den tilbage. Lykkes det, giver det et point.',
+    points: ['Den nærmeste går straks på bolden', 'De næste lukker afleveringerne tæt på bolden', 'Når bolden er vundet: spil hurtigt fremad'],
+    vary: ['Lettere: én spiller mere i genpresset', 'Sværere: holdet, der erobrer bolden, scorer ved at drible over en endelinje'],
+    view: [17.5, 33.5, 50.5, 71.5],
+    items: coneRect(21.5, 37.5, 46.5, 67.5, CONE.orange, 1, 2),
+    frames: [
+      { n: 'Rød har bolden, men pasningen bliver opsnappet af blå.',
+        p: { h2: [25.6, 53.6], h3: [33.4, 43.6], h4: [38, 49.2], h5: [42, 58.4], h6: [27.4, 62.4],
+          a2: [31.6, 51.2], a3: [26.2, 45], a4: [41.8, 44], a5: [36.8, 60], a6: [29.8, 58.6] }, b: 'h2',
+        d: [['pass', 'h2', 'a2']] },
+      { n: 'Rød presser med det samme: den nærmeste går på bolden, og de andre lukker afleveringerne.',
+        p: {}, b: 'a2',
+        d: [['run', 'h4', [34.8, 50.2], '>h4'], ['run', 'h2', [28, 52.6], '>h2'], ['run', 'h3', '>h3'], ['run', 'h6', '>h6'], ['run', 'h5', '>h5']] },
+      { n: 'Bolden er vundet tilbage inden for 6 sekunder. Rød spiller med det samme frem igen.',
+        p: { h4: [33.6, 50.6], h2: [29.6, 52.2], h3: [28.6, 46.6], h6: [29.6, 56.2], h5: [38.6, 58.4] }, b: 'h4',
+        d: [['pass', 'h4', 'h3']] },
+    ] },
+  { id: 'kontra-3-mod-2', cat: 'omstilling', lv: ['ungdom', 'senior'], age: 'U12+', title: 'Kontra 3 mod 2',
+    players: '5 spillere + målmand', area: 'Halv bane', time: '15 min', classic: true,
+    goal: 'Udnytte et overtal i en kontra: fart fremad, bredde og afslutning, før forsvaret er på plads.',
+    setup: 'Tre angribere starter ved midterlinjen og to forsvarere ved feltets kant. Målmand i målet.',
+    points: ['Den midterste driver bolden i fart, og kanterne løber bredt og fremad', 'Spil ud, når en forsvarer går på bolden', 'Angriberne ankommer forskudt foran mål'],
+    vary: ['Lettere: forsvarerne starter længere tilbage', 'Sværere: en tredje forsvarer starter bagfra (3 mod 3), eller kun 10 sekunder til at afslutte'],
+    view: [3, -4.9, 65, 56],
+    frames: [
+      { n: 'Rød har vundet bolden ved midterlinjen. Midterspilleren driver frem i fart, og kanterne løber bredt og fremad.',
+        p: { h10: [34, 52], h9: [13, 50], h11: [55, 50], a1: [34, 1.4], a2: [28, 30], a3: [40, 30] }, b: 'h10',
+        d: [['dribble', 'h10', [34.4, 44], '>h10'], ['run', 'h9', [14, 40], '>h9'], ['run', 'h11', [54, 40], '>h11'], ['run', 'a2', '>a2'], ['run', 'a3', '>a3']] },
+      { n: 'Den ene forsvarer går på bolden. Så er kanten fri: spil ud i løbet.',
+        p: { h10: [34, 36], h9: [18, 30], h11: [50, 30], a2: [29.4, 25], a3: [38.6, 25] }, b: 'h10',
+        d: [['run', 'a3', '>a3'], ['pass', 'h10', '>h11'], ['run', 'h11', '>h11']] },
+      { n: 'Kanten tager bolden med mod feltet. De to andre løber mod mål og ankommer forskudt.',
+        p: { a3: [35.4, 32.4], h11: [49, 22] }, b: 'h11',
+        d: [['dribble', 'h11', [48, 16], '>h11'], ['run', 'h10', [35, 24], '>h10'], ['run', 'h9', [22, 20], '>h9'], ['run', 'a2', '>a2'], ['run', 'a3', '>a3']] },
+      { n: 'Spil bolden på tværs foran mål til den frie angriber.',
+        p: { h11: [46, 11.6], h10: [36.6, 8.8], h9: [29.4, 13.4], a2: [34.6, 10.4], a3: [40.6, 19], a1: [37.2, 2.2] }, b: 'h11',
+        d: [['pass', 'h11', 'h9']] },
+      { n: 'Afslut på første berøring. Næste kontra starter med det samme fra den anden side.',
+        p: { a1: [35.2, 2.2] }, b: 'h9',
+        d: [['shot', 'h9', [31, 0]]] },
+    ] },
+
+  /* ---- Opbygning ---- */
+  { id: 'opbygning', cat: 'opbygning', lv: ['ungdom', 'senior'], age: 'U13+', title: 'Opbygning fra målmanden 6 mod 3',
+    players: '9 spillere + målmand', area: 'Egen tredjedel', time: '15 min', classic: true,
+    goal: 'Spille sig ud fra eget forsvarsområde mod et højt pres.',
+    setup: 'Målmand, fire forsvarere og en defensiv midtbanespiller mod tre angribere. Rød scorer ved at spille eller drible gennem en af tre porte. Vinder blå bolden, angriber blå målet.',
+    points: ['Midterforsvarerne går bredt og backerne højt', 'Spil væk fra presset – den frie spiller er ofte backen', 'Midtbanespilleren skal hele tiden være en mulighed'],
+    vary: ['Lettere: blå presser med to', 'Sværere: blå presser med fire, eller målmanden må kun bruge én berøring'],
+    view: [-4.9, 60, 72.9, 109.9],
+    items: [...gate(9, 66, 6, 'h', CONE.gul), ...gate(34, 66, 6, 'h', CONE.gul), ...gate(59, 66, 6, 'h', CONE.gul)],
+    frames: [
+      { n: 'Målmanden har bolden. Midterforsvarerne går bredt, backerne højt, og midtbanespilleren tilbyder sig. Blå presser med tre.',
+        p: { h1: [34, 101.6], h3: [20, 96], h4: [48, 96], h2: [6, 82], h5: [62, 82], h7: [34, 85], a2: [27, 89.6], a3: [41, 89.6], a4: [34, 79] }, b: 'h1',
+        d: [['pass', 'h1', 'h4'], ['run', 'a3', [45, 92], '>a3']] },
+      { n: 'Blå presser midterforsvareren. Så er backen fri: spil ud til siden.',
+        p: { a3: [45.4, 92.8], a4: [38.4, 83.6] }, b: 'h4',
+        d: [['pass', 'h4', 'h5'], ['run', 'a2', '>a2']] },
+      { n: 'Backen tager bolden med frem gennem porten – eller spiller ind til midtbanespilleren, hvis der er plads.',
+        p: { a2: [33.4, 93.4] }, b: 'h5',
+        d: [['dribble', 'h5', [62.6, 74], '>h5'], ['run', 'h7', [40, 79.6], '>h7'], ['run', 'a3', '>a3'], ['run', 'a4', '>a4']] },
+      { n: 'Point for at komme gennem en port. Vinder blå bolden, angriber blå målet med det samme.',
+        p: { h5: [60.4, 63.6], h7: [44.6, 76], a3: [52.4, 86], a4: [47, 77.6] }, b: 'h5' },
+    ] },
+];
+const drillById = id => DRILLS.find(d => d.id === id) || null;
+
+// Bygger øvelsens tavle: kun de spillere, der er med, øvelsens numre, udstyr, zoom og trin.
+function drillBoard(dr) {
+  const b = newBoard({ format: '11', name: dr.title });
+  const ids = Object.keys(dr.frames[0].p);
+  const poss = [];
+  let cur = b.frames[0].pos;
+  for (const fr of dr.frames) {
+    cur = clone(cur);
+    for (const [id, [x, y]] of Object.entries(fr.p || {})) cur[id] = { x, y };
+    poss.push(cur);
+  }
+  const pt = (s, i) => {
+    if (Array.isArray(s)) return { x: s[0], y: s[1] };
+    const q = s[0] === '>' ? poss[i + 1][s.slice(1)] : poss[i][s];
+    return { x: q.x, y: q.y };
+  };
+  const draw = (spec, i) => {
+    const [type, ...pts] = spec;
+    return { id: uid(), type: type === 'shot' ? 'pass' : type, color: DRILL_INK[type], pts: pts.map(s => pt(s, i)) };
+  };
+  b.frames = dr.frames.map((fr, i) => {
+    let ball;
+    if (Array.isArray(fr.b)) ball = { x: fr.b[0], y: fr.b[1] };
+    else {
+      // Bolden ligger lige foran spilleren, i retning af den pasning, det skud eller den dribling, spilleren laver.
+      const q = poss[i][fr.b], lead = (fr.d || []).find(s => s[1] === fr.b && ['pass', 'dribble', 'shot'].includes(s[0]));
+      const k = clamp(.036 * Math.max(dr.view[2] - dr.view[0], dr.view[3] - dr.view[1]), 1.1, 3);
+      let dx = 0, dy = fr.b[0] === 'a' ? 1 : -1;
+      if (lead) { const t = pt(lead[2], i), L = Math.hypot(t.x - q.x, t.y - q.y); if (L > .01) { dx = (t.x - q.x) / L; dy = (t.y - q.y) / L; } }
+      ball = { x: q.x + dx * k, y: q.y + dy * k };
+    }
+    return { note: fr.n, pos: poss[i], ball: { x: round2(ball.x), y: round2(ball.y) },
+      drawings: [...(dr.marks || []), ...(fr.d || [])].map(s => draw(s, i)) };
+  });
+  b.off = [...b.home, ...b.away].map(p => p.id).filter(id => !ids.includes(id));
+  b.neutral = (dr.neutral || []).slice();
+  b.showAway = ids.some(id => id[0] === 'a');
+  b.items = (dr.items || []).map(([type, x, y, z]) => ({ id: uid(), type, x, y, rot: isGoalItem({ type }) ? z || 0 : 0, ...(type === 'cone' ? { color: z || CONE.orange } : {}) }));
+  const [x0, y0, x1, y1] = dr.view;
+  b.view = { x0, y0, x1, y1 };
+  b.labels = 'none';
+  b.drill = dr.id;
+  for (const team of dr.classic ? ['away'] : ['home', 'away']) {
+    let n = 0;
+    for (const id of ids) { const p = b[team].find(q => q.id === id); if (p) { p.num = String(++n); p.autoNum = false; } }
+  }
+  return b;
+}
+
 /* ---- Validering af tavler fra lager, fil eller tekst ---- */
 const cleanText = (v, max) => String(v ?? '').replace(/[\u0000-\u001f\u007f]/g, ' ').slice(0, max);
 const cleanNum = v => String(v ?? '').replace(/\D/g, '').slice(0, 2);
@@ -1319,7 +1961,7 @@ function normalizeBoard(o) {
   if (o && o.app === 'taktiktavle' && o.board) o = o.board;
   if (!o || typeof o !== 'object' || (!('format' in o) && !('frames' in o))) throw new Error('Der er ingen tavle i det, du har åbnet.');
   const format = String(o.format);
-  if (!FORMATS[format]) throw new Error('Tavlen har et kampformat, appen ikke kender.');
+  if (!FORMATS[format]) throw new Error('Tavlen er ikke en 11 mod 11-tavle og kan ikke åbnes.');
   const f = FORMATS[format], m = marginFor(f);
   const base = newBoard({ format });
   const b = clone(base);
@@ -1386,6 +2028,19 @@ function normalizeBoard(o) {
     ...(fr.sp ? { sp: true } : {}),
   }));
   if (!b.frames.length) b.frames = [{ note: '', pos: Object.fromEntries(allIds.map((id, i) => [id, { ...fallback[i] }])), ball: { x: f.W / 2, y: f.L / 2 }, drawings: [] }];
+  b.items = (Array.isArray(o.items) ? o.items : []).slice(0, 200).filter(it => it && ITEM_TYPES[it.type] && finite(it.x) && finite(it.y))
+    .map(it => ({ id: validId(it.id) ? it.id : uid(), type: it.type, x: round2(clamp(it.x, -m, f.W + m)), y: round2(clamp(it.y, -m, f.L + m)),
+      rot: finite(it.rot) ? ((Math.round(it.rot) % 360) + 360) % 360 : 0, ...(it.type === 'cone' ? { color: isHex(it.color) ? it.color.toLowerCase() : '#ff8a3d' } : {}) }));
+  const idSet = new Set(allIds), ids2 = v => [...new Set((Array.isArray(v) ? v : []).filter(id => idSet.has(id)))];
+  b.off = ids2(o.off); b.neutral = ids2(o.neutral);
+  const vw = o.view;
+  if (vw && [vw.x0, vw.y0, vw.x1, vw.y1].every(finite)) {
+    const x0 = clamp(Math.min(vw.x0, vw.x1), -m, f.W + m), x1 = clamp(Math.max(vw.x0, vw.x1), -m, f.W + m);
+    const y0 = clamp(Math.min(vw.y0, vw.y1), -m, f.L + m), y1 = clamp(Math.max(vw.y0, vw.y1), -m, f.L + m);
+    b.view = x1 - x0 >= 6 && y1 - y0 >= 6 ? { x0: round2(x0), y0: round2(y0), x1: round2(x1), y1: round2(y1) } : null;
+  }
+  if (['name', 'role', 'none'].includes(o.labels)) b.labels = o.labels;
+  if (typeof o.drill === 'string' && /^[a-z0-9-]{1,40}$/.test(o.drill)) b.drill = o.drill;
   renumber(b, 'home'); renumber(b, 'away');
   b.v = 2;
   return b;
@@ -1415,7 +2070,8 @@ const store = {
    ========================================================= */
 let board;
 const ui = { tool: 'move', ink: '#ffffff', frame: 0, selected: null, highlight: null, labels: 'name', ghost: true,
-  playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false }, simAssist: false, tab: 'hold', side: 'home' };
+  playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false }, simAssist: false, tab: 'hold', side: 'home',
+  itemType: 'cone' };
 const hist = { stack: [], idx: -1 };
 const curFrame = () => board.frames[ui.frame];
 
@@ -1464,15 +2120,18 @@ const boardEl = $('#board'), cv = $('#pitch'), ctx = cv.getContext('2d');
 let view = null;
 let colors = {};
 
-function computeView(cssW, cssH, f, pad = 10) {
+// rect: et udsnit af banen i meter (zoom på et øvelsesområde), ellers hele banen med kant.
+function computeView(cssW, cssH, f, pad = 10, rect = null) {
   const m = marginFor(f);
-  const tw = f.W + 2 * m, tl = f.L + 2 * m;
+  const x0 = rect ? rect.x0 : -m, x1 = rect ? rect.x1 : f.W + m, y0 = rect ? rect.y0 : -m, y1 = rect ? rect.y1 : f.L + m;
+  const tw = x1 - x0, tl = y1 - y0;
   const sv = Math.min((cssW - 2 * pad) / tw, (cssH - 2 * pad) / tl);
   const sh = Math.min((cssW - 2 * pad) / tl, (cssH - 2 * pad) / tw);
   const ori = sh > sv * 1.08 ? 'h' : 'v';
   const s = Math.max(.1, ori === 'v' ? sv : sh);
-  const pw = (ori === 'v' ? f.W : f.L) * s, ph = (ori === 'v' ? f.L : f.W) * s;
-  return { ori, s, ox: (cssW - pw) / 2, oy: (cssH - ph) / 2, W: f.W, L: f.L, m,
+  const ox = ori === 'v' ? (cssW - tw * s) / 2 - x0 * s : (cssW - tl * s) / 2 - (f.L - y1) * s;
+  const oy = ori === 'v' ? (cssH - tl * s) / 2 - y0 * s : (cssH - tw * s) / 2 - x0 * s;
+  return { ori, s, ox, oy, W: f.W, L: f.L, m, rect,
     R: clamp(f.W * s * f.discF, 11, 26), cssW, cssH, labelMax: 14, strokeMax: 4.2 };
 }
 function toScreen(v, x, y) { return v.ori === 'v' ? [v.ox + x * v.s, v.oy + y * v.s] : [v.ox + (v.L - y) * v.s, v.oy + x * v.s]; }
@@ -1491,7 +2150,7 @@ function resize() {
   const dpr = window.devicePixelRatio || 1;
   cv.width = Math.max(1, Math.round(r.width * dpr));
   cv.height = Math.max(1, Math.round(r.height * dpr));
-  view = computeView(r.width, r.height, FORMATS[board.format]);
+  view = computeView(r.width, r.height, FORMATS[board.format], 10, board.view);
   view.dpr = dpr;
   paint();
 }
@@ -1575,15 +2234,53 @@ function rrPath(c, x, y, w, h, r) {
 /* =========================================================
    Tegning af banen
    ========================================================= */
+// Spillerne på banen: uden dem, der ikke er med (board.off, fx i en øvelse).
 function visiblePlayers() {
-  const out = [];
-  if (board.showAway) board.away.forEach(p => out.push({ p, team: 'away' }));
-  board.home.forEach(p => out.push({ p, team: 'home' }));
+  const out = [], off = new Set(board.off || []);
+  if (board.showAway) board.away.forEach(p => { if (!off.has(p.id)) out.push({ p, team: 'away' }); });
+  board.home.forEach(p => { if (!off.has(p.id)) out.push({ p, team: 'home' }); });
   return out;
 }
-function kitFor(p, team) {
+// neutral: id'erne på tavlens jokere (kun når tavlen tegnes; kampvisningen bruger holdenes farver).
+function kitFor(p, team, neutral) {
+  if (neutral && neutral.includes(p.id)) return board.kit.neutral || '#f97316';
   const gk = p.role === 'GK';
   return team === 'home' ? (gk ? board.kit.keeper : board.kit.home) : (gk ? board.kit.awayKeeper : board.kit.away);
+}
+const boardLabels = () => board.labels || ui.labels;
+
+/* ---- Udstyr på banen: kegler, stænger, småmål og mål ---- */
+// Mål: (x, y) er midten af mållinjen; rot (grader) drejer målet, 0 = nettet mod toppen af banen (y aftager).
+const ITEM_TYPES = { cone: { label: 'Kegle' }, pole: { label: 'Stang' }, minigoal: { label: 'Småmål', w: 3, d: 1.1 }, goal: { label: 'Mål', w: 7.32, d: 2 } };
+const isGoalItem = it => it && (it.type === 'goal' || it.type === 'minigoal');
+function itemAxes(it) { const a = (it.rot || 0) * Math.PI / 180; return { ux: Math.cos(a), uy: Math.sin(a), nx: Math.sin(a), ny: -Math.cos(a) }; }
+function goalCorners(it) {
+  const T = ITEM_TYPES[it.type], { ux, uy, nx, ny } = itemAxes(it), hw = T.w / 2;
+  const a = { x: it.x - ux * hw, y: it.y - uy * hw }, b = { x: it.x + ux * hw, y: it.y + uy * hw };
+  return [a, b, { x: b.x + nx * T.d, y: b.y + ny * T.d }, { x: a.x + nx * T.d, y: a.y + ny * T.d }];
+}
+function drawItems(c, v, items, selected) {
+  for (const it of items || []) {
+    const sel = it.id === selected;
+    if (it.type === 'cone' || it.type === 'pole') {
+      const [x, y] = toScreen(v, it.x, it.y), cone = it.type === 'cone';
+      const r = cone ? Math.max(v.thumb ? 2.2 : 5.5, .38 * v.s) : Math.max(v.thumb ? 2 : 5, .26 * v.s), col = cone ? (it.color || '#ff8a3d') : '#ffd43b';
+      if (sel) { c.beginPath(); c.arc(x, y, r + 6, 0, Math.PI * 2); c.fillStyle = 'rgba(255,255,255,.45)'; c.fill(); }
+      c.save(); c.shadowColor = 'rgba(0,0,0,.4)'; c.shadowBlur = r * .7; c.shadowOffsetX = cone ? 0 : r * .9; c.shadowOffsetY = r * .35;
+      c.beginPath(); c.arc(x, y, r, 0, Math.PI * 2); c.fillStyle = col; c.fill(); c.restore();
+      c.lineWidth = Math.max(1, r * (cone ? .16 : .3)); c.strokeStyle = cone && lum(col) < .5 ? 'rgba(255,255,255,.75)' : 'rgba(17,26,20,.6)';
+      c.beginPath(); c.arc(x, y, cone ? r * .42 : r * .55, 0, Math.PI * 2); c.stroke();
+      continue;
+    }
+    const q = goalCorners(it).map(p => toScreen(v, p.x, p.y)), lw = Math.max(1.5, .12 * v.s);
+    c.save(); c.lineJoin = 'round'; c.lineCap = 'round';
+    if (sel) { c.beginPath(); q.forEach((p, i) => c[i ? 'lineTo' : 'moveTo'](p[0], p[1])); c.closePath(); c.lineWidth = lw + 10; c.strokeStyle = 'rgba(255,255,255,.45)'; c.stroke(); }
+    c.beginPath(); q.forEach((p, i) => c[i ? 'lineTo' : 'moveTo'](p[0], p[1])); c.closePath(); c.fillStyle = 'rgba(255,255,255,.2)'; c.fill();
+    c.beginPath(); c.moveTo(q[0][0], q[0][1]); c.lineTo(q[3][0], q[3][1]); c.lineTo(q[2][0], q[2][1]); c.lineTo(q[1][0], q[1][1]);
+    c.lineWidth = Math.max(1, lw * .5); c.strokeStyle = 'rgba(255,255,255,.75)'; c.stroke();
+    c.beginPath(); c.moveTo(q[0][0], q[0][1]); c.lineTo(q[1][0], q[1][1]); c.lineWidth = lw; c.strokeStyle = '#ffffff'; c.stroke();
+    c.restore();
+  }
 }
 
 function drawPitch(c, v, dpr, col, f, fillBg) {
@@ -1613,25 +2310,20 @@ function drawPitch(c, v, dpr, col, f, fillBg) {
   for (const top of [true, false]) {
     const [bw, bd] = mk.box;
     c.strokeRect(W / 2 - bw / 2, top ? 0 : L - bd, bw, bd);
-    if (mk.six) { const [sw, sd] = mk.six; c.strokeRect(W / 2 - sw / 2, top ? 0 : L - sd, sw, sd); }
-    if (mk.spot) dot(W / 2, top ? mk.spot : L - mk.spot, Math.max(.25, 2 / s));
-    if (mk.arc && mk.spot) {
-      const a = Math.asin((bd - mk.spot) / mk.arc);
-      c.beginPath();
-      if (top) c.arc(W / 2, mk.spot, mk.arc, a, Math.PI - a);
-      else c.arc(W / 2, L - mk.spot, mk.arc, Math.PI + a, 2 * Math.PI - a);
-      c.stroke();
-    }
+    const [sw, sd] = mk.six; c.strokeRect(W / 2 - sw / 2, top ? 0 : L - sd, sw, sd);
+    dot(W / 2, top ? mk.spot : L - mk.spot, Math.max(.25, 2 / s));
+    const a = Math.asin((bd - mk.spot) / mk.arc);
+    c.beginPath();
+    if (top) c.arc(W / 2, mk.spot, mk.arc, a, Math.PI - a);
+    else c.arc(W / 2, L - mk.spot, mk.arc, Math.PI + a, 2 * Math.PI - a);
+    c.stroke();
     const g = mk.goal, gd = mk.goalDepth, gy = top ? -gd : L;
     c.save(); c.fillStyle = 'rgba(255,255,255,.18)'; c.fillRect(W / 2 - g / 2, gy, g, gd); c.restore();
     c.strokeRect(W / 2 - g / 2, gy, g, gd);
   }
-  if (mk.corner) {
-    const r = mk.corner;
-    [[0, 0, 0, .5], [W, 0, .5, 1], [0, L, 1.5, 2], [W, L, 1, 1.5]].forEach(([x, y, a0, a1]) => {
-      c.beginPath(); c.arc(x, y, r, a0 * Math.PI, a1 * Math.PI); c.stroke();
-    });
-  }
+  [[0, 0, 0, .5], [W, 0, .5, 1], [0, L, 1.5, 2], [W, L, 1, 1.5]].forEach(([x, y, a0, a1]) => {
+    c.beginPath(); c.arc(x, y, mk.corner, a0 * Math.PI, a1 * Math.PI); c.stroke();
+  });
   c.restore();
   c.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
@@ -1679,7 +2371,7 @@ function drawLabel(c, v, text, x, top) {
 }
 
 function drawPlayer(c, v, x, y, p, team, o) {
-  const kit = kitFor(p, team);
+  const kit = kitFor(p, team, o.neutral);
   const r = o.lifted ? v.R * 1.12 : v.R;
   c.save();
   c.shadowColor = 'rgba(0,0,0,.38)'; c.shadowBlur = o.lifted ? r * .9 : r * .45; c.shadowOffsetY = o.lifted ? r * .35 : r * .14;
@@ -1691,7 +2383,7 @@ function drawPlayer(c, v, x, y, p, team, o) {
   c.lineWidth = lw; c.strokeStyle = lum(kit) > .5 ? 'rgba(17,26,20,.55)' : 'rgba(255,255,255,.92)';
   c.beginPath(); c.arc(x, y, r - lw / 2, 0, Math.PI * 2); c.stroke();
   if (o.highlight) { c.lineWidth = 3; c.strokeStyle = o.accent; c.beginPath(); c.arc(x, y, r + 4.5, 0, Math.PI * 2); c.stroke(); }
-  if (p.num) {
+  if (p.num && !o.noNum) {
     c.fillStyle = inkOn(kit); c.textAlign = 'center'; c.textBaseline = 'middle';
     c.font = `800 ${Math.round(r * (p.num.length > 1 ? 1.02 : 1.12))}px ${DISPLAY_FONT}`;
     c.fillText(p.num, x, y + r * .07);
@@ -1700,8 +2392,8 @@ function drawPlayer(c, v, x, y, p, team, o) {
   if (text) drawLabel(c, v, text, x, y + r + 3);
 }
 
-function drawBall(c, x, y, R, h = 0, s = 1) {
-  let r = Math.max(5.5, R * .42);
+function drawBall(c, x, y, R, h = 0, s = 1, min = 5.5) {
+  let r = Math.max(min, R * .42);
   if (h > .05) {
     // Bolden i luften: skygge på græsset og bolden løftet op og en anelse større.
     c.save(); c.fillStyle = 'rgba(0,0,0,.28)'; c.beginPath(); c.ellipse(x, y, r * .95, r * .55, 0, 0, Math.PI * 2); c.fill(); c.restore();
@@ -1794,7 +2486,7 @@ function drawZones(c, v, zones) {
   }
 }
 
-function drawGhosts(c, v, scene, vis) {
+function drawGhosts(c, v, scene, vis, neutral) {
   for (const { p, team } of vis) {
     const a = scene.ghost[p.id], b = scene.pos[p.id];
     if (!a || !b) continue;
@@ -1803,7 +2495,7 @@ function drawGhosts(c, v, scene, vis) {
     c.save();
     c.setLineDash([3, 4]); c.lineWidth = 1.5; c.strokeStyle = 'rgba(255,255,255,.55)';
     c.beginPath(); c.moveTo(ax, ay); c.lineTo(bx, by); c.stroke(); c.setLineDash([]);
-    c.globalAlpha = .34; c.fillStyle = kitFor(p, team);
+    c.globalAlpha = .34; c.fillStyle = kitFor(p, team, neutral);
     c.beginPath(); c.arc(ax, ay, v.R * .8, 0, Math.PI * 2); c.fill();
     c.globalAlpha = .55; c.lineWidth = 1.5; c.strokeStyle = '#ffffff'; c.stroke();
     c.restore();
@@ -1817,22 +2509,26 @@ function drawScene(c, v, dpr, scene, o) {
   const vis = o.vis || visiblePlayers();
   const centers = vis.map(({ p }) => scene.pos[p.id]).filter(Boolean).map(q => toScreen(v, q.x, q.y));
   if (o.zones) drawZones(c, v, o.zones);
-  if (scene.ghost) drawGhosts(c, v, scene, vis);
+  if (scene.ghost) drawGhosts(c, v, scene, vis, o.neutral);
   const ds = scene.drawings || [];
   c.save();
   c.globalAlpha = scene.drawAlpha ?? 1;
   for (const d of ds) if (d.type === 'zone') drawZone(c, v, d, d.id === o.selected);
-  if (o.preview && o.preview.type === 'zone') drawZone(c, v, o.preview, false);
+  if (o.preview && (o.preview.type === 'zone' || o.preview.type === 'area')) drawZone(c, v, o.preview, false);
+  c.restore();
+  if (o.items) drawItems(c, v, o.items, o.selected);
+  c.save();
+  c.globalAlpha = scene.drawAlpha ?? 1;
   for (const d of ds) if (d.type !== 'zone') drawStroke(c, v, d, centers, d.id === o.selected);
-  if (o.preview && o.preview.type !== 'zone') drawStroke(c, v, o.preview, centers, false);
+  if (o.preview && o.preview.type !== 'zone' && o.preview.type !== 'area') drawStroke(c, v, o.preview, centers, false);
   c.restore();
   const order = o.liftId ? vis.filter(t => t.p.id !== o.liftId).concat(vis.filter(t => t.p.id === o.liftId)) : vis;
   for (const { p, team } of order) {
     const q = scene.pos[p.id]; if (!q) continue;
     const [x, y] = toScreen(v, q.x, q.y);
-    drawPlayer(c, v, x, y, p, team, { lifted: o.liftId === p.id, highlight: o.highlight === p.id, labels: o.labels, accent: o.colors.accent });
+    drawPlayer(c, v, x, y, p, team, { lifted: o.liftId === p.id, highlight: o.highlight === p.id, labels: o.labels, accent: o.colors.accent, neutral: o.neutral, noNum: o.noNum });
   }
-  if (scene.ball) { const [bx, by] = toScreen(v, scene.ball.x, scene.ball.y); drawBall(c, bx, by, v.R, scene.ballH || 0, v.s); }
+  if (scene.ball) { const [bx, by] = toScreen(v, scene.ball.x, scene.ball.y); drawBall(c, bx, by, v.R, scene.ballH || 0, v.s, v.thumb ? 2.6 : 5.5); }
 }
 
 function lerpPos(a, b, t) {
@@ -1863,7 +2559,7 @@ function paint(sceneOverride) {
   ctx.clearRect(0, 0, cv.width, cv.height);
   const dr = ui.drag;
   drawScene(ctx, view, view.dpr, sceneOverride || currentScene(), {
-    colors, labels: ui.labels, selected: ui.selected, highlight: ui.highlight, fillBg: true,
+    colors, labels: boardLabels(), selected: ui.selected, highlight: ui.highlight, fillBg: true, items: board.items, neutral: board.neutral,
     liftId: dr && dr.moved && dr.kind === 'player' ? dr.id : null,
     preview: dr && dr.kind === 'draw' ? dr.d : null,
     zones: ui.showZones ? zoneAnalysis(sceneOverride ? sceneOverride.pos : curFrame().pos) : null,
@@ -1903,11 +2599,20 @@ function hitTest(sx, sy) {
     if (d <= Math.max(R + 5, 22) && d < bd) { bd = d; best = { kind: 'player', id: p.id, team }; }
   }
   if (best) return best;
+  const items = board.items || [];
+  for (let i = items.length - 1; i >= 0; i--) if (hitItem(items[i], sx, sy)) return { kind: 'item', id: items[i].id };
   const ds = fr.drawings;
   for (let i = ds.length - 1; i >= 0; i--) if (ds[i].type !== 'zone' && hitDrawing(ds[i], sx, sy)) return { kind: 'drawing', id: ds[i].id };
   for (let i = ds.length - 1; i >= 0; i--) if (ds[i].type === 'zone' && hitDrawing(ds[i], sx, sy)) return { kind: 'drawing', id: ds[i].id };
   return null;
 }
+function hitItem(it, sx, sy) {
+  if (!isGoalItem(it)) { const [x, y] = toScreen(view, it.x, it.y); return Math.hypot(sx - x, sy - y) <= Math.max(14, .55 * view.s); }
+  const [px, py] = toPitch(view, sx, sy), { ux, uy, nx, ny } = itemAxes(it), T = ITEM_TYPES[it.type], pad = 10 / view.s;
+  const dx = px - it.x, dy = py - it.y, along = dx * ux + dy * uy, depth = dx * nx + dy * ny;
+  return Math.abs(along) <= T.w / 2 + pad && depth >= -pad && depth <= T.d + pad;
+}
+const selectedItem = () => (board.items || []).find(x => x.id === ui.selected) || null;
 function nearestPlayerId(sx, sy, maxD) {
   const fr = curFrame(); let best = null, bd = maxD;
   for (const { p } of visiblePlayers()) {
@@ -1935,6 +2640,10 @@ function onDown(e) {
       ui.drag = { kind: hit.kind, id: hit.id, team: hit.team, pid: e.pointerId, sx, sy, slop, t: performance.now(), moved: false, dx: q.x - px, dy: q.y - py };
       ui.selected = null;
       cv.style.cursor = 'grabbing';
+    } else if (hit && hit.kind === 'item') {
+      const it = board.items.find(x => x.id === hit.id);
+      ui.selected = hit.id;
+      ui.drag = { kind: 'item', id: hit.id, pid: e.pointerId, sx, sy, slop, moved: false, dx: it.x - px, dy: it.y - py };
     } else if (hit && hit.kind === 'drawing') {
       ui.selected = hit.id;
       ui.drag = { kind: 'drawing', id: hit.id, pid: e.pointerId, sx, sy, slop, moved: false, lx: px, ly: py };
@@ -1944,14 +2653,24 @@ function onDown(e) {
     updateToolbar(); render();
     return;
   }
+  if (ui.tool === 'item') {
+    // Udstyret sættes, hvor man trykker, og kan trækkes på plads, før man slipper.
+    const [px, py] = toPitch(view, sx, sy), t = ui.itemType || 'cone';
+    const it = { id: uid(), type: t, x: round2(px), y: round2(py), rot: ITEM_TYPES[t].w ? (py < view.L / 2 ? 0 : 180) : 0, ...(t === 'cone' ? { color: ui.ink } : {}) };
+    board.items.push(it);
+    ui.selected = it.id;
+    ui.drag = { kind: 'item', id: it.id, pid: e.pointerId, sx, sy, slop, moved: true, dx: 0, dy: 0 };
+    updateToolbar(); render();
+    return;
+  }
   let [px, py] = toPitch(view, sx, sy);
   if (ui.tool === 'run' || ui.tool === 'pass' || ui.tool === 'dribble') {
     const id = nearestPlayerId(sx, sy, Math.max(view.R + 5, 22));
     if (id) { px = fr.pos[id].x; py = fr.pos[id].y; }
   }
   const start = { x: px, y: py };
-  const pts = ui.tool === 'pass' || ui.tool === 'zone' ? [start, { ...start }] : [start];
-  ui.drag = { kind: 'draw', pid: e.pointerId, sx, sy, slop: 0, moved: false, last: [sx, sy], d: { id: uid(), type: ui.tool, color: ui.ink, pts } };
+  const pts = ui.tool === 'pass' || ui.tool === 'zone' || ui.tool === 'area' ? [start, { ...start }] : [start];
+  ui.drag = { kind: 'draw', pid: e.pointerId, sx, sy, slop: 0, moved: false, last: [sx, sy], d: { id: uid(), type: ui.tool, color: ui.tool === 'area' ? '#ffffff' : ui.ink, pts } };
   if (ui.selected) { ui.selected = null; updateToolbar(); }
   render();
 }
@@ -1970,6 +2689,9 @@ function onMove(e) {
     const lim = view.m * .85;
     q.x = round2(clamp(px + dr.dx, -lim, view.W + lim));
     q.y = round2(clamp(py + dr.dy, -lim, view.L + lim));
+  } else if (dr.kind === 'item') {
+    const [px, py] = toPitch(view, sx, sy), it = board.items.find(x => x.id === dr.id), lim = view.m * .85;
+    if (it) { it.x = round2(clamp(px + dr.dx, -lim, view.W + lim)); it.y = round2(clamp(py + dr.dy, -lim, view.L + lim)); }
   } else if (dr.kind === 'drawing') {
     const [px, py] = toPitch(view, sx, sy);
     const d = fr.drawings.find(x => x.id === dr.id);
@@ -1977,7 +2699,7 @@ function onMove(e) {
     dr.lx = px; dr.ly = py;
   } else if (dr.kind === 'draw') {
     const d = dr.d;
-    if (d.type === 'pass' || d.type === 'zone') {
+    if (d.type === 'pass' || d.type === 'zone' || d.type === 'area') {
       const [px, py] = toPitch(view, sx, sy); d.pts[1] = { x: px, y: py };
     } else {
       const evs = typeof e.getCoalescedEvents === 'function' ? e.getCoalescedEvents() : [];
@@ -2002,11 +2724,11 @@ function onUp(e) {
   if (dr.kind === 'player') {
     if (!dr.moved && performance.now() - dr.t < 700) openPlayerEditor(dr.team, dr.id);
     else if (dr.moved) { commit(); markHintSeen(); }
-  } else if (dr.kind === 'ball' || dr.kind === 'drawing') {
+  } else if (dr.kind === 'ball' || dr.kind === 'drawing' || dr.kind === 'item') {
     if (dr.moved) commit();
   } else if (dr.kind === 'draw') {
     const d = dr.d;
-    if (d.type !== 'pass' && d.type !== 'zone') {
+    if (d.type !== 'pass' && d.type !== 'zone' && d.type !== 'area') {
       const [sx, sy] = local(e);
       if (Math.hypot(sx - dr.last[0], sy - dr.last[1]) >= 1) { const [px, py] = toPitch(view, sx, sy); d.pts.push({ x: px, y: py }); }
     }
@@ -2026,6 +2748,7 @@ function finishDrawing(d) {
   const sp = d.pts.map(p => toScreen(view, p.x, p.y));
   const xs = sp.map(p => p[0]), ys = sp.map(p => p[1]);
   if (Math.hypot(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys)) < 12) return false;
+  if (d.type === 'area') { setView(d.pts[0], d.pts[d.pts.length - 1]); return true; }
   if (d.type === 'pass' || d.type === 'zone') d.pts = [d.pts[0], d.pts[d.pts.length - 1]];
   else d.pts = simplify(d.pts, .22).slice(0, 300);
   if (d.type === 'pass') {
@@ -2039,12 +2762,23 @@ function finishDrawing(d) {
   return true;
 }
 
+// Zoom på et udsnit af banen (mindst 10 × 10 m). null = hele banen.
+function setView(a, b) {
+  if (!a) board.view = null;
+  else {
+    const f = FORMATS[board.format], m = marginFor(f), cx = (a.x + b.x) / 2, cy = (a.y + b.y) / 2;
+    const w = Math.max(10, Math.abs(b.x - a.x)), h = Math.max(10, Math.abs(b.y - a.y));
+    board.view = { x0: round2(clamp(cx - w / 2, -m, f.W + m)), y0: round2(clamp(cy - h / 2, -m, f.L + m)), x1: round2(clamp(cx + w / 2, -m, f.W + m)), y1: round2(clamp(cy + h / 2, -m, f.L + m)) };
+  }
+  commit(); resize(); updateToolbar();
+  if (a) setTool('move');
+}
 function updateCursor(e) {
   if (ui.playing) { cv.style.cursor = 'pointer'; return; }
   if (ui.tool !== 'move') { cv.style.cursor = 'crosshair'; return; }
   const [sx, sy] = local(e);
   const hit = view && hitTest(sx, sy);
-  cv.style.cursor = !hit ? 'default' : hit.kind === 'drawing' ? 'move' : 'grab';
+  cv.style.cursor = !hit ? 'default' : hit.kind === 'drawing' || hit.kind === 'item' ? 'move' : 'grab';
 }
 
 cv.addEventListener('pointerdown', onDown);
@@ -2124,37 +2858,6 @@ function applyFormation(team, name, style) {
   commit(); renderPanel(); renderSteps(); render();
 }
 
-function changeFormat(format) {
-  if (ui.playing) stopPlay();
-  const old = board;
-  const nb = newBoard({ format, name: old.name, homeStyle: old.homeStyle || 'normal', awayStyle: old.awayStyle || 'normal' });
-  nb.id = old.id; nb.kit = { ...old.kit }; nb.showAway = old.showAway;
-  nb.logos = { ...old.logos }; nb.logoOpacity = old.logoOpacity;
-  nb.tactics = clone(old.tactics); nb.teamNames = { ...old.teamNames };
-  nb.bench = old.bench.map(b => ({ ...b }));
-  // Spillerne fordeles efter plads (i procent af banen), så fx angriberen også er angriber på den mindre bane.
-  const fo = FORMATS[old.format], fn = FORMATS[format];
-  const oldSlots = layoutFor(old.format, old.homeFormation).map(s => ({ x: s.x / fo.W, y: s.y / fo.L }));
-  const newSlots = layoutFor(format, nb.homeFormation).map(s => ({ x: s.x / fn.W, y: s.y / fn.L }));
-  const rows = old.home.length - 1, cols = nb.home.length - 1, n = Math.max(rows, cols);
-  const cost = Array.from({ length: n }, (_, r) => Array.from({ length: n }, (_, c) => {
-    if (r >= rows || c >= cols) return 0;
-    const a = oldSlots[r + 1], b = newSlots[c + 1];
-    return (a.x - b.x) ** 2 + (a.y - b.y) ** 2;
-  }));
-  const match = hungarian(cost);
-  const fromOld = new Array(nb.home.length).fill(-1);
-  fromOld[0] = 0;
-  for (let r = 0; r < rows; r++) {
-    if (match[r] < cols) fromOld[match[r] + 1] = r + 1;
-    else if (old.home[r + 1].name.trim()) nb.bench.push({ id: uid(), num: old.home[r + 1].num, name: old.home[r + 1].name, attrs: cleanAttrs(old.home[r + 1].attrs) });
-  }
-  nb.home.forEach((p, i) => { const o = old.home[fromOld[i]]; if (o) { p.num = o.num; p.name = o.name; p.autoNum = !!o.autoNum; p.attrs = cleanAttrs(o.attrs); } });
-  renumber(nb, 'home');
-  board = nb; ui.frame = 0; ui.selected = null; ui.anim = null;
-  commit(); refreshAll();
-}
-
 function addStep() {
   if (ui.playing) return;
   const fr = curFrame();
@@ -2218,7 +2921,7 @@ function stopPlay() {
 /* =========================================================
    Brugerflade
    ========================================================= */
-const toolbarEl = $('#toolbar'), inkPop = $('#inkPop');
+const toolbarEl = $('#toolbar'), inkPop = $('#inkPop'), itemPop = $('#itemPop');
 const hintEl = $('#hint'), noteInput = $('#stepNote'), nameInput = $('#boardName');
 const panel = $('#panel');
 
@@ -2230,9 +2933,13 @@ function buildToolbar() {
   toolbarEl.innerHTML = `${tools}<span class="tool-sep" aria-hidden="true"></span>
     <div class="ink-inline" role="group" aria-label="Stregfarve">${inks}</div>
     <button type="button" class="tool ink-btn" id="inkBtn" aria-label="Stregfarve" aria-haspopup="true" aria-expanded="false"><span class="ink-dot" style="--c:#ffffff"></span><span class="lbl">Stregfarve</span></button>
+    <button type="button" class="tool item-btn" id="itemBtn" aria-label="Vælg udstyr" aria-haspopup="true" aria-expanded="false"><span id="itemBtnIcon">${ic('cone')}</span><span class="lbl" id="itemBtnLbl">Kegle</span></button>
     <span class="spacer"></span>
+    <button type="button" class="tool" id="rotBtn" aria-label="Drej målet 45 grader" title="Drej målet (R)" hidden>${ic('rotate')}<span class="lbl">Drej</span></button>
+    <button type="button" class="tool" id="fullBtn" aria-label="Zoom ud til hele banen" title="Hele banen" hidden>${ic('full')}<span class="lbl">Hele banen</span></button>
     <button type="button" class="tool" id="delBtn" aria-pressed="false">${ic('trash')}<span class="lbl" id="delLbl">Slet</span></button>`;
   inkPop.innerHTML = inks;
+  itemPop.innerHTML = Object.entries(ITEM_TYPES).map(([k, t]) => `<button type="button" class="tool item-choice" data-itemtype="${k}" aria-pressed="false" title="${t.label}">${ic(k)}<span>${t.label}</span></button>`).join('');
 }
 function updateToolbar() {
   toolbarEl.querySelectorAll('[data-tool]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.tool === ui.tool)); b.disabled = ui.playing; });
@@ -2240,8 +2947,14 @@ function updateToolbar() {
   const inkBtn = $('#inkBtn');
   inkBtn.querySelector('.ink-dot').style.setProperty('--c', ui.ink);
   inkBtn.disabled = ui.playing;
+  const t = ui.itemType || 'cone';
+  $('#itemBtnIcon').innerHTML = ic(t); $('#itemBtnLbl').textContent = ITEM_TYPES[t].label; $('#itemBtn').disabled = ui.playing;
+  itemPop.querySelectorAll('[data-itemtype]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.itemtype === t)));
+  const sit = selectedItem();
+  $('#rotBtn').hidden = !isGoalItem(sit);
+  $('#fullBtn').hidden = !board.view;
   const fr = curFrame(), del = $('#delBtn'), lbl = $('#delLbl');
-  if (ui.selected) { lbl.textContent = 'Slet valgt'; del.setAttribute('aria-label', 'Slet den valgte tegning'); del.disabled = ui.playing; }
+  if (ui.selected) { lbl.textContent = 'Slet valgt'; del.setAttribute('aria-label', sit ? 'Slet det valgte udstyr' : 'Slet den valgte tegning'); del.disabled = ui.playing; }
   else { lbl.textContent = 'Ryd trin'; del.setAttribute('aria-label', 'Slet alle tegninger i dette trin'); del.disabled = ui.playing || !fr.drawings.length; }
   del.title = del.getAttribute('aria-label');
 }
@@ -2256,7 +2969,10 @@ function setTool(id) {
 function deleteAction() {
   if (ui.playing) return;
   const fr = curFrame();
-  if (ui.selected) {
+  if (ui.selected && selectedItem()) {
+    board.items = board.items.filter(x => x.id !== ui.selected); ui.selected = null;
+    commit(); toast('Udstyret er fjernet.', { label: 'Fortryd', fn: undo });
+  } else if (ui.selected) {
     fr.drawings = fr.drawings.filter(d => d.id !== ui.selected); ui.selected = null;
     commit(); toast('Tegningen er slettet.', { label: 'Fortryd', fn: undo });
   } else if (fr.drawings.length) {
@@ -2269,12 +2985,38 @@ toolbarEl.addEventListener('click', e => {
   const t = e.target.closest('[data-tool]'); if (t) { setTool(t.dataset.tool); return; }
   const k = e.target.closest('[data-ink]'); if (k) { setInk(k.dataset.ink); return; }
   if (e.target.closest('#inkBtn')) { toggleInkPop(); return; }
+  if (e.target.closest('#itemBtn')) { togglePop(itemPop, $('#itemBtn')); return; }
+  if (e.target.closest('#rotBtn')) { rotateSelected(); return; }
+  if (e.target.closest('#fullBtn')) { setView(null); return; }
   if (e.target.closest('#delBtn')) deleteAction();
 });
+function rotateSelected() {
+  const it = selectedItem(); if (!isGoalItem(it) || ui.playing) return;
+  it.rot = ((it.rot || 0) + 45) % 360;
+  commit(); render();
+}
+itemPop.addEventListener('click', e => {
+  const b = e.target.closest('[data-itemtype]'); if (!b) return;
+  ui.itemType = b.dataset.itemtype; closePop(itemPop, $('#itemBtn'));
+  if (ui.tool !== 'item') setTool('item'); else updateToolbar();
+});
+function togglePop(pop, btn) {
+  if (!pop.hidden) { closePop(pop, btn); return; }
+  closeInkPop(); closePop(itemPop, $('#itemBtn'));
+  pop.hidden = false;
+  const r = btn.getBoundingClientRect(), w = pop.offsetWidth;
+  pop.style.left = clamp(r.left + r.width / 2 - w / 2, 8, window.innerWidth - w - 8) + 'px';
+  pop.style.top = (r.bottom + 6) + 'px';
+  btn.setAttribute('aria-expanded', 'true');
+}
+function closePop(pop, btn) { if (pop.hidden) return; pop.hidden = true; if (btn) btn.setAttribute('aria-expanded', 'false'); }
+document.addEventListener('pointerdown', e => { if (!itemPop.hidden && !e.target.closest('#itemPop, #itemBtn')) closePop(itemPop, $('#itemBtn')); });
 function setInk(c) {
   ui.ink = c; savePrefs(); closeInkPop();
   const fr = curFrame();
-  if (ui.selected) { const d = fr.drawings.find(x => x.id === ui.selected); if (d && d.color !== c) { d.color = c; commit(); } }
+  const sit = selectedItem();
+  if (sit) { if (sit.type === 'cone' && sit.color !== c) { sit.color = c; commit(); } }
+  else if (ui.selected) { const d = fr.drawings.find(x => x.id === ui.selected); if (d && d.color !== c) { d.color = c; commit(); } }
   else if (ui.tool === 'move') setTool('run');
   updateToolbar(); render();
 }
@@ -2317,9 +3059,9 @@ function formationText(b, team) {
   return b[team + 'Formation'] + (st !== 'normal' ? ' ' + STYLES[st].toLowerCase() : '');
 }
 function describeBoard() {
-  const f = FORMATS[board.format], fr = curFrame();
+  const fr = curFrame();
   const who = board.showAway ? `${formationText(board, 'home')} mod ${formationText(board, 'away')}` : formationText(board, 'home');
-  return `Fodboldbane, ${f.label}, ${who}, trin ${ui.frame + 1} af ${board.frames.length}${fr.note ? '. ' + fr.note : ''}`;
+  return `Fodboldbane, ${who}, trin ${ui.frame + 1} af ${board.frames.length}${fr.note ? '. ' + fr.note : ''}`;
 }
 function renderSteps() {
   const n = board.frames.length, i = ui.frame;
@@ -2363,12 +3105,14 @@ const avgAttr = p => ATTRS.reduce((a, x) => a + attrOf(p, x.k), 0) / ATTRS.lengt
 const fmt1 = v => v.toFixed(1).replace('.', ',');
 // Én række pr. spiller: nummer, rolle, navn og niveau. Et tryk åbner spillerkortet.
 function rosterRow(p, team) {
-  const kit = team === 'away' ? kitFor(p, 'away') : kitFor(p, 'home'), name = p.name.trim(), lvl = avgAttr(p);
+  const kit = kitFor(p, team === 'away' ? 'away' : 'home', board.neutral), name = p.name.trim(), lvl = avgAttr(p);
   const who = name || (team === 'bench' ? 'udskifter' : roleName(p.role));
-  return `<li><button type="button" class="prow" data-edit="${team}" data-id="${esc(p.id)}" aria-label="Nr. ${esc(p.num || '–')}, ${esc(who)}, niveau ${fmt1(lvl)}. Åbn spillerkortet">
+  const off = team !== 'bench' && (board.off || []).includes(p.id), joker = team !== 'bench' && (board.neutral || []).includes(p.id);
+  const extra = off ? ', ikke på banen' : joker ? ', joker' : '';
+  return `<li${off ? ' class="off"' : ''}><button type="button" class="prow" data-edit="${team}" data-id="${esc(p.id)}" aria-label="Nr. ${esc(p.num || '–')}, ${esc(who)}${extra}, niveau ${fmt1(lvl)}. Åbn spillerkortet">
     <span class="pnum" style="--c:${kit};--ink:${inkOn(kit)}">${esc(p.num || '–')}</span>
     <span class="prole${team === 'bench' ? ' bench' : ''}">${team === 'bench' ? 'UDS' : esc(p.role)}</span>
-    <span class="pname${name ? '' : ' empty'}">${esc(name || 'Tilføj navn')}</span>
+    <span class="pname${name ? '' : ' empty'}">${esc(name || 'Tilføj navn')}${off ? '<small> · ikke på banen</small>' : joker ? '<small> · joker</small>' : ''}</span>
     <span class="plvl" aria-hidden="true"><span class="bar"><i style="width:${Math.round(lvl * 10)}%"></i></span><b>${fmt1(lvl)}</b></span>
   </button></li>`;
 }
@@ -2377,9 +3121,8 @@ function sideSegHTML() {
 }
 function renderPanel() {
   const side = ui.side, isHome = side === 'home';
-  // Tavlemenuen: kampformat, farver, logoer og visning
-  $('#formatSeg').innerHTML = Object.entries(FORMATS).map(([k, f]) =>
-    `<button type="button" role="radio" data-format="${k}" aria-checked="${k === board.format}">${f.label}</button>`).join('');
+  // Tavlemenuen: farver, logoer og visning
+  $('#kitNeutral').innerHTML = swatchesHTML('neutral', board.kit.neutral);
   $('#kitHome').innerHTML = swatchesHTML('home', board.kit.home);
   $('#kitKeeper').innerHTML = swatchesHTML('keeper', board.kit.keeper);
   $('#kitAway').innerHTML = swatchesHTML('away', board.kit.away);
@@ -2393,7 +3136,7 @@ function renderPanel() {
   $('#logoOpacity').value = String(Math.round((board.logoOpacity ?? .16) * 100));
   $('#logoOpacityRow').hidden = !board.logos.home && !board.logos.away;
   $('#labelSeg').innerHTML = [['name', 'Navn'], ['role', 'Rolle'], ['none', 'Kun nummer']].map(([k, l]) =>
-    `<button type="button" role="radio" data-labels="${k}" aria-checked="${k === ui.labels}">${l}</button>`).join('');
+    `<button type="button" role="radio" data-labels="${k}" aria-checked="${k === boardLabels()}">${l}</button>`).join('');
   $('#boardBtnName').textContent = board.name || 'Uden navn';
   // Hold: samme kontroller for begge hold
   document.querySelectorAll('[data-side-seg]').forEach(el => { el.innerHTML = sideSegHTML(); });
@@ -2404,6 +3147,9 @@ function renderPanel() {
   $('#styleSeg').innerHTML = Object.entries(STYLES).map(([k, l]) =>
     `<button type="button" role="radio" data-style="${k}" aria-checked="${k === (board[side + 'Style'] || 'normal')}">${l}</button>`).join('');
   $('#rosterList').innerHTML = board[side].map(p => rosterRow(p, side)).join('');
+  const offHere = board[side].filter(p => (board.off || []).includes(p.id)).length;
+  $('#offNote').hidden = !offHere;
+  $('#offNoteText').textContent = offHere === 1 ? 'Én spiller er ikke på banen.' : `${offHere} spillere er ikke på banen.`;
   $('#benchBlock').hidden = !isHome;
   $('#benchList').innerHTML = board.bench.length ? board.bench.map(b => rosterRow(b, 'bench')).join('') : '<li class="empty">Ingen udskiftere endnu.</li>';
   const ps = isHome ? [...board.home, ...board.bench] : board.away;
@@ -2420,13 +3166,7 @@ function renderPanel() {
   renderSteps();
 }
 
-$('#formatSeg').addEventListener('click', e => {
-  const b = e.target.closest('[data-format]');
-  if (!b || b.dataset.format === board.format) return;
-  changeFormat(b.dataset.format);
-  toast(`Skiftet til ${FORMATS[board.format].label}. Trin og tegninger er nulstillet.`, { label: 'Fortryd', fn: undo });
-});
-document.querySelectorAll('#kitHome, #kitKeeper, #kitAway').forEach(el => el.addEventListener('click', e => {
+document.querySelectorAll('#kitHome, #kitKeeper, #kitAway, #kitNeutral').forEach(el => el.addEventListener('click', e => {
   const b = e.target.closest('[data-kit]'); if (!b) return;
   board.kit[b.dataset.kit] = b.dataset.color;
   commit(); renderPanel(); render();
@@ -2466,6 +3206,11 @@ $('#addBench').addEventListener('click', () => {
   commit(); renderPanel();
   openPlayerEditor('bench', b.id);
   setTimeout(() => pdName.focus(), 60);
+});
+$('#showAllBtn').addEventListener('click', () => {
+  const ids = new Set(board[ui.side].map(p => p.id));
+  board.off = (board.off || []).filter(id => !ids.has(id));
+  commit(); renderPanel(); render();
 });
 $('#showAway').addEventListener('change', e => {
   board.showAway = e.target.checked;
@@ -2533,15 +3278,16 @@ $('#logoOpacity').addEventListener('input', e => { board.logoOpacity = clamp(Num
 $('#logoOpacity').addEventListener('change', () => commit());
 $('#labelSeg').addEventListener('click', e => {
   const b = e.target.closest('[data-labels]'); if (!b) return;
-  ui.labels = b.dataset.labels; savePrefs();
+  // Gælder tavlen (en øvelse viser fx kun numre) og bliver standard for nye tavler.
+  ui.labels = b.dataset.labels; board.labels = b.dataset.labels; savePrefs(); commit();
   $('#labelSeg').querySelectorAll('[data-labels]').forEach(x => x.setAttribute('aria-checked', String(x === b)));
   render();
 });
 $('#ghostToggle').addEventListener('change', e => { ui.ghost = e.target.checked; savePrefs(); render(); });
 
-/* ---- Faner: Hold, Taktik, Tegn og Kamp ---- */
+/* ---- Faner: Hold, Taktik, Tegn, Træning og Kamp ---- */
 const workspace = $('#workspace'), layoutQuery = matchMedia('(min-width: 740px) and (min-height: 520px), (min-width: 600px) and (orientation: landscape)');
-const TABS = ['hold', 'taktik', 'tegn', 'kamp'];
+const TABS = ['hold', 'taktik', 'tegn', 'traening', 'kamp'];
 // Værktøjerne står i panelet på store skærme og under banen på telefonen.
 function placeToolbar() {
   const slot = layoutQuery.matches ? $('#toolsSlotPanel') : $('#toolsSlotStage');
@@ -2550,13 +3296,14 @@ function placeToolbar() {
 function setTab(tab, focus) {
   if (!TABS.includes(tab)) return;
   if (ui.playing && tab !== 'tegn') stopPlay();
-  closeInkPop();
+  closeInkPop(); closePop(itemPop, $('#itemBtn'));
   ui.tab = tab; workspace.dataset.tab = tab;
   $('#tabs').querySelectorAll('[data-tab]').forEach(b => { const on = b.dataset.tab === tab; b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; });
   for (const t of TABS) $('#pane-' + t).hidden = t !== tab;
   // Uden for Tegn flytter banen kun spillere.
   if (tab !== 'tegn' && ui.tool !== 'move') { ui.tool = 'move'; ui.selected = null; cv.style.cursor = ''; updateToolbar(); }
   if (tab === 'kamp') renderKamp();
+  if (tab === 'traening') renderDrills();
   if (focus) $('#tab-' + tab).focus();
   placeToolbar(); resize(); render();
 }
@@ -2579,6 +3326,98 @@ $('#panelGrip').addEventListener('click', () => {
   $('#panelGrip').setAttribute('aria-label', on ? 'Gør panelet mindre' : 'Gør panelet større');
 });
 
+/* ---- Træning: øvelsesbiblioteket ---- */
+const drillUi = { level: 'alle', cat: 'alle', open: null, frame: 0 };
+const drillBoards = new Map(), drillThumbs = new Map();
+const drillBoardFor = d => { if (!drillBoards.has(d.id)) drillBoards.set(d.id, drillBoard(d)); return drillBoards.get(d.id); };
+// Tegner et trin af en øvelse i et lille lærred (listen og forhåndsvisningen). Den åbne tavle røres ikke:
+// tegnefunktionerne læser den globale tavle, så øvelsens tavle sættes ind og straks tilbage igen.
+function drawDrill(c, d, frame, cssW, cssH, dpr, small) {
+  const b = drillBoardFor(d), fr = b.frames[frame], x = c.getContext('2d');
+  c.width = Math.round(cssW * dpr); c.height = Math.round(cssH * dpr);
+  const v = computeView(cssW, cssH, FORMATS[b.format], small ? 2 : 6, b.view);
+  v.R = clamp(v.s * .85, small ? 3.5 : 6, 22); v.thumb = small; v.strokeMax = small ? 2.4 : 3.6;
+  const keep = board;
+  board = b;
+  try {
+    drawScene(x, v, dpr, { pos: fr.pos, ball: fr.ball, drawings: fr.drawings, drawAlpha: 1, ghost: null },
+      { colors, labels: 'none', selected: null, highlight: null, fillBg: true, items: b.items, neutral: b.neutral, noNum: small });
+  } finally { board = keep; }
+}
+function drillThumb(d) {
+  if (!drillThumbs.has(d.id)) { const c = document.createElement('canvas'); drawDrill(c, d, 0, 96, 72, 2, true); drillThumbs.set(d.id, c.toDataURL('image/png')); }
+  return drillThumbs.get(d.id);
+}
+const drillTags = d => `<span class="drill-tags">${d.lv.map(l => `<span class="drill-tag">${DRILL_LEVELS[l]}</span>`).join('')}<span class="drill-tag">${esc(d.age)}</span></span>`;
+function renderDrills() {
+  const detail = drillById(drillUi.open);
+  $('#drillBrowse').hidden = !!detail; $('#drillDetail').hidden = !detail;
+  if (detail) { renderDrillDetail(detail); return; }
+  const cur = drillById(board.drill);
+  $('#drillNow').hidden = !cur;
+  if (cur) $('#drillNow').innerHTML = `<span class="group-note">På tavlen nu</span><b>${esc(cur.title)}</b>
+    <button type="button" class="link-btn" data-drill="${cur.id}">Se beskrivelsen</button>`;
+  $('#drillLevelSeg').innerHTML = [['alle', 'Alle'], ...Object.entries(DRILL_LEVELS)].map(([k, l]) =>
+    `<button type="button" role="radio" data-level="${k}" aria-checked="${k === drillUi.level}">${l}</button>`).join('');
+  const sel = $('#drillCat');
+  if (!sel.options.length) sel.innerHTML = `<option value="alle">Alle kategorier</option>` + Object.entries(DRILL_CATS).map(([k, l]) => `<option value="${k}">${l}</option>`).join('');
+  sel.value = drillUi.cat;
+  const shown = DRILLS.filter(d => (drillUi.level === 'alle' || d.lv.includes(drillUi.level)) && (drillUi.cat === 'alle' || d.cat === drillUi.cat));
+  $('#drillCount').textContent = shown.length === 1 ? '1 øvelse' : `${shown.length} øvelser`;
+  $('#drillList').innerHTML = Object.entries(DRILL_CATS).map(([k, label]) => {
+    const ds = shown.filter(d => d.cat === k);
+    if (!ds.length) return '';
+    return `<li class="drill-group"><h3 class="group-title">${label}</h3><ul class="drill-list">${ds.map(d => `<li>
+      <button type="button" class="drill-card" data-drill="${d.id}">
+        <img class="drill-thumb" src="${drillThumb(d)}" alt="">
+        <span class="dc-text"><span class="dc-title">${esc(d.title)}</span><span class="dc-meta">${esc(d.players)} · ${esc(d.time)}</span>${drillTags(d)}</span>
+      </button></li>`).join('')}</ul></li>`;
+  }).join('');
+}
+function renderDrillDetail(d) {
+  const onBoard = board.drill === d.id;
+  $('#drillDetail').innerHTML = `
+    <button type="button" class="link-btn" id="drillBack">‹ Alle øvelser</button>
+    <div class="drill-head"><span class="group-note">${esc(DRILL_CATS[d.cat])}</span><h3>${esc(d.title)}</h3>${drillTags(d)}</div>
+    <canvas class="drill-preview" id="drillPreview" role="img"></canvas>
+    <div class="drill-facts"><div><b>Spillere</b>${esc(d.players)}</div><div><b>Område</b>${esc(d.area)}</div><div><b>Tid</b>${esc(d.time)}</div></div>
+    <button type="button" class="btn btn-accent btn-big" id="drillOpenBtn">${ic(onBoard ? 'pen' : 'plus')}${onBoard ? 'Vis på tavlen' : 'Åbn på tavlen'}</button>
+    ${onBoard ? '<button type="button" class="link-btn" id="drillCopyBtn">Åbn en ny, urørt udgave af øvelsen</button>' : ''}
+    <section class="drill-sec"><h4>Formål</h4><p>${esc(d.goal)}</p></section>
+    <section class="drill-sec"><h4>Organisering</h4><p>${esc(d.setup)}</p></section>
+    <section class="drill-sec"><h4>Forløb</h4><ol class="drill-steps">${d.frames.map((f, i) =>
+      `<li><button type="button" data-step="${i}" aria-pressed="${i === drillUi.frame}">${esc(f.n)}</button></li>`).join('')}</ol></section>
+    <section class="drill-sec"><h4>Fokuspunkter</h4><ul>${d.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul></section>
+    <section class="drill-sec"><h4>Variationer</h4><ul>${d.vary.map(p => `<li>${esc(p)}</li>`).join('')}</ul></section>
+    <p class="group-note">Øvelsen åbnes som en ny tavle. Du kan flytte spillerne, flytte udstyret, tegne og afspille trinene under Tegn.</p>`;
+  paintDrillPreview(d);
+}
+function paintDrillPreview(d) {
+  const c = $('#drillPreview'); if (!c) return;
+  const w = c.clientWidth || 300, h = Math.round(w * .75);
+  drawDrill(c, d, drillUi.frame, w, h, Math.min(2, window.devicePixelRatio || 1), false);
+  c.setAttribute('aria-label', `${d.title}, trin ${drillUi.frame + 1} af ${d.frames.length}: ${d.frames[drillUi.frame].n}`);
+  $('#drillDetail').querySelectorAll('[data-step]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.step === drillUi.frame)));
+}
+function openDrill(d) {
+  const b = normalizeBoard(drillBoard(d));
+  b.id = uid(); b.updated = Date.now();
+  openBoard(b, `»${d.title}« er åbnet som en ny tavle. Tryk Afspil for at se forløbet.`);
+  flushSave();
+  setTab('tegn');
+}
+$('#drillLevelSeg').addEventListener('click', e => { const b = e.target.closest('[data-level]'); if (!b) return; drillUi.level = b.dataset.level; renderDrills(); });
+$('#drillCat').addEventListener('change', e => { drillUi.cat = e.target.value; renderDrills(); });
+$('#pane-traening').addEventListener('click', e => {
+  const card = e.target.closest('[data-drill]');
+  if (card) { drillUi.open = card.dataset.drill; drillUi.frame = 0; renderDrills(); panel.scrollTop = 0; $('#drillBack').focus(); return; }
+  if (e.target.closest('#drillBack')) { const id = drillUi.open; drillUi.open = null; renderDrills(); const c = $(`#drillList [data-drill="${id}"]`); if (c) c.focus(); return; }
+  const st = e.target.closest('[data-step]'); const d = drillById(drillUi.open);
+  if (st && d) { drillUi.frame = +st.dataset.step; paintDrillPreview(d); return; }
+  if (e.target.closest('#drillOpenBtn') && d) { if (board.drill === d.id) setTab('tegn'); else openDrill(d); return; }
+  if (e.target.closest('#drillCopyBtn') && d) openDrill(d);
+});
+
 /* ---- Spillerkort ---- */
 const playerDlg = $('#playerDlg'), pdNum = $('#pdNum'), pdName = $('#pdName'), pdRole = $('#pdRole');
 let editing = null;
@@ -2590,6 +3429,9 @@ function openPlayerEditor(team, id) {
   $('#pdTitle').textContent = team === 'home' ? roleName(p.role) : team === 'bench' ? 'Udskifter' : `Modstander · ${roleName(p.role)}`;
   pdNum.value = p.num; pdName.value = p.name; pdRole.value = p.role || '';
   pdRole.closest('label').hidden = team === 'bench';
+  $('#pdFlags').hidden = team === 'bench';
+  $('#pdOn').checked = !(board.off || []).includes(id);
+  $('#pdJoker').checked = (board.neutral || []).includes(id);
   renderSwapList();
   renderAttrEditor(p);
   playerDlg.showModal();
@@ -2616,6 +3458,16 @@ function renderSwapList() {
     ? board.home.map(s2 => `<button type="button" class="btn btn-sm" data-swapin="${esc(s2.id)}">${ic('swap')}${esc(s2.num || '–')} ${esc(s2.name.trim() || s2.role)}</button>`).join('')
     : board.bench.map(b => `<button type="button" class="btn btn-sm" data-swap="${esc(b.id)}">${ic('swap')}${esc(b.num || '–')} ${esc(b.name.trim() || 'Udskifter')}</button>`).join('');
 }
+// Øvelser: spilleren kan tages af banen (vises ikke og kan ikke trækkes) eller være joker i neutral farve.
+function toggleIn(key, id, on) {
+  const list = new Set(board[key] || []);
+  if (on) list.add(id); else list.delete(id);
+  board[key] = [...list];
+  if (ui.selected === id) ui.selected = null;
+  commit(); renderPanel(); render();
+}
+$('#pdOn').addEventListener('change', e => { if (editing) toggleIn('off', editing.id, !e.target.checked); });
+$('#pdJoker').addEventListener('change', e => { if (editing) toggleIn('neutral', editing.id, e.target.checked); });
 pdNum.addEventListener('input', () => { const p = editingPlayer(); if (!p) return; const v = cleanNum(pdNum.value); if (v !== pdNum.value) pdNum.value = v; p.num = v; p.autoNum = false; render(); });
 pdName.addEventListener('input', () => { const p = editingPlayer(); if (!p) return; p.name = pdName.value.slice(0, 30); render(); });
 pdRole.addEventListener('input', () => { const p = editingPlayer(); if (!p) return; const v = cleanRole(pdRole.value); if (v !== pdRole.value) pdRole.value = v; if (v) p.role = v; render(); });
@@ -2666,9 +3518,8 @@ function renderBoardList() {
   const all = Object.values(store.readAll()).sort((a, b) => (b.updated || 0) - (a.updated || 0));
   if (!all.some(b => b.id === board.id)) all.unshift(board);
   $('#boardList').innerHTML = all.map(b => {
-    const f = FORMATS[b.format];
     const steps = Array.isArray(b.frames) ? b.frames.length : 1;
-    const meta = [f ? f.label : '', FORMATIONS[b.format] && FORMATIONS[b.format][b.homeFormation] ? formationText(b, 'home') : '', `${steps} trin`, b.updated ? 'ændret ' + dateFmt.format(new Date(b.updated)) : ''].filter(Boolean).join(' · ');
+    const meta = [b.drill ? 'Øvelse' : FORMATIONS[b.format] && FORMATIONS[b.format][b.homeFormation] ? formationText(b, 'home') : '', `${steps} trin`, b.updated ? 'ændret ' + dateFmt.format(new Date(b.updated)) : ''].filter(Boolean).join(' · ');
     const cur = b.id === board.id;
     return `<li class="board-item${cur ? ' current' : ''}" data-id="${esc(b.id)}">
       <div style="min-width:0"><div class="bi-name">${esc(b.name || 'Uden navn')}</div><div class="bi-meta">${esc(meta)}</div></div>
@@ -2710,7 +3561,7 @@ $('#boardList').addEventListener('click', e => {
   }
 });
 $('#newBoardBtn').addEventListener('click', () => {
-  const nb = newBoard({ format: board.format });
+  const nb = newBoard();
   openBoard(nb, 'Ny tavle oprettet.');
   flushSave();
   boardsDlg.close();
@@ -2788,21 +3639,30 @@ async function renderExportPng() {
   }));
   const f = FORMATS[board.format], i = ui.frame, fr = board.frames[i];
   const Wc = 1080, pad = 56, m = marginFor(f);
-  const s = (Wc - 2 * pad) / (f.W + 2 * m);
-  const pitchH = (f.L + 2 * m) * s;
+  // Udsnittet (zoom) eller hele banen med kant. Højst 1700 px høj.
+  const R0 = board.view || { x0: -m, y0: -m, x1: f.W + m, y1: f.L + m }, vw = R0.x1 - R0.x0, vh = R0.y1 - R0.y0;
+  const s = Math.min((Wc - 2 * pad) / vw, 1700 / vh);
+  const pitchH = vh * s, pitchW = vw * s, px0 = pad + ((Wc - 2 * pad) - pitchW) / 2;
   const c = document.createElement('canvas'), x = c.getContext('2d');
   const titleFont = `800 66px ${DISPLAY_FONT}`, metaFont = `600 28px ${UI_FONT}`, noteFont = `500 30px ${UI_FONT}`, benchFont = `500 26px ${UI_FONT}`;
   x.font = titleFont; const titleLines = wrapLines(x, (board.name || 'Taktiktavle').toUpperCase(), Wc - 2 * pad, 2);
   x.font = noteFont; const noteLines = fr.note ? wrapLines(x, fr.note, Wc - 2 * pad, 3) : [];
   const bench = board.bench.filter(b => b.num || b.name.trim()).map(b => [b.num, b.name.trim()].filter(Boolean).join(' '));
-  x.font = benchFont; const benchLines = bench.length ? wrapLines(x, 'Udskiftere: ' + bench.join(', '), Wc - 2 * pad, 3) : [];
+  x.font = benchFont;
+  const dr = typeof drillById === 'function' ? drillById(board.drill) : null;
+  const benchLines = [...(bench.length && !dr ? wrapLines(x, 'Udskiftere: ' + bench.join(', '), Wc - 2 * pad, 3) : []),
+    ...(dr ? wrapLines(x, 'Formål: ' + dr.goal, Wc - 2 * pad, 3) : []),
+    ...(dr ? wrapLines(x, 'Fokuspunkter: ' + dr.points.join(' · '), Wc - 2 * pad, 4) : [])];
   const headerH = pad + titleLines.length * 64 + 18 + 34 + (noteLines.length ? 22 + noteLines.length * 40 : 0) + 30;
   const footerH = (benchLines.length ? 14 + benchLines.length * 36 : 0) + pad * .8;
   c.width = Wc; c.height = Math.round(headerH + pitchH + footerH);
   x.fillStyle = '#12301c'; x.fillRect(0, 0, c.width, c.height);
-  const v = { ori: 'v', s, ox: pad + m * s, oy: headerH + m * s, W: f.W, L: f.L, m, R: clamp(f.W * s * f.discF, 12, 42), cssW: Wc, cssH: c.height, labelMax: 24, strokeMax: 7.5 };
+  const v = { ori: 'v', s, ox: px0 - R0.x0 * s, oy: headerH - R0.y0 * s, W: f.W, L: f.L, m, R: clamp(f.W * s * f.discF, 12, 42), cssW: Wc, cssH: c.height, labelMax: 24, strokeMax: 7.5 };
+  x.save();
+  rrPath(x, px0, headerH, pitchW, pitchH, board.view ? 14 : 0); x.clip();   // (zoomet: intet uden for udsnittet)
   drawScene(x, v, 1, { pos: fr.pos, ball: fr.ball, drawings: fr.drawings, drawAlpha: 1, ghost: null },
-    { colors: EXPORT_COLORS, labels: ui.labels, selected: null, highlight: null, fillBg: false });
+    { colors: EXPORT_COLORS, labels: boardLabels(), selected: null, highlight: null, fillBg: false, items: board.items, neutral: board.neutral });
+  x.restore();
   x.setTransform(1, 0, 0, 1, 0, 0);
   x.textAlign = 'left'; x.textBaseline = 'alphabetic';
   let y = pad + 52;
@@ -2810,7 +3670,7 @@ async function renderExportPng() {
   titleLines.forEach(l => { x.fillText(l, pad, y); y += 64; });
   y += 18 - 64 + 34;
   const who = board.showAway ? `${formationText(board, 'home')} mod ${formationText(board, 'away')}` : formationText(board, 'home');
-  const meta = [who, f.label, board.frames.length > 1 ? `Trin ${i + 1} af ${board.frames.length}` : ''].filter(Boolean).join('   ·   ');
+  const meta = (dr ? [dr.players, dr.area, dr.time] : [who]).concat(board.frames.length > 1 ? [`Trin ${i + 1} af ${board.frames.length}`] : []).filter(Boolean).join('   ·   ');
   x.font = metaFont; x.fillStyle = 'rgba(255,255,255,.72)'; x.fillText(meta, pad, y);
   x.font = `700 22px ${UI_FONT}`; x.fillStyle = 'rgba(255,255,255,.45)'; x.textAlign = 'right';
   x.fillText('TAKTIKTAVLE', Wc - pad, y); x.textAlign = 'left';
@@ -2855,10 +3715,10 @@ boardsDlg.addEventListener('close', () => { $('#boardList').querySelectorAll('.a
 /* ---- Taktik i panelet ---- */
 const gen = name => /[sxz]$/i.test(name) ? name + "'" : name + 's';
 function tacticsHTML(team) {
-  const t = board.tactics[team], preset = PRESETS.find(p => p.id === t.preset), is11 = board.format === '11';
+  const t = board.tactics[team], preset = PRESETS.find(p => p.id === t.preset);
   const opts = (map, cur) => Object.entries(map).map(([k, l]) => `<option value="${k}"${k === cur ? ' selected' : ''}>${l}</option>`).join('');
-  const note = preset ? preset.desc : is11 ? 'Vælg en kendt taktik, eller indstil jeres egen herunder.' : 'Klassiske taktikker findes til 11 mod 11. Instruktionerne virker i alle formater.';
-  return `<label class="field-inline">Klassisk taktik <select id="${team}-preset" data-tteam="${team}" data-tk="preset"${is11 ? '' : ' disabled'}>
+  const note = preset ? preset.desc : 'Vælg en kendt taktik, eller indstil jeres egen herunder.';
+  return `<label class="field-inline">Klassisk taktik <select id="${team}-preset" data-tteam="${team}" data-tk="preset">
       <option value="">Egen taktik</option>${PRESETS.map(p => `<option value="${p.id}"${p.id === t.preset ? ' selected' : ''}>${esc(presetLabel(p))}</option>`).join('')}</select></label>
     <p class="group-note">${esc(note)}</p>
     <h3 class="group-title">Instruktioner</h3>
@@ -2872,7 +3732,6 @@ function tacticsHTML(team) {
 function applyPreset(team, id) {
   const t = board.tactics[team], p = PRESETS.find(x => x.id === id);
   if (!p) { t.preset = ''; commit(); renderPanel(); return; }
-  if (board.format !== '11') { toast('Klassiske taktikker findes til 11 mod 11.'); renderPanel(); return; }
   Object.assign(t, { preset: p.id, press: p.press, line: p.line, tempo: p.tempo, width: p.width, passing: p.passing, setAtt: p.setAtt, setDef: p.setDef });
   const known = [DEFAULT_NAMES[team], ...PRESETS.map(x => x.team)];
   if (known.includes(board.teamNames[team])) board.teamNames[team] = p.team;
@@ -3968,8 +4827,7 @@ function penaltySeq(pa) {
 function penSetupAct(pa) {
   return A(() => {
     const i = pa.team, d = 1 - i, f = simF(), W = f.W, L = f.L, sx = W / 68, sy = L / 105;
-    // 5 mod 5 har hverken straffesparksplet eller bue tegnet: pletten sættes 6 m ude.
-    const spotD = f.mk.spot || 6, boxD = f.mk.box ? f.mk.box[1] : 6, clearD = Math.max(boxD, spotD + (f.mk.arc || 4));
+    const spotD = f.mk.spot, boxD = f.mk.box[1], clearD = Math.max(boxD, spotD + f.mk.arc);
     const spot = relToPitch(i, W / 2, L - spotD), taker = pa.taker.id, place = {};
     const gk = keeperOf(d), ownGk = keeperOf(i);
     place[gk.id] = relToPitch(i, W / 2, L - .4);
@@ -4783,7 +5641,7 @@ function feedbackFindings() {
   if (A.style > 0 && t.line <= 2) add(K, 'Taktik', 'Offensivt udgangspunkt, men dyb forsvarslinje: holdet bliver langt og åbent på midten.', 2);
   if (A.style < 0 && t.press >= 4) add(K, 'Taktik', 'Defensivt udgangspunkt med højt pres: de få spillere foran bolden kommer til at presse alene.', 1.5);
   if (t.press === 5 && t.tempo >= 4) add(K, 'Taktik', 'Meget højt pres og højt tempo er krævende. Forvent træthed i den sidste halve time.', 1);
-  if (board.format === '11' && A.mid <= 2) add(K, 'Formation', `Kun ${A.mid} centrale midtbanespillere giver risiko for at blive overmandet på midten.`, 1.5);
+  if (A.mid <= 2) add(K, 'Formation', `Kun ${A.mid} centrale midtbanespillere giver risiko for at blive overmandet på midten.`, 1.5);
   if (A.def >= 5) add(S, 'Formation', 'Fem spillere i bagkæden dækker hele bredden og står solidt.', 1);
   if (t.setDef === 'man' && A.cb >= 3) add(S, 'Dødbolde', 'Mandsopdækning med tre midterforsvarere giver styrke i luftduellerne.', 1);
   if (t.setDef === 'man' && A.cb <= 1) add(K, 'Dødbolde', 'Mandsopdækning med få midterforsvarere kan give mismatch i luften.', 1);
@@ -5355,7 +6213,8 @@ document.addEventListener('keydown', e => {
   if (mod && !typing && (e.key === 'y' || e.key === 'Y')) { e.preventDefault(); redo(); return; }
   if (typing || mod || e.altKey || document.querySelector('dialog[open]')) return;
   if ((e.key === 'Delete' || e.key === 'Backspace') && ui.selected) { e.preventDefault(); deleteAction(); return; }
-  if (e.key === 'Escape') { closeInkPop(); if (ui.selected) { ui.selected = null; updateToolbar(); render(); } return; }
+  if ((e.key === 'r' || e.key === 'R') && isGoalItem(selectedItem())) { rotateSelected(); return; }
+  if (e.key === 'Escape') { closeInkPop(); closePop(itemPop, $('#itemBtn')); if (ui.selected) { ui.selected = null; updateToolbar(); render(); } return; }
   if (e.key === 'ArrowLeft') { goFrame(-1); return; }
   if (e.key === 'ArrowRight') { goFrame(1); return; }
   const t = TOOLS.find(x => x.key === e.key.toLowerCase());
@@ -5381,6 +6240,7 @@ function refreshAll() {
   if (ui.side === 'away' && !board.showAway) ui.side = 'home';
   if (view) resize();
   renderPanel(); updateToolbar(); updateUndo(); render();
+  if (ui.tab === 'traening') renderDrills();
 }
 
 /* =========================================================
