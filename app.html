@@ -312,6 +312,21 @@ svg.i { width: 20px; height: 20px; flex: none; display: block; }
 .drill-sec li + li { margin-top: 3px; }
 .drill-steps button { display: block; width: calc(100% + 6px); margin-left: -6px; padding: 4px 6px; border: 0; border-radius: 8px; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
 .drill-steps button[aria-pressed="true"] { background: var(--surface-2); font-weight: 600; }
+/* Kendte hold */
+.known-btn { align-self: flex-start; margin-top: -8px; }
+.known-pick { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.6fr); gap: 8px; }
+@media (max-width: 599px) { .known-pick { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .known-pick .fld-wide { grid-column: 1 / -1; } }
+.known-card { display: flex; flex-direction: column; gap: 10px; padding: 14px; border: 1px solid var(--line); border-radius: 14px; background: var(--bg); }
+.known-card h4 { margin: 0; display: flex; align-items: center; gap: 10px; font: 800 24px/1.05 var(--font-display); letter-spacing: .02em; text-transform: uppercase; }
+.known-dot { width: 16px; height: 16px; flex: none; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1.5px rgba(128, 128, 128, .6); }
+.known-meta { font-size: 13px; color: var(--muted); }
+.known-desc { margin: 0; font-size: 13.5px; line-height: 1.45; }
+/* Opstillingen læses nedad: målmand og forsvar først, så midtbane og angreb. */
+.known-xi { list-style: none; margin: 0; padding: 0; columns: 3 140px; column-gap: 14px; font-size: 13.5px; }
+.known-xi li { display: flex; align-items: baseline; gap: 6px; min-width: 0; padding: 2px 0; break-inside: avoid; }
+.known-xi b { width: 22px; flex: none; text-align: right; font: 700 16px/1 var(--font-display); }
+.known-xi small { margin-left: auto; font-size: 10.5px; font-weight: 700; color: var(--muted); }
+.known-tac { display: flex; flex-wrap: wrap; gap: 4px; }
 /* Tavlemenuen */
 .dlg .fld .board-name { height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); font-size: 16px; font-weight: 600; }
 .appear { display: flex; flex-direction: column; gap: 12px; }
@@ -745,6 +760,8 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
           <label class="eye-toggle" title="Vis modstanderen på banen"><input type="checkbox" id="showAway" aria-label="Vis modstanderen på banen"><span data-icon="eye"></span></label>
         </div>
         <label class="team-head"><input class="team-name" id="teamName" data-team-name="home" maxlength="40" autocomplete="off" aria-label="Holdnavn"><span data-icon="pen"></span></label>
+        <button type="button" class="btn btn-sm known-btn" id="knownBtn"><span data-icon="shield"></span>Vælg et kendt hold</button>
+        <p class="group-note" id="knownNote" hidden></p>
         <div class="formation-row">
           <label class="fld"><span>Formation</span><select id="formationSel"></select></label>
           <div class="fld fld-wide"><span id="styleLabel">Udgangspunkt</span><div class="segmented" id="styleSeg" role="radiogroup" aria-labelledby="styleLabel"></div></div>
@@ -845,6 +862,25 @@ dialog.dlg.fb { width: min(920px, calc(100% - 32px)); }
     </div>
     <div class="dlg-foot"><button type="button" class="btn btn-danger" id="pdRemove" hidden>Fjern fra bænken</button><span class="spacer"></span><button type="submit" class="btn btn-accent" value="done">Færdig</button></div>
   </form>
+</dialog>
+
+<dialog class="dlg wide" id="knownDlg" aria-labelledby="kdTitle">
+  <div class="dlg-body">
+    <div class="dlg-head">
+      <h2 id="kdTitle">Kendte hold</h2>
+      <button type="button" class="icon-btn" data-close aria-label="Luk"><span data-icon="close"></span></button>
+    </div>
+    <div class="known-pick">
+      <label class="fld"><span>Land</span><select id="kdCountry"></select></label>
+      <label class="fld"><span>Liga/række</span><select id="kdLeague"></select></label>
+      <label class="fld fld-wide"><span>Hold</span><select id="kdTeam"></select></label>
+    </div>
+    <div class="known-card" id="kdCard" aria-live="polite"></div>
+    <div class="dlg-foot">
+      <button type="button" class="btn" id="kdAway">Brug som modstander</button>
+      <button type="button" class="btn btn-accent" id="kdHome">Brug som mit hold</button>
+    </div>
+  </div>
 </dialog>
 
 <dialog class="dlg wide" id="boardsDlg" aria-labelledby="bdTitle">
@@ -1105,6 +1141,7 @@ const ICONS = {
   area: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5M8 10.5h5M10.5 8v5"/>',
   full: '<rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M5 12h14"/><circle cx="12" cy="12" r="2.5"/>',
   rotate: '<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4v4.5H15"/>',
+  shield: '<path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.2 7.5 9.5 4.3-1.3 7.5-4.9 7.5-9.5V6z"/><path d="M12 3v18"/>',
 };
 const ic = name => `<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[name] || ''}</svg>`;
 
@@ -1140,6 +1177,7 @@ const FORMATIONS = {
     '3-5-2':     [['CB', .28, 0], ['CB', .5, 0], ['CB', .72, 0], ['LWB', .1, .52], ['CM', .33, .5], ['DM', .5, .36], ['CM', .67, .5], ['RWB', .9, .52], ['SS', .39, 1], ['CF', .61, 1]],
     '3-4-3':     [['CB', .28, 0], ['CB', .5, 0], ['CB', .72, 0], ['LWB', .12, .52], ['CM', .38, .47], ['CM', .62, .47], ['RWB', .88, .52], ['LW', .18, .93], ['CF', .5, 1], ['RW', .82, .93]],
     '3-2-4-1':   [['CB', .28, 0], ['CB', .5, 0], ['CB', .72, 0], ['DM', .4, .3], ['DM', .6, .3], ['LW', .1, .78], ['CAM', .36, .74], ['CAM', .64, .74], ['RW', .9, .78], ['CF', .5, 1]],
+    '3-4-2-1':   [['CB', .28, 0], ['CB', .5, 0], ['CB', .72, 0], ['LWB', .12, .52], ['CM', .38, .47], ['CM', .62, .47], ['RWB', .88, .52], ['CAM', .36, .8], ['CAM', .64, .8], ['CF', .5, 1]],
     '5-3-2':     [['LWB', .1, .12], ['CB', .3, 0], ['CB', .5, 0], ['CB', .7, 0], ['RWB', .9, .12], ['CM', .3, .52], ['DM', .5, .45], ['CM', .7, .52], ['SS', .39, 1], ['CF', .61, 1]],
     '5-4-1':     [['LWB', .1, .1], ['CB', .3, 0], ['CB', .5, 0], ['CB', .7, 0], ['RWB', .9, .1], ['LM', .14, .56], ['CM', .38, .5], ['CM', .62, .5], ['RM', .86, .56], ['CF', .5, 1]],
   },
@@ -1218,6 +1256,38 @@ const PRESETS = [
     desc: 'Solid femmandsbagkæde med wingbacks, disciplineret forsvar og kontraangreb – vejen til EM-guldet.' },
 ];
 const presetLabel = p => `${p.team} · ${p.coach.split(' ').slice(-1)[0]} ${p.season}`;
+
+/* ---- Kendte hold: land → liga/række → hold ----
+   Hver hold: træner, formation, udgangspunkt, farver, taktik (1–5) og startopstillingen [nummer, navn] i formationens
+   rækkefølge (målmand og så som i FORMATIONS). basis = den kamp, opstillingen er fra.
+   Genereres af tools/kendte_hold.py ud fra researchen i tools/kendte_hold/*.json (med kilder) — ret dér, ikke her. */
+const KNOWN = [
+  { id: "england", name: "England", leagues: [
+    { id: "premier-league", name: "Premier League", season: "2026/27", teams: [
+      {"id": "pl-afc-bournemouth", "name": "AFC Bournemouth", "coach": "Marco Rose", "formation": "4-2-3-1", "style": "off", "kit": "#da291c", "kit2": "#5b2c83", "press": 4, "line": 4, "tempo": 4, "width": 3, "passing": 4, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Petrović"], [3, "Truffert"], [14, "António Silva"], [5, "Hill"], [15, "Smith"], [8, "Scott"], [12, "Adams"], [16, "Tavernier"], [19, "Kluivert"], [37, "Rayan"], [9, "Evanilson"]], "basis": "kampen mod Brentford 12. september 2026 (hjemme) – holdets mest brugte startere", "desc": "Bournemouth spiller en offensiv og vertikal 4-2-3-1, der presser højt og går hurtigt og direkte frem, men står åbent bagud og taber mange føringer."},
+      {"id": "pl-arsenal", "name": "Arsenal", "coach": "Mikel Arteta", "formation": "4-2-3-1", "style": "off", "kit": "#ef0107", "kit2": "#1b2a4a", "press": 4, "line": 4, "tempo": 3, "width": 3, "passing": 2, "setAtt": "near", "setDef": "mixed", "xi": [[1, "Raya"], [33, "Calafiori"], [6, "Gabriel"], [15, "Konsa"], [4, "White"], [49, "Lewis-Skelly"], [41, "Rice"], [20, "Madueke"], [8, "Ødegaard"], [7, "Saka"], [29, "Havertz"]], "basis": "kampen mod Leeds United 10. oktober 2026 (hjemme)", "desc": "Arsenal dominerer bolden i en 4-2-3-1 med korte afleveringer, høj forsvarslinje og et arbejdsomt genpres, der holder modstanderen langt væk fra eget mål."},
+      {"id": "pl-aston-villa", "name": "Aston Villa", "coach": "Unai Emery", "formation": "4-2-3-1", "style": "normal", "kit": "#670e36", "kit2": "#111111", "press": 2, "line": 3, "tempo": 3, "width": 2, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Suzuki"], [13, "Ruggeri"], [5, "Mings"], [3, "Lindelöf"], [2, "Cash"], [35, "João Gomes"], [8, "Kamara"], [44, "Manzambi"], [10, "Buendía"], [7, "McGinn"], [11, "Jackson"]], "basis": "kampen mod Brentford 10. oktober 2026 (hjemme)", "desc": "Villa spiller en afventende 4-2-3-1 med en kompakt og smal blok, næsten ingen indlæg og et roligt opspil, men har svært ved at skabe store chancer."},
+      {"id": "pl-brentford", "name": "Brentford", "coach": "Keith Andrews", "formation": "4-2-3-1", "style": "normal", "kit": "#e30613", "kit2": "#1b2a47", "press": 4, "line": 3, "tempo": 4, "width": 4, "passing": 4, "setAtt": "far", "setDef": "mixed", "xi": [[1, "Kelleher"], [25, "Diouf"], [20, "Ajer"], [44, "Schuster"], [33, "Kayode"], [27, "Janelt"], [6, "Yarmoliuk"], [7, "Schade"], [23, "Lewis-Potter"], [19, "Anthony"], [9, "Igor Thiago"]], "basis": "kampen mod Aston Villa 10. oktober 2026 (ude)", "desc": "Brentford er et direkte og hårdtpresende 4-2-3-1-hold, der søger hurtigt i dybden mod angriberen, slår flest indlæg i ligaen og er farligt på dødbolde og lange indkast."},
+      {"id": "pl-brighton-and-hove-albion", "name": "Brighton & Hove Albion", "coach": "Fabian Hürzeler", "formation": "4-2-3-1", "style": "off", "kit": "#0057b8", "kit2": "#ffffff", "press": 5, "line": 4, "tempo": 2, "width": 4, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Verbruggen"], [21, "Boscagli"], [4, "Struijk"], [44, "Vuskovic"], [24, "Kadioglu"], [14, "Chema Andrés"], [13, "Gross"], [29, "De Cuyper"], [26, "Ayari"], [25, "Gómez"], [19, "Kostoulas"]], "basis": "kampen mod Sunderland 10. oktober 2026 (ude)", "desc": "Brighton kombinerer ligaens mest aggressive højpres med tålmodigt opspil i en 4-2-3-1, så bolden ofte vindes højt på banen."},
+      {"id": "pl-chelsea", "name": "Chelsea", "coach": "Xabi Alonso", "formation": "3-4-2-1", "style": "off", "kit": "#034694", "kit2": "#111111", "press": 3, "line": 3, "tempo": 4, "width": 4, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Martínez"], [6, "Colwill"], [5, "Lacroix"], [34, "Acheampong"], [29, "Chavarría"], [14, "Henderson"], [25, "Caicedo"], [7, "Neto"], [17, "Rogers"], [10, "Palmer"], [9, "João Pedro"]], "basis": "kampen mod Bournemouth 10. oktober 2026 (hjemme)", "desc": "Chelsea spiller 3-4-2-1 under Xabi Alonso med høje wingbacks og hurtige, direkte angreb gennem Palmer, Rogers og João Pedro, men efterlader ofte store huller bagud, når mange spillere går frem på én gang."},
+      {"id": "pl-coventry-city", "name": "Coventry City", "coach": "Frank Lampard", "formation": "3-4-3", "style": "def", "kit": "#4fa3dc", "kit2": "#f2eee4", "press": 2, "line": 2, "tempo": 4, "width": 4, "passing": 4, "setAtt": "mix", "setDef": "mixed", "xi": [[19, "Rushworth"], [2, "Pinnock"], [4, "Bobby Thomas"], [12, "Mfuni"], [3, "Dasilva"], [6, "Grimes"], [16, "Onyeka"], [8, "Yirenkyi"], [10, "Mason-Clark"], [23, "Thomas-Asante"], [5, "Rudoni"]], "basis": "kampen mod Nottingham Forest 19. september 2026 (ude)", "desc": "Coventry forsvarer dybt i en 3-4-3 med lidt boldbesiddelse og søger hurtige omstillinger med lange bolde og wingbacks, der løber frem i kanterne."},
+      {"id": "pl-crystal-palace", "name": "Crystal Palace", "coach": "Pierre Sage", "formation": "3-4-2-1", "style": "normal", "kit": "#ffffff", "kit2": "#111111", "press": 4, "line": 3, "tempo": 4, "width": 3, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[44, "Benítez"], [6, "Canvot"], [26, "Richards"], [8, "Lerma"], [3, "Mitchell"], [23, "Timber"], [20, "Wharton"], [25, "Khalaili"], [10, "Pino"], [18, "Kamada"], [22, "Strand Larsen"]], "basis": "kampen mod Nottingham Forest 11. oktober 2026 (hjemme)", "desc": "Crystal Palace spiller 3-4-2-1 under Pierre Sage med aggressivt genpres og mange tacklinger, wingbacks højt i banen og hurtige løb i dybden, selv om holdet sjældent har bolden."},
+      {"id": "pl-everton", "name": "Everton", "coach": "David Moyes", "formation": "4-2-3-1", "style": "normal", "kit": "#003399", "kit2": "#ffffff", "press": 4, "line": 3, "tempo": 3, "width": 3, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Pickford"], [16, "Mykolenko"], [4, "Branthwaite"], [6, "Tarkowski"], [2, "Maitland-Niles"], [45, "Armstrong"], [37, "Garner"], [10, "Grealish"], [8, "Dewsbury-Hall"], [22, "Johnson"], [11, "Barry"]], "basis": "kampen mod Ipswich Town 19. september 2026 (hjemme)", "desc": "Everton spiller en disciplineret 4-2-3-1 under David Moyes med et solidt forsvar, to arbejdsomme centrale midtbanespillere og mange erobringer højt på banen, hvorfra Grealish og Dewsbury-Hall sætter angrebet i gang."},
+      {"id": "pl-fulham", "name": "Fulham", "coach": "Álvaro Arbeloa", "formation": "4-2-3-1", "style": "normal", "kit": "#ffffff", "kit2": "#c8102e", "press": 3, "line": 3, "tempo": 3, "width": 3, "passing": 2, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Leno"], [33, "Robinson"], [3, "Bassey"], [22, "Affengruber"], [21, "Castagne"], [19, "Charles"], [16, "Berge"], [17, "Iwobi"], [24, "King"], [14, "Bobb"], [7, "Gonzalo García"]], "basis": "kampen mod Manchester United 20. september 2026 (hjemme)", "desc": "Fulham spiller en boldbesiddende 4-2-3-1 under Álvaro Arbeloa med tålmodig opbygning bagfra og fremskudte backer, men holdet har svært ved at omsætte spillet til mål og lukker for mange ind."},
+      {"id": "pl-hull-city", "name": "Hull City", "coach": "Sergej Jakirović", "formation": "5-4-1", "style": "def", "kit": "#f5a12d", "kit2": "#ffffff", "press": 2, "line": 2, "tempo": 4, "width": 3, "passing": 4, "setAtt": "mix", "setDef": "mixed", "xi": [[19, "Tzolakis"], [3, "Giles"], [32, "Mendy"], [15, "Egan"], [6, "Ajayi"], [2, "Coyle"], [7, "Thomas"], [27, "Slater"], [25, "Crooks"], [11, "Gelhardt"], [9, "McBurnie"]], "basis": "kampen mod Everton 11. oktober 2026 (hjemme)", "desc": "Hull forsvarer dybt og kompakt i en 5-4-1, lader modstanderen have bolden og kontrerer hurtigt og direkte med McBurnie som omdrejningspunkt og fremadstormende wingbacks, og holdet er farligt på dødbolde."},
+      {"id": "pl-ipswich-town", "name": "Ipswich Town", "coach": "Gary O'Neil", "formation": "4-2-3-1", "style": "normal", "kit": "#0044a9", "kit2": "#f2e6b8", "press": 3, "line": 3, "tempo": 4, "width": 3, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[28, "Walton"], [3, "Davis"], [26, "O'Shea"], [6, "Diop"], [42, "Ouattara"], [25, "Palacios"], [23, "Lukić"], [47, "Clarke"], [10, "Enciso"], [7, "Fatawu"], [19, "Emersonn"]], "basis": "kampen mod Everton 19. september 2026 (ude)", "desc": "Ipswich spiller en offensiv 4-2-3-1 under Gary O'Neil, presser højt i udvalgte øjeblikke og går hurtigt fremad efter erobringer med Enciso som kreativ tier, men giver mange chancer væk, især på udebane."},
+      {"id": "pl-leeds-united", "name": "Leeds United", "coach": "Daniel Farke", "formation": "3-4-2-1", "style": "normal", "kit": "#ffffff", "kit2": "#ffd100", "press": 3, "line": 3, "tempo": 3, "width": 4, "passing": 4, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Trafford"], [5, "Muharemović"], [30, "Elvedi"], [24, "Justin"], [3, "Gudmundsson"], [22, "Tanaka"], [4, "Ampadu"], [2, "Bogle"], [19, "Okafor"], [18, "Stach"], [9, "Calvert-Lewin"]], "basis": "kampen mod Arsenal 10. oktober 2026 (ude)", "desc": "Leeds er et velorganiseret hold med tremandsforsvar og wingbacks, der står solidt defensivt, presser fra fronten med Calvert-Lewin og skaber meget af sin farlighed på dødbolde via Stach."},
+      {"id": "pl-liverpool", "name": "Liverpool", "coach": "Andoni Iraola", "formation": "4-2-3-1", "style": "off", "kit": "#c8102e", "kit2": "#ffffff", "press": 5, "line": 4, "tempo": 4, "width": 3, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Alisson"], [6, "Kerkez"], [4, "Van Dijk"], [5, "Jacquet"], [33, "Araújo"], [10, "Mac Allister"], [8, "Szoboszlai"], [18, "Gakpo"], [7, "Wirtz"], [23, "Muñoz"], [9, "Isak"]], "basis": "kampen mod Ipswich Town 4. september 2026 (ude) – holdets mest brugte startere", "desc": "Liverpool under Iraola presser meget højt og aggressivt og spiller hurtigere og mere vertikalt fremad end før, med Wirtz som kreativt omdrejningspunkt bag Isak."},
+      {"id": "pl-manchester-city", "name": "Manchester City", "coach": "Enzo Maresca", "formation": "4-2-3-1", "style": "off", "kit": "#6cabdd", "kit2": "#111111", "press": 4, "line": 4, "tempo": 2, "width": 4, "passing": 1, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Donnarumma"], [33, "O'Reilly"], [6, "Guéhi"], [3, "Dias"], [27, "Nunes"], [17, "Enzo Fernández"], [5, "Anderson"], [42, "Semenyo"], [10, "Cherki"], [7, "Ndiaye"], [9, "Haaland"]], "basis": "kampen mod Liverpool 11. oktober 2026 (ude)", "desc": "City under Maresca dominerer boldbesiddelsen med et tålmodigt, kort opspil, hvor kanterne holder bredden og Cherki og Haaland skaber farligheden, mens forsvaret til tider er sårbart."},
+      {"id": "pl-manchester-united", "name": "Manchester United", "coach": "Michael Carrick", "formation": "4-2-3-1", "style": "off", "kit": "#da291c", "kit2": "#1f4fb4", "press": 3, "line": 3, "tempo": 3, "width": 4, "passing": 2, "setAtt": "mix", "setDef": "mixed", "xi": [[1, "Lammens"], [23, "Shaw"], [6, "Martínez"], [5, "Maguire"], [15, "Yoro"], [37, "Mainoo"], [18, "Tielemans"], [10, "Cunha"], [8, "Bruno Fernandes"], [16, "Amad"], [19, "Mbeumo"]], "basis": "kampen mod Tottenham Hotspur 10. oktober 2026 (hjemme)", "desc": "United bygger kort op fra målmanden i en 4-2-3-1, der i angreb ligner en 4-2-4 med fire offensive spillere højt og mange indlæg fra kanterne, men presset og midtbanen har haft svært ved at holde stand mod gode modstandere."},
+      {"id": "pl-newcastle-united", "name": "Newcastle United", "coach": "Matthias Jaissle", "formation": "4-2-3-1", "style": "normal", "kit": "#1a1a1a", "kit2": "#1b2440", "press": 3, "line": 3, "tempo": 4, "width": 2, "passing": 3, "setAtt": "mix", "setDef": "mixed", "xi": [[21, "Horníček"], [3, "Hall"], [4, "Botman"], [12, "Thiaw"], [37, "Dedić"], [67, "Miley"], [6, "Nico González"], [11, "Barnes"], [28, "Willock"], [19, "Elanga"], [9, "Wissa"]], "basis": "kampen mod AFC Bournemouth 5. september 2026 (hjemme) – holdets mest brugte startere", "desc": "Jaissles Newcastle vil presse højt og angribe hurtigt og lodret gennem midten fra en smal 4-2-3-1, men indtil videre har presset sjældent vundet bolden højt, og holdet har ofte været presset tilbage."},
+      {"id": "pl-nottingham-forest", "name": "Nottingham Forest", "coach": "Oliver Glasner", "formation": "3-4-2-1", "style": "def", "kit": "#dd0000", "kit2": "#00563f", "press": 2, "line": 2, "tempo": 4, "width": 4, "passing": 4, "setAtt": "mix", "setDef": "mixed", "xi": [[26, "Sels"], [5, "Murillo"], [2, "Diomande"], [34, "Aina"], [3, "Williams"], [24, "McAtee"], [21, "Schlager"], [27, "Muñoz"], [14, "Ndoye"], [10, "Gibbs-White"], [19, "Delap"]], "basis": "kampen mod Crystal Palace 11. oktober 2026 (ude)", "desc": "Glasners Forest står kompakt i en 5-4-1 uden bold, giver modstanderen meget få chancer og angriber hurtigt og direkte via wingbacks, indlæg og lange bolde frem mod Delap."},
+      {"id": "pl-sunderland", "name": "Sunderland", "coach": "Régis Le Bris", "formation": "4-2-3-1", "style": "normal", "kit": "#e2231a", "kit2": "#f5a3c7", "press": 3, "line": 3, "tempo": 3, "width": 4, "passing": 4, "setAtt": "mix", "setDef": "mixed", "xi": [[22, "Roefs"], [17, "Reinildo"], [4, "Danso"], [20, "Mukiele"], [32, "Hume"], [27, "Sadiki"], [34, "Xhaka"], [10, "Angulo"], [28, "Le Fée"], [12, "Meunier"], [18, "Isidor"]], "basis": "kampen mod Brighton & Hove Albion 10. oktober 2026 (hjemme)", "desc": "Sunderland spiller en 4-2-3-1 med Xhaka som styrmand, går gerne langt og bredt med mange indlæg og veksler uden bold mellem et mandsorienteret højt pres og en kompakt 4-4-2-blok."},
+      {"id": "pl-tottenham-hotspur", "name": "Tottenham Hotspur", "coach": "Roberto De Zerbi", "formation": "4-2-3-1", "style": "off", "kit": "#ffffff", "kit2": "#1a1f3a", "press": 4, "line": 4, "tempo": 2, "width": 4, "passing": 1, "setAtt": "mix", "setDef": "mixed", "xi": [[31, "Kinsky"], [3, "Robertson"], [37, "Van de Ven"], [6, "Van Hecke"], [14, "Gray"], [16, "Tonali"], [30, "Bentancur"], [22, "Marmoush"], [18, "Mateus Fernandes"], [17, "Sávio"], [19, "Solanke"]], "basis": "kampen mod Everton 12. september 2026 (hjemme) – holdets mest brugte startere", "desc": "De Zerbis Spurs vil have bolden, bygger tålmodigt og kort op for at lokke modstanderen frem og presser derefter højt og mandsorienteret."},
+    ] },
+  ] },
+];
+const knownTeamById = id => { for (const c of KNOWN) for (const l of c.leagues) { const t = l.teams.find(x => x.id === id); if (t) return { c, l, t }; } return null; };
 
 // Udgangspunkt: flytter de enkelte roller i forhold til grundformationen.
 // Defensiv: LW/RW og LM/RM trækker ned på midtbanelinjen, LWB/RWB ned i en femmandsbagkæde.
@@ -2041,6 +2111,7 @@ function normalizeBoard(o) {
   }
   if (['name', 'role', 'none'].includes(o.labels)) b.labels = o.labels;
   if (typeof o.drill === 'string' && /^[a-z0-9-]{1,40}$/.test(o.drill)) b.drill = o.drill;
+  if (o.known && typeof o.known === 'object') for (const k of ['home', 'away']) if (typeof o.known[k] === 'string' && knownTeamById(o.known[k])) (b.known = b.known || {})[k] = o.known[k];
   renumber(b, 'home'); renumber(b, 'away');
   b.v = 2;
   return b;
@@ -2818,7 +2889,7 @@ function hungarian(cost) {
   return out;
 }
 
-function applyFormation(team, name, style) {
+function applyFormation(team, name, style, opts = {}) {
   if (ui.playing) stopPlay();
   const f = FORMATS[board.format];
   const fKey = team + 'Formation', sKey = team + 'Style';
@@ -2855,6 +2926,7 @@ function applyFormation(team, name, style) {
   board[fKey] = name; board[sKey] = style;
   renumber(board, team);
   if (!reducedMotion()) ui.anim = { from: before, t0: performance.now(), dur: 380 };
+  if (opts.quiet) return;
   commit(); renderPanel(); renderSteps(); render();
 }
 
@@ -3160,6 +3232,9 @@ function renderPanel() {
     `<option value="${n}"${n === board[side + 'Formation'] ? ' selected' : ''}>${n}</option>`).join('');
   $('#styleSeg').innerHTML = Object.entries(STYLES).map(([k, l]) =>
     `<button type="button" role="radio" data-style="${k}" aria-checked="${k === (board[side + 'Style'] || 'normal')}">${l}</button>`).join('');
+  const kn = board.known && knownTeamById(board.known[side]);
+  $('#knownNote').hidden = !kn;
+  if (kn) $('#knownNote').textContent = `Bygger på ${kn.t.name} (${kn.l.name} ${kn.l.season}): startopstillingen fra ${kn.t.basis}.`;
   $('#rosterList').innerHTML = board[side].map(p => rosterRow(p, side)).join('');
   const offHere = board[side].filter(p => (board.off || []).includes(p.id)).length;
   $('#offNote').hidden = !offHere;
@@ -3753,6 +3828,62 @@ function applyPreset(team, id) {
   applyFormation(team, p.formation, p.style);
   toast(`${presetLabel(p)} er valgt${team === 'away' ? ' til modstanderen' : ''}.`, { label: 'Fortryd', fn: undo });
 }
+/* ---- Kendte hold (Morten 12/10: land → liga/række → hold, med startopstilling og taktik) ---- */
+const knownDlg = $('#knownDlg');
+const kd = { country: '', league: '', team: '' };
+const knownLeagueOf = (c, id) => (c && c.leagues.find(l => l.id === id)) || (c && c.leagues[0]) || null;
+const knownDate = iso => new Intl.DateTimeFormat('da-DK', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso + 'T12:00:00'));
+const kitDist = (a, b) => { const x = rgb(a), y = rgb(b); return Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]); };
+function renderKnown() {
+  const c = KNOWN.find(x => x.id === kd.country) || KNOWN[0];
+  const l = knownLeagueOf(c, kd.league);
+  const t = (l && (l.teams.find(x => x.id === kd.team) || l.teams[0])) || null;
+  kd.country = c ? c.id : ''; kd.league = l ? l.id : ''; kd.team = t ? t.id : '';
+  $('#kdCountry').innerHTML = KNOWN.map(x => `<option value="${x.id}"${x.id === kd.country ? ' selected' : ''}>${esc(x.name)}</option>`).join('');
+  $('#kdLeague').innerHTML = c ? c.leagues.map(x => `<option value="${x.id}"${x.id === kd.league ? ' selected' : ''}>${esc(x.name)}</option>`).join('') : '';
+  $('#kdTeam').innerHTML = l ? l.teams.map(x => `<option value="${x.id}"${x.id === kd.team ? ' selected' : ''}>${esc(x.name)}</option>`).join('') : '';
+  if (!t) { $('#kdCard').innerHTML = '<p class="muted">Ingen hold endnu.</p>'; return; }
+  const lay = layoutFor('11', t.formation, t.style);
+  const tac = TACTIC_KEYS.map(k => `<span class="drill-tag">${k.label}: ${k.vals[t[k.key] - 1].toLowerCase()}</span>`).join('');
+  $('#kdCard').innerHTML = `
+    <h4><span class="known-dot" style="--c:${t.kit}"></span>${esc(t.name)}</h4>
+    <div class="known-meta">${esc(l.name)} ${esc(l.season)} · Træner: ${esc(t.coach)} · ${esc(t.formation)}${t.style !== 'normal' ? ' ' + STYLES[t.style].toLowerCase() : ''}</div>
+    <p class="known-desc">${esc(t.desc)}</p>
+    <ol class="known-xi">${t.xi.map(([num, name], i) => `<li><b>${num}</b>${esc(name)}<small>${lay[i].role}</small></li>`).join('')}</ol>
+    <div class="known-tac">${tac}<span class="drill-tag">Dødbolde: ${SET_ATT[t.setAtt].toLowerCase()}, ${SET_DEF[t.setDef].toLowerCase()}</span></div>
+    <p class="group-note">Startopstillingen er fra ${esc(t.basis)}. Den opdateres ikke af sig selv.</p>`;
+}
+function openKnown() {
+  // Står holdet allerede på et kendt hold, åbnes dialogen dér.
+  const cur = board.known && knownTeamById(board.known[ui.side]);
+  if (cur) { kd.country = cur.c.id; kd.league = cur.l.id; kd.team = cur.t.id; }
+  renderKnown();
+  knownDlg.showModal();
+}
+function applyKnownTeam(side, id) {
+  const hit = knownTeamById(id); if (!hit) return;
+  const { t } = hit, other = side === 'home' ? board.kit.away : board.kit.home;
+  if (ui.playing) stopPlay();
+  board.teamNames[side] = t.name;
+  board.kit[side] = kitDist(t.kit, other) < 110 && t.kit2 && kitDist(t.kit2, other) >= 110 ? t.kit2 : t.kit;
+  Object.assign(board.tactics[side], { preset: '', press: t.press, line: t.line, tempo: t.tempo, width: t.width, passing: t.passing, setAtt: t.setAtt, setDef: t.setDef });
+  if (side === 'away') board.showAway = true;
+  else board.bench = [];   // (bænken hørte til det gamle hold)
+  const mine = new Set(board[side].map(p => p.id));
+  board.off = (board.off || []).filter(pid => !mine.has(pid)); board.neutral = (board.neutral || []).filter(pid => !mine.has(pid));
+  board.known = { ...(board.known || {}), [side]: t.id };
+  applyFormation(side, t.formation, t.style, { quiet: true });
+  board[side].forEach((p, i) => { const [num, name] = t.xi[i]; p.num = String(num); p.name = name; p.autoNum = false; p.attrs = defaultAttrs(); });
+  ui.side = side;
+  commit(); renderPanel(); renderSteps(); render();
+  toast(`${t.name} er sat ind som ${side === 'home' ? 'mit hold' : 'modstander'}.`, { label: 'Fortryd', fn: undo });
+}
+$('#knownBtn').addEventListener('click', openKnown);
+$('#kdCountry').addEventListener('change', e => { kd.country = e.target.value; kd.league = ''; kd.team = ''; renderKnown(); });
+$('#kdLeague').addEventListener('change', e => { kd.league = e.target.value; kd.team = ''; renderKnown(); });
+$('#kdTeam').addEventListener('change', e => { kd.team = e.target.value; renderKnown(); });
+$('#kdHome').addEventListener('click', () => { knownDlg.close(); applyKnownTeam('home', kd.team); });
+$('#kdAway').addEventListener('click', () => { knownDlg.close(); applyKnownTeam('away', kd.team); });
 panel.addEventListener('input', e => {
   const el = e.target;
   if (!el.dataset.tteam || el.type !== 'range') return;

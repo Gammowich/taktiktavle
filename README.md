@@ -7,7 +7,7 @@ Den kan installeres som app på hjemmeskærmen (PWA) og virker uden net, når de
 
 Banen står i midten. Resten er delt i fem faner efter, hvad du er i gang med:
 
-- **Hold:** formation, udgangspunkt, spillere (tryk for spillerkortet med nummer, navn, rolle og egenskaber), bænk og niveau for hele holdet.
+- **Hold:** kendte hold, formation, udgangspunkt, spillere (tryk for spillerkortet med nummer, navn, rolle og egenskaber), bænk og niveau for hele holdet.
 - **Taktik:** klassisk taktik, instruktioner, dødboldtaktik og *Stil op i et nyt trin*.
 - **Tegn:** tegneværktøjer, udstyr, zoom, stregfarve, trin med noter og *Afspil*. Kun her tegner man; i de andre faner flytter banen kun spillere.
 - **Træning:** 24 træningsøvelser med beskrivelse og forløb, som kan åbnes på tavlen.
@@ -18,7 +18,8 @@ Banen står i midten. Resten er delt i fem faner efter, hvad du er i gang med:
 ## Hvad den kan
 
 - **Bane:** 11 mod 11. Tavler, der er gemt i et andet kampformat i en ældre udgave, kan ikke åbnes.
-- **Formationer:** 10 formationer. Ved skift beholder spillerne navn og får den nærmeste plads i den nye formation.
+- **Formationer:** 11 formationer (bl.a. 4-2-3-1, 4-3-3, 3-4-2-1 og 5-4-1). Ved skift beholder spillerne navn og får den nærmeste plads i den nye formation.
+- **Kendte hold:** *Vælg et kendt hold* under Hold åbner land → liga/række → hold. Indtil videre findes England → Premier League 2026/27 med alle 20 hold. Hvert hold har træner, formation, udgangspunkt, spillestil, startopstilling med navne og trøjenumre og taktik (pres, forsvarslinje, tempo, bredde, afleveringer og dødbolde). *Brug som mit hold* eller *Brug som modstander* sætter det hele ind på én gang og kan fortrydes. Opstillingen er fra en bestemt kamp (står i dialogen og under Hold) og opdateres ikke af sig selv. Dataene kommer fra research med kilder i `tools/kendte_hold/` og skrives ind i appen med `python3 tools/kendte_hold.py`. Taktiktallene er skøn ud fra sæsonens første kampe, og dødboldfelterne er for de fleste hold neutrale, fordi der ikke fandtes kilder.
 - **Udgangspunkt:** Defensiv, Normal eller Offensiv for hver formation – for eget hold og modstanderen hver for sig. Defensiv ligger dybere, smallere og mere kompakt (kanterne trækker ned). Offensiv ligger højt og bredt (backs skubber op, kanterne højt, 10'eren foran 8'eren).
 - **Positioner:** engelske forkortelser – GK, LB, CB, RB, LWB, RWB, DM, CM, CAM, LM, RM, LW, RW, SS og CF.
 - **Klassiske numre:** 1 GK · 2 RB · 3 LB · 4/5 CB · 6 DM · 7 RW/RM · 8 CM · 9 CF · 10 SS/CAM · 11 LW/LM. Numrene følger positionen, når formationen skiftes. Skriver du selv et nummer (fx spillerens rigtige trøjenummer), beholder spilleren det.
@@ -52,6 +53,8 @@ Tastatur: V flyt · L løb · A aflevering · D dribling · Z zone · S streg ·
 | `docs/` | Den færdige webapp. GitHub Pages udgiver denne mappe. |
 | `tools/make_icons.py` | Tegner app-ikonerne i `docs/icons/`. |
 | `tools/konto_test.mjs` | Test af MG Games-kontoen: to "enheder" i headless Chrome mod MG Games-serveren kørt lokalt. |
+| `tools/kendte_hold.py` | Skriver de kendte hold ind i `app.html` ud fra researchen i `tools/kendte_hold/*.json` (én fil pr. liga, med kilder og forbehold). |
+| `tools/hold_test.mjs` | Test af kendte hold i headless Chrome: hvert hold sat ind og sammenholdt med dialogen. |
 | `tools/oevelser_test.mjs` | Test af træningsøvelserne, udstyr, zoom og spillere uden for banen i headless Chrome. Gemmer billeder af hvert trin. |
 | `tools/sw.template.js` | Skabelon til service worker (offline-brug). |
 | `mac/` | Mac-programmet til MG Games-launcheren: appen i sit eget vindue (Swift, WKWebView). `mac/build.sh` bygger det. |

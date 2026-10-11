@@ -1,0 +1,2052 @@
+{
+ "note": "Research 12/10 2026 af fire agenter med websøgning (ESPN, FotMob, Sky Sports, premierleague.com, klubsider, Wikipedia, Understat). Startopstilling = seneste PL-kamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn ud fra få kampe; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed'), fordi der ikke fandtes kilder.",
+ "country": {
+  "id": "england",
+  "name": "England"
+ },
+ "league": {
+  "id": "premier-league",
+  "name": "Premier League",
+  "season": "2026/27",
+  "prefix": "pl-"
+ },
+ "clubs": [
+  {
+   "club": "AFC Bournemouth",
+   "short": "Bournemouth",
+   "inPL2026_27": true,
+   "manager": "Marco Rose",
+   "lineupBasis": "Most frequent PL starters 2026/27 = XI of PL match 2026-09-12 vs Brentford (H) (identical XI 2026-09-05 at Newcastle (A))",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Petrović",
+     "pos": "GK"
+    },
+    {
+     "num": 15,
+     "name": "Smith",
+     "pos": "RB"
+    },
+    {
+     "num": 5,
+     "name": "Hill",
+     "pos": "RCB"
+    },
+    {
+     "num": 14,
+     "name": "António Silva",
+     "pos": "LCB"
+    },
+    {
+     "num": 3,
+     "name": "Truffert",
+     "pos": "LB"
+    },
+    {
+     "num": 12,
+     "name": "Adams",
+     "pos": "RDM"
+    },
+    {
+     "num": 8,
+     "name": "Scott",
+     "pos": "LDM"
+    },
+    {
+     "num": 37,
+     "name": "Rayan",
+     "pos": "RW"
+    },
+    {
+     "num": 19,
+     "name": "Kluivert",
+     "pos": "CAM"
+    },
+    {
+     "num": 16,
+     "name": "Tavernier",
+     "pos": "LW"
+    },
+    {
+     "num": 9,
+     "name": "Evanilson",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#DA291C",
+    "away": "#5B2C83"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 4,
+    "width": 3,
+    "passing": 4,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Understat PPDA is 10.49, 9th of 20, so the numbers are mid-table. I set press 4 because Rose is described as an aggressive high-press coach (premierleague.com, April 2026, a pre-season source), so this is partly judgement. Possession is 48.1% (11th). The long-ball share is 7.6% of accurate passes (6th highest) and 6.4% of shots come from fast attacks (4th highest, Understat): passing 4, tempo 4. Accurate crosses are 4.3 per game (9th), so width 3. ESPN called their approach 'cavalier' after the 5-1 at Chelsea, and the Analyst counts 9 points dropped from winning positions in the first 5 games. That gives style 'off' and line 4 (no line-height metric found). Set plays make up 30.7% of xG, 2nd highest in the league (Understat), and Tavernier's free kicks into the six-yard box were a threat against Brentford.",
+   "desc": "Bournemouth spiller en offensiv og vertikal 4-2-3-1, der presser højt og går hurtigt og direkte frem, men står åbent bagud og taber mange føringer.",
+   "uncertain": [
+    "Why this XI and not the latest match: the 10 Oct XI at Chelsea (lost 5-1) was missing Scott (thigh/quad, out roughly 4-8 weeks) and Kluivert (small muscle injury, possible return late October). It played a structure not used before this season: Petrović; Smith, Hill, António Silva, Truffert; Adams, Christie (#10); Brooks (#7), Rayan, Tavernier; Evanilson. That was Brooks's only PL start.",
+    "Because of those injuries, Scott and Kluivert are not available right now. Adams started PL games 3-6; Cook (#4) started games 1-2.",
+    "Press 4 and line 4 partly rest on Rose's general profile from a pre-season source (April 2026). The 2026/27 PPDA is only mid-table.",
+    "setAtt 'mix' and setDef 'mixed' are placeholders: I found no 2026/27 source on their corner routines or marking.",
+    "The home shirt is red and black stripes; I used red as the main colour. The away kit is purple. Hexes are approximate."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879285 — 12 Sep XI, numbers, 4-2-3-1",
+    "https://www.espn.com/soccer/match/_/gameId/401879285 — position labels (Rayan AM right, Tavernier AM left, Kluivert AM, Adams right / Scott left midfield, Silva centre-left defender), 57% possession",
+    "https://www.skysports.com/football/bournemouth-vs-brentford/teams/559475 — same XI and numbers, team-sheet order",
+    "https://www.brentfordfc.com/en/news/article/match-reports-bournemouth-2-brentford-2-kevin-schade-premier-league-12-09-2026 — names (António Silva), Tavernier free kicks",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879320 , /401879296 , /401879286 , /401879276 , /401878775 — XIs of the other PL games (start counts)",
+    "https://www.skysports.com/football/chelsea-vs-bournemouth/teams/7344304273628933232 — 10 Oct XI at Chelsea",
+    "https://www.espn.com/soccer/report/_/gameId/401878775 — Chelsea 5-1 Bournemouth, 'cavalier approach'",
+    "https://theprideoflondon.com/chelsea-vs-afc-bournemouth-early-injury-news-6-ruled-out- — Rose quotes on Kluivert and Scott injuries (7 Oct 2026)",
+    "https://www.beinsports.com/en-us/soccer/premier-league/articles/england-and-tuchel-not-to-blame-for-scotts-injury-says-rose-2026-10-08 — Scott thigh injury, 4-5 weeks, manager Rose",
+    "https://www.premierleague.com/en/news/4728153/one-stat-that-sums-up-each-clubs-202627-season-so-far — manager Rose, 9 points dropped from winning positions",
+    "https://www.premierleague.com/en/news/4637071/marco-rose-how-jurgen-klopp-influenced-bournemouths-new-head-coach — Rose's high-press profile (Apr 2026, pre-season)",
+    "https://understat.com/league/EPL/2026 — PPDA, attack speed, set-piece xG share",
+    "https://www.fotmob.com/en-GB/leagues/47/stats/season/36781/teams/possession_percentage_team/premier-league-teams — possession, long balls, passes, crosses",
+    "https://www.footyheadlines.com/8795982387/no-more-umbro-hummel-bournemouth-26-27-home-kit-released.html — home kit red and black stripes (Hummel)",
+    "https://www.footyheadlines.com/8363495290/no-more-umbro-hummel-bournemouth-26-27-away-kit-released.html — away kit purple"
+   ]
+  },
+  {
+   "club": "Arsenal",
+   "short": "Arsenal",
+   "inPL2026_27": true,
+   "manager": "Mikel Arteta",
+   "lineupBasis": "PL match 2026-10-10 vs Leeds United (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Raya",
+     "pos": "GK"
+    },
+    {
+     "num": 4,
+     "name": "White",
+     "pos": "RB"
+    },
+    {
+     "num": 15,
+     "name": "Konsa",
+     "pos": "RCB"
+    },
+    {
+     "num": 6,
+     "name": "Gabriel",
+     "pos": "LCB"
+    },
+    {
+     "num": 33,
+     "name": "Calafiori",
+     "pos": "LB"
+    },
+    {
+     "num": 41,
+     "name": "Rice",
+     "pos": "RDM"
+    },
+    {
+     "num": 49,
+     "name": "Lewis-Skelly",
+     "pos": "LDM"
+    },
+    {
+     "num": 7,
+     "name": "Saka",
+     "pos": "RW"
+    },
+    {
+     "num": 8,
+     "name": "Ødegaard",
+     "pos": "CAM"
+    },
+    {
+     "num": 20,
+     "name": "Madueke",
+     "pos": "LW"
+    },
+    {
+     "num": 29,
+     "name": "Havertz",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#EF0107",
+    "away": "#1B2A4A"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 3,
+    "width": 3,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "near",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession is 59.1%, 3rd in the league (FotMob). The Analyst had 59.5% after 5 games. Understat PPDA is 10.57, only 11th of 20. But over the first 5 games Arsenal ran 22.7 km more than their opponents, the most in the league (Analyst). They also allow the fewest deep completions (4.0 per game) and make the most (11.5 per game, Understat). That gives press 4 and line 4; I found no direct line-height stat. Accurate long balls are 18.0 per game against 435.0 accurate passes, a 4.1% long-ball share (17th of 20), so passing 2. Only 3.8% of shots come from fast attacks (Understat), which points to a controlled build-up: tempo 3. Accurate crosses are 4.0 per game (10th), so width 3. Set plays make up 16.9% of xG (11th); 13 shots from corners this season and 0 goals. setAtt 'near' comes from the 2025/26 'near-post rush' analysis (premierleague.com, 20 May 2026).",
+   "desc": "Arsenal dominerer bolden i en 4-2-3-1 med korte afleveringer, høj forsvarslinje og et arbejdsomt genpres, der holder modstanderen langt væk fra eget mål.",
+   "uncertain": [
+    "Tzolis (#17) started at LW in PL games 1-5 and was injured on 10 Oct; Madueke replaced him. When fit, Tzolis has been the regular LW.",
+    "Saliba is not in the 19 Sep or 10 Oct matchday squads. Previews say he is injured; I did not read that in a primary source. If fit, he may displace Konsa (Mosquera started at CB in PL games 1-2).",
+    "Rice right / Lewis-Skelly left is based on Sky's team-sheet order and ESPN's 'Left Midfielder' label for Lewis-Skelly on 10 Oct. ESPN had them the other way round on 21 Aug.",
+    "Saka and Madueke are coded RW/LW to fit the app's 4-2-3-1 template. ESPN labels them 'Attacking Midfielder Right/Left' (RAM/LAM).",
+    "Line height: I found no 2026/27 line-height metric, so it is inferred from the stats above.",
+    "setAtt 'near' is based on 2025/26 analysis, not this season. setDef 'mixed' is a placeholder: I found no source on Arsenal's 2026/27 set-piece marking.",
+    "Kit hexes are approximate: home is a red body with white sleeves, away is navy with a yellow geometric graphic."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879268 — 10 Oct XI, shirt numbers, formation 4-2-3-1, position labels",
+    "https://www.skysports.com/football/arsenal-vs-leeds-united/teams/6597748919932588232 — same XI and numbers, right-to-left team-sheet order",
+    "https://www.espn.com/soccer/report/_/gameId/401879268 — Arsenal 2-1 Leeds, 10 Oct 2026, report",
+    "https://www.espn.com/soccer/scoreboard/_/date/20261010/league/eng.1 — 10 Oct 2026 PL results",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879301 , /401879295 , /401879292 , /401878779 , /401879274 — XIs of PL games 1-5 (Tzolis LW, Mosquera/Konsa CB)",
+    "https://www.footballchannel.jp/2026/10/08/post999246/ — 2026/27 PL fixtures, results and table",
+    "https://www.premierleague.com/en/news/4728153/one-stat-that-sums-up-each-clubs-202627-season-so-far — manager Arteta, 59.5% possession, +22.7 km (1 Oct 2026)",
+    "https://theanalyst.com/articles/premier-league-one-stat-for-each-team-2026-27 — same stats (8 Oct 2026)",
+    "https://www.fotmob.com/en-GB/leagues/47/stats/season/36781/teams/possession_percentage_team/premier-league-teams — possession 2026/27 (also the accurate_long_balls_team, accurate_pass_team and accurate_cross_team pages)",
+    "https://understat.com/league/EPL/2026 — PPDA, deep completions, attack speed, set-piece xG share (computed from its JSON data)",
+    "https://www.premierleague.com/en/news/4662597/arsenal — 2025/26 corner routines (near-post rush); background only",
+    "https://arseblog.news/2026/05/arsenal-launch-new-adidas-home-shirt-for-2026-27-season/ — home kit: red body, white sleeves",
+    "https://www.goal.com/en/lists/arsenal-2026-27-away-kit-bruised-banana-1990s-inspired/bltaeba4d8cae20d695 — away kit: navy with yellow"
+   ]
+  },
+  {
+   "club": "Aston Villa",
+   "short": "Aston Villa",
+   "inPL2026_27": true,
+   "manager": "Unai Emery",
+   "lineupBasis": "PL match 2026-10-10 vs Brentford (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Suzuki",
+     "pos": "GK"
+    },
+    {
+     "num": 2,
+     "name": "Cash",
+     "pos": "RB"
+    },
+    {
+     "num": 3,
+     "name": "Lindelöf",
+     "pos": "RCB"
+    },
+    {
+     "num": 5,
+     "name": "Mings",
+     "pos": "LCB"
+    },
+    {
+     "num": 13,
+     "name": "Ruggeri",
+     "pos": "LB"
+    },
+    {
+     "num": 8,
+     "name": "Kamara",
+     "pos": "RDM"
+    },
+    {
+     "num": 35,
+     "name": "João Gomes",
+     "pos": "LDM"
+    },
+    {
+     "num": 7,
+     "name": "McGinn",
+     "pos": "RW"
+    },
+    {
+     "num": 10,
+     "name": "Buendía",
+     "pos": "CAM"
+    },
+    {
+     "num": 44,
+     "name": "Manzambi",
+     "pos": "LW"
+    },
+    {
+     "num": 11,
+     "name": "Jackson",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#670E36",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 2,
+    "line": 3,
+    "tempo": 3,
+    "width": 2,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Understat PPDA is 16.93, 19th of 20, so Villa press passively from a mid or low block: press 2. Possession is 46.9% (14th). Accurate crosses are 1.2 per game, by far the fewest in the league (19th is 2.5). That gives width 2; I kept it off 1 because of the 6-game sample. The long-ball share is 5.4% of accurate passes (13th), so passing 3. 5.9% of shots come from fast attacks and 4.4% from slow ones (Understat): tempo 3. Line 3: Emery's high line and offside trap are documented for 2024/25-2025/26, but I found no 2026/27 measure. Villa also allow 8.3 deep completions per game (3rd most), which argues against a 4. After 5 games they were bottom for xG (4.56), shots (48) and shots on target (12) (Analyst). Set plays are only 8.5% of xG (19th).",
+   "desc": "Villa spiller en afventende 4-2-3-1 med en kompakt og smal blok, næsten ingen indlæg og et roligt opspil, men har svært ved at skabe store chancer.",
+   "uncertain": [
+    "Ruggeri (LB) went off at half-time against Brentford with a hamstring problem, and Maatsen (LB in PL games 1-4) is injured. Wan-Bissaka covered at LB (Sky), so LB for the next match is open.",
+    "The right/left sides for Lindelöf/Mings and Kamara/João Gomes come only from Sky's team-sheet order. ESPN gave no position label for these four on 10 Oct.",
+    "This XI is the same as the 3-2 win at Tottenham (19 Sep) except Cash for Wan-Bissaka. PL games 1-4 used Barkley, Hemmings, Maatsen and Torres instead of Manzambi, João Gomes, Ruggeri and Mings.",
+    "Line height: no 2026/27 data, see tacticsWhy.",
+    "setAtt 'mix' and setDef 'mixed' are placeholders: I found no 2026/27 source on Villa's set pieces.",
+    "Kit hexes are approximate: home is claret with light-blue trim, away is black with gold."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878776 — 10 Oct XI, numbers, 4-2-3-1, labels (McGinn AM right, Manzambi AM left, Buendía AM)",
+    "https://www.skysports.com/football/aston-villa-vs-brentford/teams/7080030056527860232 — same XI and numbers, team-sheet order",
+    "https://www.skysports.com/football/news/13592769/aston-villa-2-2-brentford-unbeaten-bees-find-leveller-through-kristoffer-ajer-to-halt-villa-turnaround-at-villa-park — report, Emery, Ruggeri hamstring, Maatsen injury",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879297 , /401879295 , /401878781 , /401879284 , /401879269 — XIs of PL games 1-5",
+    "https://www.101greatgoals.com/match-reports/aston-villa-2-2-brentford-report-result-and-goals-as-spoils-shared-in-midlands/ — match stats (52% possession)",
+    "https://www.premierleague.com/en/news/4728153/one-stat-that-sums-up-each-clubs-202627-season-so-far — manager Emery, bottom for xG and shots",
+    "https://www.fotmob.com/en-GB/leagues/47/stats/season/36781/teams/accurate_cross_team/premier-league-teams — crosses 1.2 per game (also the possession, long-ball and pass pages)",
+    "https://understat.com/league/EPL/2026 — PPDA 16.93, deep completions allowed, attack speed, set-piece share",
+    "https://shirtsociety.eu/articles/aston-villa-2026-27-home-kit-adidas — home kit claret with Glow Blue trim",
+    "https://readastonvilla.com/2026/08/20/aston-villa-officially-launch-black-and-gold-2026-27-away-kit/ — away kit black and gold"
+   ]
+  },
+  {
+   "club": "Brentford",
+   "short": "Brentford",
+   "inPL2026_27": true,
+   "manager": "Keith Andrews",
+   "lineupBasis": "PL match 2026-10-10 vs Aston Villa (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Kelleher",
+     "pos": "GK"
+    },
+    {
+     "num": 33,
+     "name": "Kayode",
+     "pos": "RB"
+    },
+    {
+     "num": 44,
+     "name": "Schuster",
+     "pos": "RCB"
+    },
+    {
+     "num": 20,
+     "name": "Ajer",
+     "pos": "LCB"
+    },
+    {
+     "num": 25,
+     "name": "Diouf",
+     "pos": "LB"
+    },
+    {
+     "num": 6,
+     "name": "Yarmoliuk",
+     "pos": "RDM"
+    },
+    {
+     "num": 27,
+     "name": "Janelt",
+     "pos": "LDM"
+    },
+    {
+     "num": 19,
+     "name": "Anthony",
+     "pos": "RW"
+    },
+    {
+     "num": 23,
+     "name": "Lewis-Potter",
+     "pos": "CAM"
+    },
+    {
+     "num": 7,
+     "name": "Schade",
+     "pos": "LW"
+    },
+    {
+     "num": 9,
+     "name": "Igor Thiago",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#E30613",
+    "away": "#1B2A47"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 3,
+    "tempo": 4,
+    "width": 4,
+    "passing": 4,
+    "style": "normal",
+    "setAtt": "far",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Understat PPDA is 8.08, the 4th most intense in the league: press 4. Possession is 45.7% (15th) and accurate passes are 290.2 per game (17th). The long-ball share is 7.1% (7th highest), so passing 4. Brentford's report on the 3-0 against Chelsea stresses direct balls into the channels for Thiago, and 6.3% of shots come from fast attacks (5th): tempo 4. They make the most accurate crosses in the league (6.3 per game). That gives width 4; I kept it off 5 because of the 6-game sample. Line 3: they allow 9.5 deep completions per game (2nd most), and I found no line-height metric. They have trailed for only 3 min 10 s all season (Analyst), which fits a balanced 'normal' style. Set plays make up 25.9% of xG (5th). The opener against Chelsea was a Damsgaard corner whipped to the back post, and Kayode's long throws are still used: setAtt 'far'.",
+   "desc": "Brentford er et direkte og hårdtpresende 4-2-3-1-hold, der søger hurtigt i dybden mod angriberen, slår flest indlæg i ligaen og er farligt på dødbolde og lange indkast.",
+   "uncertain": [
+    "This XI is shaped by Damsgaard's ankle injury from Denmark duty (Sportsmole, 8-9 Oct): Lewis-Potter, who was LB in PL games 1-5, moved to CAM, and Diouf made his first PL start at LB. The pre-injury XI (18 Sep vs Chelsea, H) was Kelleher; Kayode, Schuster, Ajer, Lewis-Potter; Yarmoliuk, Janelt; Anthony, Damsgaard (#24), Schade; Thiago.",
+    "Schade (shoulder) and Schuster (precautionary) were substituted on 10 Oct (Sky). Collins (#22, CB in PL games 1-3) is coming back from a calf injury.",
+    "Formation: ESPN and Understat give 4-2-3-1. Brentford's own match reports call it 4-3-3 (12 and 18 Sep).",
+    "setAtt 'far' rests on a single 2026/27 corner goal. setDef 'mixed' is a placeholder with no 2026/27 source.",
+    "Line height is inferred, not measured.",
+    "The home shirt is red and white stripes; I used red. The away kit is navy with cream pinstripes. Hexes are approximate."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878776 — 10 Oct XI, numbers, 4-2-3-1, labels (Ajer centre-left defender, Diouf LB, Yarmoliuk right midfield, Anthony AM right, Schade AM left)",
+    "https://www.skysports.com/football/aston-villa-vs-brentford/teams/7080030056527860232 — same XI and numbers, team-sheet order",
+    "https://www.skysports.com/football/news/13592769/aston-villa-2-2-brentford-unbeaten-bees-find-leveller-through-kristoffer-ajer-to-halt-villa-turnaround-at-villa-park — report, manager Keith Andrews, Schade and Schuster substituted",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879321 , /401879315 , /401879311 , /401879285 , /401879275 — XIs of PL games 1-5",
+    "https://www.sportsmole.co.uk/football/brentford/predicted-lineups/damsgaard-concern-collins-jensen-decisions-predicted-brentford-lineup-vs-aston-villa_606424.html — Damsgaard ankle injury, Collins calf",
+    "https://www.brentfordfc.com/en/news/article/match-reports-brentford-3-chelsea-0-premier-league-jaidon-anthony-igor-thiago-fabio-carvalho — back-post corner goal, direct play, long throws, pre-injury XI",
+    "https://www.premierleague.com/en/news/4728153/one-stat-that-sums-up-each-clubs-202627-season-so-far — manager Andrews, trailed only 3 min 10 s",
+    "https://understat.com/league/EPL/2026 — PPDA 8.08, deep completions allowed, attack speed, set-piece share",
+    "https://www.fotmob.com/en-GB/leagues/47/stats/season/36781/teams/accurate_cross_team/premier-league-teams — crosses 6.3 per game, 1st (also the possession, long-ball and pass pages)",
+    "https://www.joma-sport.com/blog/en/?p=127690 — home kit red and white stripes (15 Jul 2026)",
+    "https://www.footyheadlines.com/5949360180/brentford-fc-26-27-away-kit-released.html — away kit navy with cream pinstripes"
+   ]
+  },
+  {
+   "club": "Brighton & Hove Albion",
+   "short": "Brighton",
+   "inPL2026_27": true,
+   "manager": "Fabian Hürzeler",
+   "lineupBasis": "PL match 2026-10-10 vs Sunderland (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Verbruggen",
+     "pos": "GK"
+    },
+    {
+     "num": 24,
+     "name": "Kadioglu",
+     "pos": "RB"
+    },
+    {
+     "num": 44,
+     "name": "Vuskovic",
+     "pos": "RCB"
+    },
+    {
+     "num": 4,
+     "name": "Struijk",
+     "pos": "LCB"
+    },
+    {
+     "num": 21,
+     "name": "Boscagli",
+     "pos": "LB"
+    },
+    {
+     "num": 13,
+     "name": "Gross",
+     "pos": "RDM"
+    },
+    {
+     "num": 14,
+     "name": "Chema Andrés",
+     "pos": "LDM"
+    },
+    {
+     "num": 25,
+     "name": "Gómez",
+     "pos": "RW"
+    },
+    {
+     "num": 26,
+     "name": "Ayari",
+     "pos": "CAM"
+    },
+    {
+     "num": 29,
+     "name": "De Cuyper",
+     "pos": "LW"
+    },
+    {
+     "num": 19,
+     "name": "Kostoulas",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#0057B8",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 5,
+    "line": 4,
+    "tempo": 2,
+    "width": 4,
+    "passing": 3,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Brighton have the lowest PPDA in the league (Opta 7.4 via the Analyst and premierleague.com; Understat 6.32, also 1st) and the most high turnovers (56): press 5. Possession is 60.3% (2nd). They have the league's highest share of shots from slow, patient attacks (13.6%, Understat) and only 5.5% from fast attacks: tempo 2. Accurate crosses are 5.0 per game (4th), so width 4. The long-ball share is 5.9% (9th), though the volume of 25.7 per game is 4th most: passing 3, short combinations mixed with long balls. Line 4: a press this high implies an advanced line, but deep completions allowed are a mid-table 7.2 per game and I found no line-height metric. Set plays make up 24.7% of xG (6th). The opener at Sunderland came from a long throw Sunderland failed to clear.",
+   "desc": "Brighton kombinerer ligaens mest aggressive højpres med tålmodigt opspil i en 4-2-3-1, så bolden ofte vindes højt på banen.",
+   "uncertain": [
+    "Struijk (LCB) got a straight red card on 57' on 10 Oct, so he is likely suspended for the next PL games. Dunk (#5) started at CB in PL games 1-4.",
+    "This XI was identical in PL games 5 and 6 (Sky: same XI that beat Arsenal). Games 1-4 used Dunk, Wieffer, Yalcouyé, Hinshelwood and Rutter in some spots.",
+    "Boscagli (usually a CB) at LB and De Cuyper (usually a full-back) on the left of the attacking three follow ESPN's position labels and Sky's order.",
+    "Gross right / Chema Andrés left is based on ESPN's 'Right Midfielder' label for Gross on 10 Oct. ESPN had them the other way round on 19 Sep.",
+    "setAtt 'mix' and setDef 'mixed' are placeholders: I found no 2026/27 source on Brighton's corner routines or marking. Line height is inferred.",
+    "Kit hexes are approximate: home is royal blue with white pinstripes, away is white with blue pinstripes."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878772 — 10 Oct XI, numbers, 4-2-3-1, labels (Struijk centre-left / Vuskovic centre-right defender, Gross right midfield, Gómez AM right, De Cuyper AM left, Ayari AM)",
+    "https://www.skysports.com/football/sunderland-vs-brighton/teams/559503 — same XI and numbers, team-sheet order, Struijk red card",
+    "https://www.skysports.com/football/sunderland-vs-brighton/report/559503 — Sunderland 0-2 Brighton, 10 Oct 2026; Hurzeler; same XI as against Arsenal; long-throw opener",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879274 , /401879297 , /401879317 , /401879290 , /401879282 — XIs of PL games 1-5",
+    "https://theanalyst.com/articles/premier-league-one-stat-for-each-team-2026-27 — PPDA 7.4 (lowest), 56 high turnovers, manager Hürzeler",
+    "https://www.premierleague.com/en/news/4728153/one-stat-that-sums-up-each-clubs-202627-season-so-far — same, 1 Oct 2026",
+    "https://understat.com/league/EPL/2026 — PPDA 6.32, attack speed (slow/fast share), set-piece xG share",
+    "https://www.fotmob.com/en-GB/leagues/47/stats/season/36781/teams/possession_percentage_team/premier-league-teams — possession 60.3% (also the long-ball, pass and cross pages)",
+    "https://www.footyheadlines.com/2026/07/brighton-26-27-kits.html — home royal blue with white pinstripes, away white with blue pinstripes"
+   ]
+  },
+  {
+   "club": "Chelsea",
+   "short": "Chelsea",
+   "inPL2026_27": true,
+   "manager": "Xabi Alonso",
+   "lineupBasis": "PL match 2026-10-10 vs Bournemouth (H)",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Martínez",
+     "pos": "GK"
+    },
+    {
+     "num": 34,
+     "name": "Acheampong",
+     "pos": "RCB"
+    },
+    {
+     "num": 5,
+     "name": "Lacroix",
+     "pos": "CB"
+    },
+    {
+     "num": 6,
+     "name": "Colwill",
+     "pos": "LCB"
+    },
+    {
+     "num": 7,
+     "name": "Neto",
+     "pos": "RWB"
+    },
+    {
+     "num": 25,
+     "name": "Caicedo",
+     "pos": "RDM"
+    },
+    {
+     "num": 14,
+     "name": "Henderson",
+     "pos": "LDM"
+    },
+    {
+     "num": 29,
+     "name": "Chavarría",
+     "pos": "LWB"
+    },
+    {
+     "num": 10,
+     "name": "Palmer",
+     "pos": "RAM"
+    },
+    {
+     "num": 17,
+     "name": "Rogers",
+     "pos": "LAM"
+    },
+    {
+     "num": 9,
+     "name": "João Pedro",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#034694",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 4,
+    "width": 4,
+    "passing": 3,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob season stats: possession 47.9% (12th), possession won in final third 3.3/match (9th), accurate long balls 19.5/match (13th), accurate crosses 3.2/match (17th), 2.5 goals scored/match (3rd) and 2.2 conceded/match (19th). PPDA in the opener at Fulham was 17.46 against Fulham's 9.88, with 4.37 passes per possession; their plan was to get the ball into the front three early. Analyses (12 Sep and 30 Sep) describe traditional wing-backs stretching the pitch, Joao Pedro as first outlet in transition, wing-backs and central midfielders pushing so far forward that rest defence is often empty, and a front press that is decent but uneven. Hence press 3, tempo 4, width 4 and attacking starting positions. There is no line-height data, so line 3 is a judgement.",
+   "desc": "Chelsea spiller 3-4-2-1 under Xabi Alonso med høje wingbacks og hurtige, direkte angreb gennem Palmer, Rogers og João Pedro, men efterlader ofte store huller bagud, når mange spillere går frem på én gang.",
+   "uncertain": [
+    "Left/right for Caicedo/Henderson and Palmer/Rogers is inferred from FotMob's listing order. Rogers on the left is supported by an analysis, and Chavarría at left wing-back by a match analysis.",
+    "Formation: FotMob, dave.sport and chelseafconline say 3-4-2-1, Yahoo Sports says 3-4-3.",
+    "This XI is Alonso's latest choice but not the most frequent one. Fofana, Hato and Lavia (4 league starts each) were on the bench, Reece James was injured, and Neto (normally a forward) played right wing-back.",
+    "setAtt and setDef: no 2026/27 source describes Chelsea's corner routines or marking system, so 'mix' and 'mixed' are placeholders. They have scored 5 set-piece goals (2nd) and conceded 6 (most in the league).",
+    "Kit hex values are approximate: home is described as 'Bright Blue' with gold trim, away is black with yellow/gold trim."
+   ],
+   "sources": [
+    "https://www.fotmob.com/matches/chelsea-vs-afc-bournemouth/2fe5n5 — XI with shirt numbers and order, 3-4-2-1, 5-1 result, 50% possession",
+    "https://dave.sport/news/chelsea-vs-bournemouth-confirmed-line-ups/ — confirmed XI with numbers, 3-4-2-1",
+    "https://sports.yahoo.com/articles/chelsea-vs-afc-bournemouth-premier-125259622.html — confirmed XI (listed as 3-4-3), bench",
+    "https://www.premierleague.com/en/news/4725682/all-20-premier-league-clubs-squad-numbers-for-202627-season — official 2026/27 squad numbers (22 Sep 2026)",
+    "https://www.skysports.com/football/news/13592771/chelsea-5-1-bournemouth-jordan-hendersons-stunning-strikes-help-fast-starting-blues-to-bounce-back-win — result, Alonso as manager (11 Oct 2026)",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Chelsea_F.C._season — league starts per player up to 10 Oct 2026",
+    "https://www.fotmob.com/teams/8455/stats/chelsea/teams — season team stats (possession, long balls, crosses, final-third regains, set pieces)",
+    "https://tacticalfootballanalysis.com/fulham-chelsea-premier-league-2026-2027-tactical-analysis-tactics/ — PPDA 17.46, 39.5% possession, pressing structure, direct progression (26 Aug 2026)",
+    "https://themastermindsite.com/2026/09/12/xabi-alonso-chelsea-tactical-analysis/ — 44% possession, width, transitions, weak rest defence, league-high set-piece goals",
+    "https://www.thechelseachronicle.com/columnist/inside-xabi-alonsos-tactics-five-things-we-have-learned-about-his-new-look-chelsea-so-far/ — wing-backs, empty rest defence, pressing demands (30 Sep 2026)",
+    "https://chelseafconline.com/2026/10/chelsea-5-1-bournemouth-tactical-analysis-what-alonso-got-right-and-wrong/ — first-half press, Chavarría on the left, conceded from a corner",
+    "https://www.chelseafc.com/en/news/article/lion-takes-pride-of-place-as-new-chelsea-home-kit-set-loose — home kit Bright Blue with Midwest Gold (seen via search summary only)",
+    "https://www.chelseafc.com/en/news/article/2026-27-chelsea-away-kit-is-unveiled — away kit black with yellow (seen via search summary only)"
+   ]
+  },
+  {
+   "club": "Coventry City",
+   "short": "Coventry",
+   "inPL2026_27": true,
+   "manager": "Frank Lampard",
+   "lineupBasis": "PL match 2026-09-19 vs Nottingham Forest (A)",
+   "formation": "3-4-3",
+   "players": [
+    {
+     "num": 19,
+     "name": "Rushworth",
+     "pos": "GK"
+    },
+    {
+     "num": 12,
+     "name": "Mfuni",
+     "pos": "RCB"
+    },
+    {
+     "num": 4,
+     "name": "Bobby Thomas",
+     "pos": "CB"
+    },
+    {
+     "num": 2,
+     "name": "Pinnock",
+     "pos": "LCB"
+    },
+    {
+     "num": 8,
+     "name": "Yirenkyi",
+     "pos": "RWB"
+    },
+    {
+     "num": 16,
+     "name": "Onyeka",
+     "pos": "RCM"
+    },
+    {
+     "num": 6,
+     "name": "Grimes",
+     "pos": "LCM"
+    },
+    {
+     "num": 3,
+     "name": "Dasilva",
+     "pos": "LWB"
+    },
+    {
+     "num": 5,
+     "name": "Rudoni",
+     "pos": "RW"
+    },
+    {
+     "num": 23,
+     "name": "Thomas-Asante",
+     "pos": "CF"
+    },
+    {
+     "num": 10,
+     "name": "Mason-Clark",
+     "pos": "LW"
+    }
+   ],
+   "kit": {
+    "home": "#4FA3DC",
+    "away": "#F2EEE4"
+   },
+   "tactics": {
+    "press": 2,
+    "line": 2,
+    "tempo": 4,
+    "width": 4,
+    "passing": 4,
+    "style": "def",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob season stats: possession 39.0% (19th), accurate passes 264.4/match (19th), accurate long balls 23.6/match (6th, the highest share of long balls of these five clubs), accurate crosses 4.6/match (8th), possession won in final third 2.0/match (18th), tackles 9.0/match (20th) and clearances 30.4/match (5th). Single matches: 38% possession at Forest and 30% against Brighton. Rotowire (9 Oct) says Coventry don't need the ball, their main threat is quick transitions, and the spare centre-back lets the wing-backs push high. Hence a low press and deep line, fast and direct play, wide wing-backs and defensive starting positions.",
+   "desc": "Coventry forsvarer dybt i en 3-4-3 med lidt boldbesiddelse og søger hurtige omstillinger med lange bolde og wingbacks, der løber frem i kanterne.",
+   "uncertain": [
+    "This is the most recent league XI before 12 Oct, but it was shaped by absences. Amenda (4 starts, out until at least the end of the year), van Ewijk (4 starts at right-back/right wing-back, hamstring, now back in training) and Awoniyi (3 starts, suspended until after the 12 Oct match) were all missing. With everyone fit, van Ewijk would likely be RWB and Awoniyi CF.",
+    "Formation: FotMob gives 3-4-3 for this match, while previews (Rotowire, Bolavip) describe a 3-4-2-1.",
+    "Left/right inside the back three and midfield pair is inferred from FotMob's listing order. Dasilva at left wing-back is supported by Rotowire.",
+    "Home kit: footballfashion.org describes a 'deeper Sky Blue' jacquard-striped shirt, footyheadlines says blue and white vertical stripes. The hex value is approximate.",
+    "setAtt and setDef: no source found, so these are placeholders. Rudoni has taken over corners from Grimes."
+   ],
+   "sources": [
+    "https://www.fotmob.com/en-GB/matches/coventry-city-vs-nottingham-forest/2y16ft — XI with numbers, 3-4-3, Lampard, 1-0 win, 38% possession",
+    "https://www.fotmob.com/matches/coventry-city-vs-brighton-hove-albion/2y1l02 — previous XI (3-4-3), 30% possession",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Coventry_City_F.C._season — results, Lampard, league starts per player up to 19 Sep",
+    "https://www.premierleague.com/en/news/4725682/all-20-premier-league-clubs-squad-numbers-for-202627-season — official 2026/27 squad numbers",
+    "https://rotowire.com/soccer/article/coventry-city-vs-newcastle-prediction-predicted-lineups-team-news-139813 — 39% average possession, transitions, wing-back roles, injuries and suspension, corner takers (9 Oct 2026)",
+    "https://www.fotmob.com/teams/8669/stats/coventry-city/teams — season team stats",
+    "https://footballfashion.org/wordpress/2026/07/04/coventry-city-2026-27-home-jersey-hummel/ — home kit, deeper sky blue",
+    "https://www.footyheadlines.com/2162211388/coventry-city-26-27-premier-league-home-kit-released.html — conflicting description of the home kit (blue and white stripes)",
+    "https://footballfashion.org/wordpress/2026/08/11/coventry-city-2026-27-jersey-away-kit/ — away kit off-white with navy and coral"
+   ]
+  },
+  {
+   "club": "Crystal Palace",
+   "short": "Crystal Palace",
+   "inPL2026_27": true,
+   "manager": "Pierre Sage",
+   "lineupBasis": "PL match 2026-10-11 vs Nottingham Forest (H)",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 44,
+     "name": "Benítez",
+     "pos": "GK"
+    },
+    {
+     "num": 8,
+     "name": "Lerma",
+     "pos": "RCB"
+    },
+    {
+     "num": 26,
+     "name": "Richards",
+     "pos": "CB"
+    },
+    {
+     "num": 6,
+     "name": "Canvot",
+     "pos": "LCB"
+    },
+    {
+     "num": 25,
+     "name": "Khalaili",
+     "pos": "RWB"
+    },
+    {
+     "num": 20,
+     "name": "Wharton",
+     "pos": "RDM"
+    },
+    {
+     "num": 23,
+     "name": "Timber",
+     "pos": "LDM"
+    },
+    {
+     "num": 3,
+     "name": "Mitchell",
+     "pos": "LWB"
+    },
+    {
+     "num": 18,
+     "name": "Kamada",
+     "pos": "RAM"
+    },
+    {
+     "num": 10,
+     "name": "Pino",
+     "pos": "LAM"
+    },
+    {
+     "num": 22,
+     "name": "Strand Larsen",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 3,
+    "tempo": 4,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob season stats: possession 43.4% (18th), tackles 22.2/match (1st), possession won in final third 4.8/match (6th), clearances 30.7/match (2nd), accurate long balls 19.0/match (15th) and accurate crosses 2.5/match (19th). An analysis (16 Sep) says Sage prefers aggressive counter-pressing to a low block, that Palace lead the league in tackles attempted and won, and that they conceded a league-high 164 box touches in the first four matches. In pre-season (29 Jul) Sage told the team to hold a higher line and keep pressing, with the wing-backs giving the width. Against Forest they had 43% possession and won 21 tackles to 12. Hence press 4. Line is 3 rather than 4 because the high-line intent isn't borne out by the box touches and clearances conceded. Width 3 because of the low cross count.",
+   "desc": "Crystal Palace spiller 3-4-2-1 under Pierre Sage med aggressivt genpres og mange tacklinger, wingbacks højt i banen og hurtige løb i dybden, selv om holdet sjældent har bolden.",
+   "uncertain": [
+    "This XI is shaped by absences: Benítez replaced the injured Henderson (3 starts each), Lerma played in the back three because Disasi was suspended, and Mateta was injured. Otherwise it matches the most frequent starters (per-player starts on Wikipedia).",
+    "Left/right for the three centre-backs, Wharton/Timber and Kamada/Pino is inferred from FotMob's listing order. Sports Mole's predicted lineup had Timber on the right and Wharton on the left.",
+    "Kit: the 2026/27 home shirt is white with a red/blue sash (not the traditional stripes), and the away kit is black ('Eagle Black'). A red/blue third kit ('Eagle Wings') also exists, and one site says it is used for away games.",
+    "setAtt and setDef: no source found, so these are placeholders. Lerma scored from a Wharton corner against Forest.",
+    "No measured line-height data for Palace this season."
+   ],
+   "sources": [
+    "https://www.fotmob.com/matches/crystal-palace-vs-nottingham-forest/3bfk5h — XI with numbers and order, 3-4-2-1, Sage, 3-1, 43% possession",
+    "https://thefalse9.com/2026/10/crystal-palace-3-1-nottingham-forest-player-ratings-delap.html — both teams in 3-4-2-1, Mitchell at wing-back (11 Oct 2026)",
+    "https://www.skysports.com/football/crystal-palace-vs-nottingham-forest/report/559498 — result, Sage quotes (11 Oct 2026)",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Crystal_Palace_F.C._season — results, Sage, league starts per player up to 11 Oct",
+    "https://www.sportsmole.co.uk/football/crystal-palace/preview/crystal-palace-vs-nottm-forest-prediction-team-news-lineups_606578.html — team news (Henderson, Mateta, Tomiyasu out, Disasi suspended)",
+    "https://www.premierleague.com/en/news/4725682/all-20-premier-league-clubs-squad-numbers-for-202627-season — official 2026/27 squad numbers",
+    "https://www.fotmob.com/teams/9826/stats/crystal-palace/teams — season team stats",
+    "https://sports.yahoo.com/articles/structural-growing-pains-why-box-201559598.html — counter-pressing, tackles, 164 box touches conceded (16 Sep 2026)",
+    "https://readcrystalpalace.com/2026/07/29/pierre-sage-tells-crystal-palace-to-play-higher-during-como-cup/ — high line and pressing demands, wing-backs give width",
+    "https://www.sofascore.com/news/crystal-palace-3-1-nottingham-forest-clinical-palace-turn-the-tide-at-selhurst-park — match stats (tackles 21-12, clearances 34, 40% long-ball accuracy)",
+    "https://www.footyheadlines.com/8420100691/crystal-palace-26-27-home-kit-released.html — home kit white with sash (17 Jul 2026)",
+    "https://about.macron.com/en/news/kit-launches/crystal-palace-fc-eagle-black-kit-2026-27/ — Eagle Black away kit (seen via search summary only)"
+   ]
+  },
+  {
+   "club": "Everton",
+   "short": "Everton",
+   "inPL2026_27": true,
+   "manager": "David Moyes",
+   "lineupBasis": "PL match 2026-09-19 vs Ipswich Town (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Pickford",
+     "pos": "GK"
+    },
+    {
+     "num": 2,
+     "name": "Maitland-Niles",
+     "pos": "RB"
+    },
+    {
+     "num": 6,
+     "name": "Tarkowski",
+     "pos": "RCB"
+    },
+    {
+     "num": 4,
+     "name": "Branthwaite",
+     "pos": "LCB"
+    },
+    {
+     "num": 16,
+     "name": "Mykolenko",
+     "pos": "LB"
+    },
+    {
+     "num": 37,
+     "name": "Garner",
+     "pos": "RDM"
+    },
+    {
+     "num": 45,
+     "name": "Armstrong",
+     "pos": "LDM"
+    },
+    {
+     "num": 22,
+     "name": "Johnson",
+     "pos": "RW"
+    },
+    {
+     "num": 8,
+     "name": "Dewsbury-Hall",
+     "pos": "CAM"
+    },
+    {
+     "num": 10,
+     "name": "Grealish",
+     "pos": "LW"
+    },
+    {
+     "num": 11,
+     "name": "Barry",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#003399",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 3,
+    "tempo": 3,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob season stats: possession 47.1% (13th), possession won in final third 5.5/match (2nd), tackles 17.5/match (3rd), fewest fouls (7.3/match), accurate passes 367.7/match (8th), accurate long balls 19.0/match (16th), accurate crosses 3.3/match (16th), 0.8 goals conceded/match (joint best), 3 set-piece goals (4th) and 0 conceded. Hull's coach said Everton have high tactical discipline and are strong in challenges. Everton had 65% possession at Hull and 45% against Man Utd. Press 4 rests mainly on the final-third regains (no PPDA available). Few long balls and crosses point to a balanced tempo, width and passing.",
+   "desc": "Everton spiller en disciplineret 4-2-3-1 under David Moyes med et solidt forsvar, to arbejdsomme centrale midtbanespillere og mange erobringer højt på banen, hvorfra Grealish og Dewsbury-Hall sætter angrebet i gang.",
+   "uncertain": [
+    "The most recent league match (2026-10-11 at Hull, 2-2) was not used because it was unusual: Mykolenko (5 previous starts) was absent, Branthwaite played out of position at left-back and Keane made his first league appearance. That XI was Pickford; Maitland-Niles, Tarkowski, Keane, Branthwaite; Garner, Armstrong; Johnson, Dewsbury-Hall, Grealish; Barry. The 19 Sep XI is the last full-strength one.",
+    "Left wing: Grealish (on loan from 1 Sep) started the last two league matches, but Tyrique George has more starts this season (4 of 6).",
+    "Tarkowski right / Branthwaite left and Garner right / Armstrong left come from FotMob's order for the Hull match. ESPN's order for 19 Sep could be read the other way.",
+    "setAtt and setDef: no source found, so these are placeholders.",
+    "Kit hex values are approximate: home is royal blue, away is white with amber and royal-blue pinstripes."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/match/_/gameId/401878778/ipswich-town-everton — 19 Sep XI with numbers, 4-2-3-1, 1-0 result",
+    "https://www.fotmob.com/matches/hull-city-vs-everton/2hgrvk — Hull XI (11 Oct) with numbers and positional order, Moyes, 65% possession",
+    "https://www.skysports.com/football/hull-city-vs-everton/559499 — 2-2 result, Moyes as manager, Jakirovic quote (11 Oct 2026)",
+    "https://sports.yahoo.com/articles/everton-player-ratings-vs-hull-145221529.html — Maitland-Niles at right-back (11 Oct 2026)",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Everton_F.C._season — results, Moyes, league starts per player up to 19 Sep",
+    "https://www.premierleague.com/en/news/4725682/all-20-premier-league-clubs-squad-numbers-for-202627-season — official 2026/27 squad numbers",
+    "https://www.fotmob.com/teams/8668/stats/everton/teams — season team stats",
+    "https://readeverton.com/everton-man-utd-tactical-analysis-stats-xg/ — 45% possession and stats against Man Utd (Sep 2026)",
+    "https://footballfashion.org/wordpress/2026/07/04/everton-football-club-2026-27-castore-home-kit/ — home kit royal blue (seen via search summary only)",
+    "https://footballfashion.org/wordpress/2026/07/24/everton-football-club-2026-27-away-jersey/ — away kit white with amber and royal-blue pinstripes (seen via search summary only)"
+   ]
+  },
+  {
+   "club": "Fulham",
+   "short": "Fulham",
+   "inPL2026_27": true,
+   "manager": "Álvaro Arbeloa",
+   "lineupBasis": "PL match 2026-09-20 vs Manchester United (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Leno",
+     "pos": "GK"
+    },
+    {
+     "num": 21,
+     "name": "Castagne",
+     "pos": "RB"
+    },
+    {
+     "num": 22,
+     "name": "Affengruber",
+     "pos": "RCB"
+    },
+    {
+     "num": 3,
+     "name": "Bassey",
+     "pos": "LCB"
+    },
+    {
+     "num": 33,
+     "name": "Robinson",
+     "pos": "LB"
+    },
+    {
+     "num": 16,
+     "name": "Berge",
+     "pos": "RDM"
+    },
+    {
+     "num": 19,
+     "name": "Charles",
+     "pos": "LDM"
+    },
+    {
+     "num": 14,
+     "name": "Bobb",
+     "pos": "RW"
+    },
+    {
+     "num": 24,
+     "name": "King",
+     "pos": "CAM"
+    },
+    {
+     "num": 17,
+     "name": "Iwobi",
+     "pos": "LW"
+    },
+    {
+     "num": 7,
+     "name": "Gonzalo García",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#C8102E"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 3,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob season stats: possession 54.0% (7th), accurate passes 458.8/match (4th), accurate long balls 20.7/match (11th, the lowest share of long balls of these five clubs), accurate crosses 4.0/match (11th) and possession won in final third 2.7/match (16th). In the opener against Chelsea they had 60.5% possession, PPDA 9.88 and 6.29 passes per possession, building patiently through the thirds. Pressing is a stated Arbeloa principle, but the season's final-third regains are low, hence press 3. Passing 2 reflects the short build-up. Line, tempo and width have no direct data and are set to 3.",
+   "desc": "Fulham spiller en boldbesiddende 4-2-3-1 under Álvaro Arbeloa med tålmodig opbygning bagfra og fremskudte backer, men holdet har svært ved at omsætte spillet til mål og lukker for mange ind.",
+   "uncertain": [
+    "The most recent league match (2026-10-10 at Ipswich, 1-2) was not used because both regular full-backs were missing. Robinson was out with an ankle injury, and I found no reason for Castagne's absence. Tete played right-back and Sessegnon left-back, and the rest of the XI was unchanged except that Charles and Berge appeared in reversed order in FotMob's listing. The 20 Sep XI is also the most frequent XI (per-player starts on Wikipedia up to 20 Sep).",
+    "Berge right / Charles left is from FotMob's order for 20 Sep. FotMob listed them the other way round for the Ipswich match.",
+    "The away kit is a red and black checkerboard with red shorts, so the red hex is a simplification.",
+    "PPDA (9.88) comes from a single match (the opener).",
+    "setAtt and setDef: no source found, so these are placeholders."
+   ],
+   "sources": [
+    "https://www.fotmob.com/matches/fulham-vs-manchester-united/3cqww9 — 20 Sep XI with numbers and order, 4-2-3-1, 1-1",
+    "https://tacticalfootball.substack.com/p/fulham-vs-manchester-united-1-1-premier — 20 Sep XI with Castagne RB and Robinson LB, 4-2-3-1 (22 Sep 2026)",
+    "https://www.fotmob.com/matches/fulham-vs-ipswich-town/38hr4t — latest XI (10 Oct), Robinson listed unavailable, 52% possession",
+    "https://sports.yahoo.com/articles/fulham-fall-low-defeat-ipswich-174016458.html — Robinson's ankle injury (10 Oct 2026)",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Fulham_F.C._season — results, Arbeloa, league starts per player up to 20 Sep",
+    "https://www.premierleague.com/en/news/4725682/all-20-premier-league-clubs-squad-numbers-for-202627-season — official 2026/27 squad numbers",
+    "https://www.fotmob.com/teams/9879/stats/fulham/teams — season team stats",
+    "https://tacticalfootballanalysis.com/fulham-chelsea-premier-league-2026-2027-tactical-analysis-tactics/ — PPDA 9.88, 60.5% possession, patient build-up (26 Aug 2026)",
+    "https://footballfashion.org/wordpress/2026/08/02/fulham-football-club-2026-27-jersey-home-kit/ — white home kit (seen via search summary only)",
+    "https://www.footyheadlines.com/9342556308/fulham-26-27-away-kit-released-tribute-to-96-97-away-kit.html — red and black checkerboard away kit (seen via search summary only)"
+   ]
+  },
+  {
+   "club": "Hull City",
+   "short": "Hull City",
+   "inPL2026_27": true,
+   "manager": "Sergej Jakirović",
+   "lineupBasis": "PL match 2026-10-11 vs Everton (H), 2-2",
+   "formation": "5-4-1",
+   "players": [
+    {
+     "num": 19,
+     "name": "Tzolakis",
+     "pos": "GK"
+    },
+    {
+     "num": 2,
+     "name": "Coyle",
+     "pos": "RWB"
+    },
+    {
+     "num": 6,
+     "name": "Ajayi",
+     "pos": "RCB"
+    },
+    {
+     "num": 15,
+     "name": "Egan",
+     "pos": "CB"
+    },
+    {
+     "num": 32,
+     "name": "Mendy",
+     "pos": "LCB"
+    },
+    {
+     "num": 3,
+     "name": "Giles",
+     "pos": "LWB"
+    },
+    {
+     "num": 11,
+     "name": "Gelhardt",
+     "pos": "RM"
+    },
+    {
+     "num": 25,
+     "name": "Crooks",
+     "pos": "RCM"
+    },
+    {
+     "num": 27,
+     "name": "Slater",
+     "pos": "LCM"
+    },
+    {
+     "num": 7,
+     "name": "Thomas",
+     "pos": "LM"
+    },
+    {
+     "num": 9,
+     "name": "McBurnie",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#F5A12D",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 2,
+    "line": 2,
+    "tempo": 4,
+    "width": 3,
+    "passing": 4,
+    "style": "def",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Hull have very little of the ball: 31.5% possession at Coventry, about 31.7% vs Chelsea (68.3% Chelsea) and 35% vs Everton. They pass inaccurately (73%, 223 accurate passes vs Everton's 511). Squawka and FPL Scout describe a deep, compact 5-4-1 with a direct style and quick counters; Coyle and Giles push forward on the break and McBurnie is the target man. McBurnie had the most high-intensity pressures in the opposition half after 3 games (105), but the team block is deep, so press=2 and line=2. Both goals vs Man United came from set pieces (corner, free kick). I found no data on set-piece routines or on how they defend set pieces.",
+   "desc": "Hull forsvarer dybt og kompakt i en 5-4-1, lader modstanderen have bolden og kontrerer hurtigt og direkte med McBurnie som omdrejningspunkt og fremadstormende wingbacks, og holdet er farligt på dødbolde.",
+   "uncertain": [
+    "Gelhardt made his first PL start of the season vs Everton; Belloumi (#10) started 5 of 6 PL games at RM and came off the bench to score.",
+    "Stroud (#21) started 4 of 6 at LM but was doubtful before Everton; Sorba Thomas has started the last 2.",
+    "The Sportsmole/Squawka previews listed Mendy as out, but ESPN's post-match data shows him starting at LCB. I trusted ESPN.",
+    "The Everton XI comes from one source (ESPN); I could not find an official club team sheet.",
+    "setAtt and setDef are placeholders (no source found). Hull's home shirt is amber and black stripes, so #F5A12D is approximate."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878774 — XI, numbers, 5-4-1, MKM Stadium, 11 Oct 2026",
+    "https://www.espn.com/soccer/report/_/gameId/401878774 — 2-2, Belloumi scored as a substitute",
+    "https://www.espn.com/soccer/matchstats/_/gameId/401878774 — 35% possession, 73% passing",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879271 (+401879283, 401878781, 401879316, 401879322) — earlier 2026/27 XIs, 5-4-1 every game",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Hull_City_A.F.C._season — squad numbers, Sorba Thomas #7, head coach",
+    "https://www.beinsports.com/en-au/football/premier-league/articles/hull-city-boss-jakirovic-signs-new-contract-2026-09-04 — Jakirović new contract Sept 2026",
+    "https://www.fantasyfootballscout.co.uk/2026/10/06/the-fpl-half-term-report-hull — 5-4-1, direct style, xG, set-piece takers",
+    "https://www.11v11.com/what-the-premier-leagues-promoted-clubs-revealed-on-opening-weekend/ — compact block, counters, set-piece goals",
+    "https://theanalyst.com/?p=258086 — 31.5% possession at Coventry",
+    "https://www.leedsunited.com/en/news/history-dcl-and-a-perfect-away-start-opta-facts-ahead-of-brighton — McBurnie 105 high-intensity pressures",
+    "https://www.footyheadlines.com/9961893249/oxen-hull-city-26-27-premier-league-home-kit-released-no-more-kappa.html — amber/black home kit",
+    "https://www.footyheadlines.com/1521930241/no-more-kappa-hull-city-26-27-premier-league-away-kit-released.html — white away kit"
+   ]
+  },
+  {
+   "club": "Ipswich Town",
+   "short": "Ipswich",
+   "inPL2026_27": true,
+   "manager": "Gary O'Neil",
+   "lineupBasis": "PL match 2026-09-19 vs Everton (A); NOT the latest match (2026-10-10 vs Fulham (H)), because Fatawu was suspended and Florentino and Philogene made their first starts",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 28,
+     "name": "Walton",
+     "pos": "GK"
+    },
+    {
+     "num": 42,
+     "name": "Ouattara",
+     "pos": "RB"
+    },
+    {
+     "num": 6,
+     "name": "Diop",
+     "pos": "RCB"
+    },
+    {
+     "num": 26,
+     "name": "O'Shea",
+     "pos": "LCB"
+    },
+    {
+     "num": 3,
+     "name": "Davis",
+     "pos": "LB"
+    },
+    {
+     "num": 23,
+     "name": "Lukić",
+     "pos": "RDM"
+    },
+    {
+     "num": 25,
+     "name": "Palacios",
+     "pos": "LDM"
+    },
+    {
+     "num": 7,
+     "name": "Fatawu",
+     "pos": "RAM"
+    },
+    {
+     "num": 10,
+     "name": "Enciso",
+     "pos": "CAM"
+    },
+    {
+     "num": 47,
+     "name": "Clarke",
+     "pos": "LAM"
+    },
+    {
+     "num": 19,
+     "name": "Emersonn",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#0044A9",
+    "away": "#F2E6B8"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 4,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Ipswich have had 39% possession (vs Sunderland) and 48% (vs Fulham), with 86% passing accuracy vs Fulham. 11v11 says they pressed high at chosen moments, played forward quickly after winning the ball and did not use long balls as a route. Their attack is strong: open-play xG 7.32 is 4th in the league. Their defence is not: open-play xGC 7.6, 86 shots and 17 big chances conceded, all bottom four. The Fulham report mentions wide play with Enciso crossing. O'Neil has said he wants his teams to have the ball. I found no data on set-piece routines or on how they defend set pieces.",
+   "desc": "Ipswich spiller en offensiv 4-2-3-1 under Gary O'Neil, presser højt i udvalgte øjeblikke og går hurtigt fremad efter erobringer med Enciso som kreativ tier, men giver mange chancer væk, især på udebane.",
+   "uncertain": [
+    "Fulham XI (10 Oct, won 2-1): Walton; Ouattara, Diop, O'Shea, Davis; Florentino #12, Lukić; Maeda #38 (right), Enciso, Philogene #11 (left); Emersonn.",
+    "Scherpen #37 started 4 of 6 in goal but has lost his place to Walton; Greaves #24 started 4 before Ouattara came in and O'Shea moved to centre-back.",
+    "Maeda #38 started 4 games on the left before Clarke took over; Clarke is on loan.",
+    "Palacios (LDM) and Lukić (RDM) sides are read from ESPN's list order; the source gives no position labels.",
+    "setAtt and setDef are placeholders (no source found). The blue home colour is my approximation."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878778 — XI and 4-2-3-1 at Everton, 19 Sep 2026",
+    "https://www.irishexaminer.com/sport/soccer/arid-41913196.html — Ipswich lost 1-0 at Everton, Fatawu sent off",
+    "https://www.fantasyfootballscout.co.uk/2026/10/06/the-fpl-half-term-report-ipswich — first choices, Fatawu suspended GW6, xG/xGC stats",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879265 — Fulham XI, Portman Road, 10 Oct 2026",
+    "https://www.espn.com/soccer/report/_/gameId/401879265 — 2-1 vs Fulham, O'Neil named as manager",
+    "https://www.espn.com/soccer/matchstats/_/gameId/401879265 — 48% possession, 86% passing",
+    "https://www.beinsports.com/en-us/soccer/premier-league/articles/ipswich-finalise-oneil-appointment-after-mckenna-exit-2026-06-23 — O'Neil appointed",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Ipswich_Town_F.C._season — squad numbers (Fatawu #7, Clarke #47)",
+    "https://www.11v11.com/what-the-premier-leagues-promoted-clubs-revealed-on-opening-weekend/ — 39% possession, selective high press",
+    "https://www.footyheadlines.com/1624725449/ipswich-town-26-27-home-away-kits-revealed.html — blue home, cream away kit"
+   ]
+  },
+  {
+   "club": "Leeds United",
+   "short": "Leeds",
+   "inPL2026_27": true,
+   "manager": "Daniel Farke",
+   "lineupBasis": "PL match 2026-10-10 vs Arsenal (A), 1-2",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Trafford",
+     "pos": "GK"
+    },
+    {
+     "num": 24,
+     "name": "Justin",
+     "pos": "RCB"
+    },
+    {
+     "num": 30,
+     "name": "Elvedi",
+     "pos": "CB"
+    },
+    {
+     "num": 5,
+     "name": "Muharemović",
+     "pos": "LCB"
+    },
+    {
+     "num": 2,
+     "name": "Bogle",
+     "pos": "RWB"
+    },
+    {
+     "num": 4,
+     "name": "Ampadu",
+     "pos": "RCM"
+    },
+    {
+     "num": 22,
+     "name": "Tanaka",
+     "pos": "LCM"
+    },
+    {
+     "num": 3,
+     "name": "Gudmundsson",
+     "pos": "LWB"
+    },
+    {
+     "num": 18,
+     "name": "Stach",
+     "pos": "RAM"
+    },
+    {
+     "num": 19,
+     "name": "Okafor",
+     "pos": "LAM"
+    },
+    {
+     "num": 9,
+     "name": "Calvert-Lewin",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#FFD100"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 4,
+    "passing": 4,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Leeds had 42% possession and 78% passing accuracy at Arsenal. After 5 games they had conceded the fewest goals in the league (3), with open-play xGC 3rd best, but their attack is low-volume: shots and big chances are bottom eight and open-play xG is 15th. They are dangerous from set pieces (set-piece xG 3rd, Stach 17 corners) but concede from them too (set-piece xGC 17th). Calvert-Lewin leads the press from the front (104 high-intensity pressures in the opposition half), but the block is compact, so press=3. The wing-backs give width, which is why width=4. passing=4 is based on Farke's back-three system being called 'more direct' in 2025/26, with Calvert-Lewin as the target striker. ESPN called them 'well-drilled'.",
+   "desc": "Leeds er et velorganiseret hold med tremandsforsvar og wingbacks, der står solidt defensivt, presser fra fronten med Calvert-Lewin og skaber meget af sin farlighed på dødbolde via Stach.",
+   "uncertain": [
+    "Leeds switch between 3-5-2 (Brighton, Newcastle, Palace, with these same 11 players) and 3-4-2-1 (Forest, Brentford, Arsenal).",
+    "ESPN labels Okafor and Stach as Center Left/Right Forward; I mapped them to LAM/RAM.",
+    "The 'more direct' description comes from 2025/26 coverage; I found no 2026/27 long-ball data.",
+    "setAtt and setDef are placeholders (no source found)."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879268 — XI, numbers, 3-4-2-1, Emirates, 10 Oct 2026",
+    "https://www.espn.com/soccer/report/_/gameId/401879268 — Farke named, 'well-drilled'",
+    "https://www.espn.com/soccer/matchstats/_/gameId/401879268 — 42% possession, 78% passing",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879273 (+401879280, 401879290, 401879315, 401879298) — earlier XIs and formations",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Leeds_United_F.C._season — squad numbers, Farke",
+    "https://www.fantasyfootballscout.co.uk/2026/10/06/the-fpl-half-term-report-leeds — xG/xGC splits, set pieces, Stach",
+    "https://www.leedsunited.com/en/news/history-dcl-and-a-perfect-away-start-opta-facts-ahead-of-brighton — Calvert-Lewin pressures",
+    "https://www.leedsunited.com/en/news/leeds-united-and-adidas-unveil-2026-27-home-jersey — white home kit",
+    "https://www.leedsunited.com/en/news/leeds-united-unveil-adidas-away-kit-for-2627-season — yellow away kit"
+   ]
+  },
+  {
+   "club": "Liverpool",
+   "short": "Liverpool",
+   "inPL2026_27": true,
+   "manager": "Andoni Iraola",
+   "lineupBasis": "Most frequent PL starters (6 games) = exact XI of PL match 2026-09-04 vs Ipswich Town (A); NOT the latest match (2026-10-11 vs Manchester City (H), 0-3), because Isak, Gakpo and Szoboszlai were injured",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Alisson",
+     "pos": "GK"
+    },
+    {
+     "num": 33,
+     "name": "Araújo",
+     "pos": "RB"
+    },
+    {
+     "num": 5,
+     "name": "Jacquet",
+     "pos": "RCB"
+    },
+    {
+     "num": 4,
+     "name": "Van Dijk",
+     "pos": "LCB"
+    },
+    {
+     "num": 6,
+     "name": "Kerkez",
+     "pos": "LB"
+    },
+    {
+     "num": 8,
+     "name": "Szoboszlai",
+     "pos": "RDM"
+    },
+    {
+     "num": 10,
+     "name": "Mac Allister",
+     "pos": "LDM"
+    },
+    {
+     "num": 23,
+     "name": "Muñoz",
+     "pos": "RAM"
+    },
+    {
+     "num": 7,
+     "name": "Wirtz",
+     "pos": "CAM"
+    },
+    {
+     "num": 18,
+     "name": "Gakpo",
+     "pos": "LAM"
+    },
+    {
+     "num": 9,
+     "name": "Isak",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#C8102E",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 5,
+    "line": 4,
+    "tempo": 4,
+    "width": 3,
+    "passing": 3,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Opta has Liverpool with the league's highest rate of high-intensity pressures in the opposition half (48.9% of opponent touches) and 3rd for fewest passes per defensive action. Opponents average only 9.1 passes in their own three-fifths before a Liverpool defensive action. They have become more direct: direct speed is up to 1.87 m/s and passes per sequence down to 3.9. They kept 3 clean sheets in a row and had xGC 6.12 (3rd) after 5 games. ESPN says they 'pressed the life out of City' in the first half. line=4 is inferred from the high press; I found no line-height data. Szoboszlai takes almost all set pieces (17 corners, 9 free-kick crosses). I found no data on how they defend set pieces.",
+   "desc": "Liverpool under Iraola presser meget højt og aggressivt og spiller hurtigere og mere vertikalt fremad end før, med Wirtz som kreativt omdrejningspunkt bag Isak.",
+   "uncertain": [
+    "Latest XI vs City (4-2-3-1): Alisson; Araújo, Jacquet, Van Dijk, Kerkez; Gravenberch #38, Mac Allister; Muñoz, Wirtz, Barcola #29; Koumas #67. Isak, Gakpo and Szoboszlai may still be unavailable now.",
+    "Mac Allister (4 starts) and Gravenberch (3) rotate next to Szoboszlai.",
+    "Barcola has started 3 games on the left, including the last 2.",
+    "Gakpo has started on both the left and the right; Frimpong #30 started 2 games at RB.",
+    "No source confirms line height, width or set-piece routines."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879288 — XI vs Ipswich, 4 Sep 2026",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879264 — XI vs City, 11 Oct 2026, Gravenberch sent off",
+    "https://www.espn.com/soccer/report/_/gameId/401879264 — Iraola and Maresca named, absentees, first-half press",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879276 (+401879279, 401879314, 401879319) — other 2026/27 XIs",
+    "https://www.espn.com/soccer/team/squad/_/id/364 — 2026-27 shirt numbers",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Liverpool_F.C._season — Iraola, numbers 1/5/8/33",
+    "https://www.liverpoolfc.com/news/liverpool-fc-appoint-andoni-iraola-new-head-coach — appointment",
+    "https://www.liverpoolfc.com/news/revealed-victor-munozs-squad-number-liverpool — Muñoz #23",
+    "https://www.liverpoolfc.com/news/pressing-attacking-approach-and-solidity-opta-analysis-liverpools-start-2026-27 — pressing and directness stats",
+    "https://theanalyst.com/?p=263445 — 48.9% high-intensity pressure rate",
+    "https://www.fantasyfootballscout.co.uk/2026/10/06/the-fpl-half-term-report-liverpool — 4-2-3-1 every game, starters, set-piece takers",
+    "https://www.liverpoolfc.com/news/lfc-and-adidas-unveil-2026-27-home-kit-inspired-iconic-title-winning-season — red home kit",
+    "https://www.liverpoolfc.com/news/liverpool-fc-officially-unveils-new-adidas-away-kit-2026-27 — white away kit"
+   ]
+  },
+  {
+   "club": "Manchester City",
+   "short": "Man City",
+   "inPL2026_27": true,
+   "manager": "Enzo Maresca",
+   "lineupBasis": "PL match 2026-10-11 vs Liverpool (A), 3-0",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Donnarumma",
+     "pos": "GK"
+    },
+    {
+     "num": 27,
+     "name": "Nunes",
+     "pos": "RB"
+    },
+    {
+     "num": 3,
+     "name": "Dias",
+     "pos": "RCB"
+    },
+    {
+     "num": 6,
+     "name": "Guéhi",
+     "pos": "LCB"
+    },
+    {
+     "num": 33,
+     "name": "O'Reilly",
+     "pos": "LB"
+    },
+    {
+     "num": 5,
+     "name": "Anderson",
+     "pos": "RDM"
+    },
+    {
+     "num": 17,
+     "name": "Enzo Fernández",
+     "pos": "LDM"
+    },
+    {
+     "num": 7,
+     "name": "Ndiaye",
+     "pos": "RAM"
+    },
+    {
+     "num": 10,
+     "name": "Cherki",
+     "pos": "CAM"
+    },
+    {
+     "num": 42,
+     "name": "Semenyo",
+     "pos": "LAM"
+    },
+    {
+     "num": 9,
+     "name": "Haaland",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#6CABDD",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 2,
+    "width": 4,
+    "passing": 1,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "City averaged over 60% possession in the first 5 games, had 65% at Anfield, and lead the CIES 'game dictating index' (80.1). Their 83.0% pass completion under high-intensity pressure is the league's best. At Anfield they completed 489 passes at 89%, which is why passing=1 and tempo=2. They are 2nd for xG (10.50) but 9th for xGC (7.25), and NBC calls the defence 'shaky'. Pre-season analysis describes Maresca building up in a 3-2-5 with an inverted full-back and wingers holding the width, and pressing from a 4-2-4 high block. That analysis was not confirmed with in-season data. Corners are shared between Anderson, Cherki, Foden and Enzo Fernández. I found no data on how they defend set pieces.",
+   "desc": "City under Maresca dominerer boldbesiddelsen med et tålmodigt, kort opspil, hvor kanterne holder bredden og Cherki og Haaland skaber farligheden, mens forsvaret til tider er sårbart.",
+   "uncertain": [
+    "Gvardiol #24 started 5 of 6 at LB; O'Reilly started there only vs Liverpool.",
+    "RAM is split between Foden #47 (3 starts) and Ndiaye (3 starts); Khusanov #45 has started 3 games at RB/CB.",
+    "Anderson and Fernández have swapped left/right between games.",
+    "The away shirt is black and yellow (bee pattern); #111111 is the main colour only.",
+    "The 3-2-5 and press details come from pre-season analysis; setAtt and setDef are placeholders."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879264 — XI, numbers, 4-2-3-1, Anfield, 11 Oct 2026",
+    "https://www.espn.com/soccer/matchstats/_/gameId/401879264 — 65% possession, 489 passes at 89%",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879272 (+401879278, 401879287, 401879294, 401879320) — earlier XIs",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Manchester_City_F.C._season — squad numbers, Maresca",
+    "https://www.itv.com/news/granada/2026-06-29/manchester-city-appoint-enzo-maresca-as-new-manager — appointment",
+    "https://theanalyst.com/?p=262834 — over 60% possession through 5 games",
+    "https://roundtable.io/sports/soccer/premier-league/arsenal/news/arsenal-rank-third-among-premier-league-clubs-for-dictating-play — CIES index 80.1",
+    "https://theanalyst.com/?p=263445 — 83.0% passing under pressure",
+    "https://www.fantasyfootballscout.co.uk/2026/10/06/the-fpl-half-term-report-man-city — xG/xGC, set-piece takers",
+    "https://www.nbcsports.com/soccer/news/grades-for-all-20-premier-league-clubs-based-on-the-season-so-far — 'shaky' defence",
+    "https://www.mancity.com/news/club/manchester-city-202627-home-kit-launched-63914816 — sky blue home kit",
+    "https://footballfashion.org/wordpress/2026/08/02/manchester-city-2026-27-away-jersey-puma/ — black/yellow away kit"
+   ]
+  },
+  {
+   "club": "Manchester United",
+   "short": "Man United",
+   "inPL2026_27": true,
+   "manager": "Michael Carrick",
+   "lineupBasis": "PL match 2026-10-10 vs Tottenham Hotspur (H), drew 1-1",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Lammens",
+     "pos": "GK"
+    },
+    {
+     "num": 15,
+     "name": "Yoro",
+     "pos": "RB"
+    },
+    {
+     "num": 5,
+     "name": "Maguire",
+     "pos": "RCB"
+    },
+    {
+     "num": 6,
+     "name": "Martínez",
+     "pos": "LCB"
+    },
+    {
+     "num": 23,
+     "name": "Shaw",
+     "pos": "LB"
+    },
+    {
+     "num": 18,
+     "name": "Tielemans",
+     "pos": "RDM"
+    },
+    {
+     "num": 37,
+     "name": "Mainoo",
+     "pos": "LDM"
+    },
+    {
+     "num": 16,
+     "name": "Amad",
+     "pos": "RAM"
+    },
+    {
+     "num": 8,
+     "name": "Bruno Fernandes",
+     "pos": "CAM"
+    },
+    {
+     "num": 10,
+     "name": "Cunha",
+     "pos": "LAM"
+    },
+    {
+     "num": 19,
+     "name": "Mbeumo",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#DA291C",
+    "away": "#1F4FB4"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 4,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob 2026/27 season-to-date: 58.2% possession (5th), 484.5 accurate passes per match (2nd), only 19.2 accurate long balls per match (about 4% of accurate passes), 6.0 accurate crosses per match (joint 2nd), but just 3.0 possession wins in the final third per match (13th). The Analyst (8 Oct): 182 touches in the opposition box after 5 games, the most in the league. A pre-season analysis (20 Aug 2026) describes a 4-2-4 shape built on short goal kicks, third-man runs and four high, narrow attackers who press. Against Spurs the press was beaten: Spurs had 58% possession and 0.96 xG to 0.05 in the first half. So passing is short and the starting positions are attacking, but pressing intensity in the data is only average. Line height has no data and is set to 3.",
+   "desc": "United bygger kort op fra målmanden i en 4-2-3-1, der i angreb ligner en 4-2-4 med fire offensive spillere højt og mange indlæg fra kanterne, men presset og midtbanen har haft svært ved at holde stand mod gode modstandere.",
+   "uncertain": [
+    "Formation: ESPN and FotMob both give 4-2-3-1, and several rating pieces put Yoro at right-back (back four). NBC's pre-match live blog thought it looked like a back three with Amad and Shaw as wing-backs.",
+    "Tielemans RDM / Mainoo LDM is inferred from ESPN/FotMob display order. ESPN's labels swapped sides between earlier games.",
+    "Yoro was described as out of position at RB. In GW2–GW5 the regular XI had Dalot at RB, Rashford at LAM, Mbeumo at RAM and Cunha at CF. Rashford missed GW6 with a groin problem.",
+    "No PPDA or defensive-line data found. Line=3 is a judgement call.",
+    "Set-piece routines and marking scheme not found. setAtt 'mix' and setDef 'mixed' are neutral placeholders, not findings.",
+    "Kit hex values are approximations of a red home shirt and a royal-blue away shirt."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878773 — XI, shirt numbers, 4-2-3-1, Amad AM right / Cunha AM left / Mbeumo forward",
+    "https://www.fotmob.com/matches/tottenham-hotspur-vs-manchester-united/2xqo0r — 1-1 on 10 Oct 2026, XI with numbers, both teams 4-2-3-1, 50% possession, xG 0.80 vs 1.62",
+    "https://www.sportsmole.co.uk/football/man-utd/news/baleba-rashford-maddison-decisions-man-utd-vs-spurs-team-news-confirmed_606633.html — confirmed XI; Yoro for Dalot, Amad for injured Rashford",
+    "https://www.skysports.com/football/news/13592777/man-utd-1-1-tottenham-dominic-solanke-rescues-dramatic-draw-for-10-man-spurs-at-old-trafford — result, Carrick as head coach",
+    "https://www.thenationalnews.com/sport/football/2026/10/11/manchester-united-ratings-vs-tottenham-mbeumo-strikes-but-late-solanke-goal-frustrates-carrick/ — Yoro at right-back (search snippet only)",
+    "https://www.espn.com/soccer/team/results/_/id/360/manchester-united — 2026/27 PL results and game IDs",
+    "https://www.espn.com/soccer/lineups/_/gameId/401878777 (also 401879278, 401879291, 401879293) — GW2–GW5 XIs, used to check how typical GW6 was",
+    "https://themanchesterdaily.co.uk/news/sport/manchester-uniteds-tactical-shift-under-michael-carrick-ahead-of-premier-league--mt0xtz8l — 4-2-4, short goal kicks, high narrow press (20 Aug 2026)",
+    "https://thefalse9.com/2026/10/ten-man-tottenham-rescued-point-old-trafford.html — first-half possession/xG/sprints vs Spurs",
+    "https://theanalyst.com/articles/premier-league-one-stat-for-each-team-2026-27 — 182 opposition-box touches",
+    "https://www.fotmob.com/en-GB/leagues/47/stats/season/36781/teams/possession_percentage_team/premier-league-teams — possession (also accurate_pass_team, accurate_long_balls_team, accurate_cross_team, poss_won_att_3rd_team pages)",
+    "https://www.nss-sports.com/en/kits/45368/manchester-united-home-jersey-2026-27-adidas — red 2026/27 home kit (search summary)",
+    "https://global.espn.com/football/story/_/id/49423996/man-united-go-retro-royal-blue-2026-27-away-kit — royal-blue away kit (search summary)"
+   ]
+  },
+  {
+   "club": "Newcastle United",
+   "short": "Newcastle",
+   "inPL2026_27": true,
+   "manager": "Matthias Jaissle",
+   "lineupBasis": "PL match 2026-09-05 vs AFC Bournemouth (H): most frequent starters GW1–GW5 (also identical to the XI at Tottenham on 2026-08-29); latest match 2026-09-19 vs Hull City (H) had nine players injured",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 21,
+     "name": "Horníček",
+     "pos": "GK"
+    },
+    {
+     "num": 37,
+     "name": "Dedić",
+     "pos": "RB"
+    },
+    {
+     "num": 12,
+     "name": "Thiaw",
+     "pos": "RCB"
+    },
+    {
+     "num": 4,
+     "name": "Botman",
+     "pos": "LCB"
+    },
+    {
+     "num": 3,
+     "name": "Hall",
+     "pos": "LB"
+    },
+    {
+     "num": 6,
+     "name": "Nico González",
+     "pos": "RDM"
+    },
+    {
+     "num": 67,
+     "name": "Miley",
+     "pos": "LDM"
+    },
+    {
+     "num": 19,
+     "name": "Elanga",
+     "pos": "RAM"
+    },
+    {
+     "num": 28,
+     "name": "Willock",
+     "pos": "CAM"
+    },
+    {
+     "num": 11,
+     "name": "Barnes",
+     "pos": "LAM"
+    },
+    {
+     "num": 9,
+     "name": "Wissa",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#1A1A1A",
+    "away": "#1B2440"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 4,
+    "width": 2,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Jaissle's stated model is high pressing, counter-pressing and quick vertical attacks, often from a narrow 4-2-2-2 / 4-2-3-1 (nufcblog; club profile). The 2026/27 data does not show an intense press: FotMob has 1.6 possession wins in the final third per match, the lowest in the league. Possession is 49.1% (9th), 346 accurate passes per match, 19.6 accurate long balls (about 5.7% of passes, mid-table), and only 2.6 accurate crosses per match (18th). That supports a narrow, vertical, mid-directness profile. Leeds beating them 4-1 was blamed on space left behind a press that did not arrive together. Fantasy Football Scout says they were out-xG'd in every league match (search snippet). Press is set to 3 (between intent and data) and line to 3 (no data).",
+   "desc": "Jaissles Newcastle vil presse højt og angribe hurtigt og lodret gennem midten fra en smal 4-2-3-1, men indtil videre har presset sjældent vundet bolden højt, og holdet har ofte været presset tilbage.",
+   "uncertain": [
+    "Their GW6 match at Coventry is on 12 Oct 2026 at 20:00 BST, so it is not counted. The latest completed PL match is 19 Sep vs Hull (H, won 2-1). That XI was Horníček; Miley, Thiaw, Botman, Hall; Steur, Willock; Murphy, Fernández-Pardo, Barnes; Wissa. Jaissle said nine players were injured, so most frequent starters were used instead.",
+    "Right now: Dedić (hamstring) and Elanga (thigh) are doubts for 12 Oct. Nico González is back from concussion protocol. Sports Mole's predicted XI for Coventry: Horníček; Miley, Thiaw, Botman, Hall; González, Willock; Murphy, Fernández-Pardo, Barnes; Wissa.",
+    "Miley LDM / González RDM is inferred from ESPN display order. Miley was labelled left in GW1 and right in GW4.",
+    "Willock vs Fernández-Pardo at CAM: Willock has 3 starts (one of them as DM), Fernández-Pardo 2.",
+    "The home shirt is black-and-white stripes. Black was chosen as the single main colour. The away shirt is 'night navy'.",
+    "No PPDA or defensive-line data found. Set-piece scheme not found, so setAtt/setDef are neutral placeholders."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879286 — 5 Sep 2026 vs Bournemouth (H) 2-2: XI, numbers, 4-2-3-1",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879312 — 29 Aug 2026 at Spurs 2-0: same XI, numbers, some position labels",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879319 and https://www.espn.com/soccer/lineups/_/gameId/401879280 — GW1 and GW4 XIs for the frequency count",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879271 — GW5 vs Hull XI",
+    "https://www.newcastleunited.com/en/news/hull-h-report-26-27 — GW5 report, head coach Matthias Jaissle, injury list",
+    "https://www.themag.co.uk/2026/10/official-newcastle-united-injury-update-ahead-of-coventry-city-match/ — Oct 2026 injury update, Jaissle",
+    "https://www.sportsmole.co.uk/football/coventry-city/injury-news/team-news/coventry-vs-newcastle-injury-suspension-list-predicted-xis_606623.html — Coventry v Newcastle predicted XI and doubts (search summary)",
+    "https://www.espn.com/soccer/team/results/_/id/361/newcastle-united — 2026/27 PL results",
+    "https://www.nufcblog.com/post/matthias-jaissle-newcastle-united-tactics — high press, vertical play, 4-2-2-2 / 4-2-3-1",
+    "https://www.newcastleunited.com/en/news/matthias-jaissles-style-of-play — club profile of the pressing style (search summary)",
+    "https://www.fantasyfootballscout.co.uk/2026/10/07/the-fpl-half-term-report-newcastle — out-xG'd in every match (search snippet; paywalled)",
+    "FotMob 2026/27 team stats pages (possession, accurate passes, long balls, crosses, possession won final third) — figures above",
+    "https://www.newcastleunited.com/en/news/newcastle-united-and-adidas-unveil-2026-27-home-kit — black/white striped home kit (search summary)",
+    "https://www.newcastleunited.com/en/news/introducing-our-2026-27-adidas-away-kit — night navy away kit (search summary)"
+   ]
+  },
+  {
+   "club": "Nottingham Forest",
+   "short": "Nott'm Forest",
+   "inPL2026_27": true,
+   "manager": "Oliver Glasner",
+   "lineupBasis": "PL match 2026-10-11 vs Crystal Palace (A), lost 3-1",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 26,
+     "name": "Sels",
+     "pos": "GK"
+    },
+    {
+     "num": 34,
+     "name": "Aina",
+     "pos": "RCB"
+    },
+    {
+     "num": 2,
+     "name": "Diomande",
+     "pos": "CB"
+    },
+    {
+     "num": 5,
+     "name": "Murillo",
+     "pos": "LCB"
+    },
+    {
+     "num": 27,
+     "name": "Muñoz",
+     "pos": "RWB"
+    },
+    {
+     "num": 21,
+     "name": "Schlager",
+     "pos": "RCM"
+    },
+    {
+     "num": 24,
+     "name": "McAtee",
+     "pos": "LCM"
+    },
+    {
+     "num": 3,
+     "name": "Williams",
+     "pos": "LWB"
+    },
+    {
+     "num": 10,
+     "name": "Gibbs-White",
+     "pos": "RAM"
+    },
+    {
+     "num": 14,
+     "name": "Ndoye",
+     "pos": "LAM"
+    },
+    {
+     "num": 19,
+     "name": "Delap",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#DD0000",
+    "away": "#00563F"
+   },
+   "tactics": {
+    "press": 2,
+    "line": 2,
+    "tempo": 4,
+    "width": 4,
+    "passing": 4,
+    "style": "def",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Glasner's 3-4-2-1 drops into a 5-4-1 without the ball (readastonvilla / Forest analysis). Through GW5 Forest conceded the fewest shots (52) and big chances (6), with xGC 4.77, 2nd best (Fantasy Football Scout, 7 Oct). That fits a compact, deeper block more than a high press: FotMob has 2.2 possession wins in the final third per match (17th). In possession they are direct and wide: 48.9% possession, only 316 accurate passes per match (16th), 26.5 accurate long balls per match (3rd, about 8.4% of passes) and 6.0 accurate crosses per match (2nd), with wing-backs pushing on. Line=2 is a judgement from the 5-4-1 shape; no line-height data was found.",
+   "desc": "Glasners Forest står kompakt i en 5-4-1 uden bold, giver modstanderen meget få chancer og angriber hurtigt og direkte via wingbacks, indlæg og lange bolde frem mod Delap.",
+   "uncertain": [
+    "The back three has rotated: Milenković started GW1–3 and Diomande GW4–6. Jair Paula has 4 starts as a centre-back. Aina played RWB in GW1–3 and RCB in GW4 and GW6. The GW6 XI matches the GW4 XI exactly, so it reflects the current setup.",
+    "Gibbs-White and Ndoye have swapped sides between games (ESPN labels). GW6 had Gibbs-White centre-right and Ndoye centre-left.",
+    "ESPN labels Schlager/McAtee 'Center Right/Left Midfielder'. They could equally be coded RDM/LDM.",
+    "No PPDA or defensive-line data found. Set-piece marking scheme not found (corners mostly taken by McAtee and Williams), so setAtt/setDef are neutral placeholders.",
+    "Kit hex values are approximations: Garibaldi red home, 'collegiate green' away."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879266 — 11 Oct 2026 Crystal Palace 3-1 Forest: XI, numbers, 3-4-2-1, position labels; commentary calls Glasner the new boss",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879284 — GW4 at Aston Villa, identical XI",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879298, /401879314, /401878780, /401879270 — GW1, GW2, GW3, GW5 XIs for the frequency check",
+    "https://www.espn.com/soccer/team/results/_/id/393/nottingham-forest — 2026/27 PL results",
+    "https://www.espn.com/soccer/story/_/id/49250725/oliver-glasner-nottingham-forest-manager — Glasner appointed head coach, July 2026 (search summary)",
+    "https://onefootball.com/en/news/five-ways-oliver-glasner-has-reshaped-nottingham-forest-in-his-first-79-days-43509241 — switch to back three / 3-4-2-1, McAtee deeper (23 Sep 2026)",
+    "https://readastonvilla.com/2026/09/10/nottingham-forest-tactics-aston-villa/ — 3-4-2-1 becomes 5-4-1, wing-backs advance (search summary)",
+    "https://www.fantasyfootballscout.co.uk/2026/10/07/the-fpl-half-term-report-nottm-forest — shots and big chances conceded, xGC, set-piece takers",
+    "FotMob 2026/27 team stats pages (possession, accurate passes, long balls, crosses, possession won final third) — figures above",
+    "https://footballfashion.org/wordpress/2026/07/19/nottingham-forest-football-club-2026-27-jersey-adidas-home-kit/ — Garibaldi red home (search summary)",
+    "https://leadership.ng/aina-models-nottingham-forests-new-2026-27-away-kit/ — collegiate green away (search summary)"
+   ]
+  },
+  {
+   "club": "Sunderland",
+   "short": "Sunderland",
+   "inPL2026_27": true,
+   "manager": "Régis Le Bris",
+   "lineupBasis": "PL match 2026-10-10 vs Brighton & Hove Albion (H), lost 0-2",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 22,
+     "name": "Roefs",
+     "pos": "GK"
+    },
+    {
+     "num": 32,
+     "name": "Hume",
+     "pos": "RB"
+    },
+    {
+     "num": 20,
+     "name": "Mukiele",
+     "pos": "RCB"
+    },
+    {
+     "num": 4,
+     "name": "Danso",
+     "pos": "LCB"
+    },
+    {
+     "num": 17,
+     "name": "Reinildo",
+     "pos": "LB"
+    },
+    {
+     "num": 34,
+     "name": "Xhaka",
+     "pos": "RDM"
+    },
+    {
+     "num": 27,
+     "name": "Sadiki",
+     "pos": "LDM"
+    },
+    {
+     "num": 12,
+     "name": "Meunier",
+     "pos": "RAM"
+    },
+    {
+     "num": 28,
+     "name": "Le Fée",
+     "pos": "CAM"
+    },
+    {
+     "num": 10,
+     "name": "Angulo",
+     "pos": "LAM"
+    },
+    {
+     "num": 18,
+     "name": "Isidor",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#E2231A",
+    "away": "#F5A3C7"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 4,
+    "passing": 4,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob 2026/27: 50.8% possession (8th), 337.7 accurate passes per match (13th), and the most accurate long balls in the league (27.8 per match, about 8.2% of passes), so passing is fairly direct. They cross a lot: 4.8 accurate crosses per match (5th), and against Brighton they had 62% possession and 27 crosses, only 5 of which found a teammate (Sofascore). The press is mixed. Against Arsenal they used a hybrid man-to-man press high up, then a zonal block in their own half, with the 4-2-3-1 becoming a 4-4-2 out of possession (Yahoo tactics piece, 15 Sep). FotMob has 2.7 possession wins in the final third per match (15th). Mukiele is given licence to overlap and Meunier tucks in. Line height has no data and is set to 3.",
+   "desc": "Sunderland spiller en 4-2-3-1 med Xhaka som styrmand, går gerne langt og bredt med mange indlæg og veksler uden bold mellem et mandsorienteret højt pres og en kompakt 4-4-2-blok.",
+   "uncertain": [
+    "The GW6 XI was shaped by injuries: Brobbey (CF, started GW1–5) and Ballard (LCB, started GW1–5) have hamstring injuries reported to last weeks, so Isidor and Hume came in. With both fit, the most frequent XI is Roefs; Mukiele, Danso, Ballard, Reinildo; Xhaka, Sadiki; Meunier, Le Fée, Angulo; Brobbey.",
+    "Meunier went off injured after 34 minutes on 10 Oct. His status for the next match was not found.",
+    "Hume at RB comes from player-rating pieces (search summaries). ESPN gave no label for him, but did label Mukiele centre-right and Danso centre-left.",
+    "Formation: ESPN gives 4-2-3-1 every week. A Yahoo tactics piece described the Arsenal game as a 4-3-3 that became 4-4-2 without the ball.",
+    "Long throws (Mukiele) appear only in sources that look like 2025/26. 2026/27 set-piece marking was not found, so setAtt/setDef are neutral placeholders. No PPDA or line data.",
+    "The away shirt is pink with a black upper panel (Elvis collaboration). Pink was chosen as the main colour. The home shirt is red-and-white stripes, coded as red."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401878772 — 10 Oct 2026 Sunderland 0-2 Brighton: XI, numbers, 4-2-3-1, position labels, subs (Meunier off 34')",
+    "https://www.espn.com/soccer/report/_/gameId/401878772 — report: Le Bris, three changes (Hume, Reinildo, Isidor), Sunderland dominated possession",
+    "https://www.sofascore.com/news/sunderland-0-2-brighton-sofascore-rating-and-stats — 62% possession, 495 passes, 27 crosses, xG 0.64 vs 1.12",
+    "https://www.vavel.com/en/football/2026/10/10/sunderland/1274724-sunderland-0-2-brighton-post-match-sunderland-player-ratings.html — Hume at right-back (search summary)",
+    "https://www.sportsmole.co.uk/football/sunderland/predicted-lineups/who-will-replace-injured-brobbey-ballard-predicted-sunderland-lineup-vs-brighton_606427.html — Brobbey and Ballard hamstring injuries (search summary)",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879299, /401879313, /401879311, /401878779, /401879272 — GW1–GW5 XIs for the frequency check",
+    "https://www.espn.com/soccer/team/results/_/id/366/sunderland — 2026/27 PL results",
+    "https://sports.yahoo.com/articles/talking-tactics-le-bris-took-050000411.html — vs Arsenal 12 Sep 2026: hybrid man-to-man press, 4-4-2 out of possession, Mukiele/Meunier roles",
+    "FotMob 2026/27 team stats pages (possession, accurate passes, long balls, crosses, possession won final third) — figures above",
+    "https://www.footyheadlines.com/5527598118/sunderland-26-27-home-kit-released-celebrating-1937-fa-cup-triumph.html — red/white striped home (search summary)",
+    "https://www.footyheadlines.com/5061975214/sunderland-26-27-elvis-presley-away-kit-released.html — pink/black away (search summary)"
+   ]
+  },
+  {
+   "club": "Tottenham Hotspur",
+   "short": "Tottenham",
+   "inPL2026_27": true,
+   "manager": "Roberto De Zerbi",
+   "lineupBasis": "PL match 2026-09-12 vs Everton (H): this XI is exactly the most frequent starters GW1–GW6; latest match 2026-10-10 at Man United (A, 1-1) had six changes",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 31,
+     "name": "Kinsky",
+     "pos": "GK"
+    },
+    {
+     "num": 14,
+     "name": "Gray",
+     "pos": "RB"
+    },
+    {
+     "num": 6,
+     "name": "Van Hecke",
+     "pos": "RCB"
+    },
+    {
+     "num": 37,
+     "name": "Van de Ven",
+     "pos": "LCB"
+    },
+    {
+     "num": 3,
+     "name": "Robertson",
+     "pos": "LB"
+    },
+    {
+     "num": 30,
+     "name": "Bentancur",
+     "pos": "RDM"
+    },
+    {
+     "num": 16,
+     "name": "Tonali",
+     "pos": "LDM"
+    },
+    {
+     "num": 17,
+     "name": "Sávio",
+     "pos": "RAM"
+    },
+    {
+     "num": 18,
+     "name": "Mateus Fernandes",
+     "pos": "CAM"
+    },
+    {
+     "num": 22,
+     "name": "Marmoush",
+     "pos": "LAM"
+    },
+    {
+     "num": 19,
+     "name": "Solanke",
+     "pos": "CF"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#1A1F3A"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 2,
+    "width": 4,
+    "passing": 1,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob 2026/27: 58.9% possession (4th), 466.5 accurate passes per match (3rd), and the fewest accurate long balls in the league (15.8 per match, about 3.4% of passes), so passing is very short. They have 4.8 possession wins in the final third per match (5th). At Old Trafford De Zerbi's high press set the tone, with 63 sprints to 44, 58% possession and 0.96 xG to 0.05 in the first half (The False 9). Analysis describes man-to-man pressing and patient 'press-baiting' build-up before quick releases, so tempo is set to 2. Sávio and Kudus pinned United's full-backs and stretched the pitch, and they make 4.7 accurate crosses per match (7th). Line=4 is inferred from the high press; no line-height data was found.",
+   "desc": "De Zerbis Spurs vil have bolden, bygger tålmodigt og kort op for at lokke modstanderen frem og presser derefter højt og mandsorienteret.",
+   "uncertain": [
+    "Most frequent starters were used because the latest XI (10 Oct at Man United) had six changes: Kinsky; Gray, Van Hecke, Senesi, Udogie; Bergvall, Tonali; Kudus, Gallagher, Sávio; Solanke. Van de Ven was benched but came on, so this was rotation and not only injury.",
+    "Right now: Bentancur was sent off on 10 Oct for a headbutt motion toward Shaw, so he is probably suspended (ban length not verified). Porro is out for several games with a hamstring/thigh injury. Robertson was not in the 10 Oct squad and no reason was found.",
+    "CAM is tied: Gallagher and Mateus Fernandes have 3 starts each. Mateus Fernandes was chosen because he is in the GW4 XI.",
+    "Formation: ESPN and FotMob give 4-2-3-1. NBC's live blog called Tonali, Bergvall and Gallagher a midfield trio on 10 Oct.",
+    "The name is shown as 'Savio'/'Sávio' by Spurs, ESPN and Sports Mole; it was 'Savinho' at Man City.",
+    "No PPDA or line-height data found. Set-piece scheme not found, so setAtt/setDef are neutral placeholders. The away shirt is navy (Obsidian) with a purple/orange graphic."
+   ],
+   "sources": [
+    "https://www.espn.com/soccer/lineups/_/gameId/401879277 — 12 Sep 2026 Spurs 0-0 Everton: XI, numbers, 4-2-3-1, labels (Marmoush AM left, Sávio AM right, Gray RB, Robertson LB, Tonali left mid)",
+    "https://www.espn.com/soccer/lineups/_/gameId/401879321, /401879312, /401878780, /401879269 — GW1, GW2, GW3, GW5 XIs for the frequency count",
+    "https://www.espn.com/soccer/lineups/_/gameId/401878773 — GW6 XI at Man United, subs (Bentancur on 66')",
+    "https://www.tottenhamhotspur.com/news/1176226/confirmed-line-ups-man-united-vs-spurs — official GW6 team sheet: six changes, Solanke captain",
+    "https://www.sportsmole.co.uk/football/man-utd/news/baleba-rashford-maddison-decisions-man-utd-vs-spurs-team-news-confirmed_606633.html — reasons for the changes",
+    "https://www.skysports.com/football/news/13592777/man-utd-1-1-tottenham-dominic-solanke-rescues-dramatic-draw-for-10-man-spurs-at-old-trafford — Bentancur red card, De Zerbi",
+    "https://www.sportsmole.co.uk/football/man-utd/injury-news/news/de-zerbi-provides-positive-injury-update-on-spurs-duo-ahead-of-man-utd-battle_606568.html — Porro out for several games (search summary)",
+    "https://thefalse9.com/2026/10/ten-man-tottenham-rescued-point-old-trafford.html — high press, sprints, first-half possession/xG, wide players stretching the pitch",
+    "https://www.premierleague.com/en/news/4623398/analysis-how-will-spurs-look-under-de-zerbi — press-baiting, man-to-man pressing (search summary)",
+    "https://www.espn.com/soccer/team/results/_/id/367/tottenham-hotspur — 2026/27 PL results",
+    "FotMob 2026/27 team stats pages (possession, accurate passes, long balls, crosses, possession won final third) — figures above",
+    "https://www.nss-sports.com/en/kits/45863/tottenham-hotspur-new-home-away-kits-2026-27 — white home, navy away (19 Jun 2026)"
+   ]
+  }
+ ]
+}
