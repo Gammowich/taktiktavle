@@ -2087,7 +2087,7 @@ const store = {
 let board;
 const ui = { tool: 'move', ink: '#ffffff', frame: 0, selected: null, highlight: null, labels: 'name', ghost: true,
   playing: false, drag: null, anim: null, hintSeen: false, warnedStorage: false, tacticOpen: { home: true, away: false }, simAssist: false, tab: 'hold', side: 'home',
-  itemType: 'cone' };
+  itemType: 'cone', coneColor: '#ff8a3d' };
 const hist = { stack: [], idx: -1 };
 const curFrame = () => board.frames[ui.frame];
 
@@ -2672,7 +2672,7 @@ function onDown(e) {
   if (ui.tool === 'item') {
     // Udstyret sættes, hvor man trykker, og kan trækkes på plads, før man slipper.
     const [px, py] = toPitch(view, sx, sy), t = ui.itemType || 'cone';
-    const it = { id: uid(), type: t, x: round2(px), y: round2(py), rot: ITEM_TYPES[t].w ? (py < view.L / 2 ? 0 : 180) : 0, ...(t === 'cone' ? { color: ui.ink } : {}) };
+    const it = { id: uid(), type: t, x: round2(px), y: round2(py), rot: ITEM_TYPES[t].w ? (py < view.L / 2 ? 0 : 180) : 0, ...(t === 'cone' ? { color: ui.coneColor } : {}) };
     board.items.push(it);
     ui.selected = it.id;
     ui.drag = { kind: 'item', id: it.id, pid: e.pointerId, sx, sy, slop, moved: true, dx: 0, dy: 0 };
@@ -2957,16 +2957,24 @@ function buildToolbar() {
   inkPop.innerHTML = inks;
   itemPop.innerHTML = Object.entries(ITEM_TYPES).map(([k, t]) => `<button type="button" class="tool item-choice" data-itemtype="${k}" aria-pressed="false" title="${t.label}">${ic(k)}<span>${t.label}</span></button>`).join('');
 }
+// Kegler har deres egen farve (orange som standard). Farvevalget gælder keglen, når en kegle er markeret,
+// eller når Udstyr med kegle er valgt; ellers gælder det stregerne.
+function coneInk() {
+  const sit = selectedItem();
+  return sit ? sit.type === 'cone' : !ui.selected && ui.tool === 'item' && (ui.itemType || 'cone') === 'cone';
+}
 function updateToolbar() {
   toolbarEl.querySelectorAll('[data-tool]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.tool === ui.tool)); b.disabled = ui.playing; });
-  document.querySelectorAll('[data-ink]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ink === ui.ink)));
+  const cone = coneInk(), sit = selectedItem(), ink = cone ? (sit ? sit.color : ui.coneColor) : ui.ink, inkName = cone ? 'Keglefarve' : 'Stregfarve';
+  document.querySelectorAll('[data-ink]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ink === ink)));
   const inkBtn = $('#inkBtn');
-  inkBtn.querySelector('.ink-dot').style.setProperty('--c', ui.ink);
+  inkBtn.querySelector('.ink-dot').style.setProperty('--c', ink);
+  inkBtn.querySelector('.lbl').textContent = inkName; inkBtn.setAttribute('aria-label', inkName);
+  toolbarEl.querySelector('.ink-inline').setAttribute('aria-label', inkName);
   inkBtn.disabled = ui.playing;
   const t = ui.itemType || 'cone';
   $('#itemBtnIcon').innerHTML = ic(t); $('#itemBtnLbl').textContent = ITEM_TYPES[t].label; $('#itemBtn').disabled = ui.playing;
   itemPop.querySelectorAll('[data-itemtype]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.itemtype === t)));
-  const sit = selectedItem();
   $('#rotBtn').hidden = !isGoalItem(sit);
   $('#fullBtn').hidden = !board.view;
   const fr = curFrame(), del = $('#delBtn'), lbl = $('#delLbl');
@@ -3028,12 +3036,18 @@ function togglePop(pop, btn) {
 function closePop(pop, btn) { if (pop.hidden) return; pop.hidden = true; if (btn) btn.setAttribute('aria-expanded', 'false'); }
 document.addEventListener('pointerdown', e => { if (!itemPop.hidden && !e.target.closest('#itemPop, #itemBtn')) closePop(itemPop, $('#itemBtn')); });
 function setInk(c) {
-  ui.ink = c; savePrefs(); closeInkPop();
-  const fr = curFrame();
-  const sit = selectedItem();
-  if (sit) { if (sit.type === 'cone' && sit.color !== c) { sit.color = c; commit(); } }
-  else if (ui.selected) { const d = fr.drawings.find(x => x.id === ui.selected); if (d && d.color !== c) { d.color = c; commit(); } }
-  else if (ui.tool === 'move') setTool('run');
+  closeInkPop();
+  const fr = curFrame(), sit = selectedItem();
+  if (coneInk()) {
+    // Keglefarven: den markerede kegle og de næste kegler. Stregfarven røres ikke.
+    ui.coneColor = c;
+    if (sit && sit.color !== c) { sit.color = c; commit(); }
+  } else {
+    ui.ink = c; savePrefs();
+    if (sit) { /* stænger og mål har ingen farve */ }
+    else if (ui.selected) { const d = fr.drawings.find(x => x.id === ui.selected); if (d && d.color !== c) { d.color = c; commit(); } }
+    else if (ui.tool === 'move') setTool('run');
+  }
   updateToolbar(); render();
 }
 inkPop.addEventListener('click', e => { const k = e.target.closest('[data-ink]'); if (k) setInk(k.dataset.ink); });

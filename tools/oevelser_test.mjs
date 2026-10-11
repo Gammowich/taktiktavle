@@ -261,7 +261,7 @@ await click("#tab-tegn");
 await ev("document.querySelector('#toolbar [data-tool=\"item\"]').click()");
 await tap(await screenOf(nbd, 20, 60));
 nbd = await saved();
-check("Udstyr: et tryk sætter en kegle", nbd.items.length === 1 && nbd.items[0].type === "cone" && Math.abs(nbd.items[0].x - 20) < .5 && Math.abs(nbd.items[0].y - 60) < .5,
+check("Udstyr: et tryk sætter en kegle, orange som standard", nbd.items.length === 1 && nbd.items[0].type === "cone" && nbd.items[0].color === "#ff8a3d" && Math.abs(nbd.items[0].x - 20) < .5 && Math.abs(nbd.items[0].y - 60) < .5,
 	JSON.stringify(nbd.items[0]));
 await click("#itemBtn");
 const pop = await ev("!document.getElementById('itemPop').hidden && [...document.querySelectorAll('#itemPop [data-itemtype]')].map(b => b.dataset.itemtype).join()");
@@ -293,6 +293,28 @@ await tap(await screenOf(nbd, 26, 52));
 await click("#delBtn");
 nbd = await saved();
 check("Slet valgt: keglen fjernes", nbd.items.length === 1 && nbd.items[0].type === "minigoal", nbd.items.map(i => i.type).join());
+await ev("document.querySelector('#toolbar [data-tool=\"item\"]').click()");
+await click('#itemPop [data-itemtype="cone"]');
+const inkState = () => ev("({ lbl: document.querySelector('#inkBtn .lbl').textContent, c: document.querySelector('#inkBtn .ink-dot').style.getPropertyValue('--c') })");
+const coneLbl = await inkState();
+await click('#inkPop [data-ink="#ffd43b"]');
+await tap(await screenOf(nbd, 50, 30));
+nbd = await saved();
+const yellow = nbd.items.find(i => i.type === "cone");
+await ev("document.querySelector('#toolbar [data-tool=\"run\"]').click()");
+const strokeLbl = await inkState();
+check("keglefarven for sig: gul kegle, stregfarven er stadig hvid", coneLbl.lbl === "Keglefarve" && coneLbl.c === "#ff8a3d" && yellow && yellow.color === "#ffd43b" && strokeLbl.lbl === "Stregfarve" && strokeLbl.c === "#ffffff",
+	`før ${JSON.stringify(coneLbl)}, kegle ${yellow && yellow.color}, streg ${JSON.stringify(strokeLbl)}`);
+await ev("document.querySelector('#toolbar [data-tool=\"move\"]').click()");
+await tap(await screenOf(nbd, 50, 30));
+const selLbl = await inkState();
+await click('#inkPop [data-ink="#74c0fc"]');
+nbd = await saved();
+const recol = nbd.items.find(i => i.id === yellow.id);
+await ev("document.querySelector('#toolbar [data-tool=\"item\"]').click()");
+const nextLbl = await inkState();
+check("en markeret kegle skifter farve, og de næste kegler får den", selLbl.lbl === "Keglefarve" && selLbl.c === "#ffd43b" && recol && recol.color === "#74c0fc" && nextLbl.c === "#74c0fc",
+	`markeret ${JSON.stringify(selLbl)}, kegle ${recol && recol.color}, næste ${JSON.stringify(nextLbl)}`);
 await ev("document.querySelector('#toolbar [data-tool=\"area\"]').click()");
 await drag(await screenOf(nbd, 10, 40), await screenOf(nbd, 50, 80));
 nbd = await saved();
