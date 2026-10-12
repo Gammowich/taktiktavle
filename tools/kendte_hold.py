@@ -1,10 +1,17 @@
 """Kendte hold: researchen i tools/kendte_hold/*.json → KNOWN i app.html (Morten 12/10: land → liga/række → hold med
 startopstilling og taktik). Brug: python3 tools/kendte_hold.py   (kør derefter python3 build.py)
 
-Hver JSON-fil er én liga: {"country": {...}, "league": {..., "prefix"}, "clubs": [...]}. For hver klub vælges den af appens
+Hver JSON-fil er én liga: {"country": {id, name, order}, "league": {id, name, season, prefix, selection?}, "clubs": [...]}.
+selection: ligaen har kun udvalgte (kendte) hold, ikke hele rækken. For hver klub vælges den af appens
 formationer (FORMATIONS['11'] i app.html), der passer bedst til spillernes positioner, og spillerne sættes på
-formationens pladser (ungarsk metode, som i appen). Data med fejl afvises med en forklaring og kommer ikke i appen."""
-import datetime, glob, html, json, os, re, sys
+formationens pladser (ungarsk metode, som i appen). Data med fejl afvises med en forklaring og kommer ikke i appen.
+
+Styrke (Morten 12/10: "så simuleringen ved, at City er stærkere end Coventry"): har spillerne egenskaber ("attrs": pace,
+tech, shoot, def, phys, gk på 1–10 fra spejder-research), flyttes alle holdets spillere lige meget, så holdets niveau
+(gennemsnittet af LEVEL_ATTRS for hver plads, som i appen) bliver 5 + (Elo − 1700) / 100 ud fra ClubElo
+(tools/kendte_hold/clubelo-*.json). Kampmotoren er målt til ca. 100 Elo pr. niveau (ATTR_GAIN i app.html). Forskellene
+mellem spillerne bevares; markspillernes målmandsevne står fast på 1."""
+import datetime, glob, html, json, math, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(ROOT, 'app.html')
@@ -23,6 +30,12 @@ POS = {'GK': ('GK', .5), 'RB': ('FB', .86), 'LB': ('FB', .14), 'RWB': ('WB', .9)
        'RM': ('WM', .86), 'LM': ('WM', .14), 'RW': ('W', .84), 'LW': ('W', .16), 'RCF': ('F', .61), 'CF': ('F', .5), 'LCF': ('F', .39)}
 NEAR = {frozenset(p): c for p, c in [(('FB', 'WB'), .5), (('WB', 'WM'), .5), (('WM', 'W'), .5), (('DM', 'CM'), .4), (('CM', 'AM'), .4),
         (('AM', 'W'), .7), (('AM', 'F'), .7), (('W', 'F'), .8), (('FB', 'WM'), .9), (('CB', 'DM'), 1.2), (('CB', 'FB'), 1.2)]}
+LEVEL = {m.group(1): re.findall(r"'(\w+)'", m.group(2)) for m in re.finditer(r"(\w+): \[([^\]]*)\]", app[app.index('const LEVEL_ATTRS = {'):app.index('};', app.index('const LEVEL_ATTRS = {'))])}
+KEYS = ['pace', 'tech', 'shoot', 'def', 'phys', 'gk']
+ELO = {}
+for f in glob.glob(os.path.join(ROOT, 'tools', 'kendte_hold', 'clubelo-*.json')):
+    ELO.update(json.load(open(f, encoding='utf-8'))['ratings'])
+ELO_5, ELO_PER_LEVEL = 1700, 100
 MONTHS = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december']
 
 
@@ -97,22 +110,49 @@ def team(c, prefix):
     if not basis: pr.append('lineupBasis kan ikke læses')
     if pr: return None, pr
     form = min(FORMS, key=lambda k: place(pl, k)[0])
+    # Kildens formation vinder, hvis appen har den og den passer næsten lige så godt (fx 3-5-2 og 5-3-2 har samme roller).
+    if c['formation'] in FORMS and place(pl, c['formation'])[0] <= place(pl, form)[0] + .5: form = c['formation']
     total, order = place(pl, form)
     gk = next(x for x in pl if x['pos'] == 'GK')
     name = html.unescape(c['club'])
     info = f"{name:<24} kilde {c['formation']:<9} → {form:<9} pris {total:.2f}"
+    xi_players = [gk] + order
+    roles = ['GK'] + [r for r, _ in FORMS[form]]
+    attrs, elo = None, ELO.get(name)
+    if all(isinstance(x.get('attrs'), dict) and all(isinstance(x['attrs'].get(k), int) and 1 <= x['attrs'][k] <= 10 for k in KEYS) for x in pl):
+        if elo is None: return None, ['egenskaber, men ingen Elo']
+        lvl = lambda a, r: sum(a[k] for k in LEVEL[r]) / len(LEVEL[r])
+        raw = sum(lvl(x['attrs'], r) for x, r in zip(xi_players, roles)) / 11
+        target = min(9.5, max(2.0, 5 + (elo - ELO_5) / ELO_PER_LEVEL))
+        delta = target - raw
+        # Hele trin til alle; resten som +1 én ad gangen i pladsens vigtige egenskaber, på skift mellem spillerne,
+        # så længe det bringer holdet tættere på målet (afrunding af hver egenskab for sig ville skyde forbi).
+        base = math.floor(delta)
+        attrs = [{k: x['attrs'][k] if (k == 'gk' and r != 'GK') else min(10, max(1, x['attrs'][k] + base)) for k in KEYS} for x, r in zip(xi_players, roles)]
+        cur = sum(lvl(a, r) for a, r in zip(attrs, roles)) / 11
+        for j in range(max(len(v) for v in LEVEL.values())):
+            for i, r in enumerate(roles):
+                if j >= len(LEVEL[r]) or attrs[i][LEVEL[r][j]] >= 10: continue
+                step = 1 / (11 * len(LEVEL[r]))
+                if abs(cur + step - target) < abs(cur - target): attrs[i][LEVEL[r][j]] += 1; cur += step
+        got = sum(lvl(a, r) for a, r in zip(attrs, roles)) / 11
+        info += f" | Elo {elo:.0f} → mål {target:.2f}, research {raw:.2f}, flyttet {delta:+.2f}, resultat {got:.2f}"
+    elif any('attrs' in x for x in pl):
+        return None, ['egenskaber mangler eller er ugyldige for nogle spillere']
     return ({'id': prefix + slug(name), 'name': name, 'coach': c['manager'], 'formation': form, 'style': t['style'],
              'kit': c['kit']['home'].lower(), 'kit2': c['kit']['away'].lower(),
              'press': t['press'], 'line': t['line'], 'tempo': t['tempo'], 'width': t['width'], 'passing': t['passing'],
              'setAtt': t['setAtt'], 'setDef': t['setDef'],
-             'xi': [[gk['num'], gk['name']]] + [[x['num'], x['name']] for x in order],
+             'xi': [[x['num'], x['name']] + ([[a[k] for k in KEYS]] if attrs else []) for x, a in zip(xi_players, attrs or [None] * 11)],
+             **({'elo': round(elo)} if attrs else {}),
              'basis': basis, 'desc': c['desc']}, info), []
 
 
 countries, rejected = {}, 0
 for f in sorted(glob.glob(os.path.join(ROOT, 'tools', 'kendte_hold', '*.json'))):
     doc = json.load(open(f, encoding='utf-8'))
-    co = countries.setdefault(doc['country']['id'], {**doc['country'], 'leagues': []})
+    if 'clubs' not in doc: continue   # (fx Elo-filen)
+    co = countries.setdefault(doc['country']['id'], {**{k: v for k, v in doc['country'].items() if k != 'order'}, 'order': doc['country'].get('order', 99), 'leagues': []})
     lg = {k: v for k, v in doc['league'].items() if k != 'prefix'}
     lg['teams'] = []
     for c in doc['clubs']:
@@ -124,10 +164,11 @@ for f in sorted(glob.glob(os.path.join(ROOT, 'tools', 'kendte_hold', '*.json')))
     co['leagues'].append(lg)
 
 lines = ['const KNOWN = [']
-for co in countries.values():
+for co in sorted(countries.values(), key=lambda c: c.get('order', 99)):
     lines.append(f"  {{ id: {json.dumps(co['id'])}, name: {json.dumps(co['name'], ensure_ascii=False)}, leagues: [")
     for lg in co['leagues']:
-        lines.append(f"    {{ id: {json.dumps(lg['id'])}, name: {json.dumps(lg['name'], ensure_ascii=False)}, season: {json.dumps(lg['season'])}, teams: [")
+        sel = ', selection: true' if lg.get('selection') else ''
+        lines.append(f"    {{ id: {json.dumps(lg['id'])}, name: {json.dumps(lg['name'], ensure_ascii=False)}, season: {json.dumps(lg['season'])}{sel}, teams: [")
         lines += ['      ' + json.dumps(t, ensure_ascii=False) + ',' for t in lg['teams']]
         lines.append('    ] },')
     lines.append('  ] },')

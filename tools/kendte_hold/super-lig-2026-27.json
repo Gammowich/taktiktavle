@@ -1,0 +1,418 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "tyrkiet",
+  "name": "Tyrkiet",
+  "order": 9
+ },
+ "league": {
+  "id": "super-lig",
+  "name": "Süper Lig",
+  "season": "2026/27",
+  "prefix": "tr-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "Fenerbahçe",
+   "country": "Turkey",
+   "league": "Süper Lig",
+   "manager": "İsmail Kartal",
+   "lineupBasis": "League match 2026-10-10 vs Çaykur Rizespor (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 31,
+     "name": "Ederson",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 9,
+      "shoot": 2,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "Ex-City, 33; elite distribution, shot-stopping now good rather than top"
+    },
+    {
+     "num": 27,
+     "name": "Semedo",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "32, ex-Barça/Wolves; still quick on the overlap, defensively solid"
+    },
+    {
+     "num": 37,
+     "name": "Škriniar",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Ex-Inter/PSG, 31; strong in duels and marking, key in build-up (~63 accurate passes/90)"
+    },
+    {
+     "num": 15,
+     "name": "Aké",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ex-City Netherlands international, 31; tidy left-footer, reads the game well"
+    },
+    {
+     "num": 3,
+     "name": "Brown",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Archie Brown; attacking LB, 5 goals for Fener, quick and direct"
+    },
+    {
+     "num": 91,
+     "name": "Kanté",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "35; still a top ball-winner with huge stamina, short so weaker in the air"
+    },
+    {
+     "num": 6,
+     "name": "Guendouzi",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "€28m France international; box-to-box engine who can pass and carry"
+    },
+    {
+     "num": 11,
+     "name": "Greenwood",
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 8,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "€39m from Marseille; two-footed, elite shot quality, 20+ goal seasons in Ligue 1"
+    },
+    {
+     "num": 10,
+     "name": "Asensio",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 7,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "30, ex-Real Madrid; excellent left foot and passing, 13 goals for Fener, lost some pace"
+    },
+    {
+     "num": 7,
+     "name": "Kerem",
+     "pos": "LW",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Kerem Aktürkoğlu; Turkey international, ex-Benfica, 15 goals for Fener, works hard"
+    },
+    {
+     "num": 19,
+     "name": "Muriqi",
+     "pos": "CF",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "32; one of Europe's strongest target men in the air, prolific at Mallorca, 6 league goals this season"
+    }
+   ],
+   "kit": {
+    "home": "#FFED00",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 3,
+    "passing": 3,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "There is little hard data. 19 goals in 7 league matches (8-0 vs Eyüpspor, 4-2 vs Konyaspor) and an attacking front four (Greenwood, Asensio, Kerem, Muriqi) justify style off. FotMob player stats: Škriniar 63.5 accurate passes/90 (build-up from the back) and Guendouzi 3.6 long balls/90 (moderate), so passing 3. In the Rizespor match Sporx shows 50/50 possession and 8 shots to Rizespor's 14 (possibly placeholder data), so no evidence of extreme dominance. No PPDA, line-height or crossing data found, so press, line, tempo and width are kept neutral (3). setAtt/setDef are placeholders (no source).",
+   "desc": "Fenerbahçe bygger op med en solid dobbelt-sekser og angriber med tekniske offensive spillere bag en målfarlig angriber.",
+   "uncertain": [
+    "The 10 Oct XI comes from one lineup source (mylineups). It fits Sporx's substitution list (Greenwood, Muriqi, Guendouzi, Kerem replaced) and Wikipedia's squad numbers. The same back six plus Greenwood and Muriqi started vs Beşiktaş (5 Sep) and Eyüpspor (20 Sep). Lukaku started at Gaziantep (4-3-3, 14 Sep).",
+    "Greenwood RW / Kerem LW, Kanté RDM / Guendouzi LDM and Škriniar RCB / Aké LCB are inferred from listing order.",
+    "mylineups lists the score as 'Fenerbahçe 3–0 Rizespor', but Wikipedia and Sporx have Fenerbahçe away at Rize; I used (A). Sporx's possession figure (50/50) may be a placeholder.",
+    "Kit: Wikipedia only says the home kit is the striped 'Çubuklu' (yellow/navy; I used yellow #FFED00, navy is about #002A5C). The away colour was not found, so #FFFFFF is a placeholder guess. The kit section's citation is dated 2025, so it may be copied from last season.",
+    "Kartal's appointment: Wikipedia gives 18 June 2026 (one-year contract) in the text but 21 July 2026 in the stats table. No team-level tactical stats found; setAtt/setDef are placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Fenerbah%C3%A7e_S.K._season — head coach İsmail Kartal, Süper Lig results (Çaykur Rizespor 0-3 Fenerbahçe, 10 Oct, away), squad numbers, Champions League at Aston Villa 14 Oct",
+    "https://en.wikipedia.org/wiki/%C4%B0smail_Kartal — appointed Fenerbahçe head coach 18 June 2026 (cites fenerbahce.org)",
+    "https://mylineups.app/matches/super-lig/rizespor-vs-fenerbahce-2026-10-10/ — XI with numbers, 4-2-3-1, manager Kartal",
+    "https://www.sporx.com/rizespor-fenerbahce-maci-canli-5904761 — 0-3, scorers (Asensio, İrfan Can, Oğuz Aydın), substitutions, basic stats",
+    "https://mylineups.app/matches/super-lig/fenerbahce-vs-eyupspor-2026-09-20/ — 8-0, XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/fenerbahce-vs-besiktas-2026-09-05/ — XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/gaziantep-fk-vs-fenerbahce-2026-09-14/ — XI, 4-3-3 variant",
+    "https://www.fotmob.com/teams/8695/stats/fenerbahce — player stats (Škriniar accurate passes/90, Guendouzi long balls/90, Muriqi 6 goals, Ederson 4 clean sheets)",
+    "https://en.wikipedia.org/w/index.php?title=2026%E2%80%9327_Fenerbah%C3%A7e_S.K._season&action=raw — kits section (Adidas, striped home)"
+   ]
+  },
+  {
+   "club": "Galatasaray",
+   "country": "Turkey",
+   "league": "Süper Lig",
+   "manager": "Okan Buruk",
+   "lineupBasis": "Most frequent league starters 2026/27 (all 7 league matches, every one 4-2-3-1); not the XI of the latest league match 2026-10-09 vs Kasımpaşa (H), where Osimhen and Sallai were benched on return from injury and Barış Alper played as stand-in right-back",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Uğurcan",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "Uğurcan Çakır; €27.5m Turkey international, strong shot-stopper, average with the ball"
+    },
+    {
+     "num": 7,
+     "name": "Sallai",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Hungarian winger converted to RB; hardworking and quick, adequate defender"
+    },
+    {
+     "num": 6,
+     "name": "Sánchez",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Davinson Sánchez; fast, powerful CB, occasional lapses"
+    },
+    {
+     "num": 42,
+     "name": "Abdülkerim",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Abdülkerim Bardakcı; captain, left-footed Turkey international, good organiser"
+    },
+    {
+     "num": 4,
+     "name": "Jakobs",
+     "pos": "LB",
+     "attrs": {
+      "pace": 8,
+      "tech": 5,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Senegal LB; very quick overlapper, fair defender"
+    },
+    {
+     "num": 34,
+     "name": "Torreira",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Combative Uruguayan screener and tidy passer; aggressive (red card vs Kasımpaşa)"
+    },
+    {
+     "num": 8,
+     "name": "Sara",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Gabriel Sara; €18m creative deep-lying no.8, set-piece taker, shoots from range"
+    },
+    {
+     "num": 53,
+     "name": "Barış Alper",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 6,
+      "def": 5,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Barış Alper Yılmaz; powerful, quick Turkey international, also covers RB"
+    },
+    {
+     "num": 11,
+     "name": "Yunus",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Yunus Akgün; nimble left-footed creator, good dribbles and assists, light frame"
+    },
+    {
+     "num": 27,
+     "name": "Leão",
+     "pos": "LW",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 7,
+      "def": 2,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Rafael Leão; €38m from Milan, among Europe's fastest carriers, inconsistent finisher, does little defending"
+    },
+    {
+     "num": 45,
+     "name": "Osimhen",
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 8,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Victor Osimhen; elite runner in behind and in the air, 6 goals already, back from injury"
+    }
+   ],
+   "kit": {
+    "home": "#A90432",
+    "away": "#000000"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 4,
+    "width": 4,
+    "passing": 3,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Against Kasımpaşa (Sporx): 64% possession, 17 shots (11 on target), so a dominant style (off). Anadolu Ajansı's report says attacks came mostly down the flanks and many chances came from crosses and set pieces, so width 4. The assistant coach named pressing as part of the plan; with that much possession, press 4 and line 4 are estimates. The 4-2-3-1 is used in every league match, with direct wingers (Leão, Barış Alper) and a runner in behind (Osimhen), so tempo 4. Passing 3 because no long-ball data was found. No PPDA or line-height stats found. setAtt/setDef are placeholders (no source).",
+   "desc": "Galatasaray har meget af bolden, angriber primært via kanterne med hurtige fløjspillere og indlæg og har en farlig angriber i dybden.",
+   "uncertain": [
+    "Start counts from 7 league lineups (mylineups, checked against club and Turkish media): Sánchez, Torreira, Sara, Yunus 7; Uğurcan, Sallai, Abdülkerim, Jakobs 6; Barış Alper 5; Osimhen 4; Leão, Sané, Deniz Gül, Lemina 3. Leão beat Sané for the last place on recency (Leão started the last 3; Sané 1 of the last 3). With Sané instead, the XI is exactly the 2026-08-14 vs Çorum (H) lineup.",
+    "This exact XI has never started a league match together: Leão only started (from 13 Sep) while Osimhen was injured. Osimhen came on in the 77th minute vs Kasımpaşa and is described as fully fit.",
+    "Barış Alper RW, Yunus CAM, Leão LW follows the 13 Sep vs Kocaelispor shape. Yunus has also played RW and Barış Alper LW or RB. Torreira RDM / Sara LDM is inferred from listing order.",
+    "Matchday 3 (vs Göztepe): mylineups lists Jankat Yılmaz in goal, Politikam lists Uğurcan.",
+    "Home shirt: the 2026/27 design was not described in any source I could read, and the Wikipedia infobox base colour (270e8b) looks unreliable. I used Galatasaray red (#A90432); the other traditional colour is yellow (#FDB912). Away black (#000000) is from the Wikipedia infobox base colour. Buruk was suspended for the Kasımpaşa match (assistant İrfan Saraloğlu on the bench) but remains head coach."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Galatasaray_S.K._season — head coach Okan Buruk, Süper Lig results MD1–MD7, squad numbers, Champions League vs Barcelona on 13 Oct",
+    "https://www.galatasaray.org/haber/futbol/galatasaray-3-1-kasimpasa/61094 — official XI vs Kasımpaşa 9 Oct 2026, subs (Osimhen 77'), Buruk suspended",
+    "https://www.iscihaber.net/spor/galatasaray-kasimpasa-karsisina-2-farkli-isimle-cikti/270067 — two changes; Sallai benched after returning from injury",
+    "https://www.batmanpusula.com/baris-alper-yilmaz-sag-bek-mi-oynuyor-galatasaray-kasimpasa-maci-mevkisi-ne-victor-osimhen-neden-yedek — Barış Alper at right-back; Osimhen benched as a precaution after injury",
+    "https://mylineups.app/matches/super-lig/galatasaray-vs-kasimpasa-2026-10-09/ — MD7 XI with numbers, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/trabzonspor-vs-galatasaray-2026-09-19/ — MD6 XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/galatasaray-vs-kocaelispor-2026-09-13/ — MD5 XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/basaksehir-vs-galatasaray-2026-09-04/ — MD4 XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/galatasaray-vs-goztepe-2026-08-29/ — MD3 XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/erzurumspor-fk-vs-galatasaray-2026-08-21/ — MD2 XI, 4-2-3-1",
+    "https://mylineups.app/matches/super-lig/galatasaray-vs-corum-fk-2026-08-14/ — MD1 XI, 4-2-3-1",
+    "https://www.sporx.com/galatasaray-kasimpasa-maci-canli-5904764 — 3-1, possession 64%, shots 17 (11 on target)",
+    "https://www.aa.com.tr/tr/spor/galatasaray-kasimpasayi-son-anlarda-gelen-gollerle-yendi/4083938 — flank attacks, crosses and set pieces, Torreira red card",
+    "https://en.wikipedia.org/w/index.php?title=2026%E2%80%9327_Galatasaray_S.K._season&action=raw — kit infobox (away base 000000), Puma kits unveiled 4 Jul 2026"
+   ]
+  }
+ ]
+}

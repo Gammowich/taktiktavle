@@ -1,0 +1,1012 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "italien",
+  "name": "Italien",
+  "order": 4
+ },
+ "league": {
+  "id": "serie-a",
+  "name": "Serie A",
+  "season": "2026/27",
+  "prefix": "it-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "AC Milan",
+   "country": "Italy",
+   "league": "Serie A",
+   "manager": "Rúben Amorim",
+   "lineupBasis": "League match 2026-10-11 vs Sassuolo (A)",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 16,
+     "name": "Maignan",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "31, France No.1 level; top shot-stopper and one of Serie A's best distributors"
+    },
+    {
+     "num": 34,
+     "name": "Gila",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "26, ~€30m from Lazio (Jul 2026), 120 Lazio apps; quick, aggressive right-sided CB"
+    },
+    {
+     "num": 46,
+     "name": "Gabbia",
+     "pos": "CB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Solid, aerially strong club CB; limited on the ball; now injured until late October"
+    },
+    {
+     "num": 31,
+     "name": "Pavlović",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Serbia; physical, front-foot LCB who wins duels and threatens at set pieces"
+    },
+    {
+     "num": 21,
+     "name": "Chukwueze",
+     "pos": "RWB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Winger used at RWB; 1v1 dribbler, 3G 4A on Fulham loan 25/26; 2 assists 26/27"
+    },
+    {
+     "num": 80,
+     "name": "Musah",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "USMNT; energetic ball-carrier, 1-2G in ~26 apps on Atalanta loan; average end product"
+    },
+    {
+     "num": 12,
+     "name": "Rabiot",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "31, France; complete box-to-box midfielder, strong in duels, arrives in the box (goal vs Sassuolo)"
+    },
+    {
+     "num": 2,
+     "name": "Estupiñán",
+     "pos": "LWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ecuador; quality crosser from the left, defending is the weaker side of his game"
+    },
+    {
+     "num": 11,
+     "name": "Pulisic",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Milan's main attacking output for three seasons; direct, good finisher and creator"
+    },
+    {
+     "num": 22,
+     "name": "Moreira",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "22, Belgium; ~€50m from Strasbourg; quick dribbler, 7G 15A in 76 games there, assists over goals"
+    },
+    {
+     "num": 9,
+     "name": "Gonçalo Ramos",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Club-record ~€74-80m from PSG; penalty-box poacher and willing presser; only 1 league goal so far"
+    }
+   ],
+   "kit": {
+    "home": "#C8102E",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 1,
+    "width": 3,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Lega Serie A data after 5 matchdays (Fantacalcio, 28 Sep): Milan are last of 20 for 'Direct Speed' (1.29), 2nd for sequences of 10+ passes (92) and possession duration (12.98 s), and 3rd for possession and pass accuracy, so tempo 1 and passing 2. Possession is 60.5% (3rd, Calcio d'Angolo/FotMob) and 51–69% in every league match. Crosses rank 10th, so width 3; the width comes from wing-backs Chukwueze and Estupiñán. Shots are only 12.8 per match (14th) against the best conversion rate (15.6%), and xG was 0.11 at Juventus, so style 'normal'. No PPDA or line-height data was found, so press 3 and line 3 are neutral estimates. setAtt and setDef are placeholders (no source).",
+   "desc": "Milan spiller en 3-4-2-1 med meget boldbesiddelse og en langsom, tålmodig opbygning, hvor wingbackerne giver bredde, og de to offensive midtbanespillere bag angriberen skal skabe chancerne.",
+   "uncertain": [
+    "Gabbia (1 league start of 6) went off injured after 19 min and is now out with a thigh injury until late October (FotMob). De Winter (#5, 5 starts) is the usual centre-back.",
+    "Modrić (#14, 4 starts) was benched after international duty. Musah also has 4 starts, so I kept the latest XI. A more 'current typical' XI would have De Winter for Gabbia and possibly Modrić for Musah.",
+    "Formation: FotMob gives 3-4-2-1, but pre-match previews (Fantacalcio, 9 Oct) expected a back four with Gila at right-back. The left/right of Pulisic (right) and Moreira (left) is from FotMob's ordering only.",
+    "Saelemaekers (#56) is injured until late October; Moreira replaced him.",
+    "Kit: home red/black stripes, red chosen. The away kit is white (acmilan.com, from a search summary; the page was not opened). Press, line and set pieces have no source."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Serie_A — Milan in Serie A 2026/27; Allegri sacked 25 May, Amorim appointed 16 June",
+    "https://www.fotmob.com/matches/sassuolo-vs-milan/294gu6 — 2026-10-11 Sassuolo 1-1 Milan, 3-4-2-1, XI with shirt numbers, 59% possession, subs",
+    "https://www.acmilan.com/en/match-center/2026-27-serie-a-us-sassuolo-calcio-ac-milan-7bvu4b4e5lezk0he7a4l3getw — official result 1-1, Rabiot 63'",
+    "https://www.fantacalcio-online.com/it/serie-a/2026-2027/voti/6-giornata/sassuolo-milan — cross-check of the 11 Milan starters",
+    "https://www.fotmob.com/matches/milan-vs-torino/2sg20c, https://www.fotmob.com/matches/venezia-vs-milan/28iklz, https://www.fotmob.com/matches/milan-vs-juventus/2tc0mu, https://www.fotmob.com/matches/lazio-vs-milan/2f4m36, https://www.fotmob.com/matches/milan-vs-lecce/2td7ci — earlier league XIs (all 3-4-2-1) for start counts",
+    "https://www.fotmob.com/teams/8564/squad/ac-milan — shirt numbers, positions; Gabbia and Saelemaekers injured",
+    "https://www.fantacalcio.it/news/calcio-italia/09_10_2026/milan-col-sassuolo-ancora-difesa-a-quattro-le-scelte-di-amorim-498943 — preview expecting a back four",
+    "https://www.fantacalcio.it/news/calcio-italia/28_09_2026/i-numeri-raccontano-la-serie-a-inter-roma-e-como-regine-della-produzione-offensiva-498506 — Direct Speed last, passing/possession rankings, crosses 10th",
+    "https://calciodangolo.com/serie-a-possesso-palla-squadre-classifica/ — possession 60.5%",
+    "https://www.acmilan.com/en/news/articles/club/2026-05-22/ac-milan-and-puma-unveil-the-2026-27-home-kit — home kit red/black stripes",
+    "https://www.acmilan.com/en/news/articles/media/2026-07-21/after-istanbul-there-is-always-athens-ac-milan-and-puma-unveil-the-new-2026-27-away-kit — away kit white"
+   ]
+  },
+  {
+   "club": "AS Roma",
+   "country": "Italy",
+   "league": "Serie A",
+   "manager": "Gian Piero Gasperini",
+   "lineupBasis": "Most frequent Serie A starters 2026/27 (composite of 6 league matches; closest single XI is league match 2026-08-31 vs Lecce (A), which had Ghilardi instead of N'Dicka); latest league match 2026-10-11 vs Como (A) not used because Svilar and Cristante are injured and it came three days before the CL match at Real Madrid",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 99,
+     "name": "Svilar",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "Among Serie A's best shot-stoppers for two seasons; currently out with a broken finger"
+    },
+    {
+     "num": 23,
+     "name": "Mancini",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Italy; aggressive, physical right CB, scores headers; started all 6 league games"
+    },
+    {
+     "num": 5,
+     "name": "N'Dicka",
+     "pos": "CB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Ivory Coast; tall, mobile CB, strong in duels and recovery runs"
+    },
+    {
+     "num": 22,
+     "name": "Hermoso",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "31; left-footed ball-player, good passer out from the back; lacks pace"
+    },
+    {
+     "num": 77,
+     "name": "Lulli",
+     "pos": "RWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 3,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Emanuele Lulli, 19, academy right-sided full-back/RWB promoted by Gasperini; raw, few senior minutes"
+    },
+    {
+     "num": 4,
+     "name": "Cristante",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 3,
+      "tech": 6,
+      "shoot": 5,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "31; positional holder, strong in the air and in duels; slow; currently injured"
+    },
+    {
+     "num": 17,
+     "name": "Koné",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "France; powerful ball-winner and press-resistant carrier; few goals"
+    },
+    {
+     "num": 43,
+     "name": "Wesley",
+     "pos": "LWB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "23, Brazil international; ~€30m from Flamengo; 5 SA goals and 33 chances created in 25/26; very quick"
+    },
+    {
+     "num": 18,
+     "name": "Soulé",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "23, Argentina; left-footed dribbler and creator from the right; slight build"
+    },
+    {
+     "num": 21,
+     "name": "Dybala",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 4,
+      "tech": 9,
+      "shoot": 7,
+      "def": 3,
+      "phys": 3,
+      "gk": 1
+     },
+     "attrWhy": "Nearly 33; still elite touch and passing, set pieces; low mobility and injury-prone"
+    },
+    {
+     "num": 14,
+     "name": "Malen",
+     "pos": "CF",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 8,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Roma's top scorer 25/26 (14 SA in half a season) and 6 already in 26/27; very fast runner"
+    }
+   ],
+   "kit": {
+    "home": "#8E1F2F",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 5,
+    "line": 4,
+    "tempo": 4,
+    "width": 4,
+    "passing": 4,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Lega Serie A data after 5 matchdays (Fantacalcio, 28 Sep): PPDA among the lowest in the league (exact value not given), 1st for recoveries in the attacking third (5.8 per match), 1st for central-zone recoveries (141), the most shots from high recoveries (17) and 1st for interceptions (13.8 per match), so press 5. Line 4 is inferred from that high-up ball-winning; no line metric was found. Direct Speed is 1.91 (Milan's is 1.29), with 15 direct attacks (tied 2nd), so tempo 4. Long balls rank 3rd, so passing 4. Crosses rank 2nd, so width 4. Roma are 1st for touches in the opposition box (219) and 2nd for big chances (24), with possession at 57.7% (4th), so style 'off'. setAtt and setDef are placeholders (no source).",
+   "desc": "Roma presser meget aggressivt og vinder mange bolde højt på banen i en 3-4-2-1, hvorefter holdet hurtigt og direkte søger ind i feltet via wingbackerne og mange indlæg.",
+   "uncertain": [
+    "This XI was never fielded as one. Start counts: Svilar 5, Mancini 6, Hermoso 6, N'Dicka 3 (Balerdi 2), Lulli 4 (Molina 3), Cristante 5, Koné 5, Wesley 5, Dybala 6, Malen 6, Soulé 3 (Mora 2).",
+    "Right now Svilar (broken finger, until early November) and Cristante (knee, until late October) are injured (FotMob). The 2026-10-11 Como XI was: Gollini 95; Mancini 23, N'Dicka 5, Hermoso 22; Molina 20, de Roon 15, Koné 17, Wesley 43; Dybala 21, Pellegrini 7; Malen 14 (Malen sent off 53').",
+    "Formation: 3-4-2-1 in 4 of 6 league matches and 3-4-1-2 in 2 (Atalanta, Torino).",
+    "Soulé on the right and Dybala on the left (and Mancini as right centre-back) are inferred from FotMob's ordering, which was not fully consistent between matches. Lulli is listed by FotMob as RWB, age 19.",
+    "The red hex is approximate; asroma.com only says 'traditional red base' with yellow details. The away kit is white with a yellow-red chest band (asroma.com, from a search summary)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Serie_A — Roma in Serie A 2026/27, manager Gasperini; Roma 4-0 Fiorentina (24 Aug), Lecce 0-4 Roma (31 Aug)",
+    "https://www.fotmob.com/matches/roma-vs-como/2xv43v — 2026-10-11 Como 0-0 Roma (A), 3-4-2-1, XI, Malen red card, injuries Svilar/Cristante/Koulierakis",
+    "https://www.fotmob.com/matches/fiorentina-vs-roma/2gak0t, https://www.fotmob.com/matches/roma-vs-lecce/2upm4p, https://www.fotmob.com/matches/atalanta-vs-roma/2g6hwd, https://www.fotmob.com/matches/roma-vs-torino/2ts8vv, https://www.fotmob.com/matches/inter-vs-roma/2hby2d — earlier league XIs, formations, possession (start counts)",
+    "https://www.fotmob.com/teams/8686/fixtures/roma — next match Real Madrid vs Roma 14 Oct (CL)",
+    "https://www.fotmob.com/teams/8686/squad/roma — shirt numbers, positions (Lulli RWB, Wesley LWB), injuries",
+    "https://www.fantacalcio.it/news/calcio-italia/28_09_2026/i-numeri-raccontano-la-serie-a-inter-roma-e-como-regine-della-produzione-offensiva-498506 — PPDA among lowest, recoveries, interceptions, crosses, long balls, Direct Speed, box touches",
+    "https://calciodangolo.com/serie-a-possesso-palla-squadre-classifica/ — possession 57.7%",
+    "https://www.asroma.com/en/news/75630/as-roma-and-adidas-unveil-the-new-home-kit-for-the-202627-season — home kit traditional red with yellow details",
+    "https://www.asroma.com/en/news/75737/as-roma-and-adidas-unveil-the-new-away-kit-for-the-202627-season — away kit white with yellow-red band (search summary)"
+   ]
+  },
+  {
+   "club": "Inter",
+   "country": "Italy",
+   "league": "Serie A",
+   "manager": "Cristian Chivu",
+   "lineupBasis": "Most frequent Serie A starters 2026/27 (6 league matches) = XI of league match 2026-08-22 vs Monza (H); latest league match 2026-10-10 vs Parma (H) was rotated three days before the Champions League match vs Club Brugge (13 Oct), with Barella, Bastoni, Akanji and Zieliński on the bench and Lautaro coming on in the 61st minute",
+   "formation": "3-5-2",
+   "players": [
+    {
+     "num": 1,
+     "name": "Josep Martínez",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "28; champions' No.1 since Sommer; good with his feet, decent but not elite shot-stopper"
+    },
+    {
+     "num": 31,
+     "name": "Bisseck",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Germany; tall, athletic RCB who carries the ball forward; occasional lapses"
+    },
+    {
+     "num": 25,
+     "name": "Akanji",
+     "pos": "CB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "31, Switzerland; ex-City; quick, composed central CB, key part of the 25/26 title side"
+    },
+    {
+     "num": 95,
+     "name": "Bastoni",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 4,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Italy; elite ball-playing LCB who overlaps and creates; strong in duels"
+    },
+    {
+     "num": 17,
+     "name": "Diouf",
+     "pos": "RWB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 4,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Andy Diouf, ex-Lens midfielder converted to RWB by Chivu after Dumfries left; physical, strong 1v1 carrier"
+    },
+    {
+     "num": 23,
+     "name": "Barella",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Italy; elite engine and presser, progressive passer, regular assists"
+    },
+    {
+     "num": 20,
+     "name": "Çalhanoğlu",
+     "pos": "DM",
+     "attrs": {
+      "pace": 3,
+      "tech": 8,
+      "shoot": 8,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "32; deep playmaker, penalties and long shots (12 goals 25/26); slow"
+    },
+    {
+     "num": 7,
+     "name": "Zieliński",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 6,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "32; press-resistant, two-footed passer; limited physically"
+    },
+    {
+     "num": 32,
+     "name": "Dimarco",
+     "pos": "LWB",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 7,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Italy; one of Europe's best crossers and set-piece takers; volleys and free kicks"
+    },
+    {
+     "num": 94,
+     "name": "Pio Esposito",
+     "pos": "RCF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "21, 1.91m; 11G 6A in 50 games 25/26 (23 starts); target man, new six-year deal"
+    },
+    {
+     "num": 10,
+     "name": "Lautaro",
+     "pos": "LCF",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 9,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Inter's top scorer 25/26 (24 goals); elite finisher and hard presser"
+    }
+   ],
+   "kit": {
+    "home": "#1F4FA0",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 2,
+    "width": 4,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Lega Serie A data after 5 matchdays (Fantacalcio, 28 Sep): Inter are 1st for possession (63%), completed passes (547.6 per match), pass accuracy (89.9%), passes per sequence (4.91) and possession duration (13.92 s), and have only 6 direct attacks, so tempo 2 and passing 2. Long balls are 27.4 per match (2nd), which follows from the high pass volume and does not mean direct play. Crosses are 8.2 per match (1st), and the wing-backs Dimarco and Diouf create 15 and 14 chances (FotMob), so width 4. No PPDA or line-height figure was found. Press 4 and line 4 are an inference from 3rd place for central-zone recoveries and 59–70% possession in 5 of 6 matches. Inter lead the league for goals and big chances (28), so style 'off'. No set-piece source, so setAtt 'mix' and setDef 'mixed' are neutral placeholders.",
+   "desc": "Inter dominerer bolden i en 3-5-2 med tålmodig, kort opbygning, hvor wingbackerne holder banen bred og sender mange indlæg ind mod de to angribere.",
+   "uncertain": [
+    "This XI is a most-frequent composite. It matches the Monza XI exactly. Çalhanoğlu and Sučić are tied on 3 league starts each; Çalhanoğlu was chosen because the Monza XI with him consists only of the most frequent starters.",
+    "Left/right sides (Bisseck right, Bastoni left, Barella right, Zieliński left, Esposito right, Lautaro left) are inferred from FotMob's on-pitch ordering, not stated explicitly.",
+    "Name for #94: 'Pio Esposito' is the usual Italian usage (FotMob: Francesco Pio Esposito).",
+    "Home kit is black and 'Lyon Blue' stripes (inter.it). I chose blue as the main colour, which is a judgement call. The away kit (white with navy pinstripes) comes from a Goal.com search summary; the page was not opened.",
+    "Press, line, setAtt and setDef have no direct metric (no PPDA or line height found)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Serie_A — Inter in Serie A 2026/27, manager Chivu",
+    "https://www.fotmob.com/teams/8636/overview/inter — coach Chivu; next match CL vs Club Brugge 13 Oct 2026",
+    "https://www.fotmob.com/matches/inter-vs-parma/2x9bgq — 2026-10-10 Inter 3-0 Parma, 3-5-2, rotated XI; Barella, Bastoni, Akanji, Zieliński on bench",
+    "https://www.fotmob.com/matches/monza-vs-inter/1w8tzq — 2026-08-22 Inter vs Monza (H), 3-5-2, basis XI with shirt numbers",
+    "https://www.fotmob.com/matches/cagliari-vs-inter/2fpx1z — 2026-08-30 XI (start counts)",
+    "https://www.fotmob.com/matches/inter-vs-napoli/2u0kq3 — 2026-09-05 XI (start counts)",
+    "https://www.fotmob.com/matches/udinese-vs-inter/2gg3e6 — 2026-09-14 XI (start counts)",
+    "https://www.fotmob.com/matches/inter-vs-roma/2hby2d — 2026-09-19 XI (start counts)",
+    "https://www.fotmob.com/teams/8636/squad/inter — shirt numbers and positions",
+    "https://www.fantacalcio.it/news/calcio-italia/28_09_2026/i-numeri-raccontano-la-serie-a-inter-roma-e-como-regine-della-produzione-offensiva-498506 — possession, passing, crosses and long-ball stats",
+    "https://calciodangolo.com/serie-a-possesso-palla-squadre-classifica/ — possession 63.0% (1st) after 5 matchdays",
+    "https://www.inter.it/en/news/inter-nike-new-home-kit-2026-2027-season — home kit black + Lyon Blue",
+    "https://www.goal.com/en-gb/lists/inter-milan-2026-27-kit-new-home-away-third-and-goalkeeper-jerseys-release-dates-shirt-leaks-and-prices/blt8d981a5c9ed16909 — away kit white with navy pinstripes (search summary)"
+   ]
+  },
+  {
+   "club": "Juventus",
+   "country": "Italy",
+   "league": "Serie A",
+   "manager": "Luciano Spalletti",
+   "lineupBasis": "League match 2026-10-11 vs Cagliari (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 25,
+     "name": "Vicario",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "29, Italy; on loan from Spurs, lost his place to Kinsky; strong reflexes, average distribution"
+    },
+    {
+     "num": 15,
+     "name": "Kalulu",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Fast, versatile CB/RB; reliable 1v1 and recovery defender"
+    },
+    {
+     "num": 3,
+     "name": "Bremer",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 4,
+      "def": 8,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "29, Brazil; dominant duel and aerial CB, back from the 2024 ACL injury"
+    },
+    {
+     "num": 26,
+     "name": "Lucumí",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Colombia; left-footed, quick and good in build-up (ex-Bologna)"
+    },
+    {
+     "num": 2,
+     "name": "Çelik",
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Turkey RB used at LB; steady, hard-working, limited going forward"
+    },
+    {
+     "num": 29,
+     "name": "Sarr",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Pape Matar Sarr, 24, Senegal; on loan from Spurs (Sep 2026); energetic box-to-box carrier"
+    },
+    {
+     "num": 12,
+     "name": "Douglas Luiz",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 6,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Brazil; good passer and set-piece taker, but two weak seasons (Juve, then Villa loan)"
+    },
+    {
+     "num": 7,
+     "name": "Conceição",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Portugal; quick, left-footed 1v1 dribbler from the right; slight build"
+    },
+    {
+     "num": 22,
+     "name": "McKennie",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 6,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "USMNT; utility man with a high work rate, crashes the box, good in the air"
+    },
+    {
+     "num": 31,
+     "name": "Nico González",
+     "pos": "LW",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Argentina; hard-working left-footed wide forward, good in the air; inconsistent output"
+    },
+    {
+     "num": 9,
+     "name": "Kolo Muani",
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "France; permanent signing Aug 2026; powerful runner, uneven finishing (0G 1A in his first 5 SA games)"
+    }
+   ],
+   "kit": {
+    "home": "#1A1A1A",
+    "away": "#F4B6C8"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 3,
+    "tempo": 3,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession is 56.1% (6th, FotMob via Calcio d'Angolo) and 49–72% per league match, with 72% and 22 shots at Cagliari, so passing 3 and tempo 3 (no direct-speed figure found). Lega Serie A data after 5 matchdays (Fantacalcio): best xG conceded in the league (2.4), 3rd for recoveries in the attacking third and 2nd for central-zone recoveries, so press 4. Tackles are among the lowest in Serie A, so line 3 rather than 4; no line-height metric was found. There is no crossing data, so width 3 is an estimate; Conceição and González play wide in the 4-2-3-1. Style 'normal'. setAtt and setDef are placeholders (no source).",
+   "desc": "Juventus spiller en 4-2-3-1 med kontrol over bolden og vinder mange bolde tilbage højt på banen, mens forsvaret er så solidt, at modstanderne får meget få store chancer.",
+   "uncertain": [
+    "Sarr is in for Locatelli (meniscus, out until late March 2027 per FotMob), so this is the current normal. Yıldız (#10) is out with a broken foot until early December.",
+    "Çelik at left-back and Kalulu at right-back come from FotMob's ordering; Cambiaso (#20, LB) replaced Çelik at 64'.",
+    "4-2-3-1 in 5 of 6 league matches; 3-4-2-1 vs Atalanta on 2026-09-20.",
+    "Home kit is black/white stripes; black was chosen, following the Newcastle convention in the PL file. Away kit is soft pink (footballfashion.org, from a search summary; the page was not opened).",
+    "Press and line rest on recovery/xGA rankings, not PPDA. Set pieces have no source."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Serie_A — Juventus in Serie A 2026/27, manager Spalletti",
+    "https://www.fotmob.com/matches/cagliari-vs-juventus/2sy6uu — 2026-10-11 Cagliari 1-1 Juventus (A), 4-2-3-1, XI with numbers, 72% possession, 22 shots",
+    "https://www.fotmob.com/matches/juventus-vs-frosinone/38fmtf, https://www.fotmob.com/matches/juventus-vs-parma/3bpfv3, https://www.fotmob.com/matches/milan-vs-juventus/2tc0mu, https://www.fotmob.com/matches/sassuolo-vs-juventus/2mml13, https://www.fotmob.com/matches/atalanta-vs-juventus/2sw7tm — earlier league XIs (start counts, formations)",
+    "https://www.fotmob.com/teams/9885/squad/juventus — shirt numbers, positions, injuries (Locatelli, Yıldız, Boga)",
+    "https://www.fantacalcio.it/news/calcio-italia/28_09_2026/i-numeri-raccontano-la-serie-a-inter-roma-e-como-regine-della-produzione-offensiva-498506 — xG conceded best, recoveries rankings, tackles",
+    "https://calciodangolo.com/serie-a-possesso-palla-squadre-classifica/ — possession 56.1%",
+    "https://footballfashion.org/wordpress/2026/05/13/juventus-2026-27-jersey-home-kit-release/amp/ — home kit black/white stripes (search summary)",
+    "https://footballfashion.org/wordpress/2026/08/09/juventus-2026-27-kit-adidas-away-third-jerseys/ — away kit soft pink (search summary)"
+   ]
+  },
+  {
+   "club": "Napoli",
+   "country": "Italy",
+   "league": "Serie A",
+   "manager": "Massimiliano Allegri",
+   "lineupBasis": "League match 2026-10-10 vs Frosinone (H)",
+   "formation": "3-4-3",
+   "players": [
+    {
+     "num": 1,
+     "name": "Meret",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 5,
+      "gk": 7
+     },
+     "attrWhy": "Italy; reliable shot-stopper in two title seasons, modest command of his area"
+    },
+    {
+     "num": 16,
+     "name": "Rafa Marín",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "24, ex-Real Madrid; tall, ball-playing CB; 23 LaLiga games for Villarreal on loan 25/26"
+    },
+    {
+     "num": 13,
+     "name": "Rrahmani",
+     "pos": "CB",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "32, Kosovo; positionally strong leader of two title defences; losing pace"
+    },
+    {
+     "num": 5,
+     "name": "Badiashile",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "France; left-footed CB on loan from Chelsea; good on the ball, only 8 PL games in injury-hit 25/26"
+    },
+    {
+     "num": 22,
+     "name": "Di Lorenzo",
+     "pos": "RWB",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 5,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "33, captain; smart, consistent right-sider who can play RWB or CB"
+    },
+    {
+     "num": 11,
+     "name": "De Bruyne",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 3,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "35; passing and set pieces still top level, but mobility and fitness have declined"
+    },
+    {
+     "num": 68,
+     "name": "Lobotka",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 3,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Slovakia; press-resistant metronome with very high pass accuracy; scores very little"
+    },
+    {
+     "num": 37,
+     "name": "Spinazzola",
+     "pos": "LWB",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "33; tidy, creative left-sider; no longer explosive, injury history; covering for injured Olivera"
+    },
+    {
+     "num": 7,
+     "name": "Neres",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 6,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Brazil; quick, inventive 1v1 dribbler; assists over goals"
+    },
+    {
+     "num": 19,
+     "name": "Højlund",
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "23, Denmark; fast, powerful runner in behind, solid scorer at Napoli; link play is average"
+    },
+    {
+     "num": 70,
+     "name": "Lang",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "27, Netherlands; flair dribbler; no goals or assists in 26/27 yet and a reported row with Allegri"
+    }
+   ],
+   "kit": {
+    "home": "#5AA9E0",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 2,
+    "line": 2,
+    "tempo": 3,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession is 49.8% (9th of 20, FotMob via Calcio d'Angolo) and 37–58% per league match, so passing 3 and tempo 3. Napoli allowed 29 shots at Inter and 17 shots at home to promoted Frosinone (49% opponent possession), which points to a mid/low block: press 2, line 2. This is an inference; no PPDA or line metric was found. There is no crossing data. Width 3 is an estimate, with Di Lorenzo and Spinazzola as wing-backs in the new back three. Lega data (Fantacalcio) only notes dribbles per match among the fewest. Style 'normal'. setAtt and setDef are placeholders (no source).",
+   "desc": "Napoli spiller en afbalanceret 3-4-3 med wingbacks i begge sider, deler ofte boldbesiddelsen med modstanderen og forsvarer i en mellemhøj blok, før holdet går frem mod angrebstrioen.",
+   "uncertain": [
+    "The system has changed almost every match: 4-3-3 in rounds 1–4, 4-2-3-1 at Fiorentina, then 3-4-3 vs Frosinone. Fantacalcio (8 Oct) reports the back three is a response to injuries: Olivera, Favasuli and Vergara are out, Anguissa is doubtful, and Buongiorno and Alisson Santos are injured (FotMob).",
+    "Politano (#21) started 5 of 6 league matches but was on the bench vs Frosinone, three days before the CL match at Villarreal. McTominay (#8) was also on the bench (2 starts). The XI may include light rotation.",
+    "FotMob labels the formation 3-4-3; the Fantacalcio preview called it 3-4-2-1. Left/right of the centre-backs and of De Bruyne/Lobotka comes from FotMob's ordering.",
+    "Meret has 4 starts and Milinković-Savić (#32) 2.",
+    "Home 'Centenary Blue' hex is approximate (footyheadlines, from a search summary; the page was not opened). The away kit is white with blue pinstripes. Press and line are inferences."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Serie_A — Napoli in Serie A 2026/27; Conte left 24 May, Allegri appointed 3 July",
+    "https://www.fotmob.com/matches/napoli-vs-frosinone/38be9c — 2026-10-10 Napoli 3-0 Frosinone (H), 3-4-3, XI with numbers, bench, injury list",
+    "https://www.fotmob.com/matches/napoli-vs-genoa/3cdjj5, https://www.fotmob.com/matches/napoli-vs-como/3bmv18, https://www.fotmob.com/matches/inter-vs-napoli/2u0kq3, https://www.fotmob.com/matches/bologna-vs-napoli/37x04l, https://www.fotmob.com/matches/fiorentina-vs-napoli/2swm0q — earlier league XIs, formations, possession",
+    "https://www.fotmob.com/teams/9875/overview/napoli — coach Allegri; next match CL at Villarreal 13 Oct",
+    "https://www.fotmob.com/teams/9875/squad/napoli — shirt numbers, positions, injuries",
+    "https://www.fantacalcio.it/news/calcio-italia/08_10_2026/napoli-allegri-pensa-al-3-4-3-a-sinistra-poche-alternative-498872 — switch to a back three because of injuries",
+    "https://calciodangolo.com/serie-a-possesso-palla-squadre-classifica/ — possession 49.8% (9th)",
+    "https://www.footyheadlines.com/4471050629/napoli-26-27-centenary-home-kit-revealed.html — home kit Centenary Blue (search summary)",
+    "https://www.footyheadlines.com/5794144435/napoli-26-27-away-kit-released.html — away kit white with blue accents (search summary)"
+   ]
+  }
+ ]
+}

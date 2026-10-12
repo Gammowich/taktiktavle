@@ -2,7 +2,8 @@
  "note": "Research 12/10 2026 af fire agenter med websøgning (ESPN, FotMob, Sky Sports, premierleague.com, klubsider, Wikipedia, Understat). Startopstilling = seneste PL-kamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn ud fra få kampe; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed'), fordi der ikke fandtes kilder.",
  "country": {
   "id": "england",
-  "name": "England"
+  "name": "England",
+  "order": 1
  },
  "league": {
   "id": "premier-league",
@@ -22,57 +23,156 @@
     {
      "num": 1,
      "name": "Petrović",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "Ever-present in all 38 PL games 2025/26; tall shot-stopper and good penalty saver, average distribution"
     },
     {
      "num": 15,
      "name": "Smith",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 2,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "35-year-old veteran RB; reliable positioning but has lost a step; starting all 6 PL games 26/27"
     },
     {
      "num": 5,
      "name": "Hill",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Mobile young CB/RB, 2,100 PL min 25/26 (3 assists); solid but not yet top-club level"
     },
     {
      "num": 14,
      "name": "António Silva",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£25m from Benfica, 20 Portugal caps, ball-playing LCB; aerial threat (1.63 xG in 6 PL games 26/27)"
     },
     {
      "num": 3,
      "name": "Truffert",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Bournemouth's fastest player 25/26 (34.96 km/h), 3rd-most distance in PL, ~100 tackles, 5 assists"
     },
     {
      "num": 12,
      "name": "Adams",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "USMNT ball-winner; elite pressing and tackling, simple on the ball, almost no goal threat"
     },
     {
      "num": 8,
      "name": "Scott",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "England call-up Oct 2026; press-resistant progressor (high xGBuildup 25/26); currently injured"
     },
     {
      "num": 37,
      "name": "Rayan",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "20-year-old Brazil international (started at World Cup), 1.87 m direct winger; 5 PL goals from 2.7 xG in 25/26"
     },
     {
      "num": 19,
      "name": "Kluivert",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 7,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Quick, clever forward; 12 PL goals in 24/25, injury-hit 25/26 (934 min), currently injured"
     },
     {
      "num": 16,
      "name": "Tavernier",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "7 G/4 A 25/26 (52 key passes), 3 goals already 26/27; dangerous set pieces, hard-working"
     },
     {
      "num": 9,
      "name": "Evanilson",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 6,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Mobile, physical CF who presses a lot, but finishing is wasteful (6 G from 11.8 xG in 25/26); 3 assists 26/27"
     }
    ],
    "kit": {
@@ -127,57 +227,156 @@
     {
      "num": 1,
      "name": "Raya",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 9
+     },
+     "attrWhy": "Champions' No.1, among Europe's best shot-stoppers, excellent distribution and claiming"
     },
     {
      "num": 4,
      "name": "White",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Smart, technical RB, only 703 PL min 25/26 but back starting (2 assists 26/27)"
     },
     {
      "num": 15,
      "name": "Konsa",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 2,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£51m from Villa; started 7 England games at World Cup; quick, composed right-sided CB"
     },
     {
      "num": 6,
      "name": "Gabriel",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 9,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "One of Europe's best CBs; dominant in duels and aerially, set-piece goals (4.65 xG 25/26)"
     },
     {
      "num": 33,
      "name": "Calafiori",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Inverted, ball-playing LB; 1 G/2 A in 6 games 26/27, aggressive defender"
     },
     {
      "num": 41,
      "name": "Rice",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 8,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "Elite all-round midfielder: 8.2 xA 25/26, Arsenal's top distance, set pieces, strong ball-winner"
     },
     {
      "num": 49,
      "name": "Lewis-Skelly",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Young LB used in midfield; press-resistant carrier, high buildup involvement 26/27, still developing"
     },
     {
      "num": 7,
      "name": "Saka",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 9,
+      "shoot": 7,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "World-class creator, 62 key passes and 8.6 xA in 25/26; 3 goals in 6 games 26/27"
     },
     {
      "num": 8,
      "name": "Ødegaard",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 9,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Elite playmaker and presser, 6 assists in 1,347 min 25/26; 2 goals 26/27"
     },
     {
      "num": 20,
      "name": "Madueke",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Fast, direct 1v1 winger, 4.0 xA in 1,246 min 25/26; deputising for injured Tzolis"
     },
     {
      "num": 29,
      "name": "Havertz",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 7,
+      "def": 5,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Aerially strong, smart-moving CF, injury-hit 25/26; 2 goals in 6 games 26/27, presses well"
     }
    ],
    "kit": {
@@ -232,57 +431,156 @@
     {
      "num": 1,
      "name": "Suzuki",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "£26m from Parma, Japan No.1; big, athletic shot-stopper, distribution still developing"
     },
     {
      "num": 2,
      "name": "Cash",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Energetic Poland RB, 3 G/3 A in 25/26; strong duelist"
     },
     {
      "num": 3,
      "name": "Lindelöf",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 2,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "32-year-old, composed and positionally sound but slow; regular starter 26/27"
     },
     {
      "num": 5,
      "name": "Mings",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "33-year-old, good aerially and as a leader, lacks recovery pace; 1,314 min in 25/26"
     },
     {
      "num": 13,
      "name": "Ruggeri",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "£21m from Atlético (1,767 La Liga min, 25 key passes, 3 A); good crosser; hamstring injury 10 Oct"
     },
     {
      "num": 8,
      "name": "Kamara",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "High-quality screening midfielder, tidy passer; durability is a concern (1,434 min 25/26)"
     },
     {
      "num": 35,
      "name": "João Gomes",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "£34m from Wolves, Brazil international; tireless tackler (335 km 25/26)"
     },
     {
      "num": 7,
      "name": "McGinn",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 6,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Captain, relentless engine; 5 G/4 A 25/26, 1 G/2 A 26/27; plays wide right"
     },
     {
      "num": 10,
      "name": "Buendía",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 6,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Creative, technical No.10, 6 PL goals in 1,778 min 25/26; light frame"
     },
     {
      "num": 44,
      "name": "Manzambi",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Club-record £51m from Freiburg (5 G/4 A, 51 shots 25/26); powerful 21-year-old Swiss"
     },
     {
      "num": 11,
      "name": "Jackson",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 6,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£47.5m+ from Chelsea; fast runner in behind, 8 Bundesliga goals on loan 25/26; erratic finishing; 2 PL goals"
     }
    ],
    "kit": {
@@ -333,57 +631,156 @@
     {
      "num": 1,
      "name": "Kelleher",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 8
+     },
+     "attrWhy": "Ireland No.1, strong shot-stopper with good feet; 37 PL starts 25/26"
     },
     {
      "num": 33,
      "name": "Kayode",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "8th-most distance in PL 25/26 (387 km); quick, aggressive RB with long throws"
     },
     {
      "num": 44,
      "name": "Schuster",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "20-year-old ex-Salzburg 1.90 m ball-player; led Austrian final phase in aerials/clearances; PL-raw"
     },
     {
      "num": 20,
      "name": "Ajer",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Tall, mobile CB, decent passer; 1,809 min 25/26, scored v Villa 10 Oct"
     },
     {
      "num": 25,
      "name": "Diouf",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£40m from West Ham (2,711 min, 5 A 25/26); powerful, quick Senegal LB; first PL start 10 Oct"
     },
     {
      "num": 6,
      "name": "Yarmoliuk",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Industrious Ukraine DM, 2,679 PL min 25/26; tidy recycler, good ball-winner"
     },
     {
      "num": 27,
      "name": "Janelt",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Steady, smart midfielder (4 A 25/26, 2 G 26/27); limited athletically"
     },
     {
      "num": 19,
      "name": "Anthony",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "From relegated Burnley (8 PL goals 25/26); hard-working, direct winger"
     },
     {
      "num": 23,
      "name": "Lewis-Potter",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Versatile LB/winger moved to CAM; 3 G/3 A 25/26; energetic but not a natural No.10"
     },
     {
      "num": 7,
      "name": "Schade",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 6,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Brentford's fastest 25/26 (35.88 km/h); 8 G from 11.8 xG 25/26, 3 goals 26/27"
     },
     {
      "num": 9,
      "name": "Igor Thiago",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 8,
+      "def": 4,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "22 PL goals 25/26 (24.7 xG); powerful, aerially dominant target man"
     }
    ],
    "kit": {
@@ -435,57 +832,156 @@
     {
      "num": 1,
      "name": "Verbruggen",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "Netherlands No.1, excellent ball-playing keeper, all 38 PL games 25/26; occasional errors"
     },
     {
      "num": 24,
      "name": "Kadioglu",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Turkey full-back, technical and tireless (Brighton's top distance 25/26), 3,145 min"
     },
     {
      "num": 44,
      "name": "Vuskovic",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Club-record £50m, 19, 1.93 m; 6 Bundesliga goals as CB at HSV; dominant in duels, PL-raw"
     },
     {
      "num": 4,
      "name": "Struijk",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£18m from Leeds (2,940 min 25/26); tall left-footed CB, set-piece threat; red card 10 Oct"
     },
     {
      "num": 21,
      "name": "Boscagli",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 2,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Left-footed CB used at LB; tidy in buildup, not a natural overlapper"
     },
     {
      "num": 13,
      "name": "Gross",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 3,
+      "tech": 8,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "35-year-old, elite passer and set-piece taker; 3 G/4 A, 18 key passes in 6 games 26/27; covers huge distances"
     },
     {
      "num": 14,
      "name": "Chema Andrés",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "21-year-old ex-Real Madrid/Stuttgart DM (41 games 25/26); composed, tall, still adapting"
     },
     {
      "num": 25,
      "name": "Gómez",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Energetic Paraguay attacker, 5 PL goals 25/26; 18 shots and 2 A in 6 games 26/27"
     },
     {
      "num": 26,
      "name": "Ayari",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Sweden midfielder, 3 G/3 A in 1,918 min 25/26; busy presser, good carrier"
     },
     {
      "num": 29,
      "name": "De Cuyper",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Belgium LB pushed to LW; quick, strong crosser; 2 G/2 A in 6 games 26/27"
     },
     {
      "num": 19,
      "name": "Kostoulas",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 6,
+      "def": 3,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "19-year-old Greece CF, now starter: 2 G/1 A 26/27; strong link-up, finishing still developing"
     }
    ],
    "kit": {
@@ -535,57 +1031,156 @@
     {
      "num": 1,
      "name": "Martínez",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "Emiliano Martínez, 34, Argentina No.1; elite shot-stopper and penalties, slight decline; £7.5m from Villa"
     },
     {
      "num": 34,
      "name": "Acheampong",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "20, 1.90m academy RB/CB; 17 PL apps 25/26, 5 PL so far; athletic, still raw"
     },
     {
      "num": 5,
      "name": "Lacroix",
-     "pos": "CB"
+     "pos": "CB",
+     "attrs": {
+      "pace": 8,
+      "tech": 5,
+      "shoot": 3,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "£52m from Palace; recovery pace and duel-winning were among the PL's best at Palace"
     },
     {
      "num": 6,
      "name": "Colwill",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "England LCB; strong left-footed progressive passer, solid in duels"
     },
     {
      "num": 7,
      "name": "Neto",
-     "pos": "RWB"
+     "pos": "RWB",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Winger used at RWB; elite acceleration, dribbling and crossing, modest finishing"
     },
     {
      "num": 25,
      "name": "Caicedo",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 5,
+      "def": 9,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Among Europe's best ball-winners (tackles/interceptions); clean passer, huge engine"
     },
     {
      "num": 14,
      "name": "Henderson",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 3,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Jordan Henderson, 36, free from Brentford; good range of passing, reads play, legs declining; 2 goals already"
     },
     {
      "num": 29,
      "name": "Chavarría",
-     "pos": "LWB"
+     "pos": "LWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "£16.3m from Rayo; 33 LaLiga apps, 1G 2A, 54 tackles 31 int. in 25/26; steady, energetic LB"
     },
     {
      "num": 10,
      "name": "Palmer",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 9,
+      "shoot": 9,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Elite creator and finisher, set pieces and penalties; low defensive output"
     },
     {
      "num": 17,
      "name": "Rogers",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "£117m from Villa; powerful carrier and dribbler, 4 goals in 8 apps so far"
     },
     {
      "num": 9,
      "name": "João Pedro",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 8,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Brazil CF; link-up and first touch, Chelsea's top league scorer (5) this season"
     }
    ],
    "kit": {
@@ -638,57 +1233,156 @@
     {
      "num": 19,
      "name": "Rushworth",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 6
+     },
+     "attrWhy": "25, £22.5m club record; Championship Golden Glove and PFA TOTY 25/26; Brighton-schooled distribution, unproven in PL"
     },
     {
      "num": 12,
      "name": "Mfuni",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 4,
+      "shoot": 2,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "18, on loan from Man City; 8 Championship starts at Watford; left-footed, strong in the air, very inexperienced"
     },
     {
      "num": 4,
      "name": "Bobby Thomas",
-     "pos": "CB"
+     "pos": "CB",
+     "attrs": {
+      "pace": 5,
+      "tech": 4,
+      "shoot": 3,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "1.93m CB; PFA Championship TOTY 25/26, 33 apps and 3 goals; first PL season"
     },
     {
      "num": 2,
      "name": "Pinnock",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 4,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "33, ex-Brentford; dominant in the air, reliable PL defender, ageing"
     },
     {
      "num": 8,
      "name": "Yirenkyi",
-     "pos": "RWB"
+     "pos": "RWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "20, Ghana CM played at RWB; ~£23m from Nordsjælland, 2G 5A in Superliga 25/26, energetic"
     },
     {
      "num": 16,
      "name": "Onyeka",
-     "pos": "RCM"
+     "pos": "RCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 4,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Ex-Brentford ball-winner; high work rate and duels, limited on the ball"
     },
     {
      "num": 6,
      "name": "Grimes",
-     "pos": "LCM"
+     "pos": "LCM",
+     "attrs": {
+      "pace": 3,
+      "tech": 5,
+      "shoot": 4,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Deep-lying passer, 46 Championship apps 25/26; slow, untested in PL"
     },
     {
      "num": 3,
      "name": "Dasilva",
-     "pos": "LWB"
+     "pos": "LWB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "41 Championship starts 25/26; wing-back who gets forward, scored vs Forest"
     },
     {
      "num": 5,
      "name": "Rudoni",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 5,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Hard-working attacking mid; 7 Championship goals 25/26, takes corners"
     },
     {
      "num": 23,
      "name": "Thomas-Asante",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 5,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "13 Championship goals in 21 starts 25/26; mobile runner in behind"
     },
     {
      "num": 10,
      "name": "Mason-Clark",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 5,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Quick, direct winger; 10 Championship goals 25/26"
     }
    ],
    "kit": {
@@ -737,57 +1431,156 @@
     {
      "num": 44,
      "name": "Benítez",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 6
+     },
+     "attrWhy": "Walter Benítez, 33, ex-Nice/PSV; good shot-stopper, now backup to Henderson"
     },
     {
      "num": 8,
      "name": "Lerma",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Colombia DM covering at CB; combative and aerial, scored vs Forest"
     },
     {
      "num": 26,
      "name": "Richards",
-     "pos": "CB"
+     "pos": "CB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "USMNT CB; consistent in duels, part of the Conference League-winning back three"
     },
     {
      "num": 6,
      "name": "Canvot",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "20, France U21; regular starter after Guéhi left, 20 PL apps 25/26; athletic and composed"
     },
     {
      "num": 25,
      "name": "Khalaili",
-     "pos": "RWB"
+     "pos": "RWB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "22, Israel; £24.5m from Union SG, 3G 5A 25/26; fast, wide forward turned RWB"
     },
     {
      "num": 20,
      "name": "Wharton",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 4,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "England; elite progressive passer and press-resistant, average physically"
     },
     {
      "num": 23,
      "name": "Timber",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Quinten Timber, Netherlands (17 caps); ex-Feyenoord captain, dipped at Marseille (15 apps, 0 goals)"
     },
     {
      "num": 3,
      "name": "Mitchell",
-     "pos": "LWB"
+     "pos": "LWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Reliable LWB, good engine; 2 PL goals already"
     },
     {
      "num": 18,
      "name": "Kamada",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Japan; intelligent link player with a good final pass, works defensively"
     },
     {
      "num": 10,
      "name": "Pino",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Spain international; tidy dribbler and shooter from the left"
     },
     {
      "num": 22,
      "name": "Strand Larsen",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 6,
+      "def": 3,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Norway CF; strong target man and aerial threat, decent finisher"
     }
    ],
    "kit": {
@@ -839,57 +1632,156 @@
     {
      "num": 1,
      "name": "Pickford",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 8
+     },
+     "attrWhy": "England No.1; strong shot-stopper with excellent long distribution"
     },
     {
      "num": 2,
      "name": "Maitland-Niles",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "29, £4.2m from Lyon (30 Ligue 1 apps 25/26); quick, versatile RB, 1 PL goal"
     },
     {
      "num": 6,
      "name": "Tarkowski",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 3,
+      "tech": 5,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Captain; dominant in the air, many blocks and clearances; slow, ageing"
     },
     {
      "num": 4,
      "name": "Branthwaite",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Tall, mobile left-footed CB; strong in duels"
     },
     {
      "num": 16,
      "name": "Mykolenko",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ukraine LB; defensively solid, limited going forward"
     },
     {
      "num": 37,
      "name": "Garner",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Tireless two-way midfielder, good passer and set-piece taker"
     },
     {
      "num": 45,
      "name": "Armstrong",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "19, Everton Young Player of the Season 25/26, England U21; still developing"
     },
     {
      "num": 22,
      "name": "Johnson",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Brennan Johnson (swap from Palace); very fast runner in behind, efficient finisher"
     },
     {
      "num": 8,
      "name": "Dewsbury-Hall",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Box-to-box No.10 with a good engine; goal vs Palace"
     },
     {
      "num": 10,
      "name": "Grealish",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 5,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "On loan from Man City again; top-level close control and chance creation, rarely scores"
     },
     {
      "num": 11,
      "name": "Barry",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 6,
+      "def": 3,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "1.95m CF; 6 PL goals in 1,645 min 25/26 (5.3 xG at midseason), strong aerially"
     }
    ],
    "kit": {
@@ -939,57 +1831,156 @@
     {
      "num": 1,
      "name": "Leno",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 5,
+      "gk": 7
+     },
+     "attrWhy": "34; consistent shot-stopper, very good with his feet"
     },
     {
      "num": 21,
      "name": "Castagne",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Belgium RB; reliable defender, limited in attack"
     },
     {
      "num": 22,
      "name": "Affengruber",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "25, Austria (World Cup squad); £8.5m from Elche, 36 LaLiga apps 25/26; aggressive and physical"
     },
     {
      "num": 3,
      "name": "Bassey",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Nigeria CB; strong and quick in duels, occasionally rash"
     },
     {
      "num": 33,
      "name": "Robinson",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "USMNT LB; one of the PL's quickest, strong crosser; currently has an ankle injury"
     },
     {
      "num": 16,
      "name": "Berge",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Norway; tall, strong ball-carrier and screener"
     },
     {
      "num": 19,
      "name": "Charles",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "22, Northern Ireland (39 caps); up to £30m from Southampton, 31 Championship apps 25/26"
     },
     {
      "num": 14,
      "name": "Bobb",
-     "pos": "RW"
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 5,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Norway; agile dribbler and inventive passer, slight build"
     },
     {
      "num": 24,
      "name": "King",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 5,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "19; 31 PL apps (1G 2A) 25/26, already 2 PL goals this season"
     },
     {
      "num": 17,
      "name": "Iwobi",
-     "pos": "LW"
+     "pos": "LW",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Nigeria; creative and press-resistant, works back well"
     },
     {
      "num": 7,
      "name": "Gonzalo García",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "22, £34m from Real Madrid; 6 LaLiga goals in about 1,000 min (0.57/90), Club World Cup joint top scorer"
     }
    ],
    "kit": {
@@ -1039,57 +2030,156 @@
     {
      "num": 19,
      "name": "Tzolakis",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "Club-record £20m from Olympiacos; Greek SL player of the season 24/25; 3 clean sheets in first 5 PL games; calm, tall, commands the air"
     },
     {
      "num": 2,
      "name": "Coyle",
-     "pos": "RWB"
+     "pos": "RWB",
+     "attrs": {
+      "pace": 6,
+      "tech": 4,
+      "shoot": 2,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Captain who has risen with Hull from League One; honest, energetic wing-back but a Championship-level player"
     },
     {
      "num": 6,
      "name": "Ajayi",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 4,
+      "shoot": 3,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "32, ex-WBA, Nigeria international; strong in the air and in duels, limited on the ball and slow to turn"
     },
     {
      "num": 15,
      "name": "Egan",
-     "pos": "CB"
+     "pos": "CB",
+     "attrs": {
+      "pace": 3,
+      "tech": 4,
+      "shoot": 2,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "33, ex-Sheffield Utd PL defender, Ireland; good organiser and positioning, but declining pace"
     },
     {
      "num": 32,
      "name": "Mendy",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Nobel Mendy, 22, £22m from Rayo (28 apps in a solid LaLiga defence); left-footed, Senegal cap, scored early in the PL"
     },
     {
      "num": 3,
      "name": "Giles",
-     "pos": "LWB"
+     "pos": "LWB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Crossing specialist with high Championship assist numbers; defending is the weakness"
     },
     {
      "num": 11,
      "name": "Gelhardt",
-     "pos": "RM"
+     "pos": "RM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 5,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Scored 9+ Championship goals on loan in 25/26, then signed for £6.5m; neat technically, unproven in the PL"
     },
     {
      "num": 25,
      "name": "Crooks",
-     "pos": "RCM"
+     "pos": "RCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 4,
+      "shoot": 5,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "32, tall box-crashing midfielder; threat in the air and with late runs, limited passer"
     },
     {
      "num": 27,
      "name": "Slater",
-     "pos": "LCM"
+     "pos": "LCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 4,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Hard-working ball-winning CM; solid in the Championship, below average for the PL"
     },
     {
      "num": 7,
      "name": "Thomas",
-     "pos": "LM"
+     "pos": "LM",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 4,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Sorba Thomas, Wales; set pieces, crosses and long throws; modest goal output"
     },
     {
      "num": 9,
      "name": "McBurnie",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 5,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Target man; Hull top scorer in 25/26 and scored the play-off final winner; leads the PL for pressing in the opposition half; poor PL scoring record before"
     }
    ],
    "kit": {
@@ -1141,57 +2231,156 @@
     {
      "num": 28,
      "name": "Walton",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 5
+     },
+     "attrWhy": "31, Championship-level keeper; won back the No. 1 spot from Scherpen; average shot-stopper for the PL"
     },
     {
      "num": 42,
      "name": "Ouattara",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Abdoul Ouattara, 20, from Strasbourg; about 1,300 Ligue 1 minutes in 25/26 with 2 goals; athletic, raw"
     },
     {
      "num": 6,
      "name": "Diop",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 2,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Issa Diop, ex-Fulham; big, powerful and good in the air; error-prone at times"
     },
     {
      "num": 26,
      "name": "O'Shea",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Ireland international; reliable in the 24/25 PL season; good reader of the game"
     },
     {
      "num": 3,
      "name": "Davis",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Very attacking LB; strong crosser and assist record; 2 PL goals already; weak defending against PL wingers"
     },
     {
      "num": 23,
      "name": "Lukić",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Saša Lukić, ex-Fulham DM, Serbia; tidy passer and positional screener; not quick"
     },
     {
      "num": 25,
      "name": "Palacios",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 5,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Exequiel Palacios, from Leverkusen; Argentina World Cup winner; elite progressive passer; injury-prone"
     },
     {
      "num": 7,
      "name": "Fatawu",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 5,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "£20m from Leicester; explosive 1v1 dribbler on the right; inconsistent end product after his ACL injury"
     },
     {
      "num": 10,
      "name": "Enciso",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Julio Enciso, Paraguay, from Strasbourg; creative 10 with a strong long-range shot; light physically"
     },
     {
      "num": 47,
      "name": "Clarke",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Jack Clarke, 16 Championship goals in 25/26 (club top scorer); direct inverted winger; modest earlier PL output"
     },
     {
      "num": 19,
      "name": "Emersonn",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 4,
+      "shoot": 5,
+      "def": 3,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "21-year-old Brazilian, £24m from Toulouse; 6 Ligue 1 goals in 25/26; 95th percentile for aerial duels; weak link play"
     }
    ],
    "kit": {
@@ -1241,57 +2430,156 @@
     {
      "num": 1,
      "name": "Trafford",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "£45m from Man City; England squad; good distribution; Leeds had the fewest goals conceded after 5 games"
     },
     {
      "num": 24,
      "name": "Justin",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Versatile FB/CB, PL regular; 2 goals already this season; solid all-round"
     },
     {
      "num": 30,
      "name": "Elvedi",
-     "pos": "CB"
+     "pos": "CB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Nico Elvedi, long-time Gladbach starter, Switzerland; composed in a back three"
     },
     {
      "num": 5,
      "name": "Muharemović",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Tarik Muharemović, £34m from Sassuolo; left-footed ball-player, Bosnia international, 1 goal"
     },
     {
      "num": 2,
      "name": "Bogle",
-     "pos": "RWB"
+     "pos": "RWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "34 PL apps in 25/26; energetic attacking wing-back; average defensively"
     },
     {
      "num": 4,
      "name": "Ampadu",
-     "pos": "RCM"
+     "pos": "RCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Wales captain; 35 PL apps in 25/26; excellent positional DM/CB, aggressive in duels"
     },
     {
      "num": 22,
      "name": "Tanaka",
-     "pos": "LCM"
+     "pos": "LCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Japan international; tidy box-to-box midfielder with a good long shot; 2 PL goals in 25/26"
     },
     {
      "num": 3,
      "name": "Gudmundsson",
-     "pos": "LWB"
+     "pos": "LWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 2,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Sweden international, ex-Lille; 31 PL starts in 25/26; reliable defensively, little end product"
     },
     {
      "num": 18,
      "name": "Stach",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 6,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Germany; 5 PL goals in 25/26; set-piece and free-kick taker; tall, high-work-rate runner"
     },
     {
      "num": 19,
      "name": "Okafor",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Switzerland; 8 PL goals in 25/26; quick, direct forward"
     },
     {
      "num": 9,
      "name": "Calvert-Lewin",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 7,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "14 PL goals in 25/26 (Leeds top scorer), 4 already this season; elite in the air; leads the press"
     }
    ],
    "kit": {
@@ -1339,57 +2627,156 @@
     {
      "num": 1,
      "name": "Alisson",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 5,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "34 this month; still a top-club keeper and a strong sweeper/distributor, but past his very best and injury-hit"
     },
     {
      "num": 33,
      "name": "Araújo",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 5,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Ronald Araújo on loan from Barça; CB playing RB; very fast and strong; only 11 LaLiga starts in 25/26, injury record"
     },
     {
      "num": 5,
      "name": "Jacquet",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "21, £60m from Rennes; 75% aerial duels won and 90% passing in Ligue 1 25/26; impressed Iraola"
     },
     {
      "num": 4,
      "name": "Van Dijk",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 4,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "35; still dominant in the air and an organiser; pace declining"
     },
     {
      "num": 6,
      "name": "Kerkez",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Quick, aggressive overlapping LB; uneven first Liverpool season, then improved"
     },
     {
      "num": 8,
      "name": "Szoboszlai",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Engine of the side; takes almost all set pieces (17 corners); long-range shooting; huge running volume"
     },
     {
      "num": 10,
      "name": "Mac Allister",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 6,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Argentina; press-resistant passer and good tackler; slow; rotates with Gravenberch"
     },
     {
      "num": 23,
      "name": "Muñoz",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 6,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Víctor Muñoz from Osasuna; 35.46 km/h top speed (joint 3rd in LaLiga); 215 take-ons (3rd); weak final ball (2 assists)"
     },
     {
      "num": 7,
      "name": "Wirtz",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 9,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Creative hub; among Europe's best technicians and chance creators"
     },
     {
      "num": 18,
      "name": "Gakpo",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 7,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Netherlands; reliable goals from the left; good size and work rate"
     },
     {
      "num": 9,
      "name": "Isak",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 8,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Elite finisher at his peak (23 PL goals in 24/25), but uneven since joining and back from a broken leg; currently injured"
     }
    ],
    "kit": {
@@ -1442,57 +2829,156 @@
     {
      "num": 1,
      "name": "Donnarumma",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 1,
+      "def": 5,
+      "phys": 8,
+      "gk": 9
+     },
+     "attrWhy": "One of the best shot-stoppers in the world; huge reach; distribution is his weaker side"
     },
     {
      "num": 27,
      "name": "Nunes",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Converted midfielder at RB; strong carrier and press-resistant; defending improved, not natural"
     },
     {
      "num": 3,
      "name": "Dias",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Portugal; leader and positional CB; no longer at his 2021-23 peak"
     },
     {
      "num": 6,
      "name": "Guéhi",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "England starter; arrived in January 2026; excellent reader of the game and in duels"
     },
     {
      "num": 33,
      "name": "O'Reilly",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "21, 1.90 m converted midfielder at LB; goal threat when inverting; still developing defensively; started only vs Liverpool (Gvardiol usual)"
     },
     {
      "num": 5,
      "name": "Anderson",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 6,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "£116m from Forest; England; elite ball-winner and duel-winner; press-resistant progressor; takes corners"
     },
     {
      "num": 17,
      "name": "Enzo Fernández",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 7,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "£125m from Chelsea; Argentina; high-volume passer; strong goal output from midfield at Chelsea"
     },
     {
      "num": 7,
      "name": "Ndiaye",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "£60-65m from Everton; elite close-control dribbler; decent but not prolific scorer; shares RAM with Foden"
     },
     {
      "num": 10,
      "name": "Cherki",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 9,
+      "shoot": 7,
+      "def": 2,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Two-footed and among Europe's most gifted on the ball; key creator under Maresca; minimal defensive work"
     },
     {
      "num": 42,
      "name": "Semenyo",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 8,
+      "def": 5,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "£64m in January 2026 after a prolific Bournemouth spell; powerful, very fast, two-footed finisher, hard-working"
     },
     {
      "num": 9,
      "name": "Haaland",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 10,
+      "def": 3,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "6 PL goals (8 in all comps) already this season; the most lethal finisher in world football; huge top speed and strength"
     }
    ],
    "kit": {
@@ -1544,57 +3030,156 @@
     {
      "num": 1,
      "name": "Lammens",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "2025/26 debut season: +5.5 goals prevented (Opta xGOT), 3rd-best prevention rate in PL; 1.93m"
     },
     {
      "num": 15,
      "name": "Yoro",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Fast, front-foot young CB; covering out of position at RB, still inconsistent"
     },
     {
      "num": 5,
      "name": "Maguire",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 3,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Aerially dominant, set-piece threat, good passer; slow at 33"
     },
     {
      "num": 6,
      "name": "Martínez",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Elite ball-progressing CB, aggressive tackler; short in the air, post-ACL"
     },
     {
      "num": 23,
      "name": "Shaw",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Composed, good passer and defender at FB or CB; injury history, aged 31"
     },
     {
      "num": 18,
      "name": "Tielemans",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 6,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Belgium captain; Europa League winner with Villa, £35m; top range of passing and long shots"
     },
     {
      "num": 37,
      "name": "Mainoo",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Starter under Carrick since Jan 2026; elite press resistance, 81 passes in 64 min v Sabah"
     },
     {
      "num": 16,
      "name": "Amad",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Tricky left-footed dribbler and creator; works back, used at wing-back before"
     },
     {
      "num": 8,
      "name": "Bruno Fernandes",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 9,
+      "shoot": 7,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Among the top chance creators in Europe; long-range shooting, huge workrate"
     },
     {
      "num": 10,
      "name": "Cunha",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "At least 8 PL goals 2025/26 (by late Apr), 15 at Wolves 24/25; strong, skilful carrier; criticised Sept 2026"
     },
     {
      "num": 19,
      "name": "Mbeumo",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 8,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "20 PL goals 24/25; 9 PL goals by Mar 2026 at United; clinical left foot"
     }
    ],
    "kit": {
@@ -1648,57 +3233,156 @@
     {
      "num": 21,
      "name": "Horníček",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 6
+     },
+     "attrWhy": "€30m from Braga Aug 2026, 24; called a top young keeper; new to PL"
     },
     {
      "num": 37,
      "name": "Dedić",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Quick, athletic Bosnia RB; Benfica/Salzburg starter, £29.5m; plays either flank"
     },
     {
      "num": 12,
      "name": "Thiaw",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "31 PL starts 25/26, 4 goals, FotMob 7.04; ~88% aerial duels won"
     },
     {
      "num": 4,
      "name": "Botman",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Tall left-footed CB, strong in duels and passing; injury history"
     },
     {
      "num": 3,
      "name": "Hall",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "England-capped LB; good carrier and crosser, solid 1v1"
     },
     {
      "num": 6,
      "name": "Nico González",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£50m from City Aug 2026; tall ball-carrier, composed; not a regular at City"
     },
     {
      "num": 67,
      "name": "Miley",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "20-year-old; 1g 4a in ~1,500 PL min 25/26, FotMob ~7.2; still developing"
     },
     {
      "num": 19,
      "name": "Elanga",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 4,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Among the fastest in PL; 0g 1a in 25/26 PL after 6g 11a at Forest"
     },
     {
      "num": 28,
      "name": "Willock",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 6,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Box-to-box runner who arrives late in the box; injury-prone"
     },
     {
      "num": 11,
      "name": "Barnes",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 7,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Direct inside-forward who runs in behind; reliable finisher from the left"
     },
     {
      "num": 9,
      "name": "Wissa",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "19 PL goals 24/25 at Brentford; injury-wrecked 25/26 (1-3 goals); 3 WC goals"
     }
    ],
    "kit": {
@@ -1753,57 +3437,156 @@
     {
      "num": 26,
      "name": "Sels",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "Excellent shot-stopper 24/25; aged 34, Forest conceded 51 in 25/26"
     },
     {
      "num": 34,
      "name": "Aina",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Quick, versatile defender (RWB/RCB); strong recovery defending"
     },
     {
      "num": 2,
      "name": "Diomande",
-     "pos": "CB"
+     "pos": "CB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "€40m from Sporting, 22, 1.90m; range, recovery speed, passing; Ivory Coast WC"
     },
     {
      "num": 5,
      "name": "Murillo",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Powerful CB with progressive carrying and passing; strong in duels"
     },
     {
      "num": 27,
      "name": "Muñoz",
-     "pos": "RWB"
+     "pos": "RWB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 5,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Glasner's relentless wing-back; 4 PL goals 25/26, Conference League winner"
     },
     {
      "num": 21,
      "name": "Schlager",
-     "pos": "RCM"
+     "pos": "RCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Free from Leipzig; pressing, ball-winning Austria mid; post-ACL"
     },
     {
      "num": 24,
      "name": "McAtee",
-     "pos": "LCM"
+     "pos": "LCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Neat technician moved deeper by Glasner; barely played in 25/26 PL"
     },
     {
      "num": 3,
      "name": "Williams",
-     "pos": "LWB"
+     "pos": "LWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Wales full-back; strong 1v1, good stamina, decent crossing"
     },
     {
      "num": 10,
      "name": "Gibbs-White",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "13g 4a in 35 PL apps 25/26; driving creator, presses hard"
     },
     {
      "num": 14,
      "name": "Ndoye",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 4,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Very fast and works back; weak final product (1g 1a PL 25/26)"
     },
     {
      "num": 19,
      "name": "Delap",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 5,
+      "shoot": 6,
+      "def": 3,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Club-record signing; 12 PL goals 24/25, 1 at Chelsea 25/26; powerful runner"
     }
    ],
    "kit": {
@@ -1854,57 +3637,156 @@
     {
      "num": 22,
      "name": "Roefs",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "25/26: 10 clean sheets (joint 5th), ~109 saves; Sunderland finished 7th"
     },
     {
      "num": 32,
      "name": "Hume",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "38 PL apps 25/26, 67 tackles, 99 clearances; energetic, limited crossing"
     },
     {
      "num": 20,
      "name": "Mukiele",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Ex-PSG/Leverkusen; athletic RB/CB, strong in duels, long throws"
     },
     {
      "num": 4,
      "name": "Danso",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 2,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "On loan from Spurs, where he was surplus; physical, quick CB"
     },
     {
      "num": 17,
      "name": "Reinildo",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Ex-Atlético; aggressive, tough defender; limited going forward, aged 32"
     },
     {
      "num": 34,
      "name": "Xhaka",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 3,
+      "tech": 8,
+      "shoot": 6,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Team's controller; 1g 5a in 25/26, FotMob ~7.3; slow at 34"
     },
     {
      "num": 27,
      "name": "Sadiki",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "21-year-old ball-winner; 33 PL starts 25/26, 46 tackles"
     },
     {
      "num": 12,
      "name": "Meunier",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "34-year-old right-back used on the right flank; good crosser, slowing down"
     },
     {
      "num": 28,
      "name": "Le Fée",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "4g 4-6a in 25/26 PL, FotMob 7.03; neat link player and set-piece taker"
     },
     {
      "num": 10,
      "name": "Angulo",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Ecuador winger built on speed and dribbling; only ~450 PL min, 0g 0a in 25/26"
     },
     {
      "num": 18,
      "name": "Isidor",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 5,
+      "shoot": 6,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Pacy runner in behind; at least 4 PL goals 25/26 (as of April); starting while Brobbey is injured"
     }
    ],
    "kit": {
@@ -1956,57 +3838,156 @@
     {
      "num": 31,
      "name": "Kinsky",
-     "pos": "GK"
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 6
+     },
+     "attrWhy": "De Zerbi's No.1, good feet; save % among PL bottom five early 26/27"
     },
     {
      "num": 14,
      "name": "Gray",
-     "pos": "RB"
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Versatile, composed 20-year-old; a midfielder playing RB, positionally sound"
     },
     {
      "num": 6,
      "name": "Van Hecke",
-     "pos": "RCB"
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£52m; 48 interceptions and 223 duels won (both Brighton-best) 25/26; ball-playing NED CB"
     },
     {
      "num": 37,
      "name": "Van de Ven",
-     "pos": "LCB"
+     "pos": "LCB",
+     "attrs": {
+      "pace": 10,
+      "tech": 6,
+      "shoot": 3,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "One of the fastest players in world football; elite recovery defender"
     },
     {
      "num": 3,
      "name": "Robertson",
-     "pos": "LB"
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Free from Liverpool, 32; still a quality crosser, legs declining"
     },
     {
      "num": 30,
      "name": "Bentancur",
-     "pos": "RDM"
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Tidy press-resistant passer; sent off 10 Oct, so likely suspended"
     },
     {
      "num": 16,
      "name": "Tonali",
-     "pos": "LDM"
+     "pos": "LDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Club-record £92.5m-£100m; elite box-to-box ball-winner and passer"
     },
     {
      "num": 17,
      "name": "Sávio",
-     "pos": "RAM"
+     "pos": "RAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 4,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "~£85m from City; elite 1v1 dribbler, poor finisher (2 goals in 53 PL apps at City)"
     },
     {
      "num": 18,
      "name": "Mateus Fernandes",
-     "pos": "CAM"
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "£85m; 5g 4a, 73 tackles, 214 duels won, 42 chances at West Ham 25/26"
     },
     {
      "num": 22,
      "name": "Marmoush",
-     "pos": "LAM"
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 7,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "On loan from City; Bundesliga standout 24/25; pacy creative forward"
     },
     {
      "num": 19,
      "name": "Solanke",
-     "pos": "CF"
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Captain; hard-working link striker, 19 PL goals at Bournemouth 23/24"
     }
    ],
    "kit": {

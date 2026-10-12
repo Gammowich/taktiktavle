@@ -1,0 +1,832 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "frankrig",
+  "name": "Frankrig",
+  "order": 5
+ },
+ "league": {
+  "id": "ligue-1",
+  "name": "Ligue 1",
+  "season": "2026/27",
+  "prefix": "fr-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "AS Monaco",
+   "country": "France",
+   "league": "Ligue 1",
+   "inTopDivision": true,
+   "manager": "Filipe Luís",
+   "lineupBasis": "Most frequent L1 starters 2026/27 = XI of league match 2026-09-04 vs Paris Saint-Germain (A) (identical XI 2026-08-23 at Le Havre and 2026-08-30 vs Marseille). The latest league match, 2026-10-10 vs Toulouse (H), was without the suspended Brunner and the injured Coulibaly",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Hrádecký",
+     "pos": "GK",
+     "attrs": {
+      "pace": 3,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "36-yr-old ex-Leverkusen title-winning keeper; reliable shot-stopper, calm with feet, declining agility"
+    },
+    {
+     "num": 2,
+     "name": "Vanderson",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Brazil-capped RB; explosive, strong in duels, attacking runs; crossing and decisions inconsistent"
+    },
+    {
+     "num": 72,
+     "name": "Sané",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Sadibou Sané, 21-22, €10m from relegated Metz (23 L1 apps, 2 goals 25/26); physical, still raw"
+    },
+    {
+     "num": 15,
+     "name": "Dier",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 3,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "32-yr-old ex-Bayern CB; good passer and reader of play, strong in the air, very slow"
+    },
+    {
+     "num": 20,
+     "name": "Nazinho",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Flávio Nazinho, 22, €5m from Cercle Brugge (3G 8A in 32 apps 25/26); attacking LB, step up from Belgium"
+    },
+    {
+     "num": 8,
+     "name": "Camara",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Lamine Camara, Senegal international; ball-winner with good press resistance and long passing"
+    },
+    {
+     "num": 6,
+     "name": "Zakaria",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 5,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Switzerland captain-level DM; powerful box-to-box runner, strong duels, tidy rather than creative"
+    },
+    {
+     "num": 28,
+     "name": "Coulibaly",
+     "pos": "RW",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Mamadou Coulibaly, a natural DM used on the right wing in 26/27; work rate and duels over flair"
+    },
+    {
+     "num": 10,
+     "name": "Golovin",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Creative hub; elite vision and passing at L1 level, set up both goals at PSG; injury-prone and aging"
+    },
+    {
+     "num": 17,
+     "name": "Idumbo",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Stanis Idumbo, ex-Sevilla; quick 1v1 dribbler, limited output in 25/26 (1G 1A, few minutes)"
+    },
+    {
+     "num": 29,
+     "name": "Brunner",
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 6,
+      "def": 3,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Paris Brunner, 20; 4 L1 goals in 26/27 after a goalless 25/26; mobile, strong target forward"
+    }
+   ],
+   "kit": {
+    "home": "#FE0000",
+    "away": "#542D34"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 4,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession (Footmercato/foot-direct, psg.fr): 50% at Le Havre, 36% vs Marseille, 33% at PSG, 56% at Strasbourg, 50% vs Lens, 58% vs Toulouse. That averages about 47%, and the two biggest wins (2-0 vs OM, 2-1 at PSG) came with only a third of the ball. At PSG both goals came from fast transitions: Golovin won the ball and sent Idumbo through, then Golovin switched play to Coulibaly, whose cross found Nazinho (psg.fr live). So tempo 4 and passing 3. Width 3: wide midfielders Coulibaly and Idumbo, with full-back Nazinho arriving from the far side. No PPDA or line-height metric was found, so press 3 and line 3 are neutral. Style 'normal' (10 scored, 5 conceded in 6). No set-piece source, so setAtt/setDef are placeholders.",
+   "desc": "Monaco står kompakt i en 4-2-3-1 med to defensive midtbanespillere, kan sagtens overlade bolden til modstanderen og er farligst i hurtige omstillinger, hvor den kreative tier og kanterne spiller hurtigt frem mod angriberen.",
+   "uncertain": [
+    "Shirt numbers: Footmercato's lineup box and the main AS Monaco FC Wikipedia page (squad as of 9 Sep 2026) give Dier 15 and Camara 8. The 2026–27 season page (as of 2 Sep) gives Dier 3 and Camara 15. I used 15 and 8.",
+    "Sides of the double pivot conflict. Footmercato/foot-direct list Zakaria left and Camara right; psg.fr's order suggests the reverse.",
+    "Absence reasons for Toulouse (Brunner suspended, Coulibaly with an adductor problem) come from a search summary of africafootunited.com that I did not fetch. The Toulouse XI was Hrádecký; Vanderson, Sané, Dier, Nazinho; Zakaria, Camara; Detourbet, Golovin, E. Diop; Abline. It drew 2-2 in a 4-2-3-1.",
+    "Start counts: Hrádecký, Vanderson, Sané, Dier, Nazinho, Zakaria, Camara and Golovin 6; Brunner 5; Idumbo 4; Coulibaly 3. Monaco played a 4-4-2 vs Lens (Diop, Abline in).",
+    "Home kit is diagonal red and white; #FE0000 is Wikipedia's body colour (arms white). Away #542D34 is Wikipedia's infobox base colour.",
+    "setAtt/setDef are placeholders (no source)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Ligue_1 — Monaco in Ligue 1 2026/27; Pocognoli sacked, Filipe Luís appointed",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_AS_Monaco_FC_season — league results with venues (Toulouse at Stade Louis II), Conference League fixtures in Oct",
+    "https://en.wikipedia.org/wiki/AS_Monaco_FC — squad numbers as of 9 Sep 2026 (Dier 15, Camara 8), Filipe Luís head coach",
+    "https://www.footmercato.net/a4880164669935616061-le-havre-as-monaco-les-compositions-officielles — same XI on 23 Aug with shirt numbers, 4-2-3-1, roles (Coulibaly and Idumbo wide, Golovin behind Brunner)",
+    "https://www.footmercato.net/live/7961945903537316845-le-havre-vs-monaco — possession 50%",
+    "https://www.foot-direct.com/live/8675055355899838213-monaco-vs-marseille — same XI on 30 Aug, 4-2-3-1, possession 36%",
+    "https://www.psg.fr/matchs/football-masculin/20262027/paris-vs-monaco-2026-09-04 — basis XI on 4 Sep, possession 33%, goals from transitions",
+    "https://www.footmercato.net/live/5048329727528481316-strasbourg-vs-monaco — 4-2-3-1, possession 56%",
+    "https://www.footmercato.net/live/2782751165391440962-monaco-vs-lens — 4-4-2, possession 50%",
+    "https://www.footmercato.net/live/7911228238742955994-monaco-vs-toulouse — 2-2 on 10 Oct, XI, 4-2-3-1, possession 58%",
+    "https://en.wikipedia.org/w/index.php?title=AS_Monaco_FC&action=raw&section=0 — 2026–27 kit colours (body1 FE0000 with white arms, body2 542D34)"
+   ]
+  },
+  {
+   "club": "Olympique Lyonnais",
+   "country": "France",
+   "league": "Ligue 1",
+   "inTopDivision": true,
+   "manager": "Paulo Fonseca",
+   "lineupBasis": "League match 2026-10-09 vs Lens (A)",
+   "formation": "4-3-3",
+   "players": [
+    {
+     "num": 1,
+     "name": "Greif",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 6
+     },
+     "attrWhy": "Dominik Greif, Slovakia international; solid shot-stopper, average distribution"
+    },
+    {
+     "num": 13,
+     "name": "Athekame",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "21-yr-old Swiss RB on loan from Milan (7 starts 25/26); 2 L1 goals already, energetic overlapper"
+    },
+    {
+     "num": 20,
+     "name": "Bacher",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Felix Bacher, €4.3m from Estoril; 1.90 m, every minute in 25/26, 181 duels won, 47 interceptions, 88% passing"
+    },
+    {
+     "num": 21,
+     "name": "Kluivert",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ruben Kluivert; rotation CB, decent on the ball, 60% duels won 25/26, starting due to Niakhaté injury"
+    },
+    {
+     "num": 16,
+     "name": "Abner",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Brazilian attacking LB; good crosser and runner, defensive positioning average"
+    },
+    {
+     "num": 2,
+     "name": "Bidstrup",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Mads Bidstrup, €10.5m from Salzburg (ex-captain); high-intensity presser, low output (1 assist 25/26)"
+    },
+    {
+     "num": 23,
+     "name": "Morton",
+     "pos": "DM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Tyler Morton, ex-Liverpool; tidy deep-lying passer and tempo setter, average physically"
+    },
+    {
+     "num": 8,
+     "name": "Tolisso",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 7,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "32-yr-old; joint club top scorer with 11 L1 goals in 25/26, box arrivals, experience"
+    },
+    {
+     "num": 7,
+     "name": "Nuamah",
+     "pos": "RW",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 5,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ghana winger; elite acceleration, club top scorer so far in 26/27 (3 L1), end product streaky"
+    },
+    {
+     "num": 17,
+     "name": "Openda",
+     "pos": "CF",
+     "attrs": {
+      "pace": 9,
+      "tech": 6,
+      "shoot": 7,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Loïs Openda, on loan from Juventus; very fast runner in behind, proven Bundesliga scorer, limited link-up"
+    },
+    {
+     "num": 10,
+     "name": "Šulc",
+     "pos": "LW",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Pavel Šulc; 11 L1 goals + 3 assists in 27 apps in 25/26, clever movement and finishing from AM/LW"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#F35764"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession (foot-direct): 52% at Toulouse, 57% vs Le Havre, 64% vs Auxerre, 44% at Paris FC, 45% vs Rennes, 52% at Lens. That averages about 52%, so passing 3 and tempo 3. Results are efficient rather than dominant: 4-0 vs Rennes with 45% of the ball and 15 shots to 6, 0-0 at Paris FC with 2 shots, and 8 shots to 15 in the 2-1 loss at Lens. Lyon scored 11 and conceded 4 in 6. Full-back Athekame scored twice (vs Auxerre and Rennes), so the full-backs push on; width 3. Fonseca called Lyon 'une équipe d'initiative' before Lens (Ferveur Lyonnaise), but no PPDA or line-height metric was found, so press 3 and line 3 are neutral. Style 'normal'. No set-piece source, so setAtt/setDef are placeholders.",
+   "desc": "Lyon spiller en balanceret og initiativrig 4-3-3 med en arbejdsom midtbane på tre, offensive backer, der også dukker op foran mål, og hurtige angribere i front.",
+   "uncertain": [
+    "Formation labels conflict. Footmercato and foot-direct say 4-3-3 for 9 Oct; Fox Sports says 4-2-3-1; Foot01 groups the XI as Morton, Bidstrup, Tolisso, Šulc – Nuamah, Openda (diamond-like). The same data provider labelled the three previous matches with this core XI as 4-3-2-1, 4-2-3-1 and 4-2-3-1.",
+    "Front-three roles: Footmercato's 19 Sep text puts Openda through the middle with Nuamah and Šulc wide, which I used. The 9 Oct data order (Openda, Šulc, Nuamah) could instead mean Šulc central. Midfield sides follow the data order (Tolisso left, Morton centre, Bidstrup right).",
+    "The XI was kept even though Niakhaté (19) was injured and Kluivert replaced him at centre-back, because it was the only change. Otherwise the XI is identical to 4 Sep vs Auxerre, 12 Sep at Paris FC and 19 Sep vs Rennes. Openda went off injured during the Lens match.",
+    "The opening match at Toulouse (22 Aug) was a heavily rotated XI, three days before the UCL play-off vs Fenerbahçe, and is not representative.",
+    "setAtt/setDef are placeholders (no source)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Ligue_1 — Lyon in Ligue 1 2026/27, manager Paulo Fonseca, standings",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Olympique_Lyonnais_season — squad numbers, transfers, results, Europa League (Crystal Palace 15 Oct), Ligue 1 appearances",
+    "https://www.footmercato.net/a7049949218582593512-lens-ol-les-compositions-officielles — 9 Oct XI with shirt numbers, 4-3-3, Niakhaté injured and replaced by Kluivert",
+    "https://www.foot-direct.com/live/6534463495024092712-lens-vs-lyon — 2-1, 4-3-3, possession 52%, shots 8 v 15",
+    "https://www.foxsports.com/soccer/ligue1-lens-vs-lyon-oct-10-2026-game-boxscore-878582 — same XI and numbers; formation given as 4-2-3-1",
+    "https://www.foot01.com/ligue1/lens-ol-les-compos-20h45-sur-ligue-1 — XI line grouping",
+    "https://www.footmercato.net/a2838398742609538450-ol-rennes-les-compositions-officielles — 19 Sep XI, text says 4-3-3 with Openda central and Nuamah/Šulc wide",
+    "https://www.foot-direct.com/live/707246499207949323-lyon-vs-rennes — 4-0, possession 45%, shots 15 v 6",
+    "https://www.foot-direct.com/live/7203743203706958952-paris-fc-vs-lyon — 0-0, possession 44%",
+    "https://www.foot-direct.com/live/466471132212699463-lyon-vs-auxerre — 3-1, possession 64%",
+    "https://www.foot-direct.com/live/8003610015250481410-lyon-vs-le-havre — 1-1, possession 57%",
+    "https://www.foot-direct.com/live/4976785539885409359-toulouse-vs-lyon — rotated XI, possession 52%",
+    "https://www.ferveurlyonnaise.fr/ligue-1-j6-rc-lens-ol-le-point-presse-de-paulo-fonseca-et-ernest-nuamah — Fonseca on 8 Oct 2026: 'équipe d'initiative'",
+    "https://en.wikipedia.org/w/index.php?title=Olympique_Lyonnais&action=raw&section=0 — 2026–27 kit colours (body1 FFFFFF, body2 F35764)"
+   ]
+  },
+  {
+   "club": "Olympique de Marseille",
+   "country": "France",
+   "league": "Ligue 1",
+   "inTopDivision": true,
+   "manager": "Bruno Genesio",
+   "lineupBasis": "Most frequent L1 starters 2026/27 = XI of league match 2026-09-11 vs Rennes (A) (identical XI 2026-09-06 vs Paris FC (H)). The latest league match, 2026-10-11 vs Troyes (A), was without the suspended Weah and the injured Højbjerg, with two academy players making their first pro starts",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "De Lange",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 1,
+      "def": 3,
+      "phys": 5,
+      "gk": 5
+     },
+     "attrWhy": "Jeffrey de Lange, promoted from backup after Rulli left; good with feet, shaky start (5 conceded in 3)"
+    },
+    {
+     "num": 22,
+     "name": "Weah",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "USA international, captain; converted winger at RB, fast and hard-working"
+    },
+    {
+     "num": 4,
+     "name": "Egan-Riley",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "CJ Egan-Riley, ex-Burnley/Man City academy; mobile, composed, ever-present in 26/27"
+    },
+    {
+     "num": 21,
+     "name": "Aguerd",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Morocco CB; strong in the air and duels, secure passer (93/95 vs Paris FC)"
+    },
+    {
+     "num": 33,
+     "name": "Emerson",
+     "pos": "LB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Emerson Palmieri, 32; experienced, decent crosser, limited recovery pace"
+    },
+    {
+     "num": 8,
+     "name": "Abdelli",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Himad Abdelli, Algeria; press-resistant carrier and passer, average ball-winner"
+    },
+    {
+     "num": 23,
+     "name": "Højbjerg",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 5,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "31-yr-old Denmark DM; positional leader, good range of passing, slow"
+    },
+    {
+     "num": 77,
+     "name": "Harit",
+     "pos": "RW",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 5,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Amine Harit; excellent close control and creativity, 0 L1 goals in 26/27, slight"
+    },
+    {
+     "num": 7,
+     "name": "Gomes",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Angel Gomes, England-capped; neat progressor, 3 goals in 14 L1 apps 25/26"
+    },
+    {
+     "num": 14,
+     "name": "Igor Paixão",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Brazilian left winger, prolific at Feyenoord; direct dribbler, inconsistent final ball"
+    },
+    {
+     "num": 9,
+     "name": "Gouiri",
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Amine Gouiri; 4 L1 goals in 6 in 26/27, technical, two-footed forward who drops deep"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#2C2C3E"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 2,
+    "width": 3,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession (foot-direct/Footmercato): 67% vs Strasbourg, 64% at Monaco, 61% vs Paris FC, 51% at Rennes, 39% vs PSG, 63% at Troyes. That averages about 57%, so the side is possession-based. Centre-back pass volumes were very high (Aguerd 93/95 vs Paris FC, Egan-Riley 115/121 at Troyes), which points to a short, patient build-up: passing 2, tempo 2. Yet OM lost 2-0 at Monaco with 64% of the ball and 3-2 to Paris FC with 61%, so they do not dominate in the box. Style 'normal'. No PPDA or line-height data was found, so press 3 and line 3 are neutral. Width 3: Paixão holds the left, Harit comes inside from the right, and Emerson made 3 successful crosses/corners at Rennes. No set-piece source, so setAtt/setDef are placeholders.",
+   "desc": "Marseille spiller en boldbesiddende 4-2-3-1, hvor midterforsvarerne og de to defensive midtbanespillere bygger tålmodigt op bagfra, mens en kreativ offensiv trio søger ind i banen bag den centrale angriber.",
+   "uncertain": [
+    "Formation labels conflict. Footmercato/foot-direct label the basis matches (6 and 11 Sep) as 4-1-4-1, with Højbjerg as the lone holding midfielder and Abdelli and Gomes as 8s. The same data labels 4-2-3-1 on 21 Aug, 30 Aug and 11 Oct, and FootMarseille/Foot01 group the 6 Sep XI as Abdelli–Højbjerg with Harit–Gomes–Paixão behind Gouiri. I chose 4-2-3-1.",
+    "Date of the Rennes match: Footmercato, foot-direct and maxifoot say Fri 2026-09-11; the Wikipedia season page says 13 Sep.",
+    "Weah 22 and Højbjerg 23 come only from Wikipedia's 2026–27 OM season squad table. The other 9 numbers are also confirmed by Footmercato's Troyes lineup box.",
+    "Reasons for the Troyes absences come from search-result summaries of footballclubdemarseille.fr/titrespresse.com; I did not fetch those pages. Weah was sent off vs PSG on 20 Sep (reported by Eurosport via search). The Troyes XI was De Lange; Bezahaf (74), Egan-Riley, Aguerd, Emerson; Abdelli, Kamissoko (42); Harit, Gomes, Igor Paixão; Gouiri. It won 2-0 in a 4-2-3-1.",
+    "Start counts: De Lange, Emerson, Egan-Riley, Abdelli, Harit and Gouiri 6; Weah, Højbjerg, Gomes and Paixão 5; Aguerd 4 (Kondogbia started the first 2 at LCB and is now injured).",
+    "setAtt/setDef are placeholders (no source)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Ligue_1 — OM in Ligue 1 2026/27; Habib Beye sacked, Bruno Genesio appointed",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Olympique_de_Marseille_season — squad numbers (Weah 22, Højbjerg 23), results, Europa League league phase",
+    "https://www.footmercato.net/a5538242496046701071-estac-om-les-compositions-officielles — Troyes XI with shirt numbers, 4-2-3-1",
+    "https://www.footmercato.net/live/4530070420116798998-troyes-vs-marseille — 0-2 on 11 Oct, OM possession 63%, CB pass figures",
+    "https://www.foot01.com/ligue1/troyes-om-les-compos-20h45-sur-ligue-1 — Troyes XI",
+    "https://www.footmercato.net/live/5718045721085198318-rennes-vs-marseille — basis XI (left-to-right order), labelled 4-1-4-1, Fri 11 Sep 2026, possession 51%",
+    "https://www.footmercato.net/live/5542270334841129014-marseille-vs-paris-fc — identical XI on 6 Sep, labelled 4-1-4-1, possession 61%, Aguerd 93/95 passes",
+    "https://www.footmarseille.com/158748-om-paris-fc-les-compositions-officielles — 6 Sep XI grouped as Abdelli–Højbjerg / Harit–Gomes–Paixão / Gouiri; Kondogbia and Nnadi out",
+    "https://www.foot-direct.com/live/5570029772251543079-marseille-vs-strasbourg — 21 Aug XI, 4-2-3-1, possession 67%",
+    "https://www.foot-direct.com/live/8675055355899838213-monaco-vs-marseille — 30 Aug XI, 4-2-3-1, possession 64%",
+    "https://www.foot-direct.com/live/5310175547691149806-marseille-vs-paris-saint-germain — 20 Sep XI (4-4-2 label), possession 39%",
+    "https://en.wikipedia.org/w/index.php?title=Olympique_de_Marseille&action=raw&section=0 — 2026–27 kit colours (body1 FFFFFF, body2 2C2C3E)"
+   ]
+  },
+  {
+   "club": "Paris Saint-Germain",
+   "country": "France",
+   "league": "Ligue 1",
+   "inTopDivision": true,
+   "manager": "Luis Enrique",
+   "lineupBasis": "Most frequent L1 starters 2026/27 (composite of all 6 league matches); nearest actual XI: league match 2026-09-13 vs Brest (A), only difference Doué instead of Dembélé. The latest league match, 2026-10-10 vs Le Mans (H), was a rotated XI before the UCL trip to Man City on 14 Oct",
+   "formation": "4-3-3",
+   "players": [
+    {
+     "num": 39,
+     "name": "Safonov",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "Russia keeper, PSG first choice (6/6 starts); strong reflexes and penalty saving, feet average for PSG"
+    },
+    {
+     "num": 2,
+     "name": "Hakimi",
+     "pos": "RB",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 6,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "World-class attacking RB; elite speed, high goal/assist output, solid defending"
+    },
+    {
+     "num": 5,
+     "name": "Marquinhos",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "32-yr-old captain; superb reading of the game, ball-playing CB, slowing slightly"
+    },
+    {
+     "num": 51,
+     "name": "Pacho",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 2,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Willian Pacho; fast, aggressive duel-winner, key to PSG's high line"
+    },
+    {
+     "num": 25,
+     "name": "Nuno Mendes",
+     "pos": "LB",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 5,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Among Europe's best LBs; explosive, strong 1v1 defender and ball carrier"
+    },
+    {
+     "num": 33,
+     "name": "Zaïre-Emery",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "France international, versatile (CM/RB/LB in 26/27); robust, good engine"
+    },
+    {
+     "num": 17,
+     "name": "Vitinha",
+     "pos": "DM",
+     "attrs": {
+      "pace": 6,
+      "tech": 9,
+      "shoot": 6,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "One of Europe's best deep playmakers; elite press resistance and tempo control, big stamina"
+    },
+    {
+     "num": 87,
+     "name": "João Neves",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 8,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Relentless presser and ball-winner, high work rate, good technique and late runs"
+    },
+    {
+     "num": 14,
+     "name": "Doué",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 9,
+      "shoot": 7,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Désiré Doué; elite dribbler and creator, decisive in big games"
+    },
+    {
+     "num": 9,
+     "name": "Ferran Torres",
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 7,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "€48.5m from Barcelona; 4 L1 / 7 total goals in 26/27, smart mover, finishing streaky"
+    },
+    {
+     "num": 7,
+     "name": "Kvaratskhelia",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 9,
+      "shoot": 8,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "World-class inside-left winger; elite 1v1 dribbling, strong shooting from the left half-space"
+    }
+   ],
+   "kit": {
+    "home": "#0000CC",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 5,
+    "line": 5,
+    "tempo": 3,
+    "width": 4,
+    "passing": 1,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Possession in the 6 league games (foot-direct/Footmercato match data): 69% at Rennes, 73% at Lille, 67% vs Monaco, 59% at Brest, 61% at Marseille, 73% vs Le Mans. That averages about 67%, the highest of the four clubs, so passing 1 (short) and tempo 3 (patient circulation but fast wide players). Shots 21 v 12 at Marseille and 22 v 14 vs Le Mans (attributed by column order), so style 'off'. Monaco's two goals at the Parc came from quick transitions behind the PSG defence (psg.fr live), which fits a high line: line 5. No PPDA or line-height metric was found for 2026/27, so press 5 is a judgement from Luis Enrique's high-pressing positional game, not a measured stat. Width 4: wingers Doué and Kvaratskhelia play wide and full-backs Hakimi and Mendes push on. No set-piece source, so setAtt/setDef are placeholders.",
+   "desc": "PSG dominerer boldbesiddelsen i en 4-3-3 med tålmodigt kortpasningsspil gennem et teknisk stærkt midtbanetrekløver, offensive backer og driblestærke kanter, og holdet presser højt for hurtigt at vinde bolden tilbage.",
+   "uncertain": [
+    "Composite XI. Start counts in 6 league games: Safonov 6; Hakimi, Marquinhos, Pacho, Vitinha, João Neves and Zaïre-Emery 5 each (Zaïre-Emery's starts were at RCM, LB and RB); Doué and Kvaratskhelia 4; Ferran Torres, Dembélé, Ruiz and Akliouche 3.",
+    "CF is a tie. Ferran Torres and Dembélé both have 3 starts. Torres was chosen because all 3 of his starts were at CF (Dembélé: 2 at CF, 1 at RW) and he has 4 league goals. Dembélé started at CF in the Classique on 2026-09-20.",
+    "LB is a tie. Nuno Mendes started 2 games at LB (Brest, Marseille) and was suspended at Lille. Lucas Hernández (21) started 1 at LB and 1 at CB, and Zaïre-Emery also started there.",
+    "Shirt numbers come from Wikipedia's 2026–27 PSG season squad table (as of 4 Sep 2026). psg.fr confirms only Pacho 51, Kvaratskhelia 7, Vitinha 17, João Neves 87 and Akliouche 11.",
+    "Home kit #0000CC is the base colour in Wikipedia's infobox under a 2026–27 pattern image. The real shirt is traditionally a darker navy, so adjust if needed.",
+    "Last match XI (2026-10-10 vs Le Mans, rotated): Safonov; Hakimi, Zabarnyi, L. Hernández, Digne; Dro Fernández, Beraldo, João Neves; Akliouche, Ferran Torres, Godts.",
+    "setAtt/setDef are placeholders (no source)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Ligue_1 — PSG in Ligue 1 2026/27, manager Luis Enrique, standings to 11 Oct",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Paris_Saint-Germain_FC_season — squad numbers, transfers, league results and dates",
+    "https://www.psg.fr/football-masculin/calendrier/season/2026-27?period=Oct — 3-1 vs Le Mans on 10 Oct, next game at Man City (UCL) on 14 Oct",
+    "https://www.psg.fr/matchs/football-masculin/20262027/paris-vs-le-mans-2026-10-10 — rotated XI; Marquinhos, Pacho, Vitinha, Fabian, Kvaratskhelia and Doué on the bench",
+    "https://www.goal.com/en-us/lists/-paris-saint-germain-player-ratings-le-mans-khvicha-kvaratskhelia-maghnes-akliouche-spark-/blte372a6d1f3a7b4c2 — Le Mans XI and substitutes",
+    "https://www.psg.fr/matchs/football-masculin/20262027/paris-vs-monaco-2026-09-04 — XI vs Monaco, 4-3-3, possession 67%, Monaco goals from transitions",
+    "https://www.psg.fr/matchs/football-masculin/20262027/brest-vs-paris-2026-09-13 — XI at Brest",
+    "https://www.psg.fr/matchs/football-masculin/20262027/marseille-vs-paris-2026-09-20 — XI at Marseille",
+    "https://www.foot-direct.com/live/5525585030422418331-rennes-vs-paris-saint-germain — XI at Rennes (left-to-right order), 4-3-3, possession 69%",
+    "https://www.foot-direct.com/live/6380917569118752900-lille-vs-paris-saint-germain — XI at Lille, 4-3-3, possession 73%",
+    "https://www.foot-direct.com/live/2762733616890960298-brest-vs-paris-saint-germain — XI at Brest, 4-3-3, possession 59%",
+    "https://www.foot-direct.com/live/5310175547691149806-marseille-vs-paris-saint-germain — 4-3-3, possession 61%, shots",
+    "https://www.foot-direct.com/live/6219066898043614270-paris-saint-germain-vs-le-mans — possession 73%",
+    "https://en.wikipedia.org/w/index.php?title=Paris_Saint-Germain_FC&action=raw&section=0 — 2026–27 kit colours (body1 0000CC, body2 FFFFFF)"
+   ]
+  }
+ ]
+}

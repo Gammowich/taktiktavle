@@ -1,0 +1,814 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "tyskland",
+  "name": "Tyskland",
+  "order": 3
+ },
+ "league": {
+  "id": "bundesliga",
+  "name": "Bundesliga",
+  "season": "2026/27",
+  "prefix": "de-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "Bayer Leverkusen",
+   "country": "Germany",
+   "league": "Bundesliga",
+   "manager": "Carles Martínez Novell",
+   "lineupBasis": "League match 2026-10-10 vs Mainz 05 (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Flekken",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "Experienced Netherlands keeper, strong with his feet in build-up, solid but not elite shot-stopper"
+    },
+    {
+     "num": 4,
+     "name": "Quansah",
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Natural CB used at RB; good in duels and positioning, limited going forward"
+    },
+    {
+     "num": 12,
+     "name": "Tapsoba",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Long-serving left-footed ball-playing CB, quick to cover, Burkina Faso regular"
+    },
+    {
+     "num": 2,
+     "name": "Medina",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Signed from Marseille for ~EUR 20-23m in summer 2026; Argentina international (3 WC apps), aggressive left-sided CB"
+    },
+    {
+     "num": 3,
+     "name": "Gutiérrez",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "EUR 26m from Napoli; attacking, technical LB brought in as Grimaldo's successor"
+    },
+    {
+     "num": 8,
+     "name": "Andrich",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 5,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Combative ball-winner, strong in duels, some long-range shooting, limited range of passing"
+    },
+    {
+     "num": 24,
+     "name": "Aleix García",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 5,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Deep-lying playmaker and set-piece taker; tempo and passing his strengths, not quick"
+    },
+    {
+     "num": 19,
+     "name": "Diaby",
+     "pos": "RW",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 7,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Back at Leverkusen after Aston Villa/Al-Ittihad; elite acceleration, direct dribbler, regular goal threat"
+    },
+    {
+     "num": 30,
+     "name": "Maza",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Young Algeria international playmaker; 3G/4A in 28 BL apps 25/26 (The Analyst), fan favourite this season"
+    },
+    {
+     "num": 9,
+     "name": "Afonso Moreira",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "21-year-old winger, ~EUR 30m from Lyon; 2G/6A in ~1,100 L1 min 25/26 (FotMob, as of March); finishing still raw"
+    },
+    {
+     "num": 14,
+     "name": "Schick",
+     "pos": "CF",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 8,
+      "def": 3,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "16 BL goals 25/26; clinical finisher who is strong in the air, not quick"
+    }
+   ],
+   "kit": {
+    "home": "#000000",
+    "away": "#D8E6E5"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 4,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Bundesliga.com 2026/27: possession 55% (2nd), open-play pass accuracy 87.8% (3rd), open-play crosses 74 (1st), shots 101 (2nd), but intensive runs 3179 (15th) and sprints 814 (9th). At Mainz: 53% possession (FotMob; ZDF gives 52.21%), and ZDF notes the team slowing the game by circulating the ball after taking the lead. Pre-season analyses (Roundtable Jul 2026, TacticalFootballAnalysis Aug 2026) describe positional possession, a 3-2 build-up and counter-pressing. Short, controlled passing gives passing 2 and tempo 3; the league's most crosses give width 4. Low running numbers temper the counter-press claims, so press is 3. Line 3 because no line data was found. García took several free-kick crosses at Mainz, which is not enough for a set-piece label, so set pieces are placeholders.",
+   "desc": "Leverkusen opbygger spillet roligt og positionsbestemt bagfra med to dybe midtbanespillere, holder bolden længe og skaber chancer via kanterne med mange indlæg fra åbent spil.",
+   "uncertain": [
+    "Defensive left/right (Quansah RB, Tapsoba RCB, Medina LCB, Gutiérrez LB) and attacking-midfield sides (Diaby right, Maza centre, Moreira left) are inferred from FotMob/Sky listing order; no source labels positions explicitly.",
+    "Andrich started in place of Equi Fernández (the only change; Fernández started the 2-0 win over Leipzig on 20 Sep), so the RDM/LDM pairing varies.",
+    "Home kit hex #000000 is the base colour in Wikipedia's 2026–27 kit template, which has a pattern overlay; the real shirt may have significant red. Away #D8E6E5 (light grey/mint) has the same caveat.",
+    "No PPDA or defensive-line data found; the tactical descriptions of Martínez Novell are pre-season previews.",
+    "setAtt/setDef are placeholders."
+   ],
+   "sources": [
+    "https://www.fotmob.com/matches/bayer-leverkusen-vs-mainz-05/2pcq1z — XI in line order, numbers, 4-2-3-1, coach Carles Martínez, 53% possession",
+    "https://www.skysports.com/football/mainz-vs-bayer-leverkusen/teams/563347 — 10 Oct 2026 XI with shirt numbers",
+    "https://www.bundesliga.com/en/bundesliga/news/mainz-bayer-leverkusen-match-report-highlights-matchday-5-39489 — 3-4 result, coach, Andrich in for Fernández",
+    "https://zdfheute.de/sport/fussball-bundesliga/1-fsv-mainz-05-bayer-leverkusen-liveticker-bundesliga-highlights-saison-2026-27-102.html — date, coach, XI, 52.21% possession, ball circulation, García free kicks",
+    "https://www.ysscores.com/en/lineup/5881184/1.FSV-Mainz-05-vs-Bayer-04-Leverkusen — 4-2-3-1",
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/4/bayer-04-leverkusen-vs-rb-leipzig/lineup — previous league XI (near-identical), 4-2-3-1",
+    "https://en.wikipedia.org/wiki/2026–27_Bayer_04_Leverkusen_season — Bundesliga 2026/27, coach appointed, squad numbers, kit colours",
+    "https://roundtable.io/sports/soccer/bundesliga/bayer-leverkusen/match-day/inside-carles-martinez-novell-s-bayer-leverkusen-positional-chaos-aggressive-pressing-and-tactical-flexibility — 3-2 build-up, counter-press (26 Jul 2026)",
+    "https://tacticalfootballanalysis.com/carles-martinez-novell-tactics-bayer-leverkusen-2026-2027-tactical-analysis/ — positional possession, Gutiérrez role (24 Aug 2026)",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs/crosses — 74 crosses (1st); also /ball-possession, /passes, /intensive-runs, /sprints"
+   ]
+  },
+  {
+   "club": "Bayern München",
+   "country": "Germany",
+   "league": "Bundesliga",
+   "manager": "Vincent Kompany",
+   "lineupBasis": "League match 2026-10-10 vs FC Augsburg (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Neuer",
+     "pos": "GK",
+     "attrs": {
+      "pace": 3,
+      "tech": 8,
+      "shoot": 1,
+      "def": 5,
+      "phys": 6,
+      "gk": 8
+     },
+     "attrWhy": "Age 40; still a top sweeper-keeper and distributor, reflexes and mobility declining"
+    },
+    {
+     "num": 44,
+     "name": "Stanišić",
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Versatile, reliable defensive full-back/CB, Croatia international"
+    },
+    {
+     "num": 2,
+     "name": "Upamecano",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "France starter; very fast, powerful recovery defender, occasional lapses"
+    },
+    {
+     "num": 4,
+     "name": "Tah",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Germany starter; strong reader of the game, dominant in the air, calm in build-up"
+    },
+    {
+     "num": 19,
+     "name": "Davies",
+     "pos": "LB",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Still among Europe's fastest full-backs after his 2025 ACL injury; defensive positioning is average"
+    },
+    {
+     "num": 6,
+     "name": "Kimmich",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 9,
+      "shoot": 6,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "World-class passer/organiser from the base of midfield, elite set pieces"
+    },
+    {
+     "num": 45,
+     "name": "Pavlović",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 5,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Germany international; press-resistant, progressive passer, good defensive positioning"
+    },
+    {
+     "num": 17,
+     "name": "Olise",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 9,
+      "shoot": 8,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "BL Player of the Season 25/26 (15G, league-high 19A); among Europe's best creators"
+    },
+    {
+     "num": 34,
+     "name": "Saibari",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 5,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "~EUR 50m from PSV; 15G/8A in 27 Eredivisie games 25/26 and a strong World Cup; powerful ball-carrier"
+    },
+    {
+     "num": 14,
+     "name": "Luis Díaz",
+     "pos": "LW",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 7,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Explosive dribbler, presses hard, consistent goal threat from the left"
+    },
+    {
+     "num": 9,
+     "name": "Kane",
+     "pos": "CF",
+     "attrs": {
+      "pace": 5,
+      "tech": 9,
+      "shoot": 10,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "31+ BL goals 25/26, league top scorer; elite finisher and creator, 98 BL goals in 94 games"
+    }
+   ],
+   "kit": {
+    "home": "#FF0000",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 3,
+    "width": 3,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Bundesliga.com 2026/27 club stats after 5 matchdays: possession 64% (1st), open-play pass accuracy 89.9% (1st), shots 115 (1st), distance covered 620.7 km (1st), intensive runs 3524 (3rd), but only 39 open-play crosses (12th of 18). At Augsburg: 70% possession and 30 shots (FotMob), 90% pass accuracy (bundesliga.com match stats). A dominant short-passing side, so passing 2 and tempo 3. Width 3 because the wingers start wide but the team crosses little. Press 4 and line 4 are inferred from territorial dominance and running volume; no PPDA or line-height data was found. setAtt/setDef are neutral placeholders (no source).",
+   "desc": "Bayern dominerer bolden med tålmodigt kortpasningsspil og høj boldsikkerhed, skubber holdet langt frem på banen og angriber gennem driblestærke kanter og en kreativ tier bag en komplet angriber.",
+   "uncertain": [
+    "Left/right roles (Upamecano RCB / Tah LCB, Kimmich RDM / Pavlović LDM, Olise right / Díaz left) are inferred from FotMob's listing order (right to left, consistent with Davies listed last in defence).",
+    "Saibari started only because Musiala (no. 10, normally the CAM) was injured on international duty; per bundesliga.com it was the only change from the previous league XI.",
+    "No PPDA or defensive-line data found; press and line are judgement calls.",
+    "setAtt 'mix' and setDef 'mixed' are placeholders, not sourced.",
+    "Kit hex taken from Wikipedia's 2026–27 kit template (#FF0000 approximates Bayern red; away #FFFFFF)."
+   ],
+   "sources": [
+    "https://www.fotmob.com/matches/augsburg-vs-bayern-munchen/2qxjee — 10 Oct 2026, 2-2, XI in line order, shirt numbers, 4-2-3-1, 70% possession, 30 shots",
+    "https://www.ysscores.com/en/lineup/5881179/FC-Augsburg-vs-Bayern-Munich — same XI, 4-2-3-1",
+    "https://www.vavel.com/en-us/soccer/2026/10/10/1274451-augsburg-vs-bayern-live-score-bundesliga.html — same XI, coach Kompany",
+    "https://www.bundesliga.com/en/bundesliga/news/augsburg-bayern-munich-match-report-highlights-matchday-5-39487 — result, goals, one change (Saibari for injured Musiala)",
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/fc-augsburg-vs-fc-bayern-muenchen/stats — 90% pass accuracy",
+    "https://en.wikipedia.org/wiki/2026–27_FC_Bayern_Munich_season — Bundesliga 2026/27, manager, squad numbers (incl. Saibari 34), kit colours",
+    "https://wtop.com/sports/2026/07/bayern-munich-signs-morocco-star-ismael-saibari-from-psv-eindhoven-for-reported-63-million/ — Saibari no. 34 (seen in search summary only)",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs/ball-possession — possession 64%",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs/passes — 89.9%",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs/crosses — 39 crosses",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs/intensive-runs — 3524"
+   ]
+  },
+  {
+   "club": "Borussia Dortmund",
+   "country": "Germany",
+   "league": "Bundesliga",
+   "manager": "Niko Kovač",
+   "lineupBasis": "Most frequent league starters 2026/27, matchdays 1–5 (Ryerson injured for the latest match); latest: League match 2026-10-09 vs Werder Bremen (H)",
+   "formation": "3-4-2-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Kobel",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "One of the Bundesliga's best shot-stoppers, Switzerland number one, good feet"
+    },
+    {
+     "num": 22,
+     "name": "Gadou",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "19-year-old, 1.95 m, EUR 20m from Salzburg; club calls him 'extremely quick'; still developing"
+    },
+    {
+     "num": 3,
+     "name": "Anton",
+     "pos": "CB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Solid, dependable CB/back-three central role, good in duels, unspectacular on the ball"
+    },
+    {
+     "num": 4,
+     "name": "Schlotterbeck",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 4,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Germany international; aggressive front-foot CB, strong passing from the left"
+    },
+    {
+     "num": 26,
+     "name": "Ryerson",
+     "pos": "RWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Hard-running Norway wing-back with high work-rate and good crossing"
+    },
+    {
+     "num": 7,
+     "name": "Bellingham",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Jobe Bellingham: box-to-box, good carrying and work-rate, end product still developing"
+    },
+    {
+     "num": 8,
+     "name": "Nmecha",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 6,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Technical, press-resistant midfielder with drive and late runs into the box"
+    },
+    {
+     "num": 24,
+     "name": "Svensson",
+     "pos": "LWB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Sweden left wing-back; energetic and established, competing for a regular role (1G in 5 BL apps 26/27)"
+    },
+    {
+     "num": 18,
+     "name": "Nwaneri",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "On loan from Arsenal; gifted left-footed creator who can finish; slight build"
+    },
+    {
+     "num": 14,
+     "name": "Beier",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 7,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Very fast runner in behind, Germany international, a direct goal threat"
+    },
+    {
+     "num": 9,
+     "name": "Guirassy",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 9,
+      "def": 3,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "17 BL goals 25/26 (3rd), earlier UCL top scorer; lethal box striker and strong in the air"
+    }
+   ],
+   "kit": {
+    "home": "#FFDD00",
+    "away": "#000000"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 4,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Bundesliga.com 2026/27: possession 52% (6th), open-play pass accuracy 85.4% (5th), open-play crosses 56 (4th), intensive runs 3529 (2nd). Against Bremen: 66% possession and 89% pass accuracy (bundesliga.com; FotMob shows 72%), 21 shots. The Stuttgart report credits right-side crosses (Ryerson, Bellingham) and quick breaks through Nmecha. Wing-backs plus a high cross count give width 4. Possession and passing sit in the middle of the league, so tempo, passing and press are 3. No PPDA or line-height data was found. Two corner headers by Schlotterbeck against Bremen are not enough to set a corner routine, so setAtt/setDef are placeholders.",
+   "desc": "Dortmund spiller med tre midterforsvarere og offensive wingbacks, der giver bredde, mens to fremskudte offensive midtbanespillere og en stærk centerangriber afslutter hurtige omstillinger og indlæg.",
+   "uncertain": [
+    "XI = most frequent league starters (Kobel, Anton, Gadou, Svensson, Guirassy 5 starts; Ryerson, Bellingham, Nmecha, Beier 4; Schlotterbeck, Nwaneri 3). The actual XI vs Bremen had Sabitzer (20) in for injured Ryerson, and sources disagree on whether Beier or Sabitzer played right wing-back (ESPN/Werder.de: Beier; FotMob: Sabitzer).",
+    "Ryerson was reported injured for the Bremen match; it is unknown whether he is fit now.",
+    "Matchday 1–3 starters come from automated summaries of the bundesliga.com lineup pages. Matchdays 4–5 are cross-checked with Sport1, ESPN, FotMob and Werder.de.",
+    "Ryerson's no. 26 comes only from Wikipedia's squad list (1 Sep 2026). The other numbers match ESPN/FotMob for 9 Oct.",
+    "Left/right roles come from Sport1's line order for 19 Sep (Gadou-Anton-Schlotterbeck; Ryerson-Veerman-Nmecha-Svensson; Nwaneri-Beier) and ESPN's tags for 9 Oct (Bellingham right-centre mid, Nwaneri right-centre forward)."
+   ],
+   "sources": [
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/borussia-dortmund-vs-sv-werder-bremen/lineup — Matchday 5 XI, 3-4-2-1",
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/4/vfb-stuttgart-borussia-dortmund/lineup — Matchday 4 XI, 3-4-2-1 (also /3/borussia-dortmund-vs-sc-paderborn-07/lineup, /2/tsg-hoffenheim-vs-borussia-dortmund/lineup, /1/borussia-dortmund-vs-hamburger-sv/lineup)",
+    "https://www.sport1.de/news/fussball/bundesliga/2026/09/bundesliga-heute-stuttgart-dortmund-live-im-tv-liveticker-livestream-3 — 19.09.2026 XI in line order",
+    "https://www.espn.com/soccer/match/_/gameId/401884781/werder-bremen-borussia-dortmund — 9 Oct XI with numbers and position tags",
+    "https://www.fotmob.com/matches/werder-bremen-vs-borussia-dortmund/2tqnt6 — 9 Oct 2026, 2-2, numbers, 72% possession",
+    "https://onefootball.com/en/news/borussia-dortmund-vs-werder-bremen-confirmed-lineups-43585970 — 9 Oct confirmed XI",
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/borussia-dortmund-vs-sv-werder-bremen/stats — 66% possession, 89% pass accuracy",
+    "https://www.bundesliga.com/en/bundesliga/news/vfb-stuttgart-borussia-dortmund-match-report-highlights-matchday-4-39274 — crosses and quick transitions",
+    "https://en.wikipedia.org/wiki/2026–27_Borussia_Dortmund_season — Bundesliga 2026/27, Kovač, squad numbers, results, kit colours",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs — season possession, passes, crosses, intensive runs"
+   ]
+  },
+  {
+   "club": "RB Leipzig",
+   "country": "Germany",
+   "league": "Bundesliga",
+   "manager": "Martín Demichelis",
+   "lineupBasis": "League match 2026-10-10 vs Eintracht Frankfurt (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 26,
+     "name": "Vandevoordt",
+     "pos": "GK",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "Young Belgian keeper, comfortable in build-up, still uneven in his decisions"
+    },
+    {
+     "num": 17,
+     "name": "Baku",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Ex-midfielder full-back; good on the overlap and crossing, average 1v1 defending"
+    },
+    {
+     "num": 4,
+     "name": "Orbán",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Veteran Hungary leader; dominant in the air and a set-piece threat, losing pace"
+    },
+    {
+     "num": 23,
+     "name": "Lukeba",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 2,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Quick, left-footed modern CB, France-capped, strong in recovery"
+    },
+    {
+     "num": 22,
+     "name": "Raum",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Germany-capped LB; elite crossing and set-piece delivery, average defender"
+    },
+    {
+     "num": 6,
+     "name": "Banzuzi",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Tall Belgian ball-winner, good at shielding and in duels, simple and tidy passer"
+    },
+    {
+     "num": 21,
+     "name": "El Aynaoui",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Morocco international, on loan from Roma; signed for intensity and physical presence"
+    },
+    {
+     "num": 30,
+     "name": "Maksimović",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Teen Serbian talent (EUR 14m); only 93 BL min, 0 starts in 25/26, so his rating is mostly based on potential"
+    },
+    {
+     "num": 28,
+     "name": "Nkunku",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 8,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "On loan from Milan; intelligent, technical finisher; first goal back came in the 5-0 win over Hamburg"
+    },
+    {
+     "num": 7,
+     "name": "Nusa",
+     "pos": "LW",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Explosive Norway dribbler, Leipzig's chief creator (1G/2A vs Hamburg), finishing is inconsistent"
+    },
+    {
+     "num": 40,
+     "name": "Rômulo",
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 7,
+      "def": 3,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "9G/4A in 30 BL games 25/26; mobile, physical forward"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#FF0000"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 4,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Bundesliga.com 2026/27: sprints 942 (1st) and intensive runs 3586 (1st), possession 54% (3rd), open-play pass accuracy 88.5% (2nd), open-play crosses 44 (11th). Against Frankfurt: only 47% possession but 20 shots and xG 4.03 (FotMob). Sky Sport describes early pressing, quick ball movement and a counter-attack goal; Roundtable reports Demichelis praising aggressive pressing, immediate attacks after regains and 'directness'. Top running numbers plus that pressing give press 4 and line 4 (no PPDA or line-height data found). Transitions give tempo 4. High pass accuracy keeps passing at 3. Mid-table crossing gives width 3. setAtt/setDef are placeholders.",
+   "desc": "Leipzig er et intenst og løbestærkt hold, der presser aggressivt, vinder bolden højt og spiller hurtigt og direkte frem mod mål med fart på kanterne.",
+   "uncertain": [
+    "Banzuzi RDM / El Aynaoui LDM and Maksimović right / Nusa left come from FotMob's listing order. Yahoo lists 'El Aynaoui, Banzuzi, Maksimović' as a midfield three, which would point to a 4-3-3, and Banzuzi scored from a cross that came from the right, so the pivot sides are unsure.",
+    "Formation: bundesliga.com, FotMob, ysscores and mylineups give 4-2-3-1 for matchdays 4–5, but bundesliga.com shows 4-3-3 for matchdays 1–3.",
+    "Heavy rotation: Gruda (3 league starts) did not start against Frankfurt; Maksimović had his only league start; Rômulo and Gomis have 2 starts each. The XI is still made up mostly of regular starters, so the latest match was used.",
+    "No PPDA or defensive-line data found; press and line are judgement calls.",
+    "Kit hex from Wikipedia's 2026–27 kit template (white home, red away)."
+   ],
+   "sources": [
+    "https://www.fotmob.com/matches/eintracht-frankfurt-vs-rb-leipzig/855fslx — 10 Oct 2026, 6-0, XI in line order, numbers, 4-2-3-1, 47% possession, xG 4.03",
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/5/rb-leipzig-vs-eintracht-frankfurt/lineup — XI, 4-2-3-1, coach Demichelis",
+    "https://www.ysscores.com/en/lineup/5881186/RB-Leipzig-vs-Eintracht-Frankfurt — XI, 4-2-3-1",
+    "https://mylineups.app/matches/bundesliga/rb-leipzig-vs-eintracht-frankfurt-2026-10-10/ — shirt numbers",
+    "https://sports.yahoo.com/articles/confirmed-lineups-rb-leipzig-vs-154100483.html — confirmed XI",
+    "https://sport.sky.de/fussball/rb-leipzig-vs-frankfurt/spielbericht/563350 — date, coach, early pressing, counter goal",
+    "https://roundtable.io/sports/soccer/bundesliga/rb-leipzig/news/leipzig-run-riot-against-frankfurt-as-nkunku-steals-the-show — Demichelis on aggressive pressing and directness (11 Oct 2026)",
+    "https://www.bundesliga.com/en/bundesliga/matchday/2026-2027/1/rb-leipzig-vs-borussia-moenchengladbach/lineup — earlier XIs/4-3-3 (also /2/sv-werder-bremen-vs-rb-leipzig, /3/rb-leipzig-vs-hamburger-sv, /4/bayer-04-leverkusen-vs-rb-leipzig)",
+    "https://en.wikipedia.org/wiki/2026–27_RB_Leipzig_season — Bundesliga 2026/27, Demichelis, squad numbers, results, kit colours",
+    "https://www.bundesliga.com/en/bundesliga/stats/clubs/sprints — 942 (1st); also /intensive-runs, /ball-possession, /passes, /crosses"
+   ]
+  }
+ ]
+}

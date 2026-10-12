@@ -106,12 +106,28 @@ check("land, liga og hold kan læses helt i felterne", fit.every(Boolean), JSON.
 check("20 hold i Premier League", opts.teams.length === 20, opts.teams.map(t => t.name).join(", "));
 await shot("#knownDlg", "dialog.png");
 
+// Alle hold i dialogen: land → liga → hold.
+const allTeams = [];
+for (const c of await ev("[...document.querySelectorAll('#kdCountry option')].map(o => o.value)")) {
+	await pick("#kdCountry", c);
+	for (const l of await ev("[...document.querySelectorAll('#kdLeague option')].map(o => o.value)")) {
+		await pick("#kdLeague", l);
+		for (const x of await ev("[...document.querySelectorAll('#kdTeam option')].map(o => ({ id: o.value, name: o.textContent }))")) allTeams.push({ c, l, ...x });
+	}
+}
+const choose = async x => { await pick("#kdCountry", x.c); await pick("#kdLeague", x.l); await pick("#kdTeam", x.id); };
+const byName = n => allTeams.find(x => x.name === n);
+const countryNames = await ev("[...document.querySelectorAll('#kdCountry option')].map(o => o.textContent)");
+check("lande i dialogen, England først", countryNames[0] === "England" && new Set(allTeams.map(x => x.id)).size === allTeams.length,
+	`${countryNames.join(", ")} · ${allTeams.length} hold`);
+
 console.log("Hvert hold som mit hold: tavlen = det, dialogen viste");
-for (const t of opts.teams) {
+for (const t of allTeams) {
 	if (!(await ev("document.getElementById('knownDlg').open"))) await click("#knownBtn");
-	await pick("#kdTeam", t.id);
+	await choose(t);
 	const c = await card();
 	const prob = [];
+	if (t.l !== "premier-league" && !c.meta.includes("(udvalgte hold)")) prob.push("kortet siger ikke »udvalgte hold«");
 	if (c.name !== t.name) prob.push(`kortet viser ${c.name}`);
 	if (c.xi.length !== 11 || new Set(c.xi.map(p => p.num)).size !== 11) prob.push(`${c.xi.length} spillere / dubletnumre`);
 	if (c.xi.some(p => !p.name || p.name.length > 18)) prob.push("navn tomt eller over 18 tegn");
@@ -132,9 +148,9 @@ for (const t of opts.teams) {
 }
 
 console.log("Modstander, farver, note og fortryd");
-await click("#knownBtn"); await pick("#kdTeam", opts.teams.find(t => t.name === "Manchester United").id); await click("#kdHome");
+await click("#knownBtn"); await choose(byName("Manchester United")); await click("#kdHome");
 const before = await saved();
-await click("#knownBtn"); await pick("#kdTeam", opts.teams.find(t => t.name === "Arsenal").id);
+await click("#knownBtn"); await choose(byName("Arsenal"));
 const ars = await card();
 await click("#kdAway");
 const b2 = await saved();
@@ -156,8 +172,8 @@ const title = await ev("document.getElementById('matchTitle').textContent");
 check("kampen hedder Manchester United mod Arsenal", /Manchester United/.test(title) && /Arsenal/.test(title), title);
 
 console.log("Simulering med den nye formation 3-4-2-1 (Leeds mod Forest)");
-await click("#tab-hold"); await click("#knownBtn"); await pick("#kdTeam", opts.teams.find(t => t.name === "Leeds United").id); await click("#kdHome");
-await click("#knownBtn"); await pick("#kdTeam", opts.teams.find(t => t.name === "Nottingham Forest").id); await click("#kdAway");
+await click("#tab-hold"); await click("#knownBtn"); await choose(byName("Leeds United")); await click("#kdHome");
+await click("#knownBtn"); await choose(byName("Nottingham Forest")); await click("#kdAway");
 const b4 = await saved();
 await click("#tab-kamp"); await click("#many500");
 const many = await ev("document.getElementById('manyResult').textContent");
@@ -172,6 +188,29 @@ const clock = await until(async () => { const c = await ev("document.getElementB
 const sim = await ev("({ clock: document.getElementById('sbClock').textContent, score: document.getElementById('sbScore').textContent, ticker: (document.querySelector('#simDlg .sim-ticker') || {}).textContent || '' })");
 await ev("document.getElementById('simDlg').close()");
 check("en kamp med de kendte hold går i gang (uret når mindst 3. minut)", !!clock, JSON.stringify(sim).slice(0, 180));
+
+console.log("Styrke: Manchester City mod Coventry City");
+const cardStrength = async () => ev("(() => { const b = document.querySelector('#kdCard .known-strength b'); return b ? parseFloat(b.textContent.replace('Styrke ', '').replace(',', '.')) : null; })()");
+await click("#tab-hold"); await click("#knownBtn"); await choose(byName("Manchester City")); const sCity = await cardStrength(); await click("#kdHome");
+await click("#knownBtn"); await choose(byName("Coventry City")); const sCov = await cardStrength(); await click("#kdAway");
+const b5 = await saved();
+const LV = { GK: ["gk"], CB: ["def", "pace", "phys"], LB: ["def", "pace", "phys"], RB: ["def", "pace", "phys"], LWB: ["def", "pace", "phys"], RWB: ["def", "pace", "phys"],
+	DM: ["tech", "def", "phys"], CM: ["tech", "def", "phys"], CAM: ["tech", "pace", "shoot"], LM: ["pace", "tech", "shoot"], RM: ["pace", "tech", "shoot"], LW: ["pace", "tech", "shoot"], RW: ["pace", "tech", "shoot"],
+	SS: ["shoot", "pace", "tech", "phys"], CF: ["shoot", "pace", "tech", "phys"] };
+const teamLv = ps => ps.reduce((a, p) => a + LV[p.role].reduce((s, k) => s + p.attrs[k], 0) / LV[p.role].length, 0) / ps.length;
+const varied = ps => new Set(ps.flatMap(p => Object.values(p.attrs))).size > 3;
+check("egenskaberne følger med: holdets niveau = styrken i kortet", varied(b5.home) && varied(b5.away) && Math.abs(teamLv(b5.home) - sCity) < .06 && Math.abs(teamLv(b5.away) - sCov) < .06,
+	`City ${teamLv(b5.home).toFixed(2)} / kort ${sCity}, Coventry ${teamLv(b5.away).toFixed(2)} / kort ${sCov}`);
+const roster = await ev("[...document.querySelectorAll('#rosterList .plvl b')].map(b => b.textContent)");
+check("holdlisten viser spillernes niveau (ikke 5,0 for alle)", new Set(roster).size > 3, roster.join(" "));
+const many4 = async () => { await click("#tab-kamp"); let w = 0, d = 0, l = 0; for (let i = 0; i < 4; i++) { await click("#many500"); const t = await ev("document.getElementById('manyResult').textContent"); const m = t.match(/Sejr (\d+) %.*Uafgjort (\d+) %.*Nederlag (\d+) %/s); w += +m[1]; d += +m[2]; l += +m[3]; } return { w: w / 4, d: d / 4, l: l / 4, E: (w + d / 2) / 400 }; };
+const home = await many4();
+await click("#tab-hold"); await click("#knownBtn"); await choose(byName("Coventry City")); await click("#kdHome");
+await click("#knownBtn"); await choose(byName("Manchester City")); await click("#kdAway");
+const away = await many4();
+const En = (home.E + 1 - away.E) / 2, Eelo = 1 / (1 + 10 ** (-(2035 - 1690) / 400));
+check("City mod Coventry: simuleringen giver City som klar favorit, tæt på ClubElo", home.w >= 65 && away.l >= 55 && Math.abs(En - Eelo) < .05,
+	`City hjemme: ${home.w}/${home.d}/${home.l} %, City ude: ${away.l}/${away.d}/${away.w} %, neutral E ${En.toFixed(3)} mod Elo ${Eelo.toFixed(3)}`);
 
 console.log("Telefon");
 await send("Emulation.setDeviceMetricsOverride", { width: 375, height: 812, deviceScaleFactor: 1, mobile: true }, S);

@@ -1,0 +1,612 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "portugal",
+  "name": "Portugal",
+  "order": 6
+ },
+ "league": {
+  "id": "liga-portugal",
+  "name": "Liga Portugal",
+  "season": "2026/27",
+  "prefix": "pt-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "Benfica",
+   "country": "Portugal",
+   "league": "Liga Portugal",
+   "manager": "Marco Silva",
+   "lineupBasis": "League match 2026-10-11 vs Vitória de Guimarães (H), won 2-0",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 24,
+     "name": "Samuel Soares",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 6
+     },
+     "attrWhy": "Portugal U21; displaced Trubin in Aug 2026 mainly for his footwork/build-up; limited top-level record"
+    },
+    {
+     "num": 6,
+     "name": "Bah",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Denmark international RB; energetic overlapper, solid duels, post-ACL"
+    },
+    {
+     "num": 3,
+     "name": "Circati",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 2,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "22, €20m from Parma; 31 Serie A starts 25/26, played every minute for Australia at the 2026 World Cup; left-footed, still developing"
+    },
+    {
+     "num": 44,
+     "name": "Tomás Araújo",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Portugal international CB; quick, good recovery defending, tidy passer"
+    },
+    {
+     "num": 26,
+     "name": "Dahl",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Sweden international LB; attacking, good crosser, average 1v1 defending"
+    },
+    {
+     "num": 18,
+     "name": "Barreiro",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 5,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Luxembourg box-to-box; relentless presser and runner, modest on the ball"
+    },
+    {
+     "num": 36,
+     "name": "Palhinha",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 5,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "31, ex-Bayern/Fulham elite tackler, 45 apps on loan at Spurs 25/26; slow, limited passer"
+    },
+    {
+     "num": 27,
+     "name": "Rafa",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "33, returned from Beşiktaş; still a slick dribbler and finisher, burst has faded"
+    },
+    {
+     "num": 25,
+     "name": "Prestianni",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "20, 166 cm Argentine dribbler; 7 goals by early Sep 2026 in all comps, breakout season"
+    },
+    {
+     "num": 21,
+     "name": "Schjelderup",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Norway international winger; direct, creative, rotating role in 26/27"
+    },
+    {
+     "num": 14,
+     "name": "Pavlidis",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 7,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Greece CF; ~21 league goals 25/26, good link play and pressing"
+    }
+   ],
+   "kit": {
+    "home": "#C00001",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 3,
+    "width": 3,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob, 8 league games: possession 63.4% (1st of 18), 493 accurate passes per match (1st), 4.3 possession wins in the final third per match (5th), 62 corners (1st). My own figures from FotMob per-match data: attempted long balls are 7.7% of all passes (lowest in the league, average 12.3%) -> passing 2. 59.0% of accurate passes are in the opposition half (1st, average 44.3%) -> line 4, style 'off'. 17.0 attempted crosses per match (7th, average 15.9) -> width 3. Opponent passes per Benfica tackle+interception+foul is 9.2 (lowest in the league, average 11.5; a whole-pitch PPDA proxy that is inflated by possession) and opponents complete only 78.5% of passes (3rd lowest) -> press 4. Tempo 3: patient possession, but no tempo metric found. setAtt/setDef are placeholders: no source on routines or marking.",
+   "desc": "Benfica dominerer boldbesiddelsen i en 4-2-3-1 med korte afleveringer og et aktivt pres og spiller det meste af kampen på modstanderens halvdel.",
+   "uncertain": [
+    "Clément Lenglet (#2, 7 of 8 league starts, normally LCB with Tomás Araújo at RCB) was suspended after his red card against Porto; Circati made his first league start and Araújo moved to LCB. With Lenglet back, the usual pair is Araújo RCB + Lenglet LCB.",
+    "Sudakov (#10, 5 league starts at CAM) was on the bench; Barrenechea (#5, 4 starts at DM) is injured until about early November (FotMob).",
+    "Display name: Portuguese team sheets use 'Rafa'; ESPN uses 'R. Silva'.",
+    "Home kit hex is FotMob's team colour (#C00001); I did not read a 2026/27 home-kit article. Away (white) is sourced.",
+    "setAtt/setDef are neutral placeholders; PPDA and defensive-line height were not available (proxies used)."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Primeira_Liga — Benfica in the 2026-27 Primeira Liga; head coach Marco Silva (appointed 9 June 2026)",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_S.L._Benfica_season — league results to 11 Oct 2026; squad numbers",
+    "https://www.espn.com/soccer/match/_/gameId/401885421/vitoria-de-guimaraes-benfica — 11 Oct 2026 Benfica 2-0 Vitória (home), XI, 4-2-3-1, Circati centre-right",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5887653 — same XI and numbers, 4-2-3-1 layout (sides), coach Marco Silva, Lenglet suspended, Barrenechea injured",
+    "https://www.noticiasaominuto.com/desporto/3065069/ordem-para-reagir-o-onze-do-benfica-frente-ao-vitoria-sc — official XI published 11 Oct 2026",
+    "https://www.abola.pt/noticias/a-revolucao-silenciosa-de-marco-silva-no-benfica-2026092719033492654 — Samuel Soares has taken over from Trubin; Lenglet/Araújo/Dahl among the most used players",
+    "https://bolanarede.pt/especial-bola-na-rede/atualidade/benfica-apresenta-camisola-alternativa-para-2026-27/ — 2026/27 alternate shirt is white (presented 4 July 2026)",
+    "https://data.fotmob.com/stats/61/season/40067/possession_percentage_team.json (and accurate_pass_team, accurate_long_balls_team, accurate_cross_team, poss_won_att_3rd_team, corner_taken_team, _set_piece_goals_team) — season team stats",
+    "https://www.fotmob.com/api/data/leagues?id=61 — fixture list used to fetch all 2026/27 league match stats for my long-ball/cross/opposition-half/pressing proxies"
+   ]
+  },
+  {
+   "club": "FC Porto",
+   "country": "Portugal",
+   "league": "Liga Portugal",
+   "manager": "Francesco Farioli",
+   "lineupBasis": "League match 2026-10-10 vs Marítimo (A), won 2-1",
+   "formation": "4-3-3",
+   "players": [
+    {
+     "num": 99,
+     "name": "Diogo Costa",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "Portugal no.1; strong shot-stopper and penalty saver, excellent distribution"
+    },
+    {
+     "num": 20,
+     "name": "Alberto Costa",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Young RB from Juventus; quick, energetic, defending still maturing"
+    },
+    {
+     "num": 5,
+     "name": "Bednarek",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Poland CB, ex-Southampton; strong aerially and in duels, basic on the ball"
+    },
+    {
+     "num": 4,
+     "name": "Kiwior",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Poland left-footed CB, ex-Arsenal; composed passer, solid positioning"
+    },
+    {
+     "num": 74,
+     "name": "Moura",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Francisco Moura; attacking LB with good left foot, 3G 2A in 32 apps 25/26, reduced role"
+    },
+    {
+     "num": 8,
+     "name": "Froholdt",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Denmark international, ~20; box-to-box carrier, high engine"
+    },
+    {
+     "num": 22,
+     "name": "Varela",
+     "pos": "DM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Argentine DM; tidy distributor, good ball-winner"
+    },
+    {
+     "num": 16,
+     "name": "Hwang",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Hwang In-beom, 30, 76 Korea caps, €4.5m from Feyenoord; intelligent, press-resistant 6/8"
+    },
+    {
+     "num": 7,
+     "name": "William Gomes",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Young Brazilian left-footed RW; quick, dribbles inside, end product developing"
+    },
+    {
+     "num": 19,
+     "name": "André Silva",
+     "pos": "CF",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 7,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "30+, free from Elche (10 goals in 32 apps 25/26); clever box striker, stand-in for injured Samu"
+    },
+    {
+     "num": 11,
+     "name": "Pepê",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Brazil-capped wide forward; quick, hard-working, also covers full-back"
+    }
+   ],
+   "kit": {
+    "home": "#005898",
+    "away": "#4E1D3D"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 3,
+    "tempo": 4,
+    "width": 4,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob, 8 league games: possession 54.8% (4th of 18) but only 364 accurate passes per match (8th, league average 355), so Porto move the ball forward faster than Benfica (493) and Sporting (490) -> tempo 4. 4.9 possession wins in the final third per match (3rd); opponents complete 78.5% of passes (4th lowest); opponent passes per Porto tackle+interception+foul 10.1 (3rd lowest; my whole-pitch PPDA proxy) -> press 4. My figures from FotMob match data: 22.3 attempted crosses per match (2nd, average 15.9) -> width 4. Attempted long balls are 9.2% of passes (13th, average 12.3%) -> passing 2. 47.4% of accurate passes in the opposition half (5th) and only 0.4 opponent offsides per match (17th) -> line 3. Best defensive record: 0.5 goals conceded per match, 0 set-piece goals conceded; 4 set-piece goals scored (2nd) -> style 'normal'. No source on corner routines or marking scheme, so setAtt/setDef are placeholders.",
+   "desc": "FC Porto spiller en kompakt 4-3-3, der presser aggressivt, angriber hurtigt ud ad kanterne med mange indlæg og er farlig på dødbolde.",
+   "uncertain": [
+    "This XI had three changes from the Benfica game: Moura, Varela and Hwang came in for Martim Fernandes, Rosario and Gabri Veiga. The most frequent league starters are Rosario (#13, 6 starts) at DM and Gabri Veiga (#10, 7 starts) at LCM. At LB: Sanusi (#12, 4 starts, injured day-to-day), Moura (3 starts) and Martim Fernandes (2 starts). I kept the latest XI because the changes were the coach's choice; nobody was rotated for a European game.",
+    "Midfield sides (Froholdt RCM, Varela DM, Hwang LCM) come from FotMob's layout; ESPN did not label Varela or Hwang. One Maisfutebol summary said Moura came in at right-back, but ESPN and FotMob both have him at left-back.",
+    "Away kit colour is disputed: New Balance and footballfashion.org say deep purple with cream; the club, Footy Headlines and retailers say ruby/claret. #4E1D3D is a compromise. Home hex is FotMob's team colour; footballfashion.org confirms blue and white stripes.",
+    "setAtt/setDef are neutral placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_FC_Porto_season — league results through 10 Oct 2026 (2-1 at Marítimo); squad numbers; head coach Farioli",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Primeira_Liga — Porto in the 2026-27 Primeira Liga, head coach Farioli",
+    "https://www.espn.com/soccer/match/_/gameId/401885424/fc-porto-maritimo — 10 Oct 2026 Marítimo 1-2 Porto, XI, 4-3-3, Moura LB, Froholdt right midfielder",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5887650 — same XI and numbers, 4-3-3 layout, coach Farioli, Sanusi/Pérez injured",
+    "https://maisfutebol.iol.pt/liga/fc-porto/maritimo-fc-porto-onzes-francesco-farioli-surpreende-no-meio-campo — XI, bench, three changes (Martim Fernandes back from injury, midfield surprise)",
+    "https://www.fcporto.ws/fc-porto-divulga-o-onze-para-o-cs-maritimo-francesco-farioli-faz-tres-alteracoes/ — official XI and bench",
+    "https://footballfashion.org/wordpress/2026/08/19/fc-porto-2026-27-jersey-new-balance-kit/ — 2026/27 home blue/white stripes; away deep purple",
+    "https://www.footyheadlines.com/2026/06/fc-porto-26-27-away-kit.html — away kit described as ruby (from search summary, not opened)",
+    "https://data.fotmob.com/stats/61/season/40067/possession_percentage_team.json (and accurate_pass_team, poss_won_att_3rd_team, _set_piece_goals_team, _set_piece_goals_conceded_team, goals_conceded_team_match) — season team stats"
+   ]
+  },
+  {
+   "club": "Sporting CP",
+   "country": "Portugal",
+   "league": "Liga Portugal",
+   "manager": "Rui Borges",
+   "lineupBasis": "Most frequent league starters 2026/27 = XI of league match 2026-09-05 vs Nacional (H), 2-0 (identical XI 2026-08-28 vs Rio Ave (A), 4-0); NOT the latest match 2026-10-09 vs Braga (A), where Debast was suspended, Maxi Araújo and Suárez were benched after returning late from national-team duty, and a one-off 4-3-3 was used",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Rui Silva",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "Ex-Betis keeper; reliable shot-stopper, average distribution"
+    },
+    {
+     "num": 22,
+     "name": "Fresneda",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Spanish RB; fast, good recovery runs, limited end product"
+    },
+    {
+     "num": 6,
+     "name": "Debast",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Belgium international; ball-playing CB (also DM), occasional lapses"
+    },
+    {
+     "num": 25,
+     "name": "Gonçalo Inácio",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Portugal international left-footed CB; strong passer, good reader of play"
+    },
+    {
+     "num": 20,
+     "name": "Maxi Araújo",
+     "pos": "LB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Uruguay international LB/LW; explosive, aggressive, attack-minded"
+    },
+    {
+     "num": 5,
+     "name": "Altimira",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Sergi Altimira, €18m from Betis where he started; positional DM, neat circulation"
+    },
+    {
+     "num": 77,
+     "name": "Doumbia",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Issa Doumbia, 22, €20m from Venezia; athletic box-to-box ball carrier, raw"
+    },
+    {
+     "num": 10,
+     "name": "Geny Catamo",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Mozambique winger/wing-back; quick dribbler, strong left foot"
+    },
+    {
+     "num": 17,
+     "name": "Zalazar",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 7,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Uruguay AM from Braga (9 goals in 20 by Mar 2026); set-piece and long-shot specialist"
+    },
+    {
+     "num": 58,
+     "name": "Flávio Gonçalves",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "19, Portugal U21 winger; 3G 1A in first 5 starts of 26/27, small sample"
+    },
+    {
+     "num": 97,
+     "name": "Luis Suárez",
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 8,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Colombian CF; Liga top scorer 25/26 (28 league, 37 all comps), strong, good in the air"
+    }
+   ],
+   "kit": {
+    "home": "#106840",
+    "away": "#C9A45C"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 2,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob, 8 league games: possession 59.0% (2nd of 18) and 490 accurate passes per match (2nd). 3.3 possession wins in the final third per match is below the league average of 3.56 (8th), and opponents complete 82.2% of passes (about the average of 82.0%). Opponent passes per Sporting tackle+interception+foul is 10.6 (6th lowest; my whole-pitch PPDA proxy) -> press 3. After the 3-1 at Braga, Borges said the team should at times have kept the press higher and had tried to mark man-to-man (A Bola, via search summary). My figures from FotMob match data: only 11.0 attempted crosses per match (15th, average 15.9) -> width 2 (narrow). Attempted long balls are 8.3% of passes (16th, average 12.3%) -> passing 2. 44.2% of accurate passes in the opposition half (league average) and 0.5 opponent offsides per match (16th) -> line 3, style 'normal'. Set pieces: 1 goal scored, 0 conceded; no source on routines or marking.",
+   "desc": "Sporting har meget af bolden i en 4-2-3-1 og bygger tålmodigt op gennem midten med korte afleveringer frem for indlæg fra kanterne.",
+   "uncertain": [
+    "League starts (FotMob, matches ESPN): Rui Silva, Altimira, Doumbia and Catamo 8; Inácio 7; Fresneda, Maxi Araújo, Zalazar and Flávio Gonçalves 6; Debast and Suárez 5. Next most used: Quaresma, Vagiannidis and Ioannidis 3, Irankunda 2.",
+    "Debast was suspended only for the Braga game (red card against Arouca).",
+    "Home kit hex is FotMob's team colour (green); I did not read a 2026/27 home-kit article. Away (metallic gold) is sourced.",
+    "The Borges quote about pressing comes from a search-result summary of an A Bola article; I did not open the article.",
+    "setAtt/setDef are neutral placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Primeira_Liga — Sporting in the 2026-27 Primeira Liga, head coach Rui Borges",
+    "https://www.espn.com/soccer/match/_/gameId/401885449/cd-nacional-sporting-cp — 5 Sep 2026 Sporting 2-0 Nacional (home), XI, 4-2-3-1, Fresneda RB, Maxi Araújo LB, Catamo AM right, Zalazar AM, Flávio Gonçalves AM left",
+    "https://www.espn.com/soccer/match/_/gameId/401885458/sporting-cp-rio-ave — 28 Aug 2026 Rio Ave 0-4 Sporting, same XI",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5887625 — Nacional match XI with layout (Debast right CB, Altimira right pivot); match 5887616 = Rio Ave",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5887647 — 9 Oct 2026 Braga 1-3 Sporting: 4-3-3, Debast suspended, Maxi Araújo/Suárez/Zalazar on the bench",
+    "https://cnnportugal.iol.pt/liga/sporting/sp-braga-sporting-onzes-rui-borges-muda-quatro-maxi-e-suarez-no-banco — four changes at Braga and the reasons",
+    "https://www.record.pt/futebol/futebol-nacional/liga-betclic/detalhe/20261009-190701-o-onze-do-sporting-para-o-jogo-com-o-sp-braga — official Braga XI and bench",
+    "https://www.espn.com/soccer/team/results/_/id/2250/sporting-cp — list of 2026/27 league matches (all 8 match pages read for the start counts)",
+    "https://www.footyheadlines.com/1162067902/gold-sporting-26-27-away-kit-released-total-90-inspired.html — 2026/27 away kit is metallic gold (25 July 2026)",
+    "https://www.abola.pt/noticias/rui-borges-tem-de-arranjar-outras-narrativas-essa-ja-nao-pode-pegar-2026100920555913873 — Borges on a higher press and man-to-man marking (search summary only)",
+    "https://data.fotmob.com/stats/61/season/40067/possession_percentage_team.json (and accurate_pass_team, poss_won_att_3rd_team, accurate_cross_team) — season team stats"
+   ]
+  }
+ ]
+}

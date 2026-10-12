@@ -1,0 +1,417 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "skotland",
+  "name": "Skotland",
+  "order": 8
+ },
+ "league": {
+  "id": "scottish-premiership",
+  "name": "Scottish Premiership",
+  "season": "2026/27",
+  "prefix": "sc-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "Celtic",
+   "country": "Scotland",
+   "league": "Scottish Premiership",
+   "manager": "Martin O'Neill",
+   "lineupBasis": "League match 2026-10-11 vs Motherwell (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Sinisalo",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 5
+     },
+     "attrWhy": "Viljami Sinisalo; Celtic's no.1 with 11 apps and 5 clean sheets; sound shot-stopper but not proven at top-5 level"
+    },
+    {
+     "num": 51,
+     "name": "Donovan",
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 3,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Colby Donovan; young academy RB, energetic, good assist numbers, still raw defensively (rash challenges in 25/26)"
+    },
+    {
+     "num": 47,
+     "name": "Murray",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 4,
+      "shoot": 2,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Dane Murray; academy CB, 5 apps, squad-level stand-in for Carter-Vickers"
+    },
+    {
+     "num": 5,
+     "name": "Scales",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ireland international left-footed CB; reliable in Scotland, average by top-5 standards"
+    },
+    {
+     "num": 63,
+     "name": "Tierney",
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ex-Arsenal LB; good crosser and combines well, a bit of pace lost to injuries"
+    },
+    {
+     "num": 42,
+     "name": "McGregor",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Captain at 33; press-resistant metronome, limited athleticism"
+    },
+    {
+     "num": 22,
+     "name": "Baur",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Mika Baur; Germany U21, Paderborn player of the year (4g/5a), ~£6m; 6/8 who wins the ball back"
+    },
+    {
+     "num": 11,
+     "name": "Durán",
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Camilo Durán; 15g/10a for Qarabag incl. 5 UCL goals; 7 in 13 for Celtic, plays wide or as second striker"
+    },
+    {
+     "num": 8,
+     "name": "Nygren",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Sweden international; Celtic's goal threat from no.10, 6 goals in 13 this season"
+    },
+    {
+     "num": 17,
+     "name": "Tounekti",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Tunisia international; very quick 1v1 winger, low end product (1 goal in 13)"
+    },
+    {
+     "num": 9,
+     "name": "Høgh",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Kasper Høgh; club-record ~£11m, ~53 goals in 102 for Bodø/Glimt, 6 UCL goals; strong and presses"
+    }
+   ],
+   "kit": {
+    "home": "#018749",
+    "away": "#114B40"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 3,
+    "width": 4,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Against Motherwell (Dave.Sport): 66% possession, 92% pass accuracy, 26 shots (15 on target), 9 corners. That means short passing (2), a dominant style (off) and probably a high line (4, an estimate; no line-height data found). Kieran Tierney said after the match that the press and tempo were better. The second goal came from Høgh winning the ball back, and Baur's ball-win set up a 5-v-3 counter, so press 4. The full-backs push on and Tierney and Tounekti combined down the left, so width 4. Tempo 3: a possession side that moves the ball faster when it plays well. No PPDA, line-height or long-ball stats found. setAtt/setDef are neutral placeholders (no source).",
+   "desc": "Celtic dominerer boldbesiddelsen med korte, sikre afleveringer, presser højt efter boldtab og angriber i bredden med offensive backer og tre kreative spillere bag angriberen.",
+   "uncertain": [
+    "Who played right and who played left among Durán, Nygren and Tounekti is my inference, not stated by any source. Sky Sports and VAVEL list the team in the order Donovan…Tierney, McGregor, Baur, Durán, Nygren, Tounekti, Høgh (right to left). Celtic's own report says Tounekti and Tierney combined down the left. One Celtic report calls Durán a striker working alongside Høgh, so Durán may have played more as a second striker than as a right winger.",
+    "McGregor RDM / Baur LDM and Murray RCB / Scales LCB are inferred from the listing order.",
+    "Celtic switch formations: 3-4-3 in the 2026-09-20 league match vs Rangers (Carter-Vickers, Trusty, Scales at the back; McCowan in the front three). Carter-Vickers was not in the 11 October squad; I found no reason.",
+    "Kit hex values are approximate. The home shirt is green-and-white hoops (green chosen as the main colour). The away shirt is green-and-black zigzag stripes; #114B40 is Wikipedia's infobox base colour.",
+    "No season-level pressing, line or long-ball stats found; setAtt/setDef are placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Celtic_F.C._season — top flight 2026/27, manager Martin O'Neill, league results (incl. Motherwell 0-2 Celtic on 11 Oct), squad numbers, kit descriptions",
+    "https://www.celticfc.com/news/2026/june/11/celtic-confirm-martin-o-neill-as-manager/ — O'Neill's appointment (cited by Wikipedia; I did not open it)",
+    "https://www.eurosport.de/fussball/scottish-premiership/2026-2027/fc-motherwell-celtic-glasgow_mtc21881829/live-lineup.shtml — 11 Oct XI with shirt numbers, formation 4-2-3-1",
+    "https://www.skysports.com/football/motherwell-vs-celtic/teams/558379 — Celtic team-sheet order and numbers, 11 Oct 2026",
+    "https://mylineups.app/matches/scottish-premiership/motherwell-vs-celtic-2026-10-11/ — 4-2-3-1, XI",
+    "https://dave.sport/news/motherwell-0-2-celtic-result/ — XI by line (back four / two / three / one), stats: 66% possession, 26 shots, 92% pass accuracy",
+    "https://sports.yahoo.com/articles/champions-two-goals-three-points-130600490.html — Celtic FC match report: Tounekti and Tierney down the left, substitutions",
+    "https://www.skysports.com/football/news/13592778/motherwell-0-2-celtic-hoops-secure-first-win-in-four-games-to-ease-pressure-on-martin-oneill-and-go-top-in-scottish-premiership — result; Tierney on improved press and tempo",
+    "https://mylineups.app/matches/scottish-premiership/celtic-vs-rangers-2026-09-20/ — 3-4-3 used in the 20 Sep league derby",
+    "https://news.stv.tv/sport/martin-oneill-could-rejig-celtic-system-to-accommodate-his-best-players — Durán has played centre-forward and wide (8 Sep 2026)",
+    "https://en.wikipedia.org/w/index.php?title=2026%E2%80%9327_Celtic_F.C._season&action=raw — kit infobox colours (away base 114b40)"
+   ]
+  },
+  {
+   "club": "Rangers",
+   "country": "Scotland",
+   "league": "Scottish Premiership",
+   "manager": "Derek McInnes",
+   "lineupBasis": "League match 2026-10-10 vs Kilmarnock (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Pandur",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 5
+     },
+     "attrWhy": "Ivor Pandur; £6m from Hull, good Championship shot-stopper, unproven higher up"
+    },
+    {
+     "num": 21,
+     "name": "Sterling",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 5,
+      "shoot": 3,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Athletic, strong RB with good recovery pace; limited end product"
+    },
+    {
+     "num": 37,
+     "name": "Fernandez",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 4,
+      "shoot": 2,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Emmanuel Fernandez; tall, aerially strong ex-Peterborough CB, basic on the ball"
+    },
+    {
+     "num": 24,
+     "name": "Makhanya",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 4,
+      "shoot": 2,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Olwethu Makhanya; ~£3m from Philadelphia, part of MLS's best defence in 2025, physical, 22"
+    },
+    {
+     "num": 29,
+     "name": "Penrice",
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 4,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Scotland LB on loan from AEK; dangerous crosser (assist for Naderi), defensively average"
+    },
+    {
+     "num": 6,
+     "name": "Neil",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 4,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Dan Neil; free from Sunderland, left-footed deep playmaker, little PL football in 25/26"
+    },
+    {
+     "num": 43,
+     "name": "Raskin",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Combative Belgian ball-winner who can pass"
+    },
+    {
+     "num": 10,
+     "name": "Kim",
+     "pos": "RW",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 5,
+      "def": 3,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "Kim Min-su; £8.5m from Girona, 20, 6 goals in 40 on loan at Andorra; slight, technical dribbler"
+    },
+    {
+     "num": 20,
+     "name": "Naderi",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 6,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Ryan Naderi; Rangers' top scorer (6 in all comps), 13 in 42 at Rostock; good in the air, presses hard"
+    },
+    {
+     "num": 23,
+     "name": "Gassama",
+     "pos": "LW",
+     "attrs": {
+      "pace": 8,
+      "tech": 5,
+      "shoot": 5,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Djeidi Gassama; explosive direct winger, inconsistent end product"
+    },
+    {
+     "num": 19,
+     "name": "Kelsy",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 6,
+      "def": 3,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Kevin Kelsy; ~£9m from Portland, 9 goals in 20 MLS games in 2026; big target man, 22"
+    }
+   ],
+   "kit": {
+    "home": "#1B458F",
+    "away": "#F4F5EF"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 4,
+    "width": 4,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Three of Rangers' four goals in the Kilmarnock game came via the box: Naderi scored two headers, one from Penrice's cross. Kim and Gassama hold the width and Penrice overlaps, so width 4. Kelsy and Naderi play as a two-man front line with direct running into the box, so tempo 4. Naderi's pressing 'sets the tempo for the front line', but pressing dropped clearly in the second half, so press 3. The derby wins came from a compact shape (3-5-2/4-4-1-1) that 'contained' Celtic, not from dominating the ball, so style normal. Kilmarnock had more shots on target (6 v 4, Sky Sports). No possession, PPDA, line or long-ball stats found, so line and passing are neutral estimates. setAtt/setDef are placeholders (no source).",
+   "desc": "Rangers står kompakt med to aktive angribere, presser fra fronten og søger hurtigt mod feltet med indlæg fra kanterne.",
+   "uncertain": [
+    "Formation label: Eurosport and mylineups give 4-2-3-1 for this match. The same XI was called 4-4-1-1 or 4-4-2 in the 20 Sep derby, with Naderi as a second striker behind Kelsy.",
+    "Kim RW and Gassama LW come from reports (Kim 'plays on the right-wing or in the number 10 position'; Penrice supports Gassama on the left). Neil RDM / Raskin LDM and Fernandez RCB / Makhanya LCB are inferred from listing order.",
+    "Sterling went off at half-time (tonsillitis), but he was the starting right-back.",
+    "Kit hex values: Wikipedia infobox gives home base 0000ff (I used a royal blue approximation) and away f4f5ef (off-white).",
+    "No team-level possession, PPDA or long-ball stats found; setAtt/setDef are placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Rangers_F.C._season — manager Derek McInnes, 2026/27 Premiership, squad numbers",
+    "https://www.sportsmole.co.uk/football/rangers/preview/rangers-vs-kilmarnock-prediction-team-news-lineups_606463.html — McInnes appointed after Röhl left; match 10 Oct 2026 at Ibrox; injuries (Shankland, Chermiti, Cifuentes, Rommens, Yokota)",
+    "https://www.eurosport.fr/football/premiership-ecossaise/2026-2027/glasgow-rangers-kilmarnock_mtc21881983/live-lineup.shtml — 3-1 result, XI with shirt numbers, 4-2-3-1",
+    "https://mylineups.app/matches/scottish-premiership/rangers-vs-kilmarnock-2026-10-10/ — XI and 4-2-3-1",
+    "https://uk.sports.yahoo.com/news/rangers-player-ratings-vs-kilmarnock-154647819.html — unchanged XI for third straight game; Kim right wing/No.10; Naderi centre-forward",
+    "https://www.rangersnews.uk/match/rangers-player-ratings-vs-kilmarnock-4-10-man-lets-derek-mcinnes-down-ryan-naderi-and-kevin-kelsy-star/ — Sterling right-back, Penrice left-back, Kelsy and Naderi strikers",
+    "https://www.skysports.com/football/news/13592690/rangers-3-1-kilmarnock-ryan-naderi-scores-two-and-kevin-kelsy-gets-first-league-goal-as-rangers-go-top-above-celtic-in-scottish-premiership — goals, headers, shots on target 6 v 4, Sterling off ill",
+    "https://www.rangersnews.uk/opinion/rangers-fans-point-to-clear-mvp-in-3-1-win-vs-kilmarnock-as-concerns-raised-over-performance/ — Naderi's pressing; pressing intensity dropped late",
+    "https://www.ibroxnoise.co.uk/2026/09/how-rangers-and-derek-mcinnes-tricked-mons-celtic/ — McInnes used 4-2-3-1 for about a month; Penrice supports Gassama on the left; 3-5-2/4-4-1-1 in the League Cup derby",
+    "https://mylineups.app/matches/scottish-premiership/celtic-vs-rangers-2026-09-20/ — same XI as 4-4-1-1 in the 20 Sep league derby",
+    "https://en.wikipedia.org/w/index.php?title=2026%E2%80%9327_Rangers_F.C._season&action=raw — kit infobox colours"
+   ]
+  }
+ ]
+}

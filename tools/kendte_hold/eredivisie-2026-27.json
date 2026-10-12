@@ -1,0 +1,613 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "holland",
+  "name": "Holland",
+  "order": 7
+ },
+ "league": {
+  "id": "eredivisie",
+  "name": "Eredivisie",
+  "season": "2026/27",
+  "prefix": "nl-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "Ajax",
+   "country": "Netherlands",
+   "league": "Eredivisie",
+   "manager": "Míchel",
+   "lineupBasis": "Most frequent league starters 2026/27 (8 matches; ties at RB, RCB and CF broken by the most recent start; this XI never started together); NOT the latest match 2026-10-10 vs NEC (H), 1-1, where Dolberg (out for the season), Berghuis, Caio Henrique and Gaaei were injured and Klaassen was benched",
+   "formation": "4-3-3",
+   "players": [
+    {
+     "num": 1,
+     "name": "ter Stegen",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 1,
+      "def": 5,
+      "phys": 6,
+      "gk": 7
+     },
+     "attrWhy": "34, on loan from Barça after back and knee problems; still excellent with his feet and a sweeper; mixed form (about 74% saves, 3 conceded from 5 shots on target vs PSV)"
+    },
+    {
+     "num": 2,
+     "name": "Rosa",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Lucas Rosa, 26, ex-Valladolid; attacking full-back who crosses well, average defender"
+    },
+    {
+     "num": 6,
+     "name": "Kehrer",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "30, ex-Monaco/PSG; experienced, versatile and solid in duels; around Monaco's other CBs"
+    },
+    {
+     "num": 15,
+     "name": "Baas",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "23, left-footed and aggressive; Netherlands squad; Ajax's most-used defender"
+    },
+    {
+     "num": 12,
+     "name": "Caio Henrique",
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "29, ex-Monaco; very good crosser and passer; back after a long ACL layoff"
+    },
+    {
+     "num": 24,
+     "name": "Mokio",
+     "pos": "DM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "18, Belgian; composed DM/CB with about 50 first-team games; tied to 2031"
+    },
+    {
+     "num": 18,
+     "name": "Klaassen",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "33; late runs into the box (3 league goals); slowing down"
+    },
+    {
+     "num": 8,
+     "name": "Brandt",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "30, ex-Dortmund; elite final ball and first touch; 4 goals in 8"
+    },
+    {
+     "num": 23,
+     "name": "Berghuis",
+     "pos": "RW",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "34, left-footer who cuts in from the right; good shooting technique and set pieces; lost pace"
+    },
+    {
+     "num": 99,
+     "name": "Tolu",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 6,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Arokodare, 1.97 m target man; 21 league goals for Genk in 24/25, flopped at Wolves; 4 in 7 here"
+    },
+    {
+     "num": 10,
+     "name": "Gloukh",
+     "pos": "LW",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "22, Israeli; nimble dribbler and creator (4 assists); slight build"
+    }
+   ],
+   "kit": {
+    "home": "#C2002F",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 4,
+    "tempo": 2,
+    "width": 4,
+    "passing": 1,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob, 8 league games: possession 63.9% (1st of 18) and 533.5 accurate passes per match (1st). Possession wins in the final third are only 2.9 per match (14th, average 3.76) and tackles 13.5 per match (12th), but opponents complete just 78.9% of passes (4th lowest) and my whole-pitch PPDA proxy is 11.2 (5th lowest, average 13.3) -> press 3. My figures from FotMob match data: attempted long balls are 6.3% of passes (lowest in the league, average 12.8%) -> passing 1, tempo 2 (slow, patient). 26.0 attempted crosses per match (2nd, average 18.0) -> width 4. 62.2% of accurate passes in the opposition half (3rd) and 2.1 opponent offsides per match (2nd) -> line 4, style 'off'. 5 set-piece goals (2nd), but no source on routines or marking.",
+   "desc": "Ajax kontrollerer kampene med lange perioder med bolden i en 4-3-3, spiller kort og tålmodigt op bagfra og søger mange indlæg fra kanterne.",
+   "uncertain": [
+    "League starts (FotMob and ESPN agree): ter Stegen, Baas and Gloukh 7; Caio Henrique, Mokio, Klaassen, Brandt and Berghuis 6. Ties at 4 starts each: Rosa vs Gaaei (Gaaei injured on 10 Oct), Kehrer vs Bouwman (Kehrer started the last four), Arokodare vs Dolberg (Dolberg out for the season with a knee injury). The closest XI actually fielded is 2026-09-05 vs PSV (H), with Gaaei, Bouwman and Arokodare.",
+    "Caio Henrique and Berghuis were injured on 10 Oct; FotMob expects them back in mid-October.",
+    "Midfield sides: in the 4-3-3 games, FotMob and ESPN put Klaassen right and Brandt left with Mokio central. On 10 Oct, Brandt played right and Mokio left.",
+    "Name: Dutch media write 'Tolu'; ESPN/FotMob show 'Tolu Arokodare'. Use 'Arokodare' if surnames are preferred.",
+    "The home shirt is white with a broad red central band (Footy Headlines); the hex is the red. Away is black with hazy-orange details (search summaries of retailer pages). setAtt/setDef are placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Eredivisie — Ajax in the 2026-27 Eredivisie; Míchel appointed 2 June 2026",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5781764 — 10 Oct 2026 Ajax 1-1 NEC: XI, 4-3-3, coach Míchel, injured Caio Henrique/Blind/Dolberg (out for season)/Berghuis",
+    "https://www.vi.nl/nieuws/opstelling-ajax-michel-wijst-vervanger-dolberg-aan-voor-kraker-tegen-nec — NEC lineup, injuries to Dolberg/Berghuis/Caio Henrique/Gaaei/Blind, Klaassen benched",
+    "https://www.espn.com/soccer/team/squad/_/id/139/league/NED.1 — 2026-27 Eredivisie appearances and sub appearances (start counts) and shirt numbers",
+    "https://www.espn.com/soccer/match/_/gameId/401875618/psv-eindhoven-ajax-amsterdam — 5 Sep 2026 Ajax 1-3 PSV, 4-3-3 roles (Mokio CM, Klaassen right, Brandt left, Berghuis RW, Gloukh LW)",
+    "https://www.espn.com/soccer/team/results/_/id/139/ajax-amsterdam — list of 2026/27 league matches (all 8 match pages read on ESPN and FotMob)",
+    "https://www.footyheadlines.com/it/esclusiva-filtrata-la-prima-maglia-dell-ajax-26-27.html — 2026/27 home shirt: white with a red central band (2 July 2026)",
+    "https://www.classicfootballshirts.com/2026-27-ajax-away-shirtjz4693.html — 2026/27 away shirt black with hazy-orange details (search summary)",
+    "https://data.fotmob.com/stats/57/season/36577/possession_percentage_team.json (and accurate_pass_team, poss_won_att_3rd_team, total_tackle_team, _set_piece_goals_team) — season team stats",
+    "https://www.fotmob.com/api/data/leagues?id=57 — fixture list used to fetch all 2026/27 league match stats for my proxies"
+   ]
+  },
+  {
+   "club": "Feyenoord",
+   "country": "Netherlands",
+   "league": "Eredivisie",
+   "manager": "Giovanni van Bronckhorst",
+   "lineupBasis": "League match 2026-10-10 vs AZ (H), won 2-0",
+   "formation": "4-3-3",
+   "players": [
+    {
+     "num": 1,
+     "name": "Ernst",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 6
+     },
+     "attrWhy": "Tjark Ernst, 23, signed from Hertha (2. Bundesliga) for up to €5m; Germany youth international; shot-stopper still developing"
+    },
+    {
+     "num": 26,
+     "name": "Read",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Givairo Read, 20; quick, attacking RB (4 assists in 8); defending is the weak spot"
+    },
+    {
+     "num": 6,
+     "name": "St. Juste",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "29; very fast recovery defender, strong in duels; injury history"
+    },
+    {
+     "num": 35,
+     "name": "Mármol",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 2,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Mika Mármol, 25, free from Las Palmas; left-footed ball-player with La Liga experience; not big for a CB"
+    },
+    {
+     "num": 16,
+     "name": "Javi López",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "24, ex-Real Sociedad/Alavés; overlapping LB with a good cross"
+    },
+    {
+     "num": 34,
+     "name": "Vanhoutte",
+     "pos": "DM",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "28, ex-Nice/Union SG; deep-lying passer and set-piece taker, not mobile"
+    },
+    {
+     "num": 8,
+     "name": "Zechiël",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "22; energetic box-to-box, in form (5 goals and 4 assists in 8)"
+    },
+    {
+     "num": 28,
+     "name": "Targhalline",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "24, Moroccan, ex-Le Havre; tidy, balanced CM who does a lot of work"
+    },
+    {
+     "num": 23,
+     "name": "Hadj Moussa",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "24, Algeria international; direct 1v1 dribbler; 5 goals in 7"
+    },
+    {
+     "num": 19,
+     "name": "Ferri",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 5,
+      "shoot": 6,
+      "def": 3,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Nacho Ferri, 22, 1.92 m; 11 goals for Westerlo in 25/26, 5 in 7 here (incl. a hat-trick); criticised for his link-up play"
+    },
+    {
+     "num": 10,
+     "name": "Valente",
+     "pos": "LW",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 6,
+      "def": 4,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "23, ex-Groningen; creative left-footer with a good shot (4 goals in 8)"
+    }
+   ],
+   "kit": {
+    "home": "#D8232A",
+    "away": "#8EC5E8"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 4,
+    "tempo": 3,
+    "width": 2,
+    "passing": 2,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob, 8 league games: possession 54.5% (6th-7th of 18) and 433.6 accurate passes per match (5th). 10.5 interceptions per match (3rd) but only 3.6 possession wins in the final third (11th, average 3.76). Opponents complete 80.3% of passes (mid-table) and my whole-pitch PPDA proxy is 11.5 (7th lowest, average 13.3) -> press 3. My figures from FotMob match data: 1.9 opponent offsides per match (3rd) and 58.3% of accurate passes in the opposition half (6th) -> line 4. 14.8 attempted crosses per match (14th, average 18.0) -> width 2. Attempted long balls are 7.5% of passes (16th, average 12.8%) -> passing 2. Most goals (3.4 per match) and fewest conceded (0.9) with mid-range possession -> style 'normal'; only 42% possession against AZ. 5 set-piece goals (4th), but no source on routines or marking.",
+   "desc": "Feyenoord spiller en afbalanceret 4-3-3 med korte afleveringer og en høj forsvarslinje og kan både styre kampe med bolden og forsvare kompakt uden den.",
+   "uncertain": [
+    "Watanabe (#4, 6 league starts, usually RCB, with St. Juste at LCB and Mármol at LB) was not in the matchday squad on 10 Oct. I could not find the reason (search budget ran out), so I kept this XI: only one player differs from the regulars.",
+    "Centre-forward: Ferri 4 starts (the last four), Ueda 4 (the first four; he is not in ESPN's current squad list), Diarra 5 (mostly wide).",
+    "Spelling: FotMob, Rijnmond and FR12 write 'Targhalline'; ESPN writes 'Targhaline'.",
+    "The home shirt is split red/white (Footy Headlines); the hex is the red (FotMob team colour). The away hex (light blue) is my approximation of the shirt FR12 describes.",
+    "setAtt/setDef are neutral placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Eredivisie — Feyenoord in the 2026-27 Eredivisie; van Bronckhorst appointed 15 June 2026",
+    "https://www.espn.com/soccer/match/_/gameId/401875591/az-alkmaar-feyenoord-rotterdam — 10 Oct 2026 Feyenoord 2-0 AZ (home), XI, 4-3-3, St. Juste centre-right, López LB, Zechiël right / Targhalline left midfield",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5781759 — same XI and numbers, 4-3-3, coach van Bronckhorst, bench (no Watanabe)",
+    "https://www.rijnmond.nl/nieuws/2265666/live-feyenoord-houdt-voorsprong-vast-en-wint-de-topper-van-az-2-0 — result and lineup (search summary)",
+    "https://www.espn.com/soccer/team/squad/_/id/142/league/NED.1 — 2026-27 appearances and sub appearances and shirt numbers",
+    "https://www.espn.com/soccer/match/_/gameId/401875596/fc-utrecht-feyenoord-rotterdam — usual back line with Watanabe (St. Juste centre-left)",
+    "https://www.footyheadlines.com/2026/06/feyenoord-26-27-home-kit.html — 2026/27 home kit split red/white (30 June 2026)",
+    "https://www.fr12.nl/nieuws/feyenoord-presenteert-nieuw-uitshirt-voor-seizoen-20262027 — 2026/27 away shirt light blue (search summary)",
+    "https://data.fotmob.com/stats/57/season/36577/possession_percentage_team.json (and accurate_pass_team, interception_team, poss_won_att_3rd_team, goals_team_match, goals_conceded_team_match, _set_piece_goals_team) — season team stats"
+   ]
+  },
+  {
+   "club": "PSV",
+   "country": "Netherlands",
+   "league": "Eredivisie",
+   "manager": "Peter Bosz",
+   "lineupBasis": "Most frequent league starters 2026/27 = XI of league match 2026-08-30 vs FC Utrecht (A), won 6-1; NOT the latest match 2026-10-09 vs Heerenveen (H), 2-0, where strikers Pepi (injured) and Lammers were unavailable, midfielder Mijnans played centre-forward and Perišić was benched",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 32,
+     "name": "Kovář",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 7
+     },
+     "attrWhy": "26, Czech international, ex-Leverkusen; tall, reliable shot-stopper"
+    },
+    {
+     "num": 8,
+     "name": "Dest",
+     "pos": "RB",
+     "attrs": {
+      "pace": 8,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "25, USMNT; quick, skilful attacking RB (2 goals and 2 assists); average defender"
+    },
+    {
+     "num": 6,
+     "name": "Flamingo",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 3,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "23; athletic, tall CB; Netherlands squad level"
+    },
+    {
+     "num": 4,
+     "name": "Obispo",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "27; steady left-sided CB, strong in the air; ever-present"
+    },
+    {
+     "num": 17,
+     "name": "Mauro Júnior",
+     "pos": "LB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "27; former midfielder playing LB; good passing, average defending"
+    },
+    {
+     "num": 24,
+     "name": "Sano",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Kodai Sano, 23; about €14.5m from NEC (third place last season); high-work-rate box-to-box"
+    },
+    {
+     "num": 31,
+     "name": "Fernandez",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Noah Fernandez, 18, left-footed DM up from Jong PSV; Belgium youth international; little data"
+    },
+    {
+     "num": 5,
+     "name": "Perišić",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "37; two-footed, crosses and shoots well; still has stamina but has lost his burst"
+    },
+    {
+     "num": 20,
+     "name": "Til",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "28; goalscoring 10 who arrives in the box and heads well (5 goals in 8)"
+    },
+    {
+     "num": 7,
+     "name": "Van Bommel",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 6,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "22, ex-AZ; explosive, direct wide forward"
+    },
+    {
+     "num": 9,
+     "name": "Pepi",
+     "pos": "CF",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 7,
+      "def": 4,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "23, USMNT; efficient box finisher, good in the air; currently injured"
+    }
+   ],
+   "kit": {
+    "home": "#E00000",
+    "away": "#FFFFFF"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 3,
+    "width": 4,
+    "passing": 2,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "FotMob, 8 league games: possession 62.6% (2nd of 18), 528.5 accurate passes per match (2nd), 5.3 possession wins in the final third per match (2nd, average 3.76). My figures from FotMob match data: opponents complete only 77.2% of passes (2nd lowest) and my whole-pitch PPDA proxy is 10.3 (4th lowest, average 13.3) -> press 4. 26.4 attempted crosses per match (1st, average 18.0) -> width 4. Attempted long balls are 7.4% of passes (17th, average 12.8%) -> passing 2. 62.0% of accurate passes in the opposition half (4th) gives line 4, although opponent offsides are low (0.9 per match, 15th). 3.3 goals per match (2nd) and xG 22.0 (1st) -> style 'off'. Tempo 3: no direct tempo metric; the many final-third regains point higher, the short passing lower. 4 set-piece goals, 0 conceded; no source on routines or marking.",
+   "desc": "PSV spiller en offensiv 4-2-3-1 med meget boldbesiddelse, vinder ofte bolden højt på banen og angriber med mange indlæg fra kanterne.",
+   "uncertain": [
+    "League starts (FotMob, matches ESPN's squad table): Obispo, Mauro Júnior, Til and Kovář 8; Dest and Van Bommel 7; Sano, Perišić and Pepi 6; Flamingo and Fernandez 5. Next most used: Wanner 4, Geertruida 3 and Mijnans 3.",
+    "Pivot sides: ESPN (Utrecht, Ajax and Heerenveen games) and FotMob (Ajax, Twente and Heerenveen) put Sano right and Fernandez left. FotMob's Utrecht layout has them the other way round.",
+    "Pepi's injury comes from Dutch media headlines ('geblesseerde Pepi'); I did not find a return date. Formation on 9 Oct: FotMob says 4-3-3, ESPN says 4-2-3-1.",
+    "Home kit hex is FotMob's team colour (red). VI (16 June 2026) said the home shirt had not yet been presented, and I found no later source. Away (white with orange/pink/purple accents) is sourced.",
+    "setAtt/setDef are neutral placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Eredivisie — PSV in the 2026-27 Eredivisie, head coach Peter Bosz",
+    "https://www.espn.com/soccer/match/_/gameId/401875626/psv-eindhoven-fc-utrecht — 30 Aug 2026 Utrecht 1-6 PSV, XI, 4-2-3-1, Obispo centre-left",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5781726 — same Utrecht XI, numbers and 4-2-3-1",
+    "https://www.espn.com/soccer/team/squad/_/id/148/league/NED.1 — 2026-27 Eredivisie appearances and sub appearances (start counts) and shirt numbers",
+    "https://www.fotmob.com/api/data/matchDetails?matchId=5781762 — 9 Oct 2026 PSV 2-0 Heerenveen: Mijnans at CF, Perišić on the bench, coach Bosz",
+    "https://www.voetbalnieuws.nl/nieuws/2144964/opstelling-psv-binnen-bosz-kiest-vervanger-van-geblesseerde-pepi-in-de-spits.html — Pepi injured, replacement striker chosen (headline/search summary)",
+    "https://www.vi.nl/nieuws/opstelling-psv-bosz-start-gewoon-met-dest-geen-perisic — Heerenveen lineup, no Perišić (search summary)",
+    "https://www.espn.com/soccer/match/_/gameId/401875593/psv-eindhoven-fc-twente — Twente game: Geertruida centre-right, Sano right pivot",
+    "https://www.vi.nl/nieuws/psv-presenteert-nieuw-uitshirt — 2026/27 away shirt white with orange, pink and purple accents (16 June 2026)",
+    "https://data.fotmob.com/stats/57/season/36577/possession_percentage_team.json (and accurate_pass_team, poss_won_att_3rd_team, expected_goals_team, goals_team_match) — season team stats"
+   ]
+  }
+ ]
+}

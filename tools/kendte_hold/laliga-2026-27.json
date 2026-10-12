@@ -1,0 +1,825 @@
+{
+ "note": "Research 12/10 2026 af agenter med websøgning (FotMob, ESPN, ligaernes og klubbernes sider, Wikipedia m.fl.). Udvalgte, kendte hold, ikke hele ligaen. Startopstilling = seneste ligakamp før 12/10 eller holdets mest brugte startere (se lineupBasis/uncertain). Taktiktallene 1-5 er skøn; setAtt/setDef er for de fleste hold pladsholdere ('mix'/'mixed').",
+ "country": {
+  "id": "spanien",
+  "name": "Spanien",
+  "order": 2
+ },
+ "league": {
+  "id": "laliga",
+  "name": "LaLiga",
+  "season": "2026/27",
+  "prefix": "es-",
+  "selection": true
+ },
+ "clubs": [
+  {
+   "club": "Athletic Club",
+   "country": "Spain",
+   "league": "LaLiga",
+   "manager": "Edin Terzić",
+   "lineupBasis": "Most frequent league starters 2026/27 = XI of league match 2026-09-12 vs Elche (H) (identical XI 2026-09-05 vs Atlético Madrid (H)); latest league match 2026-10-10 at Rayo Vallecano (A) was abandoned at 0-0 and played without Sancet, Nico Williams and Laporte",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Unai Simón",
+     "pos": "GK",
+     "attrs": {
+      "pace": 5,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 6,
+      "gk": 8
+     },
+     "attrWhy": "Spain international, reliable shot-stopper and good with his feet; just below Europe's elite keepers"
+    },
+    {
+     "num": 12,
+     "name": "Areso",
+     "pos": "RB",
+     "attrs": {
+      "pace": 7,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Energetic overlapping RB brought back from Osasuna; good crosser, solid but not elite defender"
+    },
+    {
+     "num": 5,
+     "name": "Yeray",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "31, aggressive front-foot CB, strong in duels and in the air; limited on the ball"
+    },
+    {
+     "num": 14,
+     "name": "Laporte",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "32, former Spain starter; elite left-footed passer and reads the game well, has lost pace"
+    },
+    {
+     "num": 17,
+     "name": "Yuri",
+     "pos": "LB",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 4,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "36, experienced LB and good crosser; legs clearly declining"
+    },
+    {
+     "num": 16,
+     "name": "R. de Galarreta",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 4,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "33, tidy tempo-setter and smart tackler; not athletic"
+    },
+    {
+     "num": 24,
+     "name": "Gerenabarrena",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 5,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "23, first-team debut Aug 2026 after 39 league apps on loan at Castellón 25/26; tidy holding midfielder, unproven at top level"
+    },
+    {
+     "num": 23,
+     "name": "Navarro",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 6,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Robert Navarro: 6 G 1 A in 1,293 LaLiga min 25/26 (mostly as a sub); left-footed dribbler"
+    },
+    {
+     "num": 8,
+     "name": "Sancet",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Tall, elegant No.10 with a good final ball and goals from midfield; injury history"
+    },
+    {
+     "num": 10,
+     "name": "Nico Williams",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 6,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Spain winger, elite acceleration and 1v1 dribbling; finishing only average; groin problems in 25/26"
+    },
+    {
+     "num": 9,
+     "name": "Iñaki Williams",
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 6,
+      "def": 4,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "32, still very quick and powerful runner in behind; average finisher"
+    }
+   ],
+   "kit": {
+    "home": "#EE2523",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 4,
+    "line": 4,
+    "tempo": 3,
+    "width": 4,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Based on my own totals from ESPN team stats for the 6 completed league matches. Average possession is 52.5% (65–69% in the three home wins/draws vs Sevilla, Elche and Alavés; 30–46% away at Barcelona, Celta and at home to Atlético). The pressing proxy (opponent passes ÷ Athletic's tackles + interceptions + fouls, whole pitch, not true PPDA) averages 13.5. That is about the same as Atlético, but it is 6.8–10.6 in the home matches. Opponents were caught offside about 3.5 times per game (21 in 6, including 8 by Barcelona), as often as against Barcelona, which points to a high line: line 4. Press 4 rather than 3 is a judgement from that high line and the home figures. Accurate crosses average 5.0 per game, the most of the four clubs, and Fichajes names Areso and Yuri as the main flank options: width 4. Accurate long balls are 5.6% of accurate passes (137/2451), so passing 3. Tempo 3 and style 'normal' are judgements (7 goals for, 6 against in 6). I found no source on set pieces, so setAtt and setDef are placeholders.",
+   "desc": "Athletic Club spiller 4-2-3-1 med fart på kanterne og offensive backer, presser aktivt og holder en høj forsvarslinje, hvorfra holdet ofte søger indlæg i feltet.",
+   "uncertain": [
+    "Latest matches: the 10 Oct match at Rayo Vallecano was abandoned at 0-0 after fans threw objects (LiveScore 'Abandoned'; Thisclaimer). ESPN wrongly lists it as a 0-0 final. Its XI (4-2-3-1) was: Unai Simón; Areso, Yeray, Paredes, Yuri; R. de Galarreta, Gerenabarrena; Navarro, Canales, Berenguer; Iñaki Williams. The last completed league match was 19 Sep, 0-0 at home to Alavés. Its XI was Unai Simón; Johaneko Louis-Jean, Paredes, Laporte, Yuri; R. de Galarreta, Jauregizar; Navarro, Sancet, Nico Williams; Iñaki Williams.",
+    "Availability right now: search snippets I did not open (Comuniate, Asesorías Fantasy, El Gol Digital) report a moderate soleus injury for Sancet, diagnosed 8 Oct, with estimates of 2–5 weeks out. A Rayo preview (also only seen as a snippet) had Nico Williams and Egiluz ruled out injured, and Comuniate reported Laporte missed Rayo through illness. So Sancet and Nico Williams may not be available for the next matches.",
+    "Start counts over 7 league line-ups (including the abandoned match): Unai Simón 7, Yuri 6, Sancet 6, Areso 5, Yeray 5, Laporte 5, R. de Galarreta 5, Gerenabarrena 5, Navarro 5, Iñaki Williams 5 as CF, Nico Williams 4 (Berenguer 3), Paredes 4.",
+    "The Levante match (matchday 7) was postponed to 21 Oct. The Rayo match had no new date in the sources.",
+    "Name forms: 'R. de Galarreta' follows LaLiga's 'R. De Galarreta' because 'Ruiz de Galarreta' is longer than 16 characters. 'Yuri' is LaLiga's name for Yuri Berchiche.",
+    "Kit: the home shirt is red-and-white stripes, so the red is approximate. The away shirt is black with red and white trim. setAtt and setDef are placeholders."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_La_Liga — Athletic in LaLiga 2026/27, manager Edin Terzić (replaced Valverde 1 July 2026), table showing 6 played",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Athletic_Bilbao_season — squad numbers, Levante match postponed",
+    "https://www.laliga.com/en-GB/clubs/athletic-club/results — six completed league matches with home/away",
+    "https://www.laliga.com/en-DE/match/temporada-2026-2027-laliga-ea-sports-athletic-club-deportivo-alaves-7 — official XI vs Alavés (19 Sep), possession 68.4%",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882886 — XI and 4-2-3-1 vs Elche (12 Sep 2026, home, 1-1), position labels",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882895 — identical XI vs Atlético Madrid (5 Sep 2026, home, 3-0)",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882849 — XI at Rayo (10 Oct 2026); ESPN shows it as a 0-0 final",
+    "https://www.livescore.com/en/football/spain/laliga/rayo-vallecano-vs-athletic-club/1810715/ — Rayo vs Athletic listed as Abandoned at 0-0",
+    "https://thisclaimer.com/2026/10/11/rayo-vallecano-athletic-club-match-suspended-fan-protest — abandonment after a fan protest, 10 Oct 2026",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882866 (and 401882916, 401882921, 401882905) — other league XIs, used for frequency counts",
+    "https://www.fichajes.net/en/news/the-influence-of-terzic-is-already-noticeable-at-athletic-club-20260923.html — Terzić's most-used players, Areso and Yuri as flank options, results",
+    "https://www.espn.com/soccer/team-stats/_/gameId/401882916 (and 401882921, 401882905, 401882895, 401882886, 401882866) — possession, passes, long balls, crosses, defensive actions, offsides",
+    "https://www.footyheadlines.com/2026/05/athletic-bilbao-26-27-home-kit.html — 2026/27 home kit is red-and-white stripes",
+    "https://www.footyheadlines.com/2026/06/bilbao-26-27-away-kit.html — 2026/27 away kit is black with red and white trim"
+   ]
+  },
+  {
+   "club": "Atlético Madrid",
+   "country": "Spain",
+   "league": "LaLiga",
+   "manager": "Diego Simeone",
+   "lineupBasis": "League match 2026-10-10 vs Alavés (A)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 13,
+     "name": "Oblak",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 5,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "33, still a top shot-stopper but past his peak; distribution is ordinary"
+    },
+    {
+     "num": 14,
+     "name": "Llorente",
+     "pos": "RB",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 6,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Marcos Llorente: one of LaLiga's fastest players with a huge engine; attacking RB/RWB"
+    },
+    {
+     "num": 21,
+     "name": "Romero",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 4,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Cristian Romero, ~€35-40m from Spurs Aug 2026; Argentina starter, aggressive front-foot duel-winner"
+    },
+    {
+     "num": 24,
+     "name": "Le Normand",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Spain Euro 2024 starter; solid, positionally sound CB, injury-hit at Atlético"
+    },
+    {
+     "num": 22,
+     "name": "Grimaldo",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Ex-Leverkusen attacking LB; elite crossing and set pieces, high goal output; average defender"
+    },
+    {
+     "num": 6,
+     "name": "Koke",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 3,
+      "tech": 8,
+      "shoot": 4,
+      "def": 6,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "34, captain; still a fine passer and organiser, legs have gone"
+    },
+    {
+     "num": 5,
+     "name": "Cardoso",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 5,
+      "tech": 6,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Johnny Cardoso, USMNT DM; strong ball-winner and screener, simple passer"
+    },
+    {
+     "num": 20,
+     "name": "Giuliano",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 5,
+      "def": 6,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Giuliano Simeone, Argentina international; relentless runner and presser on the right, good crosser"
+    },
+    {
+     "num": 8,
+     "name": "Barrios",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 5,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Pablo Barrios, Spain international; press-resistant, progressive box-to-box midfielder"
+    },
+    {
+     "num": 11,
+     "name": "Lookman",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 7,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Joined from Atalanta Jan 2026; 15+ goal seasons in Serie A; direct dribbler cutting in from the left"
+    },
+    {
+     "num": 15,
+     "name": "Jonathan David",
+     "pos": "CF",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 7,
+      "def": 4,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "On loan from Juventus (1 Sep 2026) after a weak spell there; clinical, smart mover at Lille (25+ goals 24/25)"
+    }
+   ],
+   "kit": {
+    "home": "#CB3524",
+    "away": "#111111"
+   },
+   "tactics": {
+    "press": 3,
+    "line": 3,
+    "tempo": 3,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Based on my own totals from ESPN team stats for the 8 league matches. Average possession is 58.6% (range 47–68%; 68% at Alavés). The pressing proxy (opponent passes ÷ Atlético's tackles + interceptions + fouls, whole pitch, not true PPDA) is about 13.0. That sits between Barcelona (10.1) and Real Madrid (18.9), so press 3. Opponents were caught offside only about 1.1 times per game (9 in 8), so no high line: line 3. Accurate long balls are 5.3% of accurate passes (217/4096), so passing 3. Accurate crosses average 4.25 per game, so width 3. At Alavés they had 22 shots to 8 and xG 2.12, and Koke made 122 passes (beIN). The team creates a lot without being extreme in any category. Tempo 3 and style 'normal' are judgements. I found no source on set pieces, so setAtt and setDef are placeholders.",
+   "desc": "Atlético Madrid veksler mellem 4-4-2 og 4-2-3-1, har ofte mest af bolden, men forsvarer kompakt og disciplineret med en mellemhøj forsvarslinje og et afmålt pres.",
+   "uncertain": [
+    "Formation: 4-2-3-1 is what ESPN gives for this match. Simeone has rotated a lot, though: ESPN lists 4-4-2 in 5 of 8 league matches, plus one each of 4-1-4-1 and 3-4-2-1.",
+    "Julián Álvarez (#19) did not start any of the 8 league matches in ESPN's lineups. He came on at half-time at Alavés. I found no reason (my web-search limit ran out before I could check).",
+    "Start counts over 8 league matches: Grimaldo 7, Lookman 7, Hancko 6, Giuliano 6, Lee Kang-in 6, Llorente 6, Baena 5, Pubill 5. The Alavés XI is within normal rotation, but Hancko, Baena, Lee Kang-in, Hjulmand and Pubill are frequent starters who were not in it.",
+    "Koke (RDM) and Cardoso (LDM) sides come from ESPN's page order, which lists the left player first (Cardoso was labelled 'Center Left Midfielder' vs Osasuna). Romero RCB is ESPN's own label.",
+    "Kit: the home shirt is red-and-white stripes, so the red is approximate. The away shirt is black with neon-green accents.",
+    "setAtt and setDef are neutral placeholders because I found no source."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_La_Liga — Atlético in LaLiga 2026/27, manager Diego Simeone, league table",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Atl%C3%A9tico_Madrid_season — squad numbers (Romero #21 from Tottenham, Grimaldo #22, David #15 on loan from Juventus, Lookman #11, etc.)",
+    "https://www.espn.com/soccer/team/results/_/id/1068/atletico-madrid — league results; Alavés (10 Oct 2026) is the latest",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882856 — XI, 4-2-3-1, position labels and substitutions at Alavés (Alavés 1-2 Atlético)",
+    "https://www.beinsports.com/en-us/soccer/la-liga/articles/alaves-1-2-atletico-madrid-romero-wins-it-late-after-perez-red-card-2026-10-10 — result, 22 shots to 8, xG 2.12, Koke 122 passes",
+    "https://www.football-espana.net/2026/10/11/atletico-madrid-alaves-win — match report (Grimaldo goal, Romero winner, Baena assist)",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882865 (and 401882875, 401882879, 401882895, 401882897, 401882915, 401882925) — other league XIs and formations, used for frequency counts",
+    "https://www.espn.com/soccer/team-stats/_/gameId/401882856 (and 401882875, 401882879, 401882895, 401882897, 401882915, 401882925, 401882865) — possession, passes, long balls, crosses, defensive actions, offsides",
+    "https://www.footyheadlines.com/7783103808/in-hand-photos-reveal-flawed-nike-collar-construction-on-atletico-madrid-26-27-home-kit.html — 2026/27 home shirt is striped with a central red stripe",
+    "https://www.footyheadlines.com/2025/08/atm-26-27-away-kit.html — 2026/27 away kit is black with volt (neon green) accents, released 18 May 2026"
+   ]
+  },
+  {
+   "club": "FC Barcelona",
+   "country": "Spain",
+   "league": "LaLiga",
+   "manager": "Hansi Flick",
+   "lineupBasis": "Most frequent league starters 2026/27 = XI of league match 2026-09-13 vs Levante (A) (identical XI 2026-09-06 vs Valencia (A)); latest league match 2026-10-10 vs Getafe (H) was heavily rotated (Raphinha injured)",
+   "formation": "4-3-3",
+   "players": [
+    {
+     "num": 1,
+     "name": "Joan García",
+     "pos": "GK",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 1,
+      "def": 4,
+      "phys": 7,
+      "gk": 8
+     },
+     "attrWhy": "Spain keeper; outstanding shot-stopping since Espanyol and in his first Barça season; good feet for a high line"
+    },
+    {
+     "num": 24,
+     "name": "Eric García",
+     "pos": "RB",
+     "attrs": {
+      "pace": 4,
+      "tech": 8,
+      "shoot": 4,
+      "def": 7,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Versatile CB/DM used at RB; excellent reader and passer, clearly slow"
+    },
+    {
+     "num": 5,
+     "name": "Cubarsí",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 8,
+      "shoot": 2,
+      "def": 8,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "19, Spain; elite line-breaking passer and anticipation; still light in duels"
+    },
+    {
+     "num": 18,
+     "name": "Gerard Martín",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 3,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Ex-LB converted to LCB under Flick; composed left-footer, average 1v1"
+    },
+    {
+     "num": 12,
+     "name": "Espart",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Xavi Espart, La Masia teenager (natural RB) on the left; started the first 4 league games with 2 assists"
+    },
+    {
+     "num": 16,
+     "name": "Rodri",
+     "pos": "DM",
+     "attrs": {
+      "pace": 4,
+      "tech": 9,
+      "shoot": 7,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "2024 Ballon d'Or; £65.4m from City Aug 2026; elite controller, not quite pre-ACL level"
+    },
+    {
+     "num": 7,
+     "name": "Fermín",
+     "pos": "RCM",
+     "attrs": {
+      "pace": 7,
+      "tech": 8,
+      "shoot": 7,
+      "def": 5,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Intense presser and late box-runner; regular goals from midfield"
+    },
+    {
+     "num": 8,
+     "name": "Pedri",
+     "pos": "LCM",
+     "attrs": {
+      "pace": 6,
+      "tech": 10,
+      "shoot": 6,
+      "def": 6,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "Among the world's best on the ball: press resistance, passing and tempo; improved defensive work"
+    },
+    {
+     "num": 10,
+     "name": "Lamine Yamal",
+     "pos": "RW",
+     "attrs": {
+      "pace": 8,
+      "tech": 10,
+      "shoot": 8,
+      "def": 3,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Runner-up for the 2025 Ballon d'Or; the best dribbler and creator in the world"
+    },
+    {
+     "num": 11,
+     "name": "Raphinha",
+     "pos": "CF",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 8,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "34 goals in 24/25; elite pressing forward; currently injured"
+    },
+    {
+     "num": 17,
+     "name": "Gordon",
+     "pos": "LW",
+     "attrs": {
+      "pace": 9,
+      "tech": 7,
+      "shoot": 6,
+      "def": 5,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "£80m from Newcastle; 4 assists in first 4 LaLiga apps, still no Barça goal; very fast, hard presser"
+    }
+   ],
+   "kit": {
+    "home": "#A50044",
+    "away": "#2A1B3D"
+   },
+   "tactics": {
+    "press": 5,
+    "line": 5,
+    "tempo": 4,
+    "width": 3,
+    "passing": 1,
+    "style": "off",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Based on my own totals from ESPN team stats for the 8 league matches. Average possession is 70.5% (range 54–83%). The pressing proxy (opponent passes ÷ Barça's tackles + interceptions + fouls, whole pitch, not true PPDA) is about 10.1 over 7 matches, the most aggressive of the four clubs. Opponents were caught offside about 3.4 times per game (24 in 7), against 1.1–1.3 for the Madrid clubs, which points to a high line and offside trap. That gives press 5 and line 5. Accurate long balls are only 3.6% of accurate passes (157/4417), with pass accuracy of 87–92%, so passing 1. Accurate crosses average 3.7 per game, so width 3 even though Yamal and Gordon play as wide forwards. Tempo 4 is a judgement: about 21.6 shots per game, 34 goals for in 8, and no tempo stat available. Style 'off' follows from the possession, shot volume and goals. I found no source on set pieces, so setAtt and setDef are placeholders.",
+   "desc": "Barcelona dominerer bolden med korte afleveringer i en 4-3-3, presser højt og hurtigt efter boldtab og forsvarer med en høj forsvarslinje, der ofte fanger modstanderen offside.",
+   "uncertain": [
+    "I used the most frequent XI because the latest XI (10 Oct, 3-0 vs Getafe) was unusual. Raphinha was out with a thigh problem from Brazil duty (beIN), and Sport, via Comuniate, reported that Flick planned heavy rotation before the Clásico. That XI was 4-3-3: Joan García; Koundé, Eric García, Gerard Martín, Espart; Olmo, Rodri, Gavi; Lamine Yamal, Gabriel Jesus, Gordon. Pedri and Fermín came off the bench.",
+    "Raphinha may still be injured at the time of the app data. Beyond the pre-match reports, I could not confirm when he returns.",
+    "Start counts over 8 league matches: Joan García 7; Eric García 5 at RB (Koundé 2); Gerard Martín 6, Cubarsí 5, Christensen 4; Espart 6; Rodri 5; Pedri 6; Fermín 5; Yamal 8; Raphinha 7; Gordon 6. The positions in two matches (Elche, Racing) were not fully labelled.",
+    "Centre-back sides (Cubarsí RCB, Martín LCB) are taken from ESPN's labels for the 27 Aug match vs Athletic. They are not labelled for the Levante match itself.",
+    "Espart was listed as #36 in the first league match and #12 afterwards. Wikipedia's squad list (10 Oct) gives #12.",
+    "Kit: the home shirt is blue-and-garnet stripes, and I chose garnet as the main colour (blue #004D98 would be equally valid). The away shirt is black fading to purple with gold, so the hex is an approximate dark purple-black.",
+    "setAtt and setDef are neutral placeholders because I found no source."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_La_Liga — Barcelona in LaLiga 2026/27, manager Hansi Flick, league table",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_FC_Barcelona_season — squad numbers (Rodri #16 from Man City, Gabriel Jesus #9, Gordon #17, Espart #12), Getafe result",
+    "https://www.espn.com/soccer/team/results/_/id/83/barcelona — league results and game IDs",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882883 — XI and 4-3-3 at Levante (13 Sep 2026, away, 4-2), with Eric García RB, Espart LB, Fermín right midfield",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882888 — identical XI and 4-3-3 at Valencia (6 Sep 2026, away, 5-0)",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882921 — Martín 'Center Left Defender' and Cubarsí 'Center Right Defender' vs Athletic",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882853 — rotated XI vs Getafe (10 Oct 2026, home, 3-0)",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882913 (and 401882903, 401882871, 401882859) — other league XIs, used for frequency counts",
+    "https://www.beinsports.com/en-us/soccer/la-liga/articles/who-will-replace-raphinha-against-getafe-2026-10-09 — Raphinha's thigh problem before Getafe",
+    "https://www.comuniate.com/en/noticias/38223/flick-will-rotate-heavily-against-getafe-according-to-sport — planned rotation before the Clásico",
+    "https://www.espn.com/soccer/team-stats/_/gameId/401882913 (and 401882921, 401882903, 401882888, 401882883, 401882871, 401882859, 401882853) — possession, passes, long balls, crosses, defensive actions, offsides",
+    "https://www.goal.com/en-us/lists/barcelona-2026-27-kits-release-date-prices/blt86fdf6835b1ac1c1 — home kit is blaugrana stripes; away kit is black fading to purple"
+   ]
+  },
+  {
+   "club": "Real Madrid",
+   "country": "Spain",
+   "league": "LaLiga",
+   "manager": "José Mourinho",
+   "lineupBasis": "League match 2026-10-10 vs Villarreal (H)",
+   "formation": "4-2-3-1",
+   "players": [
+    {
+     "num": 1,
+     "name": "Courtois",
+     "pos": "GK",
+     "attrs": {
+      "pace": 4,
+      "tech": 6,
+      "shoot": 1,
+      "def": 5,
+      "phys": 8,
+      "gk": 9
+     },
+     "attrWhy": "34, still among Europe's best shot-stoppers; huge reach and dominates his box"
+    },
+    {
+     "num": 12,
+     "name": "Alexander-Arnold",
+     "pos": "RB",
+     "attrs": {
+      "pace": 6,
+      "tech": 9,
+      "shoot": 6,
+      "def": 5,
+      "phys": 5,
+      "gk": 1
+     },
+     "attrWhy": "Elite passer, crosser and set-piece taker; defending 1v1 is his weak point"
+    },
+    {
+     "num": 16,
+     "name": "Konaté",
+     "pos": "RCB",
+     "attrs": {
+      "pace": 8,
+      "tech": 6,
+      "shoot": 3,
+      "def": 8,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "Free from Liverpool Jun 2026; France CB, fast and very strong in duels; knee knock early Oct"
+    },
+    {
+     "num": 22,
+     "name": "Rüdiger",
+     "pos": "LCB",
+     "attrs": {
+      "pace": 6,
+      "tech": 6,
+      "shoot": 3,
+      "def": 7,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "33, aggressive and aerially strong; injury-hit and declining, the only fit senior CB in early Oct"
+    },
+    {
+     "num": 18,
+     "name": "Carreras",
+     "pos": "LB",
+     "attrs": {
+      "pace": 7,
+      "tech": 7,
+      "shoot": 4,
+      "def": 7,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Álvaro Carreras, Spain LB; strong 1v1 defender with a good engine and tidy in build-up"
+    },
+    {
+     "num": 8,
+     "name": "Valverde",
+     "pos": "RDM",
+     "attrs": {
+      "pace": 8,
+      "tech": 8,
+      "shoot": 7,
+      "def": 7,
+      "phys": 9,
+      "gk": 1
+     },
+     "attrWhy": "Huge engine and power; long-range shooting; plays across midfield and at RB"
+    },
+    {
+     "num": 14,
+     "name": "Tchouaméni",
+     "pos": "LDM",
+     "attrs": {
+      "pace": 6,
+      "tech": 7,
+      "shoot": 5,
+      "def": 8,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "France DM; strong tackler and in the air, reliable distributor"
+    },
+    {
+     "num": 15,
+     "name": "Güler",
+     "pos": "RAM",
+     "attrs": {
+      "pace": 5,
+      "tech": 8,
+      "shoot": 7,
+      "def": 4,
+      "phys": 4,
+      "gk": 1
+     },
+     "attrWhy": "21, left-footed creator; excellent passing and set pieces, light physically"
+    },
+    {
+     "num": 5,
+     "name": "Bellingham",
+     "pos": "CAM",
+     "attrs": {
+      "pace": 7,
+      "tech": 9,
+      "shoot": 8,
+      "def": 6,
+      "phys": 8,
+      "gk": 1
+     },
+     "attrWhy": "Elite all-round attacking midfielder; arrives in the box, strong in duels"
+    },
+    {
+     "num": 25,
+     "name": "Diomande",
+     "pos": "LAM",
+     "attrs": {
+      "pace": 9,
+      "tech": 8,
+      "shoot": 6,
+      "def": 3,
+      "phys": 6,
+      "gk": 1
+     },
+     "attrWhy": "~€125-140m from Leipzig (12 G 9 A in the Bundesliga 25/26); explosive dribbler, 0 G 1 A in 7 LaLiga games"
+    },
+    {
+     "num": 10,
+     "name": "Mbappé",
+     "pos": "CF",
+     "attrs": {
+      "pace": 10,
+      "tech": 9,
+      "shoot": 10,
+      "def": 2,
+      "phys": 7,
+      "gk": 1
+     },
+     "attrWhy": "Among the fastest and most lethal finishers in world football; LaLiga top scorer since 2024/25"
+    }
+   ],
+   "kit": {
+    "home": "#FFFFFF",
+    "away": "#1E4D2B"
+   },
+   "tactics": {
+    "press": 2,
+    "line": 3,
+    "tempo": 4,
+    "width": 3,
+    "passing": 3,
+    "style": "normal",
+    "setAtt": "mix",
+    "setDef": "mixed"
+   },
+   "tacticsWhy": "Based on my own totals from ESPN team stats for the 8 league matches. Average possession is 51.8% (range 39–63%). It was 39% in the 2-1 derby loss at Atlético and 46% vs Villarreal. I built a pressing proxy: opponent passes divided by Madrid's tackles + interceptions + fouls, over the whole pitch, so it is not true PPDA. It averages about 18.9 across 7 matches, the most passive of the four clubs (Barcelona about 10.1). Goal's tactics-board piece on the Villarreal match says the same: a 4-2-3-1 that drops into a 4-4-2 mid-block, no high press, engaging only in the middle third, then 'contain and counter' with deep balls from Alexander-Arnold and runs from Mbappé. That gives press 2, line 3 and tempo 4. Opponents were caught offside about 1.3 times per game, so the line is mid rather than high. Accurate long balls are 5.8% of accurate passes (185/3181), so passing 3. Accurate crosses average 4.4 per game, so width 3. Style 'normal' is my judgement: 19 goals for and 8 against in 8 matches, and the team keeps a defensive structure. I found no source on set pieces, so setAtt and setDef are placeholders.",
+   "desc": "Real Madrid stiller op i 4-2-3-1, forsvarer i en kompakt mellemblok uden højt pres og søger hurtigt og direkte frem i omstillingerne, gerne med lange bolde i dybden.",
+   "uncertain": [
+    "The XI is a normal selection, but it is not the most-used XI. Huijsen (6 of 8 league starts) was suspended after his red card in the derby. Vinícius Júnior (7 of 8 starts) was on the bench, came on and was sent off (72'/74', for pulling Saliba's hair), and may be suspended for the next matches. Dumfries has started 5 of 8 at RB against 3 for Alexander-Arnold.",
+    "Wide roles move around. In earlier matches ESPN listed Diomande as right attacking midfielder and Vinícius as left. Against Villarreal ESPN listed Güler on the right and Diomande on the left.",
+    "Left and right for the centre-backs (Konaté RCB, Rüdiger LCB) and holding midfielders (Valverde RDM, Tchouaméni LDM) come from ESPN shot-map labels (Konaté 'Center Right Defender', Tchouaméni 'Left Midfielder') and the page order. ESPN does not label every position.",
+    "Away kit colour: sources say only 'dark green' (with off-white details). The hex is approximate.",
+    "Some search snippets said Asencio, Militão, Rodrygo and Mendy were injured before the Villarreal match. I did not open those pages.",
+    "setAtt and setDef are neutral placeholders because I found no source."
+   ],
+   "sources": [
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_La_Liga — Real Madrid in LaLiga 2026/27, manager José Mourinho (appointed 13 June 2026), league table",
+    "https://en.wikipedia.org/wiki/2026%E2%80%9327_Real_Madrid_CF_season — 2026/27 squad numbers, league results, Vinícius red card vs Villarreal",
+    "https://www.espn.com/soccer/team/results/_/id/86/real-madrid — fixture list; Villarreal (10 Oct 2026) is the latest league match",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882848 — XI, shirt numbers, 4-2-3-1, position labels and substitutions vs Villarreal",
+    "https://www.espn.com/soccer/report/_/gameId/401882848 — date, venue (Bernabéu) and 1-0 result",
+    "https://www.goal.com/en-us/lists/real-madrid-player-ratings-vs-villarreal-yan-diomande-the-unlikely-hero-as-vinicius-junior-sees-red-in-tense-victory/blt1a8e5d638a097e92 — confirms starters and substitutes",
+    "https://www.goal.com/en-us/news/real-madrid-vs-villarreal-the-tactics-board-mourinho-s-defensive-masterclass-survives-vinicius-junior-red-card/blt030075ef0c423ca4 — mid-block, no high press, contain and counter",
+    "https://www.espn.com/soccer/lineups/_/gameId/401882865 (and 401882872, 401882880, 401882894, 401882899, 401882919, 401882912) — starting XIs of the other 7 league matches, used for frequency counts",
+    "https://www.espn.com/soccer/team-stats/_/gameId/401882848 (and 401882865, 401882872, 401882880, 401882894, 401882899, 401882919, 401882912) — possession, passes, long balls, crosses, tackles, interceptions, fouls, offsides",
+    "https://www.footyheadlines.com/2025/08/new-real-madrid-26-27-home-kit.html — 2026/27 home kit is white (released 3 June 2026)",
+    "https://footballfashion.org/wordpress/2026/07/23/real-madrid-2026-27-jersey-away-kit-release/ — 2026/27 away kit is dark green (headline only)"
+   ]
+  }
+ ]
+}
