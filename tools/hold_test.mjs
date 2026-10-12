@@ -183,11 +183,15 @@ const fb = await ev("({ open: document.getElementById('fbDlg').open, s: document
 await ev("document.getElementById('fbDlg').close()");
 check("feedback åbner for Leeds mod Forest", fb.open && fb.s + fb.k > 0, JSON.stringify(fb));
 await click("[data-sim]"); await sleep(500);
+// 8×: kampvisningen spiller hvert angreb i realtid, så ét minut kan tage over 20 s ved 1× (målt 12/10: 1 af 6 kørsler nåede
+// ikke 3. minut på 20 s). Ved 8× nåede 15 af 15 kørsler 3. minut på højst 4,4 s.
+for (let i = 0; i < 3; i++) await click("#simSpeedBtn");
+const speed = await ev("document.getElementById('simSpeedBtn').textContent");
 await click("#simPlay");
 const clock = await until(async () => { const c = await ev("document.getElementById('sbClock').textContent"); return parseInt(c) >= 3 ? c : null; }, 20000, 250);
 const sim = await ev("({ clock: document.getElementById('sbClock').textContent, score: document.getElementById('sbScore').textContent, ticker: (document.querySelector('#simDlg .sim-ticker') || {}).textContent || '' })");
 await ev("document.getElementById('simDlg').close()");
-check("en kamp med de kendte hold går i gang (uret når mindst 3. minut)", !!clock, JSON.stringify(sim).slice(0, 180));
+check("en kamp med de kendte hold går i gang (ved 8× når uret mindst 3. minut)", speed === "8×" && !!clock, `${speed} ${JSON.stringify(sim).slice(0, 180)}`);
 
 console.log("Styrke: Manchester City mod Coventry City");
 const cardStrength = async () => ev("(() => { const b = document.querySelector('#kdCard .known-strength b'); return b ? parseFloat(b.textContent.replace('Styrke ', '').replace(',', '.')) : null; })()");
